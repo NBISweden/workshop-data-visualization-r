@@ -1,0 +1,93 @@
+---
+title: "Title of the topic"
+subtitle: "Workshop on Topic"
+author: "`r paste0('<b>Doe Jones</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
+institute: NBIS, SciLifeLab
+keywords: bioinformatics, course, workshop, scilifelab, nbis
+output:
+  xaringan::moon_reader:
+    encoding: 'UTF-8'
+    self_contained: false
+    chakra: 'assets/remark-latest.min.js'
+    css: 'assets/slide.css'
+    lib_dir: libs
+    nature:
+      ratio: '4:3'
+      highlightLanguage: r
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%/%total%"
+    include: NULL
+---
+exclude: true
+count: false
+
+```{r,echo=FALSE,child="assets/header-slide.Rmd"}
+```
+
+<!-- ------------ Only edit title, subtitle & author above this ------------ -->
+
+```{r,include=FALSE}
+# load the packages you need
+library(dplyr)
+```
+
+---
+name: content
+class: spaced
+
+## Contents
+
+* [Section 1](#section1)
+* [Section 2](#section2)
+* [Section 3](#section3)
+
+## Section 1
+
+This is some text here.
+
+## Section 2
+
+Here is some more stuff. And below is some code.
+
+```
+if(sad==TRUE) {
+ sad().stop();
+ beAwesome();
+}
+```
+
+## Section 3
+
+More content here
+
+```{r}
+head(iris)
+```
+
+<!-- --------------------- Do not edit this and below --------------------- -->
+
+---
+
+# Acknowledgements
+
+* [Tutorial 1](link-to-tutorial)
+* [Tutorial 2](link-to-tutorial)
+
+---
+name: end_slide
+class: end-slide, middle
+count: false
+
+# Thank you. Questions?
+
+```{r,echo=FALSE,child="assets/footer-slide.Rmd"}
+```
+
+```{r,include=FALSE,eval=FALSE}
+# manually run this to render this document to HTML
+rmarkdown::render("slide_sample.Rmd")
+# manually run this to convert HTML to PDF
+#pagedown::chrome_print("slide_sample.html",output="slide_sample.pdf")
+```

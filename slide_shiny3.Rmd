@@ -1,0 +1,157 @@
+---
+title: "R Shiny - Deployments"
+subtitle: "Workshop on Plotting in R"
+author: "`r paste0('<b>Lokesh Mano</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
+institute: NBIS, SciLifeLab
+keywords: bioinformatics, course, workshop, scilifelab, nbis
+output:
+  xaringan::moon_reader:
+    encoding: 'UTF-8'
+    self_contained: false
+    chakra: 'assets/remark-latest.min.js'
+    css: 'assets/slide.css'
+    lib_dir: libs
+    nature:
+      ratio: '4:3'
+      highlightLanguage: r
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%/%total%"
+    include: NULL
+---
+exclude: true
+count: false
+
+```{r,echo=FALSE,child="assets/header-slide.Rmd"}
+```
+
+<!-- ------------ Only edit title, subtitle & author above this ------------ -->
+
+```{r,include=FALSE}
+# load the packages you need
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+#library(stringr)
+library(ggplot2)
+#library(plotly)
+#library(pheatmap)
+#library(DESeq2)
+#library(edgeR)
+library(kableExtra)
+```
+
+---
+name: deploy
+
+## Deployment
+
+* R scripts
+  * GitHub
+  * R Package
+  * Docker container
+
+* Webpage
+  * Shinyapps.io
+  * Shiny Server (Free)
+  * Shiny Server Pro
+
+--
+
+* Automatically deploying to shinyapps.io
+
+```
+library(rsconnect)
+rsconnect::setAccountInfo(name="username", token="HDFGT46YF7TDT6474G47", secret="hdgTDF5FStgdkpJ")
+deployApp(appName="name")
+```
+
+--
+
+* Shiny apps user guide https://docs.rstudio.com/shinyapps.io/index.html  
+* Shiny server guide https://docs.rstudio.com/shiny-server/
+
+---
+name: interactive-docs
+
+## Interactive documents
+
+* Shiny can run in RMarkdown documents. Set YAML `runtime: shiny`.  
+
+```
+---
+title: Interactive document
+output: html_document
+runtime: shiny
+---
+```
+
+* Shiny widgets can be included directly  
+
+```{r,echo=FALSE,comment=""}
+cat(paste0("```{r}\n","selectInput('n_breaks',label='Number of bins:',choices=c(10,20,35,50),selected=20)\n","```\n"))
+```
+
+* Whole shiny apps can be included directly  
+
+```{r,echo=FALSE,comment=""}
+cat(paste0("```{r}\n","shinyApp(\n","  ui=fluidPage(),\n","  server=function(input,output) {}\n",")\n","```\n"))
+```
+
+* Hosted shiny apps can be embedded using `<iframe>`  
+
+```
+<iframe src="https://user.shinyapps.io/app"></iframe>
+```
+
+.small[_Demo: shiny-rmarkdown.R_]
+
+---
+name: extensions
+
+## Extensions
+
+* [Naxstats](https://github.com/nanxstats/awesome-shiny-extensions): Repo collection all shiny extensions
+* [shinythemes](https://github.com/rstudio/shinythemes): Bootswatch themes for shiny
+* shinyurl: using URLs to recreate state of an app
+* shinypod: Reusable modules
+* [shinyjs](https://deanattali.com/shinyjs/): custom javascript functionality
+* [shinyWidgets](https://github.com/dreamRs/shinyWidgets): Bootstrap 3 custom widgets
+* [shinyBS](https://github.com/ebailey78/shinyBS): Bootstrap 3 widgets
+
+---
+name: help
+class: spaced
+
+## Help
+
+* [**RStudio Shiny home**](https://shiny.rstudio.com/) 
+* [**RStudio Shiny tutorial**](http://shiny.rstudio.com/tutorial/)
+* [**RStudio Shiny articles**](https://shiny.rstudio.com/articles/)
+
+### Other topics
+
+* [Applications of action buttons](http://shiny.rstudio.com/articles/action-buttons.html)  
+* [Progress indicators](http://shiny.rstudio.com/articles/progress.html)  
+* [Shiny modules](https://shiny.rstudio.com/articles/modules.html)
+...
+---
+
+name: end_slide
+class: end-slide, middle
+count: false
+
+# Thank you. Questions?
+
+Slide courtesy: Roy Francis (NBIS, RaukR2021)
+
+```{r,echo=FALSE,child="assets/footer-slide.Rmd"}
+```
+
+```{r,include=FALSE,eval=FALSE}
+# manually run this to render this document to HTML
+rmarkdown::render("slide_sample.Rmd")
+# manually run this to convert HTML to PDF
+#pagedown::chrome_print("slide_sample.html",output="slide_sample.pdf")
+```

@@ -1,0 +1,251 @@
+---
+title: "ggplot Part I"
+subtitle: "Workshop on Plotting in R"
+author: "`r paste0('<b>Lokesh Mano</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
+institute: NBIS, SciLifeLab
+keywords: bioinformatics, course, workshop, scilifelab, nbis
+output:
+  xaringan::moon_reader:
+    encoding: 'UTF-8'
+    self_contained: false
+    chakra: 'assets/remark-latest.min.js'
+    css: 'assets/slide.css'
+    lib_dir: libs
+    nature:
+      ratio: '4:3'
+      highlightLanguage: r
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%/%total%"
+    include: NULL
+---
+exclude: true
+count: false
+
+```{r,echo=FALSE,child="assets/header-slide.Rmd"}
+```
+
+<!-- ------------ Only edit title, subtitle & author above this ------------ -->
+
+```{r,include=FALSE}
+# load the packages you need
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+#library(stringr)
+library(ggplot2)
+#library(plotly)
+#library(pheatmap)
+#library(DESeq2)
+#library(edgeR)
+library(kableExtra)
+```
+
+---
+name: content
+class: spaced
+
+## Contents
+
+* [Grammer of Graphics](#gog)
+* [Building a graph](#build)
+* [Build-Demo](#build-demo)
+* [Geoms](#geoms)
+* [Aesthetics](#aesth)
+* [Multiple Geoms](#mul-geom)
+
+---
+name: gog
+
+## Grammar of Graphics
+
+.pull-left-30[
+<img src="assets/images/gog.png" alt="drawing" width="300"/>
+]
+
+--
+
+.pull-right-70[
+* **Data:** Input data
+* **Geom:** A geometry representing data. Points, Lines etc
+* **Aesthetics:** Visual characteristics of the geometry. Size, Color, Shape etc
+* **Scale:** How visual characteristics are converted to display values
+* **Statistics:** Statistical transformations. Counts, Means etc
+* **Coordinates:** Numeric system to determine position of geometry. Cartesian, Polar etc
+* **Facets:** Split data into subsets
+]
+
+---
+name: build
+class: spaced
+
+## Building a graph
+
+<img src="assets/images/gg-syntax.png" alt="drawing", width ="600"/>
+
+---
+name: build-demo
+
+
+## Build-Demo
+
+.pull-left-50[
+```{r, eval=FALSE}
+ggplot(iris)
+```
+]
+
+.pull-right-50[
+```{r, echo=FALSE}
+ggplot(iris)
+```
+]
+---
+name: build-demo2
+
+
+## Build-Demo
+
+.pull-left-50[
+```{r, eval=FALSE}
+ggplot(iris,aes(x=Sepal.Length,
+                y=Sepal.Width))
+```
+]
+
+.pull-right-50[
+```{r, echo=FALSE}
+ggplot(iris,aes(x=Sepal.Length,
+                y=Sepal.Width))
+```
+]
+---
+name: build-demo3
+
+
+## Build-Demo
+
+.pull-left-50[
+```{r, eval=FALSE}
+ggplot(iris,aes(x=Sepal.Length,
+                y=Sepal.Width))+
+  geom_point()
+```
+]
+
+.pull-right-50[
+```{r, echo=FALSE}
+ggplot(iris,aes(x=Sepal.Length,
+                y=Sepal.Width))+
+  geom_point()
+```
+]
+---
+name: build-demo4
+
+## Build-Demo
+
+.pull-left-50[
+```{r, eval=FALSE}
+ggplot(iris,aes(x=Sepal.Length,
+                y=Sepal.Width,
+                colour=Species))+
+  geom_point()
+```
+]
+
+.pull-right-50[
+```{r, echo=FALSE}
+ggplot(iris,aes(x=Sepal.Length,
+                y=Sepal.Width,
+                colour=Species))+
+  geom_point()
+```
+]
+---
+name: geoms
+class: spaced
+
+## Geoms
+
+<img src="assets/images/geoms.png" alt="drawing", width ="600"/>
+
+--
+```{r, eval=FALSE}
+p <- ggplot(iris)
+# scatterplot
+p+geom_point(aes(x=Sepal.Length,y=Sepal.Width))
+# barplot
+p+geom_bar(aes(x=Sepal.Length))
+# boxplot
+p+geom_boxplot(aes(x=Species,y=Sepal.Width))
+# search
+help.search("^geom_",package="ggplot2")
+```
+
+---
+name: aesth
+
+## Aesthetics
+
+* Aesthetic mapping vs aesthetic parameter
+
+.pull-left-50[
+```{r, fig.width=5, fig.height=4}
+ggplot(iris)+
+  geom_point(aes(x=Sepal.Length,
+                 y=Sepal.Width,
+                 size=Petal.Length,
+                 alpha=Petal.Width,
+                 shape=Species,
+                 color=Species))
+```
+]
+
+--
+
+.pull-right-50[
+```{r, fig.width=4, fig.height=3.5}
+ggplot(iris)+
+  geom_point(aes(x=Sepal.Length,
+                 y=Sepal.Width),
+                 size=2,
+                 alpha=0.8,
+                 shape=15,
+                 color="steelblue")
+```
+]
+
+---
+name: mul-geom
+
+## Multiple geoms
+
+```{r, fig.height=4}
+ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width))+
+      geom_point()+
+      geom_line()+
+      geom_smooth()+
+      geom_rug()+
+      geom_step()+
+      geom_text(data=subset(iris,iris$Species=="setosa"),aes(label=Species))
+```
+
+---
+
+name: end_slide
+class: end-slide, middle
+count: false
+
+# Thank you. Questions?
+
+```{r,echo=FALSE,child="assets/footer-slide.Rmd"}
+```
+
+```{r,include=FALSE,eval=FALSE}
+# manually run this to render this document to HTML
+rmarkdown::render("slide_sample.Rmd")
+# manually run this to convert HTML to PDF
+#pagedown::chrome_print("slide_sample.html",output="slide_sample.pdf")
+```

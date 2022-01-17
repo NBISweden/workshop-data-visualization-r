@@ -1,0 +1,58 @@
+---
+title: "&nbsp;"
+output:
+  bookdown::html_document2:
+    toc: false
+    number_sections: false
+---
+
+```{r,child="assets/header-lab.Rmd"}
+```
+
+```{r,eval=TRUE,include=FALSE}
+library(yaml)
+upid <- yaml::read_yaml("_site.yml")$uppmax_project
+```
+
+# Precourse {.tabset .tabset-fade}
+
+These are absolutely necessary for the course, if you do not already have a working R environment with R studio:
+
+<div class="instruction">
+<i class="fas fa-exclamation-circle"></i> Download and install the latest version of R from [r-project.org](https://cloud.r-project.org/). Install Rtools from [https://cran.r-project.org/bin/](https://cran.r-project.org/bin/). Rtools may be needed for installing new packages from source. 
+
+<i class="fas fa-exclamation-circle"></i> Install [RStudio](https://www.rstudio.com/products/rstudio/download/). RStudio provides you with tools like code editor with highlighting, project management, version control, package building, debugger, profiler and more.
+
+<i class="fas fa-exclamation-circle"></i> install R packages necessary for this course:
+
+```{r,eval=FALSE,block.title=TRUE}
+
+install.packages(c("ggplot2","tidyverse","ggmap","pheatmap","devtools","cowplot",
+                   "reshape2", "dplyr", "wesanderson", "scales", "ggthemes", "ggrepel", 
+                   "ggpubr", "gridExtra", "gganimate", "shiny", "rsconnect",
+                   "shinythemes", "colourpicker"), dependencies = TRUE)
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install(c("ggtree", "treeio"))
+
+```
+
+<div class="boxy boxy-lightbulb">
+<i class="fas fa-exclamation-circle"></i> To make sure that the installations went well, we will try to make a quick plot using the packages you just installed. In this plot, we try to see if there is correlation plot between `BMI` and average `no.of steps` taken by some volunteers per day. The data and the code for plotting is available [here](./data/Installation_check/packages_check.zip). Just `knit` the `Rmarkdown` file and you should see correlation the plot, if all the packages are installed properly. 
+
+</div>
+
+</div>
+
+The following are the steps that are recommended for the course participants.
+
+* Although you would have a small session on how to handle data in R, it is advisable for you to freshen up your memory on data-types such as `data.frame`, `matrix` and `read/write files` and so on. 
+
+* Some warm-up exercises in R if you are interested can be found  [here](https://immuntech.github.io/Bioinformatics_Workshop_ImmTech/Data/2019-10-15/R_exercise_Lokesh.html)
+
+* The data that is necessary for this course is available [here](lab_download.html) and it is important to check that the `file-tree` looks OK.
+
+
+***

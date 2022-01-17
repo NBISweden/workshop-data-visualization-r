@@ -1,0 +1,386 @@
+---
+title: "R Shiny - Part II"
+subtitle: "Workshop on Plotting in R"
+author: "`r paste0('<b>Lokesh Mano</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
+institute: NBIS, SciLifeLab
+keywords: bioinformatics, course, workshop, scilifelab, nbis
+output:
+  xaringan::moon_reader:
+    encoding: 'UTF-8'
+    self_contained: false
+    chakra: 'assets/remark-latest.min.js'
+    css: 'assets/slide.css'
+    lib_dir: libs
+    nature:
+      ratio: '4:3'
+      highlightLanguage: r
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%/%total%"
+    include: NULL
+---
+exclude: true
+count: false
+
+```{r,echo=FALSE,child="assets/header-slide.Rmd"}
+```
+
+<!-- ------------ Only edit title, subtitle & author above this ------------ -->
+
+```{r,include=FALSE}
+# load the packages you need
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+#library(stringr)
+library(ggplot2)
+#library(plotly)
+#library(pheatmap)
+#library(DESeq2)
+#library(edgeR)
+library(kableExtra)
+```
+
+---
+name: content
+class: spaced
+
+## Contents
+
+* [Reactivity](#react)
+* [Isolate reactivity](#isolate)
+* [observeEvent()](#observe)
+* [Updating Widgets](#updating)
+* [Error Validation](#error)
+* [Download Button](#download)
+* [Modularizing reactivity](#module)
+
+---
+name: react
+
+## Reactivity
+
+.size-95[
+<img src="assets/images/react-code1.png" alt="drawing" width="800"/>
+]
+
+---
+name: react1
+
+## Reactivity
+
+.size-95[
+<img src="assets/images/react-code2.png" alt="drawing" width="800"/>
+]
+
+---
+name: react2
+
+## Reactivity
+
+.size-95[
+<img src="assets/images/react-code3.png" alt="drawing" width="800"/>
+]
+
+---
+name: react3
+
+## Reactivity
+
+.size-95[
+<img src="assets/images/react-code4.png" alt="drawing" width="800"/>
+]
+
+---
+name: react4
+
+## Reactivity
+
+.size-95[
+<img src="assets/images/react5.png" alt="drawing" width="800"/>
+]
+
+---
+name: react5
+
+## Reactivity
+
+.size-95[
+<img src="assets/images/react6.png" alt="drawing" width="800"/>
+]
+
+---
+name: isolate
+
+## Isolate reactivity
+
+* Reactivity can be controlled.
+
+--
+
+* You will notice that as soon as you try to change the title, the histogram will update with new values
+
+.size-95[
+<img src="assets/images/isolate1.png" alt="drawing" width="800"/>
+]
+---
+
+name: isolate2
+
+## Isolate reactivity
+
+.size-95[
+<img src="assets/images/isolate2.png" alt="drawing" width="800"/>
+]
+---
+name: isolate3
+
+## Isolate reactivity
+
+.size-95[
+<img src="assets/images/isolate3.png" alt="drawing" width="800"/>
+]
+
+---
+name:isolate4
+
+## Isolate reactivity
+
+.size-95[
+<img src="assets/images/isolate4.png" alt="drawing" width="800"/>
+]
+
+---
+name:observe
+
+## observeEvent()
+
+.size-95[
+<img src="assets/images/observe.png" alt="drawing" width="500"/>
+]
+
+---
+name: updating
+
+## Updating widgets
+
+* Widgets can be updated once initialised.
+* Add third argument **session** to server function
+
+```
+server=function(input,output,session) {}
+```
+
+--
+
+* Example of a typical UI
+
+```
+ui=fluidPage(
+  selectInput("select-input",label="selectInput",choices=c("A","B","C")),
+  numericInput("numeric-input",label="numericInput",value=5,min=1,max=10),
+  sliderInput("slider-input",label="sliderInput",value=5,min=1,max=10),
+)
+```
+
+--
+
+* Update functions can be used to update input widgets
+* Reactive observer `observe({})` monitors for a conditional change
+
+```
+server=function(input,output,session) {
+  observe({
+    if(something) {
+      updateSelectInput(session,"select-input",label="selectInput",choices=c("D","E","F"))
+      updateNumericInput(session,"numeric-input",label="numericInput",value=10,min=1,max=10)
+      updateSliderInput(session,"slider-input",label="sliderInput",value=8,min=1,max=10)
+    }
+  })
+}
+```
+
+---
+name: error
+
+## Error validation
+
+* Shiny returns an error with missing or incorrect values
+
+.pull-left-70[.limity100[
+```{r,eval=FALSE}
+shinyApp(
+ui=fluidPage(
+  selectInput("data_input",label="Select data",
+              choices=c("","mtcars","faithful","iris")),
+  tableOutput("table_output")
+),
+server=function(input, output) {
+  getdata <- reactive({ get(input$data_input,'package:datasets') })
+  output$table_output <- renderTable({head(getdata())})
+})
+```
+]]
+
+.pull-right-30[
+![](assets/images/val1.png)
+]
+
+--
+
+* Errors can be handled in a controlled manner
+
+--
+
+* `validate()` can be used to check input
+* `validate()` using `need()`
+
+.pull-left-70[.limity100[
+```
+shinyApp(
+ui=fluidPage(
+  selectInput("data_input",label="Select data",
+              choices=c("","mtcars","faithful","iris")),
+  tableOutput("table_output")
+),
+server=function(input, output) {
+  getdata <- reactive({ 
+  validate(need(try(input$data_input),"Please select a data set"))
+    get(input$data_input,'package:datasets') 
+    })
+  output$table_output <- renderTable({head(getdata())})
+})
+```
+]]
+
+.pull-right-30[
+![](assets/images/val2.png)
+]
+
+--
+
+* `validate()` using custom function
+
+.pull-left-70[.limity100[
+```
+valfn <- function(x) if(is.null(x) | is.na(x) | x=="") return("Input data is incorrect.")
+shinyApp(
+ui=fluidPage(
+  selectInput("data_input",label="Select data",
+              choices=c("","mtcars","faithful","iris")),
+  tableOutput("table_output")
+),
+server=function(input,output) {
+  getdata <- reactive({ 
+  validate(valfn(try(input$data_input)))
+    get(input$data_input,'package:datasets')
+    })
+  output$table_output <- renderTable({head(getdata())})
+})
+```
+]]
+
+.pull-right-30[
+![](assets/images/val3.png)
+]
+
+--
+
+* `shiny::req()` checks input variable and silently stops execution
+
+---
+name: download
+
+## Download • Data
+
+* Add button and `downloadHandler()` function
+
+```
+shinyApp(
+ui=fluidPage(
+  selectInput("data_input",label="Select data",
+              choices=c("mtcars","faithful","iris")),
+  textOutput("text_output"),
+  downloadButton("button_download","Download")
+),
+server=function(input, output) {
+  getdata <- reactive({ get(input$data_input, 'package:datasets') })
+  output$text_output <- renderText(paste0("Selected dataset: ",input$data_input))
+  
+  output$button_download <- downloadHandler(
+  filename = function() {
+     paste0(input$data_input,".csv")
+   },
+  content = function(file) {
+     write.csv(getdata(),file,row.names=FALSE,quote=F)
+   })
+})
+```
+
+* Run in system browser if Rstudio browser doesn't work
+* See usage of download buttons
+
+---
+name: download-plot
+
+## Download • Plots
+
+```
+shinyApp(
+ui=fluidPage(
+  selectInput("data_input",label="Select data",
+              choices=c("mtcars","faithful","iris")),
+  textOutput("text_output"),
+  plotOutput("plot_output",width="400px"),
+  downloadButton("button_download", "Download")
+),
+server=function(input, output) {
+  getdata <- reactive({ get(input$data_input, 'package:datasets') })
+  output$text_output <- renderText(paste0("Selected dataset: ",input$data_input))
+  output$plot_output <- renderPlot({hist(getdata()[, 1])})
+  
+output$button_download <- downloadHandler(
+  filename = function() {
+    paste0(input$data_input,".png")
+  },
+  content = function(file) {
+    png(file)
+    hist(getdata()[, 1])
+    dev.off()
+  })
+})
+```
+
+* Run in system browser if Rstudio browser doesn't work
+* See usage of download buttons
+
+---
+
+name: module
+
+## Modularizing Reactivity
+
+.size-95[
+<img src="assets/images/shiny-mod.png" alt="drawing" width="800"/>
+]
+
+---
+
+name: end_slide
+class: end-slide, middle
+count: false
+
+# Thank you. Questions?
+
+Slide courtesy: Roy Francis (NBIS, RaukR2021)
+
+```{r,echo=FALSE,child="assets/footer-slide.Rmd"}
+```
+
+```{r,include=FALSE,eval=FALSE}
+# manually run this to render this document to HTML
+rmarkdown::render("slide_sample.Rmd")
+# manually run this to convert HTML to PDF
+#pagedown::chrome_print("slide_sample.html",output="slide_sample.pdf")
+```

@@ -1,0 +1,163 @@
+---
+title: "Solutions"
+subtitle: "Workshop on ggplot"
+author: "`r paste0('<b>Lokesh Mano</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
+---
+
+```{r, include=FALSE}
+hooks = knitr::knit_hooks$get()
+hook_foldable = function(type) {
+  force(type)
+  function(x, options) {
+    res = hooks[[type]](x, options)
+    
+    if (isFALSE(options[[paste0("fold.", type)]])) return(res)
+    
+    paste0(
+      "<details><summary>", type, "</summary>\n\n",
+      res,
+      "\n\n</details>"
+    )
+  }
+}
+knitr::knit_hooks$set(
+  output = hook_foldable("output"),
+  plot = hook_foldable("plot")
+)
+```
+
+```{r,child="assets/header-lab.Rmd"}
+```
+
+The solutions given below are just one way of obtaining the desired plots! There are probably several different ways you could code to get the same plots.  
+
+# R and basics-1
+
+For the exercises in the first two lab sessions: `R introduction` and the `ggplot basics 1`, all you need to do is to replace the filename `raw_counts.txt` with each of the different files to look at the differences between different normalization methods.
+
+# ggplot basics 2
+
+<i class="fas fa-clipboard-list"></i> Task &nbsp; Plot 1:
+
+```{r, eval=FALSE}
+
+gc_raw <- read.table(file = "data/counts_raw.txt", sep = "\t", header = T)
+gc_filt <- read.table(file = "data/counts_filtered.txt", sep = "\t", header = T)
+gc_vst <- read.table(file = "data/counts_vst.txt", sep = "\t", header = T)
+gc_deseq <- read.table(file = "data/counts_deseq2.txt", sep = "\t", header = T)
+md <- read.table("data/metadata.csv", header = T, sep = ";")
+
+gene_counts_all <- 
+  gc_raw %>% gather(Sample_ID, Raw, -Gene) %>%
+  full_join(gc_filt %>% gather(Sample_ID, Filtered, -Gene), by = c("Gene", "Sample_ID")) %>%
+  full_join(gc_vst %>% gather(Sample_ID, VST, -Gene), by = c("Gene", "Sample_ID")) %>%
+  full_join(gc_deseq %>% gather(Sample_ID, DESeq2, -Gene), by = c("Gene", "Sample_ID")) %>%
+  gather(Method, count, Raw:DESeq2) %>%
+  filter(!is.na(count)) %>%
+  full_join(md, by = "Sample_ID")
+
+gene_counts_all$Time <- factor(gene_counts_all$Time, levels = c("t0","t2","t6","t24"))
+gene_counts_all$Replicate <- factor(gene_counts_all$Replicate, levels = c("A","B","C"))
+gene_counts_all$Method <- factor(gene_counts_all$Method, levels = c("Raw","Filtered","DESeq2","VST"))
+
+gene_counts_all %>% 
+  group_by(Time, Replicate, Method) %>% 
+  summarise(mean=mean(log10(count +1)),se=se(log10(count +1))) %>%
+  ggplot(aes(x= Time, y= mean, fill = Replicate)) + 
+  geom_bar(position = position_dodge2(), stat = "identity") +
+  geom_errorbar(aes(ymin=mean-se, ymax=mean+se), position = position_dodge2(.9, padding = .6)) +
+  facet_wrap(~Method, scales = "free")
+```
+
+<i class="fas fa-clipboard-list"></i> Task &nbsp; Plot 2:
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE, fold.plot=FALSE, fig.width = 10, fig.height=8}
+gene_counts_all %>% 
+  group_by(Time, Replicate, Method) %>% 
+  ggplot() +
+  geom_boxplot(mapping = aes(x = Sample_Name, y = log10(count + 1), fill = Time)) +
+  facet_wrap(~Method*Replicate, ncol = 3, scales = "free")
+```
+
+# ggplot basics 3
+
+```{r, eval=FALSE}
+gc_long %>% 
+  group_by(Time, Replicate) %>% 
+  summarise(mean=mean(log10(count +1)),se=se(log10(count +1))) %>%
+  ggplot(aes(x=Time, y=mean, color = Replicate)) +
+  facet_wrap(~Replicate) +
+  geom_line(aes(group=1), stat= "identity", size = 2) +
+  scale_x_discrete(limits= c("t0", "t2", "t24")) +
+  scale_y_continuous(limits = c(0.4,0.8), breaks = seq(0.4,0.8,0.05)) +
+  guides(color="none") +
+  ylab(label = "mean(log10(count + 1))") +
+  theme_light() +
+  theme(axis.text = element_text(face="bold", size=12),
+        axis.title = element_text(face="bold", color = "#C84DF9", size=14),
+        axis.ticks = element_blank())
+```
+
+# Combining plots
+
+```{r, eval=FALSE}
+p4 <- ggplot(data=iris,mapping=aes(x=Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point(size = 3, alpha = 0.6) +
+  theme_classic(base_size = 12) +
+  border() 
+
+d1 <- ggplot(data=iris,mapping=aes(Sepal.Length, fill = Species)) +
+  geom_density(alpha = 0.6) +
+  theme_classic() +
+  clean_theme() +
+  theme(legend.position = "none")
+
+d2 <- ggplot(data=iris,mapping=aes(Sepal.Width, fill = Species)) +
+  geom_density(alpha = 0.6) +
+  theme_classic() +
+  clean_theme() +
+  theme(legend.position = "none") +
+  rotate()
+
+ggarrange(d1, NULL, p4, d2, 
+          ncol = 2, nrow = 2,  align = "hv", 
+          widths = c(3, 1), heights = c(1, 3),
+          common.legend = TRUE)
+```
+
+# PCA
+
+```{r, eval=FALSE}
+Eigenvalues <- gc_mds$eig
+Variance <- Eigenvalues / sum(Eigenvalues) 
+Variance1 <- 100 * signif(Variance[1], 3)
+Variance2 <- 100 * signif(Variance[2], 3)
+
+gc_mds_long <- gc_mds$points %>%
+  as.data.frame() %>%
+  rownames_to_column("Sample_ID") %>%
+  full_join(md, by = "Sample_ID")
+
+gc_mds_long$Sample_Name <- factor(gc_mds_long$Sample_Name, levels = c("t0_A","t0_B","t0_C","t2_A","t2_B","t2_C","t6_A","t6_B","t6_C","t24_A","t24_B","t24_C"))
+gc_mds_long$Time <- factor(gc_mds_long$Time, levels = c("t0","t2","t6","t24"))
+gc_mds_long$Replicate <- factor(gc_mds_long$Replicate, levels = c("A","B","C"))
+
+ggplot(gc_mds_long, aes(x=V1, y=V2, color = Time)) +
+  geom_point(size = 3, aes(shape = Replicate)) +
+  xlab(paste("PCO1: ", Variance1, "%")) +
+  ylab(paste("PCO2: ", Variance2, "%")) +
+  geom_vline(xintercept = 0, linetype=2) +
+  geom_hline(yintercept = 0, linetype=2) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank()) 
+```
+
+# Session info
+
+```{r, fold.output=FALSE, fold.plot=FALSE}
+sessionInfo()
+```
+
+***
+
