@@ -1,6 +1,6 @@
 ---
 title: "Advanced Rmarkdown"
-subtitle: "Workshop on Plotting in R"
+subtitle: "Workshop on Data Visualization in R"
 author: "`r paste0('<b>NBIS</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
 ---
 

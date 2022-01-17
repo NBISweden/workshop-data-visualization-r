@@ -1,6 +1,6 @@
 ---
 title: "RShiny Lab: Part III"
-subtitle: "Workshop on Plotting in R"
+subtitle: "Workshop on Data Visualization in R"
 author: "`r paste0('<b>Lokesh Mano</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
 ---
 

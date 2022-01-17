@@ -72,6 +72,6 @@ This workshop is run by the **National Bioinformatics Infrastructure Sweden (NBI
 If you would like to get in touch with us regarding this workshop, please contact us at **edu.plotting.r@nbis.se**.
 
 
-If you would like to get in touch with us regarding the course at GitHub, kindly write to us at the [issues](https://github.com/NBISweden/workshop-plotting-in-r/issues) page.
+If you would like to get in touch with us regarding the course at GitHub, kindly write to us at the [issues](https://github.com/NBISweden/workshop-data-visualization-r/issues) page.
 
 ***

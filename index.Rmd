@@ -19,7 +19,7 @@ output:
 
 <div class="col-md-12 flex-box">
 <p class="landing-title">
-<span style="display:block;">Workshop on Plotting in R</span>
+<span style="display:block;">Workshop on Data Visualization in R</span>
 <span style="display:block;"></span>
 </p>
 </div>

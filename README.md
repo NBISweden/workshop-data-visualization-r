@@ -1,13 +1,13 @@
-# workshop-plotting-in-R [![gh-actions-build-status](https://github.com/royfrancis/workshop-template-rmd-ga/workflows/build/badge.svg)](https://github.com/NBISweden/workshop-ggplot/actions?workflow=build)
+# workshop-data-visualization-r [![gh-actions-build-status](https://github.com/royfrancis/workshop-template-rmd-ga/workflows/build/badge.svg)](https://github.com/NBISweden/workshop-data-visualization-r/actions?workflow=build)
 
-This repo contains the course material for NBIS workshop **Workshop on ggplot**. The rendered view of this repo is available [here](https://nbisweden.github.io/workshop-plotting-in-r/).
+This repo contains the course material for NBIS workshop **Workshop on Data Visualization in R**. The rendered view of this repo is available [here](https://nbisweden.github.io/workshop-data-visualization-r/).
 
 ## Contributing
 
 To add or update contents of this repo (for collaborators), first clone the repo.
 
 ```
-git clone https://github.com/nbisweden/workshop-plotting-in-r.git
+git clone https://github.com/nbisweden/workshop-data-visualization-r.git
 ```
 
 Make changes/updates as needed. Add the changed files. Commit it. Then push the repo back.
@@ -26,7 +26,7 @@ If you are not added as a collaborator, first fork this repo to your account, th
 
 ## Repo organisation
 
-The source material is located on the *master* branch (default). The rendered material is located on the *gh-pages* branch. For most part, one only needs to update content in master. Changes pushed to the *master* branch is automatically rendered to the *gh-pages* branch.
+The source material is located on the *main* branch (default). The rendered material is located on the *gh-pages* branch. For most part, one only needs to update content in master. Changes pushed to the *main* branch is automatically rendered to the *gh-pages* branch.
 
 :exclamation: The first build can take around 30-40 mins depending on the number of R packages (listed in **_site.yml**). Subsequent builds take about 2-3 minutes since caching is enabled. Caches are removed after 7 days of last access. A push after that will require a full rebuild.
 
@@ -36,4 +36,4 @@ For more details about repo organisation, updating and modifying this repo, chec
 
 ---
 
-**2021** NBIS • SciLifeLab
+**2022** NBIS • SciLifeLab
