@@ -75,12 +75,10 @@ packages:
   - gridExtra
   - maps
   - mapdata
-  - raster
   - leaflet
   - ggimage
   - shiny
  packages_bioc_student:
-  - biomaRt
   - ggtree
   - treeio
  packages_github_student:
