@@ -125,6 +125,13 @@ jobs:
           	printf "<span style='display:block;'><a href='https://${str_user}.github.io/${repo}/${i}/'>$dt</a></span>" >> index.md
           done
           printf "</p></div>" >> index.md
+          printf "\n\nPrevious workshops:\n" >> index.md
+          printf "<div style='display:block;'><p style='line-height:2;'> \n" >> index.md
+          printf "<span style='display:block;'><a href='https://NBISweden.github.io/workshop-plotting-in-r/2109/'>2021 Sep: Different Course Title</a></span> \n" >> index.md
+          printf "</p></div> \n" >> index.md
+          printf "<div style='display:block;'><p style='line-height:2;'> \n" >> index.md
+          printf "<span style='display:block;'><a href='https://nbisweden.github.io/Workshop_geneco_2020_05/docs/index.html'>2020 GENECO Research School</a></span> \n" >> index.md
+          printf "</p></div> \n" >> index.md
 
 
           echo "Folder contents at $(pwd):"
