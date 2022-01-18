@@ -11,7 +11,7 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_r
 ;;15:00;15:15;Coffee Break;;;;;
 ;;15:15;15:40;Lecture on axes, labels, legends and themes;LM;;slide_gg3.html;;
 ;;15:40;17:00;Lab on axes, labels, legends and themes;LM;MR,LV;;lab_gg3.html;
-28/04/2022;Retina D227;09:00;09:30;Vector and bitmap; images;MR;;Vector_Bitmap_Images.pdf;;https://link.mazemap.com/NQj3ZZyI
+28/04/2022;Retina D227;09:00;09:30;Vector and bitmap images;MR;;Vector_Bitmap_Images.pdf;;https://link.mazemap.com/NQj3ZZyI
 ;;09:30;10:00;Lab on combining plots;LM;MR,LV;slide_gg4.html;lab_gg4.html;
 ;;10:00;10:15;Coffee Break;;;;;
 ;;10:15;10:40;Lecture on making PCA, heatmaps and others;MR;;;;
