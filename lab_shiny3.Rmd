@@ -158,7 +158,7 @@ server=function(input,output){}
 
 ## UI
 
-Then we fill in the panels with widgets and contents. The way I planned this app is to have two input values from user which are the countries to visualize and the duration, as I mentioned earlier. In addition I would also like to have the `Update` button to control the `reactivity` of the plots as we have learnt in the earlier session. So, the plots should update only when the `Update` button is pressed. I would also like to give the user the option to download these animated plots as `gif` image. 
+Then we fill in the panels with widgets and contents. The way I planned this app is to have two input values from user which are the countries to visualize and the duration, as I mentioned earlier. In addition I would also like to have the `Update` button to control the `reactivity` of the plots as we have learnt in the earlier session. So, the plots should update only when the `Update` button is pressed. I would also like to give the user the option to download these animated plots as `pdf` image. 
 
 Let us start with including the countries as a `checkboxGroupInput()` input widget. It is self-explanatory that the countries you choose in this group can be accessed in the `server()` to subset the data just for these countries. The function comes with its own header `label`, followed by `choices` and you can use `selected` to have the default choice. 
 

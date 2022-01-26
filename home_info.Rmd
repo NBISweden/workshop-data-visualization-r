@@ -22,7 +22,7 @@ if(loc=="lund") {
   dfr <- data.frame(venue_lat=55.713394,
                     venue_lon=13.206628,
                     venue_address="<b>Department of Biology</b>,Building D, Room Retina D227, Sölvegatan 35,Lund Sweden",
-                    description="For Lund city buses, regional buses and regional trains, [click here](https://www.skanetrafiken.se/). You can buy a ticket at the central station in Lund or at the regional bus (card only). You can also use the app [Skånetrafiken](https://www.skanetrafiken.se/biljetter/app2/)",
+                    description="For Lund city buses, regional buses and regional trains, [click here](https://www.skanetrafiken.se/). You can buy a ticket at the central station in Lund or at the regional bus (card only). You can also use the app [Skånetrafiken](https://www.skanetrafiken.se/om-oss/ladda-ner-appen/)",
                     stringsAsFactors=F)
 }
 
