@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Lokesh Mano • 31-Jan-2022" />
+
+
+<title>ggplot: Part II</title>
+
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link id="font-awesome-1-attachment" rel="attachment" href="site_libs/font-awesome-5.1.0/fonts/fontawesome-webfont.ttf"/>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="assets/lab.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+#TOC {
+  display: none !important;
+}
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div id="header">
+
+
+
+
+
+<h4 class="author"><b>Lokesh Mano</b> • 31-Jan-2022</h4>
+
+</div>
+
+
+<!-- rmd lab header -->
+<p><br></p>
+<div id="faceting" class="section level1">
+<h1><span class="header-section-number">1</span> Faceting</h1>
+<div id="with-wrap" class="section level2">
+<h2><span class="header-section-number">1.1</span> With wrap</h2>
+<p>We can create subplots using the faceting functionality.</p>
+<pre class="r"><code>ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Sepal.Width))+
+  geom_smooth(method=&quot;lm&quot;) + 
+  facet_wrap(~Species)</code></pre>
+<details>
+<p><summary>plot</summary></p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-4-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p>If we try the same with the gene counts data faceted by time.</p>
+<pre class="r"><code>ggplot(data = gc_long) +
+  geom_boxplot(mapping = aes(x = Sample_Name, y = log10(count + 1), color = Time)) +
+  facet_wrap(~Time)</code></pre>
+<details>
+<p><summary>plot</summary></p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-5-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+</div>
+<div id="with-grid" class="section level2">
+<h2><span class="header-section-number">1.2</span> With grid</h2>
+<p>Here in the above plot, you see some empty samples in each facet. In this case, you could use <code>facet_grid</code> together with <code>space</code> and <code>scales</code> options to make it look neat and intuitive. You can use <code>?facet_grid</code> and <code>?facet_wrap</code> to figure out the exact difference between the two.</p>
+<pre class="r"><code>ggplot(data = gc_long) +
+  geom_boxplot(mapping = aes(x = Sample_Name, y = log10(count + 1), color = Time)) +
+  facet_grid(~Time , scales = &quot;free&quot;, space = &quot;free&quot;)</code></pre>
+<details>
+<p><summary>plot</summary></p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-6-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p>You can also make grid with different variables one might have using <code>vars()</code> function together with <code>rows</code> and <code>cols</code> options!</p>
+<pre class="r"><code>ggplot(data = gc_long) +
+  geom_boxplot(mapping = aes(x = Sample_Name, y = log10(count + 1), color = Time)) +
+  facet_grid(rows = vars(Time), cols = vars(Replicate), scales = &quot;free&quot;, space = &quot;free&quot;)</code></pre>
+<details>
+<p><summary>plot</summary></p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-7-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+</div>
+</div>
+<div id="labeling-and-annotations" class="section level1">
+<h1><span class="header-section-number">2</span> Labeling and annotations</h1>
+<div id="labels" class="section level2">
+<h2><span class="header-section-number">2.1</span> Labels</h2>
+<p>Here, we will quickly mention, how one can add labels to the plots. Items on the plot can be labelled using the <code>geom_text</code> or <code>geom_label</code> geoms.</p>
+<pre class="r"><code>ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Species))+
+  geom_text(aes(label=Species,hjust=0),nudge_x=0.5,size=3)</code></pre>
+<details>
+<p><summary>plot</summary></p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-8-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<pre class="r"><code>ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Species))+
+  geom_label(aes(label=Species,hjust=0),nudge_x=0.5,size=3)</code></pre>
+<details>
+<p><summary>plot</summary></p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-9-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p>The R package ggrepel allows for non-overlapping labels.</p>
+<pre class="r"><code>library(ggrepel)
+ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Species))+
+  geom_text_repel(aes(label=Species),size=3)</code></pre>
+<details>
+<p><summary>plot</summary></p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-10-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+</div>
+<div id="annotations" class="section level2">
+<h2><span class="header-section-number">2.2</span> Annotations</h2>
+<p>Custom annotations of any geom can be added arbitrarily anywhere on the plot.</p>
+<pre class="r"><code>ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Species))+
+  annotate(&quot;text&quot;,x=2.5,y=2.1,label=&quot;There is a random line here&quot;)+
+  annotate(&quot;segment&quot;,x=2,xend=4,y=1.5,yend=2)</code></pre>
+<details>
+<p><summary>plot</summary></p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-11-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+</div>
+</div>
+<div id="bar-charts" class="section level1">
+<h1><span class="header-section-number">3</span> Bar charts</h1>
+<p>Let’s now make some bar charts with the data we have. We can start with the simple <code>iris</code> data first.</p>
+<pre class="r"><code>ggplot(data=iris,mapping=aes(x=Species,y=Petal.Width))+
+  geom_col()</code></pre>
+<details>
+<p><summary>plot</summary></p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-12-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p><i class="fas fa-exclamation-circle"></i> Note   There are two types of bar charts: <code>geom_bar()</code> and <code>geom_col()</code>. <code>geom_bar()</code> makes the height of the bar proportional to the number of cases in each group (or if the <code>weight</code> aesthetic is supplied, the sum of the weights). If you want the heights of the bars to represent values in the data, use <code>geom_col()</code> instead. <code>geom_bar()</code> uses <code>stat_count()</code> by default: it counts the number of cases at each x position. <code>geom_col()</code> uses <code>stat_identity()</code> and it leaves the data as is.</p>
+<p>Similarly, we can use the <code>gene counts</code> data to make a barplot as well. But first, let’s make the data into the right format so as to make the bar plots. This is where knowledge on <code>tidyverse</code> would be super useful.</p>
+<pre class="r"><code>se &lt;- function(x) sqrt(var(x)/length(x))
+gc_long %&gt;% 
+  group_by(Time) %&gt;% 
+  summarise(mean=mean(log10(count +1)),se=se(log10(count +1))) %&gt;%
+  head()</code></pre>
+<details>
+<p><summary>output</summary></p>
+<pre><code>## # A tibble: 4 × 3
+##   Time   mean      se
+##   &lt;fct&gt; &lt;dbl&gt;   &lt;dbl&gt;
+## 1 t0    0.560 0.00237
+## 2 t2    0.605 0.00248
+## 3 t6    0.606 0.00247
+## 4 t24   0.675 0.00262</code></pre>
+</details>
+<p><i class="fas fa-exclamation-circle"></i> Note   There are a couple of things to note here. In the above example, we use the pipe <code>%&gt;%</code> symbol that redirects the output of one command as the input to another. Then we group the data by the variable <code>Time</code>, followed by summarizing the <code>count</code> with <code>mean()</code> and <code>sd()</code> functions to get the mean and standard deviation of their respective counts. The <code>head()</code> function just prints the first few lines.</p>
+<p>Now that we have summarized the data to be bale to plot the bar graph that we want, we can just input the data to ggplot as well using the <code>%&gt;%</code> sign.</p>
+<pre class="r"><code>gc_long %&gt;% 
+  group_by(Time) %&gt;% 
+  summarise(mean=mean(log10(count +1)),se=se(log10(count +1))) %&gt;%
+  ggplot(aes(x=Time, y=mean)) + 
+  geom_bar(stat = &quot;identity&quot;)</code></pre>
+<details>
+<p><summary>plot</summary></p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-14-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p><i class="fas fa-exclamation-circle"></i> Note   Notice that the <code>%&gt;%</code> sign is used in the <code>tidyverse</code> based commands and <code>+</code> is used for all the <code>ggplot</code> based commands.</p>
+<div id="flip-coordinates" class="section level2">
+<h2><span class="header-section-number">3.1</span> Flip coordinates</h2>
+<p>One can also easily just flip the <code>x</code> and <code>y</code> axis.</p>
+<pre class="r"><code>gc_long %&gt;% 
+  group_by(Time) %&gt;% 
+  summarise(mean=mean(log10(count +1)),se=se(log10(count +1))) %&gt;%
+  ggplot(aes(x=Time, y=mean)) + 
+  geom_col() +
+  coord_flip()</code></pre>
+<details>
+<p><summary>plot</summary></p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-15-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+</div>
+</div>
+<div id="error-bars" class="section level1">
+<h1><span class="header-section-number">4</span> Error bars</h1>
+<p>Now that we have the bar plots, we can also add error bars to them using the <code>sd</code> values we calculated in the previous step.</p>
+<pre class="r"><code>gc_long %&gt;% 
+  group_by(Time) %&gt;% 
+  summarise(mean=mean(log10(count +1)),se=se(log10(count +1))) %&gt;%
+  ggplot(aes(x=Time, y=mean, fill = Time)) + 
+  geom_col() +
+  geom_errorbar(aes(ymax=mean+se,ymin=mean-se),width=0.2)</code></pre>
+<details>
+<p><summary>plot</summary></p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-16-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+</div>
+<div id="stacked-bars" class="section level1">
+<h1><span class="header-section-number">5</span> Stacked bars</h1>
+<p>Let’s now try to make stacked bars. For this let’s try to make the data more usable for stacked bars. For this let’s use the <code>group_by</code> function to make the groups based on both <code>Time</code> and <code>Replicate</code>.</p>
+<pre class="r"><code>se &lt;- function(x) sqrt(var(x)/length(x))
+gc_long %&gt;% 
+  group_by(Time, Replicate) %&gt;% 
+  summarise(mean=mean(log10(count +1)),se=se(log10(count +1))) %&gt;%
+  head()</code></pre>
+<details>
+<p><summary>output</summary></p>
+<pre><code>## # A tibble: 6 × 4
+## # Groups:   Time [2]
+##   Time  Replicate  mean      se
+##   &lt;fct&gt; &lt;fct&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 t0    A         0.587 0.00424
+## 2 t0    B         0.579 0.00419
+## 3 t0    C         0.515 0.00385
+## 4 t2    A         0.622 0.00438
+## 5 t2    B         0.617 0.00436
+## 6 t2    C         0.577 0.00416</code></pre>
+</details>
+<p>Let’s build the stacked bars!</p>
+<pre class="r"><code>gc_long %&gt;% 
+  group_by(Time, Replicate) %&gt;% 
+  summarise(mean=mean(log10(count +1)),se=se(log10(count +1))) %&gt;%
+  ggplot(aes(x=Time, y=mean, fill = Replicate)) + 
+  geom_col(position = &quot;stack&quot;)</code></pre>
+<details>
+<p><summary>plot</summary></p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-18-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p>One can also have <code>dodge</code> bars.</p>
+<pre class="r"><code>gc_long %&gt;% 
+  group_by(Time, Replicate) %&gt;% 
+  summarise(mean=mean(log10(count +1)),se=se(log10(count +1))) %&gt;%
+  ggplot(aes(x=Time, y=mean, fill = Replicate)) + 
+  geom_col(position = &quot;dodge&quot;)</code></pre>
+<details>
+<p><summary>plot</summary></p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-19-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p>We can try now to plot error bars on them. The errorbars would look weird and complicated if one forgets to add <code>position = dodge</code> to the <code>geom_errorbar()</code> as well.</p>
+<pre class="r"><code>gc_long %&gt;% 
+  group_by(Time, Replicate) %&gt;% 
+  summarise(mean=mean(log10(count +1)),se=se(log10(count +1))) %&gt;%
+  ggplot(aes(x= Time, y= mean, fill = Replicate)) + 
+  geom_col(position = &quot;dodge&quot;) +
+  geom_errorbar(aes(ymin=mean-se, ymax=mean+se), position = &quot;dodge&quot;)</code></pre>
+<details>
+<p><summary>plot</summary></p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-20-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p><i class="fas fa-exclamation-circle"></i> Note   It is important that you keep tract of what kind of aesthetics you give when you initialize <code>ggplot()</code> and what you add in the <code>geoms()</code> later.</p>
+<p>You can also make these error bars look nicer by playing around with some of the parameters available, like example below:</p>
+<pre class="r"><code>gc_long %&gt;% 
+  group_by(Time, Replicate) %&gt;% 
+  summarise(mean=mean(log10(count +1)),se=se(log10(count +1))) %&gt;%
+  ggplot(aes(x= Time, y= mean, fill = Replicate)) + 
+  geom_col(position = position_dodge2()) +
+  geom_errorbar(aes(ymin=mean-se, ymax=mean+se), position = position_dodge2(.9, padding = .6))</code></pre>
+<details>
+<p><summary>plot</summary></p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-21-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+</div>
+<div id="exercise" class="section level1">
+<h1><span class="header-section-number">6</span> Exercise</h1>
+<p><i class="fas fa-clipboard-list"></i> Task   Make the following plots.</p>
+<p><i class="fas fa-lightbulb"></i> Tip   It is more of a <code>tidyverse</code> exercise than <code>ggplot</code>. Because to get these plots, you need get the data in the right format.</p>
+<p><i class="fas fa-clipboard-list"></i> Task   Plot 1:</p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-22-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+<p><i class="fas fa-clipboard-list"></i> Task   Plot 2:</p>
+<p><img src="lab_gg2_files/figure-html/unnamed-chunk-23-1.svg" width="960" style="display: block; margin: auto auto auto 0;" /></p>
+</div>
+<div id="session-info" class="section level1">
+<h1><span class="header-section-number">7</span> Session info</h1>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 4.0.0 (2020-04-24)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Ubuntu 18.04.6 LTS
+## 
+## Matrix products: default
+## BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
+## LAPACK: /usr/lib/x86_64-linux-gnu/libopenblasp-r0.2.20.so
+## 
+## locale:
+##  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
+##  [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
+##  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
+## [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] ggrepel_0.9.1          wesanderson_0.3.6      forcats_0.5.1         
+##  [4] stringr_1.4.0          purrr_0.3.4            readr_2.1.1           
+##  [7] tidyr_1.1.4            tibble_3.1.6           tidyverse_1.3.1       
+## [10] reshape2_1.4.4         ggplot2_3.3.5          formattable_0.2.1     
+## [13] kableExtra_1.3.4       dplyr_1.0.7            lubridate_1.8.0       
+## [16] leaflet_2.0.4.1        yaml_2.2.1             fontawesome_0.2.2.9000
+## [19] captioner_2.2.3        bookdown_0.24          knitr_1.37            
+## 
+## loaded via a namespace (and not attached):
+##  [1] httr_1.4.2        sass_0.4.0        jsonlite_1.7.3    viridisLite_0.4.0
+##  [5] splines_4.0.0     modelr_0.1.8      bslib_0.3.1       assertthat_0.2.1 
+##  [9] highr_0.9         cellranger_1.1.0  pillar_1.6.4      backports_1.4.1  
+## [13] lattice_0.20-41   glue_1.6.0        digest_0.6.29     rvest_1.0.2      
+## [17] colorspace_2.0-2  htmltools_0.5.2   Matrix_1.2-18     plyr_1.8.6       
+## [21] pkgconfig_2.0.3   broom_0.7.11      haven_2.4.3       scales_1.1.1     
+## [25] webshot_0.5.2     svglite_2.0.0     tzdb_0.2.0        mgcv_1.8-31      
+## [29] generics_0.1.1    farver_2.1.0      ellipsis_0.3.2    withr_2.4.3      
+## [33] cli_3.1.0         magrittr_2.0.1    crayon_1.4.2      readxl_1.3.1     
+## [37] evaluate_0.14     fs_1.5.2          fansi_1.0.2       nlme_3.1-147     
+## [41] xml2_1.3.3        tools_4.0.0       hms_1.1.1         lifecycle_1.0.1  
+## [45] reprex_2.0.1      munsell_0.5.0     compiler_4.0.0    jquerylib_0.1.4  
+## [49] systemfonts_1.0.3 rlang_0.4.12      grid_4.0.0        rstudioapi_0.13  
+## [53] htmlwidgets_1.5.4 crosstalk_1.2.0   labeling_0.4.2    rmarkdown_2.11   
+## [57] gtable_0.3.0      DBI_1.1.2         R6_2.5.1          fastmap_1.1.0    
+## [61] utf8_1.2.2        stringi_1.7.6     Rcpp_1.0.8        vctrs_0.3.8      
+## [65] dbplyr_2.1.1      tidyselect_1.1.1  xfun_0.29</code></pre>
+<hr />
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
