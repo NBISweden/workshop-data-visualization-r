@@ -5,12 +5,12 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_r
 ;;10:15;11:30;R Introduction Lab;LM;MR,LV;slide_overview_r.html;lab_r.html;
 ;;11:30;12:00;Lecture on grammar, geoms, colors and aesthetics;LM;;slide_gg1.html;;
 ;;12:00;13:00;Lunch;;;;;
-;;13:00;13:50;Lab on grammar, geoms, colors and aesthetics;LV;MR,LM;;lab_gg1.html;
-;;13:50;14:10;Lecture on facets, barplots and errorbars;LM;;slide_gg2.html;;
+;;13:00;13:50;Lab on grammar, geoms, colors and aesthetics;LM;MR,LV;;lab_gg1.html;
+;;13:50;14:10;Lecture on facets, barplots and errorbars;LV;;slide_gg2.html;;
 ;;14:10;15:00;Lab on facets, barplots and errorbars;LV;MR,LM;;lab_gg2.html;
 ;;15:00;15:15;Coffee Break;;;;;
-;;15:15;15:40;Lecture on axes, labels, legends and themes;LM;;slide_gg3.html;;
-;;15:40;17:00;Lab on axes, labels, legends and themes;LM;MR,LV;;lab_gg3.html;
+;;15:15;15:40;Lecture on axes, labels, legends and themes;LV;;slide_gg3.html;;
+;;15:40;17:00;Lab on axes, labels, legends and themes;LV;MR,LM;;lab_gg3.html;
 28/04/2022;Retina D227;09:00;09:30;Vector and bitmap images;MR;;Vector_Bitmap_Images.pdf;;https://link.mazemap.com/NQj3ZZyI
 ;;09:30;10:00;Lab on combining plots;LM;MR,LV;slide_gg4.html;lab_gg4.html;
 ;;10:00;10:15;Coffee Break;;;;;
