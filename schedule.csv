@@ -4,7 +4,7 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_r
 ;;10:00;10:15;Coffee Break;;;;;
 ;;10:15;11:30;R Introduction Lab;LM;MR,LV;slide_overview_r.html;lab_r.html;
 ;;11:30;12:00;Lecture on grammar, geoms, colors and aesthetics;LM;;slide_gg1.html;;
-;;12:00;13:00;Lunch;;;;;
+;;12:00;13:00;Lunch;;;;;https://goo.gl/maps/94UhgmtaEw4396857
 ;;13:00;13:50;Lab on grammar, geoms, colors and aesthetics;LM;MR,LV;;lab_gg1.html;
 ;;13:50;14:10;Lecture on facets, barplots and errorbars;LV;;slide_gg2.html;;
 ;;14:10;15:00;Lab on facets, barplots and errorbars;LV;MR,LM;;lab_gg2.html;
@@ -16,13 +16,13 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_r
 ;;10:00;10:15;Coffee Break;;;;;
 ;;10:15;10:40;Lecture on making PCA, heatmaps and others;MR;;;;
 ;;10:40;12:00;Lab on making PCA, heatmaps and others;MR;LM,LV;;lab_pca_hmap.html;
-;;12:00;13:00;Lunch;;;;;
+;;12:00;13:00;Lunch;;;;;https://goo.gl/maps/94UhgmtaEw4396857
 ;;13:00;14:00;Lab on phylogenetic tree (optional);LM;MR,LV;;lab_phylo.html;
 ;;14:00;15:00;Lab on using maps on plots (optional);LM;MR,LV;;lab_ggmap.html;
 ;;15:00;15:15;Coffee Break;;;;;
 ;;15:15;17:00;Bring your own data;LM,MR,LV;Everyone;;;
-;;17:00;19:00;Break;;;;;
-;;19:00;21:00;Dinner (Restaurant - TBA);;;;;
+;;17:00;18:30;Break;;;;;
+;;18:30;22:00;Dinner (Restaurant - TBA);;;;;
 29/04/2022;Retina D227;09:00;09:30;Intro to R-Shiny apps;LM;;slide_shiny1.html;;https://link.mazemap.com/NQj3ZZyI
 ;;09:30;10:00;Intro lab on R-Shiny apps;LM;MR,LV;;lab_shiny1.html;
 ;;10:00;10:15;Coffee Break;;;;;
