@@ -73,6 +73,14 @@ if(loc!="online") {
 }
 ```
 
+### Lunch
+
+The lunches during the course will be provided at **Cafe Bryggan** located at **IKDC Building** which is 5 minutes walk from the course location. The location of the restaurant is [here](https://goo.gl/maps/94UhgmtaEw4396857).
+
+### Dinner
+
+The information regarding the restaurant for the dinner on the 2nd day will soon follow.
+
 ## Contact
 
 This workshop is run by the **National Bioinformatics Infrastructure Sweden (NBIS)**. NBIS is a platform that is part of **SciLifeLab**.
