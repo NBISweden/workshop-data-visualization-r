@@ -28,9 +28,9 @@ These are absolutely necessary for the course, if you do not already have a work
 ```{r,eval=FALSE,block.title=TRUE}
 
 install.packages(c("ggplot2","tidyverse","ggmap","pheatmap","devtools","cowplot",
-                   "reshape2", "dplyr", "wesanderson", "scales", "ggthemes", "ggrepel", 
+                   "reshape2", "dplyr", "wesanderson", "scales", "ggthemes", "ggrepel",
                    "ggpubr", "gridExtra", "gganimate", "shiny", "rsconnect",
-                   "shinythemes", "colourpicker"), dependencies = TRUE)
+                   "grid", "shinythemes", "colourpicker"), dependencies = TRUE)
 
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")

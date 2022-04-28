@@ -72,6 +72,7 @@ packages:
   - ggthemes
   - ggrepel
   - ggpubr
+  - grid
   - gridExtra
   - maps
   - mapdata

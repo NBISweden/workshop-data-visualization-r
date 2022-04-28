@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 x <- c("ggplot2","tidyverse","ggmap","pheatmap","devtools","cowplot",
-       "reshape2", "dplyr", "wesanderson", "scales", "ggthemes", "ggrepel", 
+       "reshape2", "dplyr", "wesanderson", "scales", "ggthemes", "ggrepel", "grid",
        "ggpubr", "gridExtra", "ggtree", "treeio", "shiny", "gganimate", "shinythemes",
        "rsconnect", "colourpicker")
 for (i in x){

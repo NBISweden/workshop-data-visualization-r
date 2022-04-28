@@ -223,6 +223,45 @@ ggexport(multi.page, filename = "multi.page.ggplot2.pdf")
 
 <i class="fas fa-exclamation-circle"></i> Note &nbsp; From this `multi.page` R object (which is of class list) , you can get the indivdual plots by `multi.page[[1]]`, `multi.page[[2]]` and so on.
 
+# Adding images to plots
+
+Let us you have a microscopic image in `jpeg` or `png` that you want to add to a normal `ggplot` plot that you have made from the data.
+
+Let's take for example the RBC cluster from a SEM that is in `data/Blood_Cells_Image.jpeg`:
+
+![](data/Blood_Cells_Image.jpeg)
+Let us take the following plot that you want to add the image to:
+
+```{r, warning=FALSE, message=FALSE}
+x <- 1:10
+y <- x*abs(rnorm(10))
+p1 <- ggplot(data.frame(x,y), mapping=aes(x=x,y=y)) + geom_point() + geom_smooth() + ggtitle("The Title") + theme(title=element_text(size=14, hjust=0.5), axis.title=element_text(size=10), axis.text = element_text(size=6))
+p1
+```
+
+For this first you need to convert the image into a grid object (`grob`). For this we need a couple of packages `grid` and `jpeg` to be able to convert the image into a grid object! We will use the functions `readJPEG` and `rasterGrob` from these packages.
+
+```{r, warning=FALSE, message=FALSE}
+library(grid)
+library(jpeg)
+cells_jpg=readJPEG("data/Blood_Cells_Image.jpeg")
+p2 <- rasterGrob(cells_jpg)
+```
+
+Now, we can use the `grid.arrange()` function to plot the grob objects and the ggplot objects.
+
+```{r, warning=FALSE, message=FALSE}
+library(gridExtra)
+grid.arrange(p1,p2,nrow=1)
+```
+
+We can also use the  `annotation_custom` to place the image in a particular position of the plot!
+
+```{r, warning=FALSE, message=FALSE}
+p3 <- p1 + annotation_custom(rasterGrob(cells_jpg, width = 0.2),
+                    ymin = 10)
+```
+
 # Exercise
 
 <i class="fas fa-clipboard-list"></i> Task &nbsp; For the exercise in this session, let us look into way of using the tools available for combining plots to make one plot that could be very comprehensive. Try to code the figure below:
