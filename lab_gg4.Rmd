@@ -230,9 +230,10 @@ Let us you have a microscopic image in `jpeg` or `png` that you want to add to a
 Let's take for example the RBC cluster from a SEM that is in `data/Blood_Cells_Image.jpeg`:
 
 ![](data/Blood_Cells_Image.jpeg)
+
 Let us take the following plot that you want to add the image to:
 
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE, fold.output=FALSE, fold.plot=FALSE}
 x <- 1:10
 y <- x*abs(rnorm(10))
 p1 <- ggplot(data.frame(x,y), mapping=aes(x=x,y=y)) + geom_point() + geom_smooth() + ggtitle("The Title") + theme(title=element_text(size=14, hjust=0.5), axis.title=element_text(size=10), axis.text = element_text(size=6))
@@ -260,6 +261,7 @@ We can also use the  `annotation_custom` to place the image in a particular posi
 ```{r, warning=FALSE, message=FALSE}
 p3 <- p1 + annotation_custom(rasterGrob(cells_jpg, width = 0.2),
                     ymin = 10)
+p3
 ```
 
 # Exercise
