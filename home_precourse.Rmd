@@ -1,5 +1,5 @@
 ---
-title: "&nbsp;"
+title: "Precourse"
 output:
   bookdown::html_document2:
     toc: false
@@ -52,7 +52,7 @@ The following are the steps that are recommended for the course participants.
 
 * Some warm-up exercises in R if you are interested can be found  [here](https://immuntech.github.io/Bioinformatics_Workshop_ImmTech/Data/2019-10-15/R_exercise_Lokesh.html)
 
-* The data that is necessary for this course is available [here](https://nbisweden.github.io/workshop-data-visualization-r/2204/data/data.zip) and it is important to check that the `file-tree` looks OK.
+* The data that is necessary for this course is available [here](https://nbisweden.github.io/workshop-data-visualization-r/2210/data/data.zip) and it is important to check that the `file-tree` looks OK.
 
 # HackMD
 

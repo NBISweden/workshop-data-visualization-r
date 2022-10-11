@@ -1,5 +1,5 @@
 ---
-title: "&nbsp;"
+title: "Workshop on Data Visualization"
 output:
   bookdown::html_document2:
     toc: false
@@ -13,13 +13,13 @@ output:
 
 <div class="col-md-12 flex-box">
 <p class="landing-subtitle">
-<span style="display:block;">NBIS • Workshop</span>
+<span style="display:block;">SBW2022 • NBIS</span>
 </p>
 </div>
 
 <div class="col-md-12 flex-box">
 <p class="landing-title">
-<span style="display:block;">Workshop on Data Visualization in R</span>
+<span style="display:block;">Workshop on Data Visualization</span>
 <span style="display:block;"></span>
 </p>
 </div>
@@ -28,9 +28,7 @@ output:
 <p class="medium landing-bullets">
 <span style="display:block;">Handle data in R for visualizations</span>
 <span style="display:block;">Apply ggplot grammar to get publication-grade plots</span>
-<span style="display:block;">Combine different data and/or different plots</span>
-<span style="display:block;">PCA, Heatmaps, Phylogenetic trees and Maps</span>
-<span style="display:block;">Write and deploy your own Rshiny app</span>
+<span style="display:block;">Basics on deploying your own Rshiny app</span>
 </p>
 </div>
 
@@ -42,7 +40,7 @@ output:
 
 <div class="landing-update">
 <p class="small" style="color:#bdbdbd;">
-`r paste("Last updated on",fontawesome::fa("calendar-alt",fill="#bdbdbd"),format(Sys.time(),format='%d-%b-%Y'),"at",fontawesome::fa("clock",fill="#bdbdbd"),format(Sys.time(),format='%X'),".")`
+`r paste("Last updated on",fontawesome::fa("calendar",fill="#bdbdbd"),format(Sys.time(),format='%d-%b-%Y'),"at",fontawesome::fa("clock",fill="#bdbdbd"),format(Sys.time(),format='%X'),".")`
 </p>
 </div>
 

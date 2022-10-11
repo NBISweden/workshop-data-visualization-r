@@ -5,7 +5,7 @@ output_dir: 2210
 uppmax_project: XXXXXXXX
 uppmax_res_1: XXXXXX
 # location options are linkoping, lund, umea or uppsala
-location: lund
+location: sbw2022
 assistants:
  - "LM: Lokesh Mano"
  - "MR: Markus Ringńer"
