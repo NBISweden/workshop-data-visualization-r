@@ -13,7 +13,7 @@ output:
 
 <div class="col-md-12 flex-box">
 <p class="landing-subtitle">
-<span style="display:block;">SciLifeLAB • NBIS</span>
+<span style="display:block;">SciLifeLab • NBIS</span>
 </p>
 </div>
 
