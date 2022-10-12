@@ -51,7 +51,7 @@ if(loc=="linkoping") {
 if(loc=="sbw2022") {
   dfr <- data.frame(venue_lat=63.819769,
                     venue_lon=20.306739,
-                    venue_address="<b>Umeå University</b>,Naturvetarhuset, Floor 3, Hörsal NAT.D.320",
+                    venue_address="<b>Hörsal NAT.D.320</b>, Floor 3, Naturvetarhuset, Umeå University",
                     description="For the most updated information regarding the venue/rooms, please check [here](https://www.sbw2022.com/home)",
                     stringsAsFactors=F)
 }

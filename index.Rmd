@@ -13,13 +13,13 @@ output:
 
 <div class="col-md-12 flex-box">
 <p class="landing-subtitle">
-<span style="display:block;">SBW2022 • NBIS</span>
+<span style="display:block;">SciLifeLAB • NBIS</span>
 </p>
 </div>
 
 <div class="col-md-12 flex-box">
 <p class="landing-title">
-<span style="display:block;">Workshop on Data Visualization</span>
+<span style="display:block;">SBW-2022</span>
 <span style="display:block;"></span>
 </p>
 </div>

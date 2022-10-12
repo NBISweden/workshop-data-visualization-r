@@ -27,15 +27,10 @@ These are absolutely necessary for the course, if you do not already have a work
 
 ```{r,eval=FALSE,block.title=TRUE}
 
-install.packages(c("ggplot2","tidyverse","ggmap","pheatmap","devtools","cowplot",
+install.packages(c("ggplot2","tidyverse","pheatmap","devtools","cowplot",
                    "reshape2", "dplyr", "wesanderson", "scales", "ggthemes", "ggrepel",
                    "ggpubr", "gridExtra", "gganimate", "shiny", "rsconnect",
                    "grid", "shinythemes", "colourpicker"), dependencies = TRUE)
-
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-
-BiocManager::install(c("ggtree", "treeio"))
 
 ```
 
@@ -44,6 +39,8 @@ BiocManager::install(c("ggtree", "treeio"))
 
 </div>
 
+<i class="fas fa-exclamation-circle"></i> The data that is necessary for this course is available [here](https://nbisweden.github.io/workshop-data-visualization-r/2210/data/data.zip) and it is important to check that the `file-tree` looks OK.
+
 </div>
 
 The following are the steps that are recommended for the course participants.
@@ -51,8 +48,6 @@ The following are the steps that are recommended for the course participants.
 * Although you would have a small session on how to handle data in R, it is advisable for you to freshen up your memory on data-types such as `data.frame`, `matrix` and `read/write files` and so on. 
 
 * Some warm-up exercises in R if you are interested can be found  [here](https://immuntech.github.io/Bioinformatics_Workshop_ImmTech/Data/2019-10-15/R_exercise_Lokesh.html)
-
-* The data that is necessary for this course is available [here](https://nbisweden.github.io/workshop-data-visualization-r/2210/data/data.zip) and it is important to check that the `file-tree` looks OK.
 
 # HackMD
 

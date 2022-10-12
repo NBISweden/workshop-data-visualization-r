@@ -19,9 +19,6 @@ In particular, you will learn:
 - how to format the data necessary for ggplot 
 - how to make bar-charts, box-plots and others using ggplot
 - how to make PCA plots in ggplot
-- how to use R packages for heatmaps
-- how to plot data on maps using R (optional)
-- how to plot and handle phylogenetic trees in R (optional)
 - how to make interactive plots in R using Rshiny
 - how to host a Rshiny app in one of the available ser
 
@@ -113,22 +110,6 @@ Here, we look into some of the important Rshiny functions that one can use in th
 In this part, we learn how to write an app from scratch! So, we take the visualization of the covid data as an example from few countries that we would like to plot!
 
 [<i class="fas fa-link"></i> <span class="large">Rshiny Covid App</span>](lab_shiny3.html)
-
-# Optional exercises
-
-Below are specific exercises for people who are interested in specific topics.
-
-## Phylogenetic trees
-
-Below are some exercises in working with phylogenetic trees in R using mainly a package called `ggtree`.
-
-[<i class="fas fa-link"></i> <span class="large">Phylogenetic trees</span>](lab_phylo.html)
-
-## Map-data using ggmap
-
-Below is if you want publication-grade phylogenetic trees.
-
-[<i class="fas fa-link"></i> <span class="large">Map-data using ggmap</span>](lab_ggmap.html)
 
 # Solutions to exercises:
 
