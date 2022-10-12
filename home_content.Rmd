@@ -139,19 +139,6 @@ This section basically contains how to go about starting and making a simple Rsh
 
 [<i class="fas fa-link"></i> <span class="large">A simple app</span>](lab_shiny3.html)
 
-# Lectures in PDF
-
-- [Introduction to R](assets/Introduction_to_R.pdf)
-- [Overview R](assets/Overview_R.pdf)
-- [ggplot Part I](assets/ggplot_Part_I.pdf)
-- [ggplot Part II](assets/ggplot_Part_II.pdf)
-- [ggplot Part III](assets/ggplot_Part_III.pdf)
-- [Lecture on Images](assets/Vector_Bitmap_Images.pdf)
-- [ggplot Part IV](assets/ggplot_Part_IV.pdf)
-- [Rshiny Part I](assets/Introduction_to_R_Shiny.pdf)
-- [Rshiny Part II](assets/RShiny-Part_II.pdf)
-- [Rshiny Part III](assets/RShiny-Deployments.pdf)
-
 # Extra Tutorial for ggplot
 
 In the following link, you can find several different ways to use `ggplot` and obtain incredible visualizations of the data. Depending on the kind of data you have and the kind of visualization you would like to see, you can follow it on the table contents in this following page:

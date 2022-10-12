@@ -3,8 +3,9 @@
 .RData
 .Ruserdata
 
-# Release directory 2109
+# Release directories 
 2204/
+2210/
 
 # Admin for particular release
 #2109_Admin/
