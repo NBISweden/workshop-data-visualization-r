@@ -2,6 +2,6 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_r
 27/10/2022;Hörsal NAT.D.320;13:30;13:40;Welcome & Intro;LM;;;;https://link.mazemap.com/XjT4ZEWl
 ;;13:40;14:30;ggplot2 Part I;LM;JA;slide_gg1.html;lab_gg1.html;
 ;;14:30;14:40;Break I;;;;;
-;;14:40;15:20;ggplot2 Part II;LM;JA;;;
+;;14:40;15:20;ggplot2 Part II;LM;JA;slide_gg_p2.html;lab_gg_p2.html;
 ;;15:20;15:30;Break II;;;;;
 ;;15:30;16:30;R Shiny App;LM;JA;;;
