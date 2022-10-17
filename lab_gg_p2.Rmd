@@ -1,5 +1,5 @@
 ---
-title: "ggplot: Part III"
+title: "ggplot: Part II"
 subtitle: "Workshop on Data Visualization in R"
 author: "`r paste0('<b>Lokesh Mano</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
 ---
