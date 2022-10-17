@@ -54,6 +54,9 @@ class: spaced
 * [Geoms](#geoms)
 * [Aesthetics](#aesth)
 * [Multiple Geoms](#mul-geom)
+* [Scales - color](#scales-discrete-color)
+* [Scales - shape](#scales-shape)
+* [facet_wrap](#facet-wrap)
 
 ---
 name: gog
@@ -233,6 +236,152 @@ ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width))+
 ```
 
 ---
+name: scales-discrete-color
+
+## Scales • Discrete Colors
+
+* scales: position, color, fill, size, shape, alpha, linetype
+* syntax: `scale_<aesthetic>_<type>`
+
+.center[
+<img src="assets/images/scales.png" alt="drawing" width="400"/>
+]
+
+--
+
+.pull-left-50[
+```{r,fig.height=2,fig.width=4}
+p <- ggplot(iris)+geom_point(aes(x=Sepal.Length,
+                     y=Sepal.Width,color=Species))
+p
+```
+]
+
+--
+
+.pull-right-50[
+```{r,fig.height=2,fig.width=4}
+p + scale_color_manual(
+     name="Manual",
+     values=c("#5BC0EB","#FDE74C","#9BC53D"))
+```
+]
+
+---
+
+## Scales • Continuous Colors
+
+* In RStudio, type `scale_`, then press **TAB**
+
+--
+
+.pull-left-50[
+```{r,fig.height=4,fig.width=5}
+p <- ggplot(iris)+
+      geom_point(aes(x=Sepal.Length,
+                     y=Sepal.Width,
+      shape=Species,color=Petal.Length))
+p
+```
+]
+
+--
+
+.pull-right-50[
+```{r,fig.height=4,fig.width=5}
+p + 
+scale_color_gradient(name="Pet Len",
+  breaks=range(iris$Petal.Length),
+  labels=c("Min","Max"),
+  low="black",high="red")
+              
+```
+]
+---
+name: scales-shape
+
+## Scales • Shape
+
+.pull-left-50[
+```{r,fig.height=4,fig.width=5}
+p <- ggplot(iris)+
+      geom_point(aes(x=Sepal.Length,
+                     y=Sepal.Width,
+      shape=Species,color=Species))
+p
+```
+]
+
+--
+
+.pull-right-50[
+```{r,fig.height=4,fig.width=5}
+p + 
+scale_color_manual(name="New",
+   values=c("blue","green","red"))+
+scale_shape_manual(name="Bla",values=c(0,1,2))
+              
+```
+]
+
+---
+name: facet-wrap
+
+## Facets • `facet_wrap`
+
+* Split to subplots based on variable(s)
+* Facetting in one dimension
+
+--
+
+.pull-left-50[
+```{r,fig.height=4,fig.width=5}
+p <- ggplot(iris)+
+      geom_point(aes(x=Sepal.Length,
+                     y=Sepal.Width,
+                     color=Species))
+p
+```
+]
+
+--
+
+.pull-right-50[
+```{r,fig.height=2.1,fig.width=4.5}
+p + facet_wrap(~Species)
+```
+
+```{r,fig.height=2.1,fig.width=4.5}
+p + facet_wrap(~Species,nrow=3)
+```
+]
+
+---
+name: facet-grid
+
+## Facets • `facet_grid`
+
+* Facetting in two dimensions
+
+.pull-left-50[
+```{r,fig.height=3.5,fig.width=5}
+p <- diamonds %>%
+     ggplot(aes(carat,price))+
+     geom_point()
+p + facet_grid(~cut+clarity)
+```
+]
+
+--
+
+.pull-left-50[
+```{r,fig.height=4,fig.width=5}
+p + facet_grid(cut~clarity)
+```
+]
+
+---
+
 
 name: end_slide
 class: end-slide, middle
