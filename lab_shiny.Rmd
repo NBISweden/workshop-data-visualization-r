@@ -1,0 +1,550 @@
+---
+title: "RShiny Lab: Part I"
+subtitle: "Workshop on Data Visualization in R"
+author: "`r paste0('<b>Lokesh Mano</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
+---
+
+```{r, include=FALSE}
+hooks = knitr::knit_hooks$get()
+hook_foldable = function(type) {
+  force(type)
+  function(x, options) {
+    res = hooks[[type]](x, options)
+    
+    if (isFALSE(options[[paste0("fold.", type)]])) return(res)
+    
+    paste0(
+      "<details><summary>", type, "</summary>\n\n",
+      res,
+      "\n\n</details>"
+    )
+  }
+}
+knitr::knit_hooks$set(
+  output = hook_foldable("output"),
+  plot = hook_foldable("plot")
+)
+```
+
+```{r,echo=FALSE,child="assets/header-lab.Rmd"}
+```
+
+<!-- ------------ Only edit title, subtitle & author above this ------------ -->
+
+```{r,echo=FALSE,results='hide',warning=FALSE,message=FALSE}
+library(shiny)
+library(ggplot2)
+```
+
+<br>
+<div class="abstract spaced">
+This is an introduction to shiny web applications with R. Please follow the exercise to familiarise yourself with the fundamentals. And then you can follow instructions to build an app with interactive plots related to the Covid data.  Code chunks starting with `shinyApp()` can be simply copy-pasted to the RStudio console and run. Generally, complete shiny code is saved as a text file, named for example, as **app.R** and then clicking **Run app** launches the app. 
+</div>
+<br>
+
+# UI • Layout
+
+This is an example to show the layout of widgets on a webpage using shiny functions. `fluidPage()` is used to define a responsive webpage. `titlePanel()` is used to define the top bar. `sidebarLayout()` is used to create a layout that includes a region on the left called side bar panel and a main panel on the right. The contents of these panels are further defined under `sidebarPanel()` and `mainPanel()`.
+
+In the main panel, the use of tab panels are demonstrated. The function `tabsetPanel()` is used to define a tab panel set and individual tabs are defined using `tabPanel()`. `fluidRow()` and `column()` are used to structure elements within each tab. The width of each column is specified. Total width of columns must add up to 12.
+
+```{r}
+library(shiny)
+ui <- fluidPage(
+  titlePanel("Title Panel"),
+  sidebarLayout(
+    sidebarPanel(
+      helpText("Sidebar Panel")
+    ),
+    mainPanel(tabsetPanel(
+      tabPanel("tab1",
+               fluidRow(
+                 column(6,helpText("Col1")),
+                 column(6,
+                        helpText("Col2"),
+                        fluidRow(
+                          column(4,style="background-color:#b0c6fb",
+                                 helpText("Col1")
+                          ),
+                          column(4,style="background-color:#ffa153",
+                                 helpText("Col2")
+                          ),
+                          column(4,style="background-color:#b1f6c6",
+                                 helpText("Col3")
+                          )
+                        )
+                 )
+               )
+      ),
+      tabPanel("tab2",
+               inputPanel(helpText("Input Panel"))
+      ),
+      tabPanel("tab3",
+               wellPanel(helpText("Well Panel"))
+      )
+    )
+    )
+  )
+)
+server <- function(input,output){}
+shinyApp(ui=ui,server=server)
+```
+
+# UI • Widgets • Input
+
+Input widgets are used to accept content interactively from the user. These widgets usually end in `Input` like `selectInput()`. Below are usage examples of several of shiny's built-in widgets. Every widget has a variable name which is accessible through `input$` in the server function. For example, the value of a variable named `text-input` would be accessed through `input$text-input`.
+
+```{r}
+shinyApp(
+ui=fluidPage(
+  fluidRow(
+    column(6,
+           fileInput("file-input","fileInput:"),
+           selectInput("select-input",label="selectInput",choices=c("A","B","C")),
+           numericInput("numeric-input",label="numericInput",value=5,min=1,max=10),
+           sliderInput("slider-input",label="sliderInput",value=5,min=1,max=10),
+           textInput("text-input",label="textInput"),
+           textAreaInput("text-area-input",label="textAreaInput"),
+           dateInput("date-input",label="dateInput"),
+           dateRangeInput("date-range-input",label="dateRangeInput"),
+           radioButtons("radio-button",label="radioButtons",choices=c("A","B","C"),inline=T),
+           checkboxInput("checkbox","checkboxInput",value=FALSE),
+           actionButton("action-button","Action"),
+           hr(),
+           submitButton()
+    )
+  )
+),
+server=function(input,output){},
+options=list(height=900))
+```
+
+# UI • Widgets • Outputs
+
+Similar to input widgets, output widgets are used to display information to the user on the webpage. These widgets usually end in `Output` like `textOutput()`. Every widget has a variable name accessible under `output$` to which content is written in the server function. Render functions are used to write content to output widgets. For example `renderText()` is used to write text data to `textOutput()` widget.
+
+```{r}
+shinyApp(
+  ui=fluidPage(fluidRow(column(6,
+             textInput("text_input",label="textInput",value="<h3 style='color:red'>Red text</h3>"),
+             hr(),
+             htmlOutput("html_output"),
+             textOutput("text_output"),
+             verbatimTextOutput("verbatim_text_output"),
+             tableOutput("table_output"),
+             plotOutput("plot_output",width="300px",height="300px")
+      ))),
+  server=function(input, output) {
+    output$html_output <- renderText({input$text_input})
+    output$text_output <- renderText({input$text_input})
+    output$verbatim_text_output <- renderText({input$text_input})
+    output$table_output <- renderTable({iris[1:3,1:3]})
+    output$plot_output <- renderPlot({
+      plot(iris[,1],iris[,2])
+    })
+},
+options=list(height=700))
+```
+
+In this example, we have a text input box which takes user text and outputs it in three different variations. The first output is html output `htmlOutput()`. Since the default text is html content, the output is red coloured text. A normal non-html text would just look like normal text. The second output is normal text output `textOutput()`. The third variation is `verbatimTextOutput()` which displays text in monospaced code style. This example further shows table output and plot output.
+
+# Dynamic UI
+
+Sometimes we want to add, remove or change currently loaded UI widgets conditionally based on dynamic changes in code execution or user input. Conditional UI can be defined using `conditionalPanel()`, `uiOutput()`/`renderUI()`, `insertUI()` or `removeUI`. In this example, we will use `uiOutput()`/`renderUI()`.
+
+In the example below, the output plot is displayed only if the selected dataset is **iris**.
+
+```{r}
+shinyApp(
+ui=fluidPage(
+  selectInput("data_input",label="Select data",
+              choices=c("mtcars","faithful","iris")),
+  tableOutput("table_output"),
+  uiOutput("ui")
+),
+server=function(input,output) {
+  getdata <- reactive({ get(input$data_input, 'package:datasets') })
+  
+  output$ui <- renderUI({
+    if(input$data_input=="iris") plotOutput("plot_output",width="400px")
+  })
+  
+  output$plot_output <- renderPlot({hist(getdata()[, 1])})
+  output$table_output <- renderTable({head(getdata())})
+})
+```
+
+Here, conditional UI is used to selectively display an output widget (plot). Similarly, this idea can be used to selectively display any input or output widget.
+
+# Reactivity
+
+We will here first look into the example of what the automatic reactivity of Rshiny looks like. The reactive functions like `renderPlot()` and `renderPrint()` are always looking for any changes in the input values and are updated quickly! Although this is super handy for any app, sometimes this can lead to unwanted confusion. Like, take the R function `rnorm()`, this function basically spits out random numbers. If you use this function in an app, everytime this function is called, it will output different random number sets. This can cause problems like in the example below:
+
+<i class="fas fa-clipboard-list"></i> Task &nbsp;  Try to change the slider input values and check if the `summary` and `hist` match with each other?
+
+```{r}
+ui <- fluidPage(
+  sliderInput(inputId = "num", 
+    label = "Choose a number", 
+    value = 25, min = 1, max = 100),
+  plotOutput("hist"),
+  verbatimTextOutput("stats")
+)
+
+server <- function(input, output) {
+  output$hist <- renderPlot({
+    hist(rnorm(input$num))
+  })
+  output$stats <- renderPrint({
+    summary(rnorm(input$num))
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+So, in order to make it consistent, we have to use the `rnorm()` only once and save it as a `reactive function` and then apply it to both the `hist()` and `summary()`. We do this by using `reactive()` function to store it as a variable. See the example below:
+
+```{r}
+ui <- fluidPage(
+  sliderInput(inputId = "num", 
+    label = "Choose a number", 
+    value = 25, min = 1, max = 100),
+  plotOutput("hist"),
+  verbatimTextOutput("stats")
+)
+
+server <- function(input, output) {
+  
+  data <- reactive({
+    rnorm(input$num)
+  })
+  
+  output$hist <- renderPlot({
+    hist(data())
+  })
+  output$stats <- renderPrint({
+    summary(data())
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; As the `data` variable we have in the example above is a reactive function, you have to remember to use `()` whenever you call that particular variable.
+
+# Isolating reactivity
+
+In the same manner as above, sometimes you will notice that the Rshiny's reactivity can be very quick! Take the below example and try to type in the title of the histogram slowly. You will notice that the histogram will keep changing as you type, because the `rnorm()` gets updated constantly as you type!
+
+```{r}
+ui <- fluidPage(
+  sliderInput(inputId = "num", 
+    label = "Choose a number", 
+    value = 25, min = 1, max = 100),
+  textInput(inputId = "title", 
+    label = "Write a title",
+    value = "Histogram of Random Normal Values"),
+  plotOutput("hist")
+)
+
+server <- function(input, output) {
+  output$hist <- renderPlot({
+    hist(rnorm(input$num), main = input$title)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+By using the `isolate()` function, we can make certain UI input components to not react for changes! This means you can change/decide the title of the plot first and then you can change the slider in the example above to decide on the histogram you want for a particular value!
+
+```{r}
+ui <- fluidPage(
+  sliderInput(inputId = "num", 
+    label = "Choose a number", 
+    value = 25, min = 1, max = 100),
+  textInput(inputId = "title", 
+    label = "Write a title",
+    value = "Histogram of Random Normal Values"),
+  plotOutput("hist")
+)
+
+server <- function(input, output) {
+  output$hist <- renderPlot({
+    hist(rnorm(input$num), main = isolate(input$title))
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+# eventReactive()
+
+This is similar to the `observeEvent()`, where it is used to send message like logs when you click on a button.
+In the following example, we will see how to use `eventReactive()` with an action button and when you press it, the random numbers are only generated then. You can think of it as an `update` button. Let us look at the example below:
+
+```{r}
+ui <- fluidPage(
+  sliderInput(inputId = "num", 
+    label = "Choose a number", 
+    value = 25, min = 1, max = 100),
+  textInput(inputId = "title", 
+    label = "Write a title",
+    value = "Histogram of Random Normal Values"),
+  plotOutput("hist"),
+  actionButton(inputId = "click", label = "Update")
+)
+
+server <- function(input, output) {
+  randomVals <- eventReactive(input$click, {
+    rnorm(input$num)
+  })
+  output$hist <- renderPlot({
+    hist(randomVals(), main = input$title)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+
+# Updating widgets
+
+Widgets can be updated with new values dynamically. `observe()` and `observeEvent()` functions can monitor the values of interest and update relevant widgets.
+
+```{r}
+shinyApp(
+ui=fluidPage(
+  selectInput("data_input",label="Select data",choices=c("mtcars","faithful","iris")),
+  selectInput("header_input",label="Select column name",choices=NULL),
+  plotOutput("plot_output",width="400px")
+),
+server=function(input,output,session) {
+  getdata <- reactive({ get(input$data_input, 'package:datasets') })
+  
+  observe({
+    updateSelectInput(session,"header_input",label="Select column name",choices=colnames(getdata()))
+  })
+  
+  output$plot_output <- renderPlot({
+    #shiny::req(input$header_input)
+    #validate(need(input$header_input %in% colnames(getdata()),message="Incorrect column name."))
+    hist(getdata()[, input$header_input],xlab=input$header_input,main=input$data_input)
+  })
+},
+options=list(height=600))
+```
+
+In this example, the user selects a dataset and a column from the selected dataset to be plotted as a histogram. The column name selection widget must automatically update it's choices depending on the selected dataset. This achieved using `observe()` where the `updateSelectInput()` function updates the selection choices. Notice that a third option `session` is in use in the server function. ie; `server=function(input,output,session)`. And `session` is also the first argument in `updateSelectInput()`. Session keeps track of values in the current session.
+
+When changing the datasets, we can see that there is a short red error message. This is because, after we have selected a new dataset, the old column name from the previous dataset is searched for in the new dataset. This occurs for a short time and causes the error. This can be fixed using careful error handling. We will discuss this in another section.
+
+# Error validation
+
+Shiny returns an error when a variable is NULL, NA or empty. This is similar to normal R operation. The errors show up as bright red text. By using careful error handling, we can print more informative and less distracting error messages. We also have the option of hiding error messages.
+
+```{r}
+shinyApp(
+ui=fluidPage(
+  selectInput("data_input",label="Select data",
+              choices=c("","mtcars","faithful","iris")),
+  tableOutput("table_output")
+),
+server=function(input, output) {
+  getdata <- reactive({ get(input$data_input,'package:datasets') })
+  output$table_output <- renderTable({head(getdata())})
+},
+options=list(height="350px"))
+```
+
+In this example, we have a list of datasets to select which is then printed as a table. The first and default option is an empty string which cannot be printed as a table and therefore returns an error.
+
+We can add an extra line to the above app so that the selected string is validated before running downstream commands in the `getdata({})` reactive function. The function `validate()` is used to validate inputs. `validate()` can be used with `need()` function or a custom function.
+
+Below we use the `need()` function to check the input. It checks if the input is NULL, NA or an empty string and returns a specified message if TRUE. `try()` is optional and is used to catch any other unexpected errors.
+
+```{r}
+shinyApp(
+ui=fluidPage(
+  selectInput("data_input",label="Select data",
+              choices=c("","mtcars","faithful","iris")),
+  tableOutput("table_output")
+),
+server=function(input, output) {
+  
+  getdata <- reactive({
+    validate(need(try(input$data_input),"Please select a data set"))
+    get(input$data_input,'package:datasets')
+  })
+  
+  output$table_output <- renderTable({head(getdata())})
+},
+options=list(height="350px"))
+```
+
+Now we see an informative grey message (less scary) asking the user to select a dataset.
+
+We can use a custom function instead of using `need()`. Below, we have created a function called `valfun()` that checks if the input is NULL, NA or an empty string. This is then used in `validate()`.
+
+```{r}
+valfn <- function(x) if(is.null(x) | is.na(x) | x=="") return("Input data is incorrect.")
+shinyApp(
+ui=fluidPage(
+  selectInput("data_input",label="Select data",
+              choices=c("","mtcars","faithful","iris")),
+  tableOutput("table_output")
+),
+server=function(input, output) {
+  
+  getdata <- reactive({
+    validate(valfn(try(input$data_input)))
+    get(input$data_input,'package:datasets')
+  })
+  
+  output$table_output <- renderTable({head(getdata())})
+},
+options=list(height="350px"))
+```
+
+The last option is to simple hide the error. This may be used in situations where there is no input needed from the user. We use `req()` to check if the input is valid, else stop execution there till the condition becomes true.
+
+```{r}
+shinyApp(
+ui=fluidPage(
+  selectInput("data_input",label="Select data",
+              choices=c("","mtcars","faithful","iris")),
+  tableOutput("table_output")
+),
+server=function(input, output) {
+  
+  getdata <- reactive({
+    shiny::req(try(input$data_input))
+    get(input$data_input,'package:datasets')
+  })
+  
+  output$table_output <- renderTable({head(getdata())})
+},
+options=list(height="350px"))
+```
+
+As expected there is no error or any message at all. This is not always the best to use this option as we need the user to do something. An informative message may be better than nothing.
+
+Finally, instead of printing messages about the error or hiding the error, we can try to resolve the errors from the previous section in a more robust manner. `shiny::req(input$header_input)` is added to ensure that a valid column name string is available before running any of the `renderPlot()` commands. Second, we add `validate(need(input$header_input %in% colnames(getdata()),message="Incorrect column name."))` to ensure that the column name is actually a column in the currently selected dataset.
+
+```{r}
+shinyApp(
+ui=fluidPage(
+  selectInput("data_input",label="Select data",choices=c("mtcars","faithful","iris")),
+  selectInput("header_input",label="Select column name",choices=NULL),
+  plotOutput("plot_output",width="400px")
+),
+server=function(input,output,session) {
+  getdata <- reactive({ get(input$data_input, 'package:datasets') })
+  
+  observe({
+    updateSelectInput(session,"header_input",label="Select column name",choices=colnames(getdata()))
+  })
+  
+  output$plot_output <- renderPlot({
+    shiny::req(input$header_input)
+    validate(need(input$header_input %in% colnames(getdata()),message="Incorrect column name."))
+    hist(getdata()[, input$header_input],xlab=input$header_input,main=input$data_input)
+  })
+},
+options=list(height=600))
+```
+
+Now, we do not see any error messages. Note that shiny apps on shinyapps.io do not display the complete regular R error message for security reasons. It returns a generic error message in the app. One needs to inspect the error logs to view the actual error message.
+
+# Download • Data
+
+It is often desirable to let the user down data tables and plots as images. This is done using `downloadHandler()`.
+
+In the example below, we are downloading a table as a csv text file. We define a button that accepts the action input from the user. The `downloadHandler()` function has the file name argument, and the content argument where we specify the `write.csv()` command. Note that this example needs to be opened in a browser and may not in the RStudio preview. In the RStudio preview, click on **Open in Browser**. 
+
+```{r}
+shinyApp(
+  ui=fluidPage(
+    selectInput("data_input",label="Select data",
+                choices=c("mtcars","faithful","iris")),
+    textOutput("text_output"),
+    downloadButton("button_download","Download")
+  ),
+  server=function(input, output) {
+    
+    getdata <- reactive({ get(input$data_input, 'package:datasets') })
+    output$text_output <- renderText(paste0("Selected dataset: ",input$data_input))
+    
+    output$button_download <- downloadHandler(
+      filename = function() {
+        paste0(input$data_input,".csv")
+      },
+      content = function(file) {
+        write.csv(getdata(),file,row.names=FALSE,quote=F)
+      })
+  },
+  options=list(height="200px")
+)
+```
+
+# Download • Plot
+
+In this next example, we are downloading a plot. In the content part of `downloadHandler()`, we specify commands to export a png image. Note that this example needs to be opened in a browser and may not in the RStudio preview. In the RStudio preview, click on **Open in Browser**.
+
+
+```{r}
+shinyApp(
+  ui=fluidPage(
+    selectInput("data_input",label="Select data",
+                choices=c("mtcars","faithful","iris")),
+    textOutput("text_output"),
+    plotOutput("plot_output",height="300px",width="300px"),
+    downloadButton("button_download","Download")
+  ),
+  server=function(input, output) {
+    
+    getdata <- reactive({ get(input$data_input, 'package:datasets') })
+    output$text_output <- renderText(paste0("Selected dataset: ",input$data_input))
+    
+    output$plot_output <- renderPlot({hist(getdata()[,1])})
+  
+  output$button_download <- downloadHandler(
+    filename = function() {
+      paste0(input$data_input,".png")
+    },
+    content = function(file) {
+      png(file)
+      hist(getdata()[, 1])
+      dev.off()
+    })
+  },
+  options=list(height="500px")
+)
+```
+
+# Shiny in Rmarkdown
+
+Shiny interactive widgets can be embedded into Rmarkdown documents. These documents need to be live and can handle interactivity. The important addition is the line `runtime: shiny` to the YAML matter. Here is an example:
+
+```{r,echo=FALSE,out.class="md",comment=""}
+cat("---\nruntime: shiny\noutput: html_document\n---\n\n")
+cat("```{r}\nlibrary(shiny)\n```\n\n")
+cat("This is a standard RMarkdown document. Here is some code:\n\n")
+cat("```{r}\nhead(iris)\n```\n\n")
+cat("```{r}\nplot(iris$Sepal.Length,iris$Petal.Width)\n```\n\n")
+cat("But, here is an interactive shiny widget.\n\n")
+cat('```{r}\nsliderInput("in_breaks",label="Breaks:",min=5,max=50,value=5,step=5)\n```\n\n')
+cat('```{r}\nrenderPlot({\nhist(iris$Sepal.Length,breaks=input$in_breaks)\n})\n```\n')
+```
+
+This code can be copied to a new file in RStudio and saved as, for example, **shiny.Rmd**. Then click 'Knit'. Alternatively, you can run `rmarkdown::run("shiny.Rmd")`.
+
+
+# Session info
+
+```{r, fold.output=FALSE, fold.plot=FALSE}
+sessionInfo()
+```
+
+***

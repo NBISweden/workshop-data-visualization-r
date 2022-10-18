@@ -4,4 +4,4 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_r
 ;;14:30;14:40;Break I;;;;;
 ;;14:40;15:20;ggplot2 Part II;LM;JA;slide_gg_p2.html;lab_gg_p2.html;
 ;;15:20;15:30;Break II;;;;;
-;;15:30;16:30;R Shiny App;LM;JA;;;
+;;15:30;16:30;R Shiny App;LM;JA;slide_shiny.html;lab_shiny.html,lab_shiny3.html;

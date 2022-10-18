@@ -686,7 +686,7 @@ ggplot(data=vst_pca_all, mapping=aes(x=PC1, y=PC2)) +
 
 <i class="fas fa-exclamation-circle"></i> Note &nbsp; Similarly, let us say, you have environmental variables (continous variables like pH and so on) from the same samples and you would like to see how they would fit this bi-plot. One can use `envfit()` function from the `vegan` package, this function would return both the `p-value` and the `coordinates` of each of the variables in your environmental matrix. Then you could subset the significant variables and plot them in the same way as above. 
 
-# Exercise
+# Exercise III
 
 Now, as I have mentioned earlier, building a plot similar to PCA really depends on how the object looks like. Now, let us try to make a `MDS` or `PCoA` plot from the same data as we have used. Here is how you get the MDS object in R.
 
