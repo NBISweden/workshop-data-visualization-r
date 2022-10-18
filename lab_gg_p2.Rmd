@@ -303,6 +303,8 @@ gc_long %>%
 
 <i class="fas fa-lightbulb"></i> Tip: 2 &nbsp; This figure has `theme_light()`
 
+# Cowplot
+
 In this chapter, we will mainly focus on making a "publication-type" figure, with sub-plots and such using different tools in R. There are many different ways/packages to do this, but we will mainly focus on 2 packages: `cowplot` and `ggpubr`.
 
 Now let us consider some of the plots we have made so far in the previous exercises. From the picture below, **A** and **B** are the figures that was made from the `gene counts` dataset and the figures **C** and **D** are using the `Sepal.Length` and `Sepal.Width` from the `iris` data. Now let us look into how we can combine each of the figures like it is shown here. 
@@ -388,8 +390,6 @@ p4 <- ggplot(data=iris,mapping=aes(x=Sepal.Length, y = Sepal.Width, color = Spec
 ```
 
 The objects `p1`, `p2`, `p3` and `p4` as intuitively represent the plots **A**, **B**, **C** and **D** repectively. 
-
-# Cowplot
 
 ## plot_grid
 
