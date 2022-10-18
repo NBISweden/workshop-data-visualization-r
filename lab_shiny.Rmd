@@ -536,10 +536,12 @@ cat("```{r}\nplot(iris$Sepal.Length,iris$Petal.Width)\n```\n\n")
 cat("But, here is an interactive shiny widget.\n\n")
 cat('```{r}\nsliderInput("in_breaks",label="Breaks:",min=5,max=50,value=5,step=5)\n```\n\n')
 cat('```{r}\nrenderPlot({\nhist(iris$Sepal.Length,breaks=input$in_breaks)\n})\n```\n')
+
 ```
 
-This code can be copied to a new file in RStudio and saved as, for example, **shiny.Rmd**. Then click 'Knit'. Alternatively, you can run `rmarkdown::run("shiny.Rmd")`.
+# Building an app from scratch
 
+Here is an example of how you build an app from scratch. Please follow the instructions in this [exercise](lab_shiny3.html)
 
 # Session info
 
