@@ -527,7 +527,7 @@ shinyApp(
 
 Shiny interactive widgets can be embedded into Rmarkdown documents. These documents need to be live and can handle interactivity. The important addition is the line `runtime: shiny` to the YAML matter. Here is an example:
 
-```{r,echo=FALSE,out.class="md",comment=""}
+```{r,echo=FALSE,out.class="md",comment="", fold.output=F, fold.plot=F}
 cat("---\nruntime: shiny\noutput: html_document\n---\n\n")
 cat("```{r}\nlibrary(shiny)\n```\n\n")
 cat("This is a standard RMarkdown document. Here is some code:\n\n")
