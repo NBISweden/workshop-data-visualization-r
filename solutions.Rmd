@@ -1,6 +1,6 @@
 ---
 title: "Solutions"
-subtitle: "SBW Data Visualization Workshop"
+subtitle: "SBW - Data Visualization Workshop"
 author: "`r paste0('<b>Lokesh Mano</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
 ---
 
