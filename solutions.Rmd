@@ -1,6 +1,6 @@
 ---
 title: "Solutions"
-subtitle: "Workshop on Data Visualization in R"
+subtitle: "SBW Data Visualization Workshop"
 author: "`r paste0('<b>Lokesh Mano</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
 ---
 
@@ -31,11 +31,13 @@ knitr::knit_hooks$set(
 
 The solutions given below are just one way of obtaining the desired plots! There are probably several different ways you could code to get the same plots.  
 
-# R and basics-1
+# ggplot2 part-I
 
-For the exercises in the first two lab sessions: `R introduction` and the `ggplot basics 1`, all you need to do is to replace the filename `raw_counts.txt` with each of the different files to look at the differences between different normalization methods.
+## Exercise I
 
-# ggplot basics 2
+ All you need to do is to replace the filename `raw_counts.txt` with each of the different files to look at the differences between different normalization methods.
+
+## Exercise II
 
 <i class="fas fa-clipboard-list"></i> Task &nbsp; Plot 1:
 
@@ -79,7 +81,9 @@ gene_counts_all %>%
   facet_wrap(~Method*Replicate, ncol = 3, scales = "free")
 ```
 
-# ggplot basics 3
+# ggplot2 part-II
+
+## Exercise I
 
 ```{r, eval=FALSE}
 gc_long %>% 
@@ -98,7 +102,7 @@ gc_long %>%
         axis.ticks = element_blank())
 ```
 
-# Combining plots
+## Exercise II
 
 ```{r, eval=FALSE}
 p4 <- ggplot(data=iris,mapping=aes(x=Sepal.Length, y = Sepal.Width, color = Species)) +
@@ -125,7 +129,7 @@ ggarrange(d1, NULL, p4, d2,
           common.legend = TRUE)
 ```
 
-# PCA
+## Exercise III
 
 ```{r, eval=FALSE}
 Eigenvalues <- gc_mds$eig

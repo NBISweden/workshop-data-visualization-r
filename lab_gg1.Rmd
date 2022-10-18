@@ -385,13 +385,6 @@ plot_obj_2
 
 This way, you can create different plot objects for the different counts, we will use them in the later exercises.
 
-  select(Sample_ID, everything()) %>% 
-  select(-c(Gene,count), c(Gene,count)) 
-gc_long$Sample_Name <- factor(gc_long$Sample_Name, levels = c("t0_A","t0_B","t0_C","t2_A","t2_B","t2_C","t6_A","t6_B","t6_C","t24_A","t24_B","t24_C"))
-gc_long$Time <- factor(gc_long$Time, levels = c("t0","t2","t6","t24"))
-gc_long$Replicate <- factor(gc_long$Replicate, levels = c("A","B","C"))
-```
-
 # Faceting
 
 ## With wrap 

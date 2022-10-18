@@ -63,47 +63,23 @@ The A431 cells were treated with gefinitib, which is an EGFR inhibitor and is us
 
 This data is part of the transcriptomics course that is also given by NBIS. We will use some of the `counts table` that was generated in the course after different transformations like manual filtering for low counts, VST and DESeq2. You don't have to know what these exactly mean to do these exercises :) These are basically the same data at different stages of the transcriptomics analysis.    
 
-## ggplot part 1
+## ggplot part I
 
-Below is the link for the basic plotting exercise. there will be some basic plotting exercises first using R base graphics and comparing them to the grid graphics using `ggplot2`. Followed by practicing the first basics in ggplot: geoms, colors and aesthetics.
+This section is for people who are not used to using `ggplot2` before! This section covers all the major basics to the grid graphics using `ggplot2`. These include some of the important functions in ggplot: geoms, colors and aesthetics, facets, barplots and errorbars.
 
-[<i class="fas fa-link"></i> <span class="large">Geoms, colors and aesthetics</span>](lab_gg1.html)
+[<i class="fas fa-link"></i> <span class="large">Basics in ggplot2</span>](lab_gg1.html)
 
-## ggplot part 2
+## ggplot part II
 
-Below is the link for the second exercise where you will look into facets, barplots and errorbars.
+This section is for the people who are comfortable in using in using `ggplot2` and would like to learn some advanced functions in `ggplot2`.
 
-[<i class="fas fa-link"></i> <span class="large">Facets, barplots and errorbars</span>](lab_gg2.html)
+[<i class="fas fa-link"></i> <span class="large">Advanced ggplot2</span>](lab_gg_p2.html)
 
-## ggplot part 3
+## Rshiny
 
-Below is the link for the third exercise where you will look into facets, barplots and errorbars.
+This section is for the people here who are mainly interested in learning how to design the interactive `RShiny app`. This section covers all the basics of RShiny. The second section of this lab also includes some of the important functions which is important for mastering `Rshiny` 
 
-[<i class="fas fa-link"></i> <span class="large">Axes, labels, legends and themes</span>](lab_gg3.html)
-
-## Combining plots
-
-In this part of the lab, we will look into: how one can combine different plots that we have made using different tools. Also to look into some of the advantages of `cowplot` and `ggpubr`.
-
-[<i class="fas fa-link"></i> <span class="large">Combining plots</span>](lab_gg4.html)
-
-## PCA and Heatmaps
-
-Here, we look into building PCA plots with `ggplot`. We will also look into making heatmaps with both `pheatmap` and `geom_tile` in `ggplot`.
-
-[<i class="fas fa-link"></i> <span class="large">PCA and Heatmap</span>](lab_pca_hmap.html)
-
-## Rshiny Part I
-
-Here, we get introduced to how to start writing a Rshiny code. So, naturally we start to play around with the `UI` mainly to see what kinds of different `UIs` that one can use.
-
-[<i class="fas fa-link"></i> <span class="large">Rshiny Part I</span>](lab_shiny1.html)
-
-## Rshiny Part II
-
-Here, we look into some of the important Rshiny functions that one can use in the `server` part of the shiny code like `reactivity`, `Error validation` and `Download` options in the server.
-
-[<i class="fas fa-link"></i> <span class="large">Rshiny Part II</span>](lab_shiny2.html)
+[<i class="fas fa-link"></i> <span class="large">Rshiny</span>](lab_shiny.html)
 
 ## Rshiny Covid App
 
@@ -116,28 +92,6 @@ In this part, we learn how to write an app from scratch! So, we take the visuali
 Here I have compiled all the solutions for the different exercises in each of the sections:
 
 [<i class="fas fa-link"></i> <span class="large">Solutions</span>](solutions.html)
-
-# Rshiny
-
-This part contains all the labs and details to learn to make a simple Rshiny app.
-
-## Rshiny Intro
-
-This section contains the very simple terms of what an Rshiny app is and it's main components.
-
-[<i class="fas fa-link"></i> <span class="large">Rshiny Intro</span>](lab_shiny1.html)
-
-## Rshiny modules
-
-This section contains explanations and tutorials of some of the functions to modularize the Rshiny app's function in general.
-
-[<i class="fas fa-link"></i> <span class="large">Modularizing Rshiny</span>](lab_shiny2.html)
-
-## A simple app
-
-This section basically contains how to go about starting and making a simple Rshiny app.
-
-[<i class="fas fa-link"></i> <span class="large">A simple app</span>](lab_shiny3.html)
 
 # Extra Tutorial for ggplot
 
