@@ -47,12 +47,20 @@ name: whoweare
 
 ## Who we are!
 
+.pull-centre[
+<img src="assets/logo.svg" style="width: 50%;"/>
+]
+
 .pull-left-50[
 <img src="assets/images/lokesh-mano.jpeg" style="width: 80%; height: 80%;"/>
+
+__Lokesh Mano__
 ]
 
 .pull-right-50[
 <img src="assets/images/juliana-assis.png" style="width: 80%; height: 80%;"/>
+
+__Juliana Assis__
 ]
 
 ---
@@ -71,6 +79,7 @@ name: demo
 * Plots from drop-down
 * Times mentioned in schedule are **super** arbitrary
 * Depending on your skill level, you can choose one of the 3 parts of the workshop
+* HackMD https://hackmd.io/BcwXnvdVS469hIHXnDSvJg?both 
 
 ---
 
