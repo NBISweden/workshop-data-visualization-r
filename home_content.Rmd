@@ -16,11 +16,10 @@ output:
 In this course you will learn how to visualize your data in R.
 In particular, you will learn:
  
-- how to format the data necessary for ggplot 
 - how to make bar-charts, box-plots and others using ggplot
 - how to make PCA plots in ggplot
 - how to make interactive plots in R using Rshiny
-- how to host a Rshiny app in one of the available ser
+
 
 # Page Info
 
