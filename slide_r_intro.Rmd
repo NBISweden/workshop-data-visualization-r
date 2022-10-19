@@ -52,7 +52,7 @@ name: whoweare
 .pull-left-50[
 <img src="assets/images/lokesh-mano.jpeg" style="width: 80%; height: 80%;"/>
 
-.pull-centre[
+.center[
 __Lokesh Mano__
 ]
 
@@ -61,13 +61,13 @@ __Lokesh Mano__
 .pull-right-50[
 <img src="assets/images/juliana-assis.png" style="width: 80%; height: 80%;"/>
 
-.pull-centre[
+.center[
 __Juliana Assis__
 ]
 
 ]
 
-.pull-centre[
+.center[
 <img src="assets/logo.svg" style="width: 50%;"/>
 ]
 
