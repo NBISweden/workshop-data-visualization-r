@@ -67,7 +67,7 @@ __Juliana Assis__
 
 ]
 
-.center[
+.pull-center[
 <img src="assets/logo.svg" style="width: 50%;"/>
 ]
 
