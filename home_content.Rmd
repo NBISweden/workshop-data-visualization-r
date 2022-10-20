@@ -18,7 +18,7 @@ In particular, you will learn:
  
 - how to make bar-charts, box-plots and others using ggplot
 - how to make PCA plots in ggplot
-- how to make interactive plots in R using Rshiny
+- how to make interactive plots in R using Rshiny (an Intro)
 
 
 # Page Info
