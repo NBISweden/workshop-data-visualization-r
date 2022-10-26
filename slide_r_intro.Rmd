@@ -61,16 +61,12 @@ __Lokesh Mano__
 ]
 
 .pull-right-50[
-<img src="assets/images/juliana-assis.png" style="width: 80%; height: 80%;"/>
+<img src="assets/images/juliana-assis.png" style="width: 100%; height: 100%;"/>
 
 .center[
 __Juliana Assis__
 ]
 
-]
-
-.center[
-<img src="assets/logo.svg" style="width: 50%;"/>
 ]
 
 ---
