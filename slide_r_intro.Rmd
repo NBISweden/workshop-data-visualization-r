@@ -81,6 +81,10 @@ name: demo
 
 ---
 
+name: pointers
+
+## Some pointers
+
 * 2 X 10-minutes leg strecher (hopefully coffee) 
 * Webpage structure
 * Plots from drop-down
