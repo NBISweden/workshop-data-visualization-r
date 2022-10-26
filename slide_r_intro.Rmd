@@ -20,6 +20,7 @@ output:
       slideNumberFormat: "%current%/%total%"
     include: NULL
 ---
+
 exclude: true
 count: false
 
@@ -43,6 +44,7 @@ library(kableExtra)
 ```
 
 ---
+
 name: whoweare
 
 ## Who we are!
@@ -72,6 +74,7 @@ __Juliana Assis__
 ]
 
 ---
+
 name: demo
 
 ## Quick checkups

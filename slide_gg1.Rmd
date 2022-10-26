@@ -20,6 +20,7 @@ output:
       slideNumberFormat: "%current%/%total%"
     include: NULL
 ---
+
 exclude: true
 count: false
 
@@ -43,6 +44,7 @@ library(kableExtra)
 ```
 
 ---
+
 name: content
 class: spaced
 
@@ -59,6 +61,7 @@ class: spaced
 * [facet_wrap](#facet-wrap)
 
 ---
+
 name: gog
 
 ## Grammar of Graphics
@@ -80,6 +83,7 @@ name: gog
 ]
 
 ---
+
 name: build
 class: spaced
 
@@ -88,6 +92,7 @@ class: spaced
 <img src="assets/images/gg-syntax.png" alt="drawing", width ="600"/>
 
 ---
+
 name: build-demo
 
 
@@ -104,7 +109,9 @@ ggplot(iris)
 ggplot(iris)
 ```
 ]
+
 ---
+
 name: build-demo2
 
 
@@ -123,7 +130,9 @@ ggplot(iris,aes(x=Sepal.Length,
                 y=Sepal.Width))
 ```
 ]
+
 ---
+
 name: build-demo3
 
 
@@ -144,7 +153,9 @@ ggplot(iris,aes(x=Sepal.Length,
   geom_point()
 ```
 ]
+
 ---
+
 name: build-demo4
 
 ## Build-Demo
@@ -166,7 +177,9 @@ ggplot(iris,aes(x=Sepal.Length,
   geom_point()
 ```
 ]
+
 ---
+
 name: geoms
 class: spaced
 
@@ -188,6 +201,7 @@ help.search("^geom_",package="ggplot2")
 ```
 
 ---
+
 name: aesth
 
 ## Aesthetics
@@ -221,6 +235,7 @@ ggplot(iris)+
 ]
 
 ---
+
 name: mul-geom
 
 ## Multiple geoms
@@ -236,6 +251,7 @@ ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width))+
 ```
 
 ---
+
 name: scales-discrete-color
 
 ## Scales • Discrete Colors
@@ -297,7 +313,9 @@ scale_color_gradient(name="Pet Len",
               
 ```
 ]
+
 ---
+
 name: scales-shape
 
 ## Scales • Shape
@@ -325,6 +343,7 @@ scale_shape_manual(name="Bla",values=c(0,1,2))
 ]
 
 ---
+
 name: facet-wrap
 
 ## Facets • `facet_wrap`
@@ -357,6 +376,7 @@ p + facet_wrap(~Species,nrow=3)
 ]
 
 ---
+
 name: facet-grid
 
 ## Facets • `facet_grid`
@@ -381,7 +401,6 @@ p + facet_grid(cut~clarity)
 ]
 
 ---
-
 
 name: end_slide
 class: end-slide, middle

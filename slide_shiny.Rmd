@@ -20,6 +20,7 @@ output:
       slideNumberFormat: "%current%/%total%"
     include: NULL
 ---
+
 exclude: true
 count: false
 
@@ -43,6 +44,7 @@ library(kableExtra)
 ```
 
 ---
+
 name: content
 class: spaced
 
@@ -62,6 +64,7 @@ class: spaced
 * [Modularizing reactivity](#module)
 
 ---
+
 name: intro
 
 .size-95[
@@ -98,6 +101,7 @@ class: spaced
 * Builder
 
 ---
+
 name: code-structure
 class: spaced
 
@@ -206,6 +210,7 @@ server=function(input,output) {})
 <img src="assets/images/app-layout.png" style="width: 90%;" />
 
 ---
+
 name: ui-input
 
 ## UI • Widgets • Input
@@ -247,6 +252,7 @@ server=function(input,output) {
 Widgets are visual objects on a page to allow for data input. Input and output variables.
 
 ---
+
 name: ui-output
 
 ## UI • Widgets • Outputs
@@ -280,6 +286,7 @@ server=function(input, output) {
 ]
 
 ---
+
 name: ui-dynamic
 
 ## Dynamic UI
@@ -347,6 +354,7 @@ class: spaced
 .small[[Different Render functions](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf)]
 
 ---
+
 name: server-3
 
 ## Server
@@ -362,6 +370,7 @@ name: server-3
 <img src="assets/images/shiny-input2.png" style="width: 80%;" />
 
 ---
+
 name: react
 
 ## Reactivity
@@ -371,6 +380,7 @@ name: react
 ]
 
 ---
+
 name: react1
 
 ## Reactivity
@@ -380,6 +390,7 @@ name: react1
 ]
 
 ---
+
 name: react2
 
 ## Reactivity
@@ -389,6 +400,7 @@ name: react2
 ]
 
 ---
+
 name: react3
 
 ## Reactivity
@@ -398,6 +410,7 @@ name: react3
 ]
 
 ---
+
 name: react4
 
 ## Reactivity
@@ -407,6 +420,7 @@ name: react4
 ]
 
 ---
+
 name: react5
 
 ## Reactivity
@@ -416,6 +430,7 @@ name: react5
 ]
 
 ---
+
 name: isolate
 
 ## Isolate reactivity
@@ -429,6 +444,7 @@ name: isolate
 .size-95[
 <img src="assets/images/isolate1.png" alt="drawing" width="800"/>
 ]
+
 ---
 
 name: isolate2
@@ -438,7 +454,9 @@ name: isolate2
 .size-95[
 <img src="assets/images/isolate2.png" alt="drawing" width="800"/>
 ]
+
 ---
+
 name: isolate3
 
 ## Isolate reactivity
@@ -448,6 +466,7 @@ name: isolate3
 ]
 
 ---
+
 name:isolate4
 
 ## Isolate reactivity
@@ -457,6 +476,7 @@ name:isolate4
 ]
 
 ---
+
 name:observe
 
 ## observeEvent()
@@ -466,6 +486,7 @@ name:observe
 ]
 
 ---
+
 name: updating
 
 ## Updating widgets
@@ -507,6 +528,7 @@ server=function(input,output,session) {
 ```
 
 ---
+
 name: error
 
 ## Error validation
@@ -595,6 +617,7 @@ server=function(input,output) {
 * `shiny::req()` checks input variable and silently stops execution
 
 ---
+
 name: download
 
 ## Download • Data
@@ -627,6 +650,7 @@ server=function(input, output) {
 * See usage of download buttons
 
 ---
+
 name: download-plot
 
 ## Download • Plots
@@ -669,8 +693,6 @@ name: module
 .size-95[
 <img src="assets/images/shiny-mod.png" alt="drawing" width="800"/>
 ]
-
-
 
 ---
 
