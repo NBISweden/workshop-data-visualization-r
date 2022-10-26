@@ -72,6 +72,7 @@ name: intro
 ](https://shiny.rstudio.com/gallery/)
 
 ---
+
 name: intro-1
 class: spaced
 
@@ -160,6 +161,7 @@ R -e "shiny::runApp('~/shinyapp')"
 ```
 
 ---
+
 name: ui-layout
 
 ## UI • Layout
@@ -333,6 +335,7 @@ class: spaced
 <img src="assets/images/server1.png.svg" style="width: 80%;" />
 
 ---
+
 name: server-2
 class: spaced
 
@@ -351,6 +354,7 @@ class: spaced
                 })
 ```
 --
+
 .small[[Different Render functions](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf)]
 
 ---
