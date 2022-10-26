@@ -69,7 +69,7 @@ __Juliana Assis__
 
 ]
 
-.pull-center[
+.center[
 <img src="assets/logo.svg" style="width: 50%;"/>
 ]
 
@@ -80,10 +80,10 @@ name: demo
 ## Quick checkups
 
 .pull-center[
-<img src="assets/images/inst_check.png" alt="drawing" width="500"/>
+<img src="assets/images/inst_check.png" alt="drawing" width="800"/>
 ]
 
---
+---
 
 * 2 X 10-minutes leg strecher (hopefully coffee) 
 * Webpage structure
