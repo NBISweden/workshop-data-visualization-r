@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Content</title>
+
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link id="font-awesome-1-attachment" rel="attachment" href="site_libs/font-awesome-5.1.0/fonts/fontawesome-webfont.ttf"/>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="assets/lab.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+#TOC {
+  display: none !important;
+}
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div id="header">
+
+
+
+
+
+</div>
+
+
+<p><br></p>
+<!-- rmd lab header -->
+<p><br></p>
+<div id="course-objectives" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Course objectives</h1>
+<p>In this course you will learn how to visualize your data in R.
+In particular, you will learn:</p>
+<ul>
+<li>how to make bar-charts, box-plots and others using ggplot</li>
+<li>how to make PCA plots in ggplot</li>
+<li>how to make interactive plots in R using Rshiny (an Intro)</li>
+</ul>
+</div>
+<div id="page-info" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Page Info</h1>
+<p>This page contains links to different lectures (slides) and practical exercises (labs) that are part of this workshop. The links below are similar to that under [link removed] but organised here by topic.</p>
+<div class="boxy boxy-lightbulb">
+<p>Input code blocks are displayed like shown below. The code language is displayed above the block. Shell scripts (<strong>SH</strong>) are to be executed in the linux terminal. <strong>R</strong> scripts are to be run in R either through the terminal, RGui or RStudio.</p>
+<div class="block-title-parent">
+<div class="block-title small">
+sh
+</div>
+<pre class="sh"><code>command</code></pre>
+</div>
+<p><i class="fas fa-exclamation-circle"></i> Note   <i class="fas fa-lightbulb"></i> Tip   <i class="fas fa-comments"></i> Discuss   <i class="fas fa-clipboard-list"></i> Task</p>
+</div>
+<p><br></p>
+<p>This topic covers retrieving data needed for all the exercises in the entire course can be found in the following link.</p>
+<p><a href="lab_download.html" target="_blank"><i class="fas fa-link"></i> <span class="large">Downloading data</span></a></p>
+<p>Some pre-course R warm-up below, if you fancy that:</p>
+<p><a href="https://immuntech.github.io/Bioinformatics_Workshop_ImmTech/Data/2019-10-15/R_exercise_Lokesh.html" target="_blank"><i class="fas fa-link"></i> <span class="large">R warmup</span></a></p>
+</div>
+<div id="introduction" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Introduction</h1>
+<p>Most of the analyses is carried out in R and it will be useful to learn some basics in R that are very much necessary for this course. Even if you have learnt these things already, it is good to freshen up your memory.</p>
+<p><a href="lab_r.html" target="_blank"><i class="fas fa-link"></i> <span class="large">Introduction to R</span></a></p>
+</div>
+<div id="main-lab" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Main lab</h1>
+<div id="data" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Data</h2>
+<p>In most of the exercises, we will use RNA-seq data (Illumina short reads) from the human A431 cell line. It is an epidermoid carcinoma cell line which is often used to study cancer and the cell cycle, and as a sort of positive control of epidermal growth factor receptor (EGFR) expression. A431 cells express very high levels of EGFR, in contrast to normal human fibroblasts.</p>
+<p>The A431 cells were treated with gefinitib, which is an EGFR inhibitor and is used (under the trade name Iressa) as a drug to treat cancers with mutated and overactive EGFR. In the experiment, RNA was extracted at four time points: before the gefinitib treatment (t=0), and two, six and twenty-four hours after treatment (t=2, t=6, t=24, respectively), and sequenced using an Illumina HiSeq instrument in triplicates (thus there are 3x4=12 samples).</p>
+<p>This data is part of the transcriptomics course that is also given by NBIS. We will use some of the <code>counts table</code> that was generated in the course after different transformations like manual filtering for low counts, VST and DESeq2. You don’t have to know what these exactly mean to do these exercises :) These are basically the same data at different stages of the transcriptomics analysis.</p>
+</div>
+<div id="ggplot-part-i" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> ggplot part I</h2>
+<p>This section is for people who are not used to using <code>ggplot2</code> before! This section covers all the major basics to the grid graphics using <code>ggplot2</code>. These include some of the important functions in ggplot: geoms, colors and aesthetics, facets, barplots and errorbars.</p>
+<p><a href="lab_gg1.html" target="_blank"><i class="fas fa-link"></i> <span class="large">Basics in ggplot2</span></a></p>
+</div>
+<div id="ggplot-part-ii" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> ggplot part II</h2>
+<p>This section is for the people who are comfortable in using in using <code>ggplot2</code> and would like to learn some advanced functions in <code>ggplot2</code>.</p>
+<p><a href="lab_gg_p2.html" target="_blank"><i class="fas fa-link"></i> <span class="large">Advanced ggplot2</span></a></p>
+</div>
+<div id="rshiny" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Rshiny</h2>
+<p>This section is for the people here who are mainly interested in learning how to design the interactive <code>RShiny app</code>. This section covers all the basics of RShiny. The second section of this lab also includes some of the important functions which is important for mastering <code>Rshiny</code></p>
+<p><a href="lab_shiny.html" target="_blank"><i class="fas fa-link"></i> <span class="large">Rshiny</span></a></p>
+</div>
+<div id="rshiny-covid-app" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Rshiny Covid App</h2>
+<p>In this part, we learn how to write an app from scratch! So, we take the visualization of the covid data as an example from few countries that we would like to plot!</p>
+<p><a href="lab_shiny3.html" target="_blank"><i class="fas fa-link"></i> <span class="large">Rshiny Covid App</span></a></p>
+</div>
+</div>
+<div id="solutions-to-exercises" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Solutions to exercises:</h1>
+<p>Here I have compiled all the solutions for the different exercises in each of the sections:</p>
+<p><a href="solutions.html" target="_blank"><i class="fas fa-link"></i> <span class="large">Solutions</span></a></p>
+</div>
+<div id="extra-tutorial-for-ggplot" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Extra Tutorial for ggplot</h1>
+<p>In the following link, you can find several different ways to use <code>ggplot</code> and obtain incredible visualizations of the data. Depending on the kind of data you have and the kind of visualization you would like to see, you can follow it on the table contents in this following page:</p>
+<p><a href="http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html" target="_blank"><i class="fas fa-link"></i> <span class="large">Top 50 ggplot2 Visualizations</span></a></p>
+<hr />
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
