@@ -205,7 +205,7 @@ ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
   geom_smooth(method="lm")
 ```
 
-There are many other `geoms` and you can find most of them here in this [cheatsheet](https://rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf)
+There are many other `geoms` and you can find most of them here in this [cheatsheet](https://www.maths.usyd.edu.au/u/UG/SM/STAT3022/r/current/Misc/data-visualization-2.1.pdf)
 
 ### Gene counts data
 
