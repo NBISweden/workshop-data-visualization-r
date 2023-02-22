@@ -20,13 +20,22 @@ output:
       slideNumberFormat: "%current%/%total%"
     include: NULL
 ---
+
 exclude: true
 count: false
 
 ```{r,echo=FALSE,child="assets/header-slide.Rmd"}
 ```
 
-<!-- ------------ Only edit title, subtitle & author above this ------------ -->
+<!-- ---
+---
+---
+---
+ Only edit title, subtitle & author above this ---
+---
+---
+---
+ -->
 
 ```{r,include=FALSE}
 # load the packages you need
@@ -44,6 +53,7 @@ library(gridExtra)
 ```
 
 ---
+
 name: content
 class: spaced
 
@@ -59,6 +69,7 @@ class: spaced
 
 
 ---
+
 name: scales-axis
 
 ## Scales • Axes
@@ -90,6 +101,7 @@ scale_x_continuous(name="Sepal Length",
 ```
 ]
 ---
+
 name: coordinate
 
 ## Coordinate Systems
@@ -121,6 +133,7 @@ p+coord_polar("y",start=0)
 ]
 
 ---
+
 name: theme
 
 ## Theme
@@ -157,6 +170,7 @@ ggplot(iris,aes(Petal.Length))+
 Themes allow to modify all non-data related components of the plot. This is the visual appearance of the plot. Examples include the axes line thickness, the background color or font family.
 
 ---
+
 name: theme-legend
 
 ## Theme • Legend
@@ -181,6 +195,7 @@ p + theme(legend.position="bottom")
 ]
 
 ---
+
 name: theme-text
 
 ## Theme • Text
@@ -230,6 +245,7 @@ grid.arrange(p,q,nrow=1)
 ```
 
 ---
+
 name: theme-rect
 
 ## Theme • Rect
@@ -277,6 +293,7 @@ grid.arrange(p,q,nrow=1)
 ```
 
 ---
+
 name: theme-reuse
 
 ## Theme • Reuse
@@ -319,6 +336,7 @@ p + newtheme
 ]
 
 ---
+
 name: end_slide
 class: end-slide, middle
 count: false

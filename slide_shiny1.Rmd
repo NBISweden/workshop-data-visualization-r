@@ -20,13 +20,22 @@ output:
       slideNumberFormat: "%current%/%total%"
     include: NULL
 ---
+
 exclude: true
 count: false
 
 ```{r,echo=FALSE,child="assets/header-slide.Rmd"}
 ```
 
-<!-- ------------ Only edit title, subtitle & author above this ------------ -->
+<!-- ---
+---
+---
+---
+ Only edit title, subtitle & author above this ---
+---
+---
+---
+ -->
 
 ```{r,include=FALSE}
 # load the packages you need
@@ -43,6 +52,7 @@ library(kableExtra)
 ```
 
 ---
+
 name: content
 class: spaced
 
@@ -55,6 +65,7 @@ class: spaced
 * [Server](#server)
 
 ---
+
 name: intro
 
 .size-95[
@@ -62,6 +73,7 @@ name: intro
 ](https://shiny.rstudio.com/gallery/)
 
 ---
+
 name: intro-1
 class: spaced
 
@@ -91,6 +103,7 @@ class: spaced
 * Builder
 
 ---
+
 name: code-structure
 class: spaced
 
@@ -127,6 +140,7 @@ server <- function(input,output) {}
 
 ---
 
+
 name: execute
 
 ## App execution
@@ -149,6 +163,7 @@ R -e "shiny::runApp('~/shinyapp')"
 ```
 
 ---
+
 name: ui-layout
 
 ## UI • Layout
@@ -199,6 +214,7 @@ server=function(input,output) {})
 <img src="assets/images/app-layout.png" style="width: 90%;" />
 
 ---
+
 name: ui-input
 
 ## UI • Widgets • Input
@@ -240,6 +256,7 @@ server=function(input,output) {
 Widgets are visual objects on a page to allow for data input. Input and output variables.
 
 ---
+
 name: ui-output
 
 ## UI • Widgets • Outputs
@@ -273,6 +290,7 @@ server=function(input, output) {
 ]
 
 ---
+
 name: ui-dynamic
 
 ## Dynamic UI
@@ -304,6 +322,7 @@ server=function(input, output) {
 
 ---
 
+
 name: server
 class: spaced
 
@@ -319,6 +338,7 @@ class: spaced
 <img src="assets/images/server1.png.svg" style="width: 80%;" />
 
 ---
+
 name: server-2
 class: spaced
 
@@ -340,6 +360,7 @@ class: spaced
 .small[[Different Render functions](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf)]
 
 ---
+
 name: server-3
 
 ## Server
@@ -355,6 +376,7 @@ name: server-3
 <img src="assets/images/shiny-input2.png" style="width: 80%;" />
 
 ---
+
 
 name: end_slide
 class: end-slide, middle

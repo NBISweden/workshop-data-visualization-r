@@ -20,13 +20,22 @@ output:
       slideNumberFormat: "%current%/%total%"
     include: NULL
 ---
+
 exclude: true
 count: false
 
 ```{r,echo=FALSE,child="assets/header-slide.Rmd"}
 ```
 
-<!-- ------------ Only edit title, subtitle & author above this ------------ -->
+<!-- ---
+---
+---
+---
+ Only edit title, subtitle & author above this ---
+---
+---
+---
+ -->
 
 ```{r,include=FALSE}
 # load the packages you need
@@ -43,6 +52,7 @@ library(kableExtra)
 ```
 
 ---
+
 name: content
 class: spaced
 
@@ -55,6 +65,7 @@ class: spaced
 
 
 ---
+
 name: scales-discrete-color
 
 ## Scales • Discrete Colors
@@ -88,6 +99,7 @@ p + scale_color_manual(
 
 ---
 
+
 ## Scales • Continuous Colors
 
 * In RStudio, type `scale_`, then press **TAB**
@@ -117,6 +129,7 @@ scale_color_gradient(name="Pet Len",
 ```
 ]
 ---
+
 name: scales-shape
 
 ## Scales • Shape
@@ -144,6 +157,7 @@ scale_shape_manual(name="Bla",values=c(0,1,2))
 ]
 
 ---
+
 name: facet-wrap
 
 ## Facets • `facet_wrap`
@@ -176,6 +190,7 @@ p + facet_wrap(~Species,nrow=3)
 ]
 
 ---
+
 name: facet-grid
 
 ## Facets • `facet_grid`
@@ -200,6 +215,7 @@ p + facet_grid(cut~clarity)
 ]
 
 ---
+
 name: end_slide
 class: end-slide, middle
 count: false

@@ -20,13 +20,22 @@ output:
       slideNumberFormat: "%current%/%total%"
     include: NULL
 ---
+
 exclude: true
 count: false
 
 ```{r,echo=FALSE,child="assets/header-slide.Rmd"}
 ```
 
-<!-- ------------ Only edit title, subtitle & author above this ------------ -->
+<!-- ---
+---
+---
+---
+ Only edit title, subtitle & author above this ---
+---
+---
+---
+ -->
 
 ```{r,include=FALSE}
 # load the packages you need
@@ -43,6 +52,7 @@ library(kableExtra)
 ```
 
 ---
+
 name: content
 class: spaced
 
@@ -57,6 +67,7 @@ class: spaced
 * [Modularizing reactivity](#module)
 
 ---
+
 name: react
 
 ## Reactivity
@@ -66,6 +77,7 @@ name: react
 ]
 
 ---
+
 name: react1
 
 ## Reactivity
@@ -75,6 +87,7 @@ name: react1
 ]
 
 ---
+
 name: react2
 
 ## Reactivity
@@ -84,6 +97,7 @@ name: react2
 ]
 
 ---
+
 name: react3
 
 ## Reactivity
@@ -93,6 +107,7 @@ name: react3
 ]
 
 ---
+
 name: react4
 
 ## Reactivity
@@ -102,6 +117,7 @@ name: react4
 ]
 
 ---
+
 name: react5
 
 ## Reactivity
@@ -111,6 +127,7 @@ name: react5
 ]
 
 ---
+
 name: isolate
 
 ## Isolate reactivity
@@ -126,6 +143,7 @@ name: isolate
 ]
 ---
 
+
 name: isolate2
 
 ## Isolate reactivity
@@ -134,6 +152,7 @@ name: isolate2
 <img src="assets/images/isolate2.png" alt="drawing" width="800"/>
 ]
 ---
+
 name: isolate3
 
 ## Isolate reactivity
@@ -143,6 +162,7 @@ name: isolate3
 ]
 
 ---
+
 name:isolate4
 
 ## Isolate reactivity
@@ -152,6 +172,7 @@ name:isolate4
 ]
 
 ---
+
 name:observe
 
 ## observeEvent()
@@ -161,6 +182,7 @@ name:observe
 ]
 
 ---
+
 name: updating
 
 ## Updating widgets
@@ -202,6 +224,7 @@ server=function(input,output,session) {
 ```
 
 ---
+
 name: error
 
 ## Error validation
@@ -290,6 +313,7 @@ server=function(input,output) {
 * `shiny::req()` checks input variable and silently stops execution
 
 ---
+
 name: download
 
 ## Download • Data
@@ -322,6 +346,7 @@ server=function(input, output) {
 * See usage of download buttons
 
 ---
+
 name: download-plot
 
 ## Download • Plots
@@ -357,6 +382,7 @@ output$button_download <- downloadHandler(
 
 ---
 
+
 name: module
 
 ## Modularizing Reactivity
@@ -366,6 +392,7 @@ name: module
 ]
 
 ---
+
 
 name: end_slide
 class: end-slide, middle

@@ -20,13 +20,22 @@ output:
       slideNumberFormat: "%current%/%total%"
     include: NULL
 ---
+
 exclude: true
 count: false
 
 ```{r,echo=FALSE,child="assets/header-slide.Rmd"}
 ```
 
-<!-- ------------ Only edit title, subtitle & author above this ------------ -->
+<!-- ---
+---
+---
+---
+ Only edit title, subtitle & author above this ---
+---
+---
+---
+ -->
 
 ```{r,include=FALSE}
 # load the packages you need
@@ -43,6 +52,7 @@ library(kableExtra)
 ```
 
 ---
+
 name: content
 class: spaced
 
@@ -56,6 +66,7 @@ class: spaced
 * [Tips](#tips)
 
 ---
+
 name: demo
 
 ## Quick checkups
@@ -72,6 +83,7 @@ name: demo
 * Times mentioned in schedule are **super** arbitrary
 
 ---
+
 name: r-intro
 
 ## R
@@ -96,6 +108,7 @@ name: r-intro
 ]
 
 ---
+
 name: data
 
 ## Data Formats
@@ -120,6 +133,7 @@ kable(gc[c(1:6),c(1:4)]) %>%
 * you see more data
 
 ---
+
 name: data-2
 
 ## Data Formats
@@ -165,6 +179,7 @@ gc[c(1:6),c(1:4)] %>%
 ```
 
 ---
+
 name: data-3
 
 ## Data Formats
@@ -195,6 +210,7 @@ gc[c(1:6),c(1:4)] %>%
 * R tools **like ggplot** require data in long format.
 
 ---
+
 name: data-frame
 
 ## Data Frames
@@ -211,6 +227,7 @@ name: data-frame
 * Probably most used `data.type` in Biology! 
 
 ---
+
 name: func
 
 ## Vectors
@@ -242,6 +259,7 @@ print(s)
 ```
 
 ---
+
 name: vec-typ
 
 ## Vector types
@@ -257,6 +275,7 @@ name: vec-typ
 You can find what kind of vectors you have or imported by using the function `class()`
 
 ---
+
 name:tips
 
 ## Important tips
@@ -286,6 +305,7 @@ print(n)
 
 
 ---
+
 name: end_slide
 class: end-slide, middle
 count: false

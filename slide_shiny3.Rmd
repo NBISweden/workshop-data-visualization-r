@@ -20,13 +20,22 @@ output:
       slideNumberFormat: "%current%/%total%"
     include: NULL
 ---
+
 exclude: true
 count: false
 
 ```{r,echo=FALSE,child="assets/header-slide.Rmd"}
 ```
 
-<!-- ------------ Only edit title, subtitle & author above this ------------ -->
+<!-- ---
+---
+---
+---
+ Only edit title, subtitle & author above this ---
+---
+---
+---
+ -->
 
 ```{r,include=FALSE}
 # load the packages you need
@@ -43,6 +52,7 @@ library(kableExtra)
 ```
 
 ---
+
 name: deploy
 
 ## Deployment
@@ -73,6 +83,7 @@ deployApp(appName="name")
 * Shiny server guide https://docs.rstudio.com/shiny-server/
 
 ---
+
 name: interactive-docs
 
 ## Interactive documents
@@ -81,10 +92,12 @@ name: interactive-docs
 
 ```
 ---
+
 title: Interactive document
 output: html_document
 runtime: shiny
 ---
+
 ```
 
 * Shiny widgets can be included directly  
@@ -108,6 +121,7 @@ cat(paste0("```{r}\n","shinyApp(\n","  ui=fluidPage(),\n","  server=function(inp
 .small[_Demo: shiny-rmarkdown.R_]
 
 ---
+
 name: extensions
 
 ## Extensions
@@ -121,6 +135,7 @@ name: extensions
 * [shinyBS](https://github.com/ebailey78/shinyBS): Bootstrap 3 widgets
 
 ---
+
 name: help
 class: spaced
 
@@ -137,6 +152,7 @@ class: spaced
 * [Shiny modules](https://shiny.rstudio.com/articles/modules.html)
 ...
 ---
+
 
 name: end_slide
 class: end-slide, middle

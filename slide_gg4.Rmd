@@ -20,13 +20,22 @@ output:
       slideNumberFormat: "%current%/%total%"
     include: NULL
 ---
+
 exclude: true
 count: false
 
 ```{r,echo=FALSE,child="assets/header-slide.Rmd"}
 ```
 
-<!-- ------------ Only edit title, subtitle & author above this ------------ -->
+<!-- ---
+---
+---
+---
+ Only edit title, subtitle & author above this ---
+---
+---
+---
+ -->
 
 
 ```{r,include=FALSE}
@@ -45,6 +54,7 @@ library(gridExtra)
 ```
 
 ---
+
 name: save
 
 ## Saving plots
@@ -72,6 +82,7 @@ ggsave("plot.png",p,height=5,width=7,units="cm",dpi=200,type="cairo")
 * Note that default units in `png` is pixels while in `ggsave` it's inches  
 
 ---
+
 name: extension
 class: spaced
 
@@ -90,6 +101,7 @@ class: spaced
 
 
 ---
+
 name: help
 class: spaced
 
@@ -103,9 +115,24 @@ class: spaced
 * [**ggplot2 GUI**](https://site.shinyserver.dck.gmw.rug.nl/ggplotgui/)  
 * Numerous personal blogs, r-bloggers.com etc.  
 
-<!-- --------------------- Do not edit this and below --------------------- -->
+<!-- ---
+---
+---
+---
+---
+---
+---
+ Do not edit this and below ---
+---
+---
+---
+---
+---
+---
+ -->
 
 ---
+
 name: end-slide
 class: end-slide, middle
 count: false

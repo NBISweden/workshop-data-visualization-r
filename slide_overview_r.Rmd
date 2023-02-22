@@ -20,13 +20,22 @@ output:
       slideNumberFormat: "%current%/%total%"
     include: NULL
 ---
+
 exclude: true
 count: false
 
 ```{r,echo=FALSE,child="assets/header-slide.Rmd"}
 ```
 
-<!-- ------------ Only edit title, subtitle & author above this ------------ -->
+<!-- ---
+---
+---
+---
+ Only edit title, subtitle & author above this ---
+---
+---
+---
+ -->
 
 ```{r,include=FALSE}
 # load the packages you need
@@ -43,6 +52,7 @@ library(kableExtra)
 ```
 
 ---
+
 name: content
 class: spaced
 
@@ -54,6 +64,7 @@ class: spaced
 * [Some important functions](#tidyr)
 
 ---
+
 name: demo
 
 ## Reading files
@@ -65,7 +76,9 @@ name: demo
 ---
 
 
+
 ---
+
 name: dplyr
 
 ## Special operator
@@ -82,6 +95,7 @@ read.table("data/counts_raw.txt", header = T, row.names = 1, sep = "\t") %>%
 ```
 
 ---
+
 name: dplyr-2
 
 ## Special operator
@@ -98,6 +112,7 @@ read.table("data/counts_raw.txt", header = T, row.names = 1, sep = "\t") %>%
 ```
 
 ---
+
 name: dplyr-3
 
 ## Special operator
@@ -114,6 +129,7 @@ read.table("data/counts_raw.txt", header = T, row.names = 1, sep = "\t") %>%
 ```
 
 ---
+
 name: tidyr
 
 ## Tidyr or dplyr functions
@@ -128,6 +144,7 @@ name: tidyr
   - you can choose which columns you want,
 
 ---
+
 name: join
 
 ## Join
@@ -144,6 +161,7 @@ To merge two different tables to make a combined dataset where you have all the 
 ]
 
 ---
+
 name: end_slide
 class: end-slide, middle
 count: false
