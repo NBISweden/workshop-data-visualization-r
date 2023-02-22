@@ -1,7 +1,7 @@
 All current and previous workshop materials are listed below.
 
 <div style='display:block;'><p style='line-height:2;'>
-<span style='display:block;'><a href='https://NBISweden.github.io/workshop-data-visualization-r/2210/'>2022 Oct</a></span><span style='display:block;'><a href='https://NBISweden.github.io/workshop-data-visualization-r/2204/'>2022 Apr</a></span></p></div>
+<span style='display:block;'><a href='https://NBISweden.github.io/workshop-data-visualization-r/2304/'>2023 Apr</a></span><span style='display:block;'><a href='https://NBISweden.github.io/workshop-data-visualization-r/2210/'>2022 Oct</a></span><span style='display:block;'><a href='https://NBISweden.github.io/workshop-data-visualization-r/2204/'>2022 Apr</a></span></p></div>
 
 Previous workshops:
 <div style='display:block;'><p style='line-height:2;'> 
