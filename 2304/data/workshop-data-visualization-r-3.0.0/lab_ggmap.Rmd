@@ -1,0 +1,469 @@
+---
+title: "Maps"
+subtitle: "Workshop on Data Visualization in R"
+author: "`r paste0('<b>Lokesh Mano</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
+---
+
+```{r, include=FALSE}
+hooks = knitr::knit_hooks$get()
+hook_foldable = function(type) {
+  force(type)
+  function(x, options) {
+    res = hooks[[type]](x, options)
+    
+    if (isFALSE(options[[paste0("fold.", type)]])) return(res)
+    
+    paste0(
+      "<details><summary>", type, "</summary>\n\n",
+      res,
+      "\n\n</details>"
+    )
+  }
+}
+knitr::knit_hooks$set(
+  output = hook_foldable("output"),
+  plot = hook_foldable("plot")
+)
+```
+
+```{r,child="assets/header-lab.Rmd"}
+```
+
+# Making maps with R
+
+To do this exercise, we will use a separate dataset and it can be downloaded [here](data/ggmap_data/ggmap_data.zip). 
+
+If you would like to keep the data tree same as the exercises here, you can extract the zip file inside the data directory. So, the file tree would like this:
+
+* <span style="color:blue">ggplot_geneco_course</span>
+  + <span style="color:blue">data</span>
+    + archaea_nexus.txt
+    + arch_newick.txt
+    + counts_deseq2.txt
+    + counts_filtered.txt
+    + counts_raw.txt
+    + counts_vst.txt
+    + human_biomaRt_annotation.csv
+    + metadata.csv
+    + Time_t24_vs_t0.txt
+    + Time_t2_vs_t0.txt
+    + Time_t6_vs_t0.txt
+    + tree_env.tsv
+    + tree_hmap.tsv
+    + <span style="color:blue">ggmap_data</span>
+      + running.csv
+      + sisquoc-points.txt
+      + world_population.tsv
+
+
+Before we go into `ggmap` package and its options, let us take a quick look about some of the other options available for making maps in R.
+
+## maps and mapdata
+
+Here we will see, how some of the traditional R packages `maps` and `mapdata` were used and how we could implement the information from these packages into `ggplot`. Some pointers about these packages are:
+
+* The maps package contains a lot of outlines of continents, countries, states, and counties that have been with R for a long time.
+* The mapdata package contains a few more, higher-resolution outlines.
+* The maps package comes with a plotting function, but, we will opt to use ggplot2 to plot the maps in the maps package.
+* Recall that ggplot2 operates on data frames. Therefore we need some way to translate the maps data into a data frame format the ggplot can use.
+
+Let us start with how to install these packages and look at their simple functions:
+
+```{r, eval=FALSE}
+if (!requireNamespace("maps", quietly = TRUE)){
+  install.packages("maps", dependencies = TRUE)
+}
+
+if (!requireNamespace("mapdata", quietly = TRUE)){
+  install.packages("mapdata", dependencies = TRUE)
+}
+
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+library(maps)
+library(mapdata)
+library(ggplot2)
+library(dplyr)
+library(reshape2)
+library(tidyverse)
+world <- map_data("world")
+head(world)
+```
+
+The structure of this data-set could be explained as follows:
+
+* `long` is longitude. Things to the west of the prime meridian are negative.
+* `lat` is latitude.
+* `order`: This just shows in which order ggplot should “connect the dots”
+* `region` and `subregion` tell what region or subregion a set of points surrounds.
+* `group`: This is very important! ggplot2’s functions can take a group argument which controls (amongst other things) whether adjacent points should be connected by lines. If they are in the same group, then they get connected, but if they are in different groups then they don’t. 
+  + Essentially, having to points in different groups means that ggplot “lifts the pen” when going between them.
+
+To plot the map, in a pretty way:
+
+```{r, message=FALSE, warning=FALSE}
+gg1 <- ggplot(data = world, aes(x=long, y = lat)) + 
+  geom_polygon(aes(group = group)) + 
+  theme(legend.position = "none")
+gg1
+
+```
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; New Zealand was not missed in this map ;)
+
+<div class="instruction">
+
+* Maps in this format can be plotted with the polygon geom. i.e. using geom_polygon().
+* `geom_polygon()` drawn lines between points and “closes them up” (i.e. draws a line from the last point back to the first point)
+* You have to map the group aesthetic to the group column
+* Of course, x = long and y = lat are the other aesthetics.
+
+You can test it out how the data looks like without using the group aesthetic
+
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
+gg1 <- ggplot(data = world, aes(x=long, y = lat)) + 
+  geom_polygon() + 
+  theme(legend.position = "none")
+gg1
+
+```
+
+</div>
+
+From the dataset we have, we can also draw the border lines representing the different countries based on the variable `region`. 
+
+```{r, message=FALSE, warning=FALSE}
+gg2 <- ggplot(data = world, aes(x=long, y = lat)) + 
+  geom_polygon(aes(group = group, fill = region)) + 
+  theme(legend.position = "none")
+gg2
+```
+
+### Adding points to map
+
+Now, in this huge map, let us try to add some points like our favourite city Lund and few others.
+
+```{r, message=FALSE, warning=FALSE}
+labs <- data.frame(
+  long = c(13.1629767,11.7537556,16.3100205,80.0689272),
+  lat = c(55.7068448,57.7010982,48.220778,13.0478223),
+  names = c("LUND", "GBG", "Vienna", "Chennai"),
+  stringsAsFactors = FALSE
+  )  
+
+gg2 + 
+  geom_point(data = labs, aes(x = long, y = lat), color = "black", size = 2) 
+
+```
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; You can also import the points from a file and store in a data frame.
+
+### Zooming in
+
+Unlike in normal ggplots, to zoom into a section of the map, if we try to use the `xlim()` and `ylim()` functions:
+
+```{r, message=FALSE, warning=FALSE}
+gg2 + 
+  geom_point(data = labs, aes(x = long, y = lat), color = "black", size = 2) +
+  xlim(c(-30,40)) +
+  ylim(c(50,85))
+```
+
+You can see that this subsection of the map is not very good, you can notice it especially in the area of Germany and Poland. This is because the latitude and longtitude does not really work like axes on a plot and the structure of the data-set we have here doesn't support it that way.
+
+We will go through a function in `ggmap` to get one of the nicer ways to get a subsection in those measures. But, with the data we have here, it is possible get a subset of countries:
+
+```{r, message=FALSE, warning=FALSE}
+scandic <- subset(world, region %in% c("Sweden", "Denmark", "Norway", "Finland", "Iceland", "Faroe Islands"))
+
+gg_scan <- ggplot(data = scandic, aes(x=long, y=lat)) + 
+  geom_polygon(aes(group = group, fill = region)) 
+gg_scan
+```
+
+### Continous data
+
+Let's see how we can add a continous data like the World population statistics on to the above map. We can do this by importing the file with the population information and join it to the data set, we have with `left_join()`
+
+```{r, message=FALSE, warning=FALSE}
+pop_info <- read.table("data/ggmap_data/world_population.tsv", header = T, row.names = 1, sep = "\t")
+head(pop_info)
+```
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; Here the values are in the unit of thousands.
+
+```{r, message=FALSE, warning=FALSE}
+world_pop <- left_join(world, pop_info, by = "region") 
+
+gg_pop <- ggplot(data = world_pop, aes(x=long, y = lat, group = group, fill =PopTotal))
+gg_pop + geom_polygon(color = "white") +
+  scale_fill_gradientn(colours = rev(rainbow(8)))
+```
+
+
+# ggmap
+
+`ggmap` is an R package that makes it easy to retrieve raster map tiles from popular online mapping services like Google Maps and Stamen Maps and plot them using the `ggplot2` framework:
+
+You can find more information about the R package [here](https://github.com/dkahle/ggmap)
+
+## How ggmap works
+
+* ggmap simplifies the process of downloading base maps from Google or Open Street Maps or Stamen Maps to use in the background of your plots.
+* It also sets the axis scales, etc, in a nice way.
+* Once you have gotten your maps, you make a call with `ggmap()` much as you would with `ggplot()`
+
+The `ggmap()` related tutorials here requires that you need to register for an API with google to be able to do this! Follow the instructions below to get an API: 
+
+<div class="instruction">
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; To use Google maps, it is necessary to get an API key from [google](https://developers.google.com/maps/gmp-get-started) for your account and then register for an API key for example for a free trail. They might ask for your credit-card information! Then under `credentials` you should be able to find your API key and copy it.  Then after lpading `ggmap` package in your R, you should able to register the key using the function `register_google()`.
+
+</div>
+
+## Discrete data
+
+```{r, eval=FALSE}
+if (!requireNamespace("ggmap", quietly = TRUE)){
+  install.packages("ggmap", dependencies = TRUE)
+}
+library(ggmap)
+register_google(<INSERT YOUR PERSONAL KEY HERE>)
+```
+
+```{r, warning=FALSE, message=FALSE}
+sisquoc <- read.table("data/ggmap_data/sisquoc-points.txt", sep = "\t", header = TRUE)
+head(sisquoc)
+```
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; `ggmap` tends to use "lon" instead of "long" for longitude.
+
+Now that we have the zoom region we are after, we can get the map from "google" using the `get_map()` function. Then plot the points on the river from the data using `geom_point()`
+
+`get_map()` function requires:
+
+* `location`: for which I prefer to give a centroid location meaning like one location point with latitude and longtitude. So, here one could take the mean of all the latitude and longtitude values.
+* `maptype` and `source`: This is more upto your taste. You can find all the different options by `?get_map()`
+* `zoom`: This typically from the center point how much zoom do you need to acquire: In google maps, this is in the range of 3 (to a continent) to 21 (a house)
+
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+ll_means <- sapply(sisquoc[2:3], mean)
+sq_map2 <- get_map(location = as.array(ll_means),  maptype = "satellite", source = "google", zoom = 15)
+ggmap(sq_map2) + geom_point(data = sisquoc, mapping = aes(x = lon, y = lat), color = "red") 
+```
+
+![](assets/images/goog_map1.jpeg)
+
+In here, we just managed to get an average of all the latitudes and the longtiudes in our data points that would give a centroid value and grabbed the map around the centroid.
+
+Here we can also add some more information around these points
+
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+ggmap(sq_map2) + 
+  geom_point(data = sisquoc, mapping = aes(x = lon, y = lat), color = "red", size = 3) +
+  geom_text(data = sisquoc, aes(x = lon, y = lat, label = paste("  ", as.character(name), sep="")), angle = 60, hjust = 0, color = "yellow")
+
+```
+
+![](assets/images/goog_map2.jpeg)
+
+How about if we use the “terrain” type of map:
+
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+sq_map3 <- get_map(location = ll_means,  maptype = "terrain", source = "google", zoom = 15)
+
+ggmap(sq_map3) + 
+  geom_point(data = sisquoc, mapping = aes(x = lon, y = lat), color = "red", size = 3) +
+  geom_text(data = sisquoc, aes(x = lon, y = lat, label = paste("  ", as.character(name), sep="")), angle = 60, hjust = 0, color = "yellow")
+```
+
+![](assets/images/goog_map3.jpeg)
+
+## Continous data
+
+Let us take the data points from a bike ride and see how we can plot it better:
+
+```{r, warning=FALSE, message=FALSE}
+run_df <- read.csv("data/ggmap_data/running.csv")
+head(run_df)
+```
+
+
+Now let us try to plot the data:
+
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+run_means <- sapply(run_df[1:2], mean)
+runmap1 <- get_map(location = run_means, maptype = "terrain", source = "google", zoom = 14)
+
+ggmap(runmap1) + 
+  geom_path(data = run_df, aes(x = lon, y = lat, color = elevation), size = 3, lineend = "round") + 
+  scale_color_gradientn(colours = rev(rainbow(7)))
+
+```
+
+![](assets/images/goog_map4.jpeg)
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; getting the right zoom and position for the map is sort of trial and error. You can go to google maps to figure out where the center should be (right click and choose “What’s here?” to get the lat-long of any point)
+
+# Swedish map
+
+I found one of the simplest Swedish maps that could be used in R from Reinholdsson's [GitHub page](https://github.com/reinholdsson/swemaps)
+Here, I will show you how to install it in your R and then how to use it! 
+This package gives you the map-data for Sweden like the one we had with the world-map. The dtasets that are included are:
+
+* `map_ln`: regions polygon data
+* `map_kn`: municipalities polygon data
+* `cent_ln`: regions centroids data
+* `cent_kn`: municipalities centroids data
+
+## Map data-sets
+
+Let us take a quick look on how the `map_ln` data looks like:
+
+```{r, eval=FALSE}
+if (!requireNamespace("devtools", quietly = TRUE)){
+  install.packages("devtools", dependencies = TRUE)
+}
+
+if (!requireNamespace("swemaps", quietly = TRUE)){
+  devtools::install_github("reinholdsson/swemaps", dependencies = TRUE)
+}
+```
+
+
+```{r, warning=FALSE, message=FALSE}
+library(swemaps)
+head(map_ln)
+```
+
+And the `map_kn` data:
+
+```{r}
+head(map_kn)
+```
+
+It is quite clear from the beginning that `map_kn` is more detailed than the `map_ln`, as expected.
+
+```{r, warning=FALSE, message=FALSE}
+gg_swe <- ggplot(data = map_kn, aes(x=leaflet_long, y = leaflet_lat)) + 
+  geom_polygon(aes(group = group, fill = lnnamn), color = "white") +
+  coord_fixed(1.5)
+gg_swe
+```
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; Here we use `coord_fixed()` for the first time, this is to control the dimentions of the axis to keep the map for in a proper shape than make it looked streched in one axis or the other.
+
+## centroid data-sets
+
+Let us take a quick look on how and what actually is the `cent_ln` data contain.
+
+Here, let us take `cent_ln` for example:
+
+```{r}
+head(cent_ln)
+```
+
+As you can see, it is basically the centroid points of each of the län. And similarly, `cent_kn` contains the centroids of each kommun. We can for example use this datasets in this way: 
+
+```{r, warning=FALSE, message=FALSE, fig.height=8, fig.width=6}
+gg_cen <- ggplot() + 
+  geom_polygon(data = map_kn, aes(x=leaflet_long, y = leaflet_lat, group = group, fill = lnnamn)) +
+  coord_fixed(1.3) +
+   geom_text(data = cent_ln, aes(x=leaflet_long, y = leaflet_lat, label = lnnamn), color = "black", size = 3) +
+  theme(legend.position = "none") + 
+  theme_nothing()
+gg_cen
+```
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; It is important to remember that when you use multiple datsets, you can initate the plot by just `ggplot()` and add the "data" and "aesthetics" in each of the `geoms` you are plotting.
+
+## Particular region
+
+Now, similar to world-map let us try to extract a particular län, like our "Skåne".
+
+```{r, message=FALSE, warning=FALSE}
+scania <- subset(map_kn, lnnamn %in% c("Skåne län"))
+
+gg_scania <- ggplot(data = scania, aes(x=leaflet_long, y=leaflet_lat)) + 
+  geom_polygon(aes(group = group, fill = knnamn)) +
+  coord_fixed(1.1) +
+  theme_void()
+gg_scania
+```
+
+# Interactive maps
+
+Here I will show a quick demo of how to make interactive maps in R based on a package called `leaflet`. This is the reason why `swemaps` had the labels `leaflet_long` and `leaflet_lat`.
+
+There is quite a lot of things you can do with this! You can follow the tutorial [here](https://rstudio.github.io/leaflet/). But here I will show you some of the very simple things. 
+
+```{r, eval=FALSE}
+if (!requireNamespace("leaflet", quietly = TRUE)){
+  devtools::install_github("rstudio/leaflet", dependencies = TRUE)
+}
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+library(leaflet)
+m <- leaflet() %>% setView(lng = 13.1914692, lat = 55.7040588, zoom = 12)
+m %>% addTiles()
+```
+
+## Discrete data
+
+Now let us add some data to these maps. Let us first look into the discrete data that we have. 
+
+```{r, message=FALSE, warning=FALSE}
+m <- leaflet(data = sisquoc) %>% setView(lng = -119.75132, lat = 34.75312, zoom = 15)
+m %>% addTiles() %>%
+  addMarkers(~lon, ~lat, popup = ~as.character(name), label = ~as.character(name))
+```
+
+Now let us see if we can make it look prettier:
+
+```{r, message=FALSE, warning=FALSE}
+m <- leaflet(data = sisquoc) %>% setView(lng = -119.75132, lat = 34.75312, zoom = 15)
+m %>% addProviderTiles(providers$Esri.NatGeoWorldMap) %>%
+  addMarkers(~lon, ~lat, popup = ~as.character(name), label = ~as.character(name))
+```
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; Here you can choose the different kinds of base maps available from the function `addProviderTiles()`
+
+## Continous data
+
+Let us see, if we can add the GPS recordings to in a similar interactive map.
+
+```{r, message=FALSE, warning=FALSE}
+m <- leaflet(data = run_df) %>% setView(lng = 13.21943, lat = 55.73118, zoom = 14)
+m %>% addProviderTiles(providers$CartoDB.Voyager) %>%
+  addPolylines(~lon, ~lat)
+```
+
+Now, let us try to make something pretty with it.
+
+```{r, message=FALSE, warning=FALSE}
+
+m <- leaflet(data = run_df) %>% setView(lng = 13.21943, lat = 55.73118, zoom = 14)
+m %>% addProviderTiles(providers$CartoDB.Voyager) %>%
+  addPolylines(~lon, ~lat, color = "blue") %>%
+  addCircleMarkers(data = run_df[1,], ~lon, ~lat, stroke = FALSE, fillOpacity = 0.5, label = "Start", color = "green") %>%
+  addCircleMarkers(data = run_df[667,], ~lon, ~lat, stroke = FALSE, fillOpacity = 0.5, label = "End", color = "red") %>%
+  addMarkers(data = run_df[seq(50,667, 50), ], ~lon, ~lat, popup = ~as.character(elevation), label = ~as.character(time))
+```
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; Here I have used `seq()` function to create a sequence of numbers to pick up the GPS positions from equal intervals. Then using that function I subset the dataframe `run_df` in the last line of the command above. In the `addCircleMarkers()` function I only used the first and the last line of the dataframe to specify the start and the end.
+
+
+
+
+# Session info
+
+```{r, fold.output=FALSE, fold.plot=FALSE}
+sessionInfo()
+```
+
+***
+
