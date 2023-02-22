@@ -29,16 +29,6 @@ count: false
 ```{r,echo=FALSE,child="assets/header-slide.Rmd"}
 ```
 
-<!-- ---
----
----
----
- Only edit title, subtitle & author above this ---
----
----
----
- -->
-
 ```{r,include=FALSE}
 # load the packages you need
 library(dplyr)
