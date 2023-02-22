@@ -81,10 +81,10 @@ packages:
   - ggimage
   - shiny
  packages_bioc_student:
-  - ggtree
   - treeio
  packages_github_student:
   - reinholdsson/swemaps
+  - YuLab-SMU/ggtree
  packages_cran_repo:
   - bookdown
   - captioner
