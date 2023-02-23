@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Lokesh Mano • 23-Feb-2023" />
+
+
+<title>ggplot: Part I</title>
+
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link id="font-awesome-1-attachment" rel="attachment" href="site_libs/font-awesome-5.1.0/fonts/fontawesome-webfont.ttf"/>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="assets/lab.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+#TOC {
+  display: none !important;
+}
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div id="header">
+
+
+
+
+
+<h4 class="author"><b>Lokesh Mano</b> • 23-Feb-2023</h4>
+
+</div>
+
+
+<!-- rmd lab header -->
+<p><br></p>
+<div id="base-vs-grid-graphics" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Base vs grid graphics</h1>
+<div id="base" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Base</h2>
+<p>R is an excellent tool for creating graphs and plots. The graphic capabilities and functions provided by the base R installation is called the base R graphics. Numerous packages exist to extend the functionality of base graphics.</p>
+<p>We can try out plotting a few of the common plot types. Let’s start with a scatterplot. First we create a <code>data.frame</code> as this is the most commonly used data object.</p>
+<pre class="r"><code>dfr &lt;- data.frame(a=sample(1:100,10),b=sample(1:100,10))</code></pre>
+<p>Now we have a dataframe with two continuous variables that can be plotted against each other.</p>
+<pre class="r"><code>plot(dfr$a,dfr$b)</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-5-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p>This is probably the simplest and most basic plots. We can modify the x and y axis labels.</p>
+<pre class="r"><code>plot(dfr$a,dfr$b,xlab=&quot;Variable a&quot;,ylab=&quot;Variable b&quot;)</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-6-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p>We can change the point to a line.</p>
+<pre class="r"><code>plot(dfr$a,dfr$b,xlab=&quot;Variable a&quot;,ylab=&quot;Variable b&quot;,type=&quot;b&quot;)</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-7-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p>Let’s add a categorical column to our dataframe.</p>
+<pre class="r"><code>dfr$cat &lt;- rep(c(&quot;C1&quot;,&quot;C2&quot;),each=5)</code></pre>
+<p>And then colour the points by category.</p>
+<pre class="r"><code># subset data
+dfr_c1 &lt;- subset(dfr,dfr$cat == &quot;C1&quot;)
+dfr_c2 &lt;- subset(dfr,dfr$cat == &quot;C2&quot;)
+
+plot(dfr_c1$a,dfr_c1$b,xlab=&quot;Variable a&quot;,ylab=&quot;Variable b&quot;,col=&quot;red&quot;,pch=1)
+points(dfr_c2$a,dfr_c2$b,col=&quot;blue&quot;,pch=2)
+
+legend(x=&quot;topright&quot;,legend=c(&quot;C1&quot;,&quot;C2&quot;),
+       col=c(&quot;red&quot;,&quot;blue&quot;),pch=c(1,2))</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-9-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p>Let’s create a barplot.</p>
+<pre class="r"><code>ldr &lt;- data.frame(a=letters[1:10],b=sample(1:50,10))
+barplot(ldr$b,names.arg=ldr$a)</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-10-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+</div>
+<div id="grid" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Grid</h2>
+<p>Grid graphics have a completely different underlying framework compared to base graphics. Generally, base graphics and grid graphics cannot be plotted together. The most popular grid-graphics based plotting library is <strong>ggplot2</strong>.</p>
+<p>Let’s create the same plot as before using <strong>ggplot2</strong>. Make sure you have the package installed.</p>
+<pre class="r"><code>library(ggplot2)
+
+ggplot(dfr)+
+  geom_point(mapping = aes(x=a,y=b,colour=cat))+
+  labs(x=&quot;Variable a&quot;,y=&quot;Variable b&quot;)</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-11-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p>It is generally easier and more consistent to create plots using the ggplot2 package compared to the base graphics.</p>
+<p>Let’s create a barplot as well.</p>
+<pre class="r"><code>ggplot(ldr,aes(x=a,y=b))+
+  geom_col()</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-12-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+</div>
+<div id="saving-images" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Saving images</h2>
+<p>Let’s take a look at saving plots.</p>
+<p><i class="fas fa-exclamation-circle"></i> Note   This part is just to give you a quick look into how you can save images from Rstudio quickly. The different format of images will be explained in a lecture tomorrow.</p>
+<div id="base-graphics" class="section level3" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> Base graphics</h3>
+<p>The general idea for saving plots is open a graphics device, create the plot and then close the device. We will use <strong>png</strong> here. Check out <code>?png</code> for the arguments and other devices.</p>
+<pre class="r"><code>dfr &lt;- data.frame(a=sample(1:100,10),b=sample(1:100,10))
+
+png(filename=&quot;plot-base.png&quot;)
+plot(dfr$a,dfr$b)
+dev.off()</code></pre>
+</div>
+<div id="ggplot2" class="section level3" number="1.3.2">
+<h3><span class="header-section-number">1.3.2</span> ggplot2</h3>
+<p>The same idea can be applied to ggplot2, but in a slightly different way. First save the file to a variable, and then export the plot.</p>
+<pre class="r"><code>p &lt;- ggplot(dfr,aes(a,b)) + geom_point()
+
+png(filename=&quot;plot-ggplot-1.png&quot;)
+print(p)
+dev.off()</code></pre>
+<p><i class="fas fa-lightbulb"></i> Tip  
+<strong>ggplot2</strong> also has another easier helper function to export images.</p>
+<pre class="r"><code>ggsave(filename=&quot;plot-ggplot-2.png&quot;,plot=p)</code></pre>
+</div>
+</div>
+</div>
+<div id="ggplot-basics" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Ggplot basics</h1>
+<p>Make sure the library is loaded in your environment.</p>
+<pre class="r"><code>library(ggplot2)</code></pre>
+<div id="geoms" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Geoms</h2>
+<p>In the previous section we saw very quickly how to use <code>ggplot</code>. Let’s take a look at it again a bit more carefully. For this let’s first look into a simple data that is available in R. We use the <code>iris</code> data for this to start with.</p>
+<p>This dataset has four continuous variables and one categorical variable. It is important to remember about the data type when plotting graphs</p>
+<pre class="r"><code>data(&quot;iris&quot;)
+head(iris)</code></pre>
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa</code></pre>
+<p>When we initiate the ggplot object using the data, it just creates a blank plot!</p>
+<pre class="r"><code>ggplot(iris) </code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-18-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p>Now we can specify what we want on the x and y axes using aesthetic mapping. And we specify the geometric using <code>geoms</code>. <i class="fas fa-exclamation-circle"></i> Note   that the variable names do not have double quotes <code>""</code> like in base plots.</p>
+<pre class="r"><code>ggplot(data=iris)+
+  geom_point(mapping=aes(x=Petal.Length,y=Petal.Width))</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-19-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<div id="multiple-geoms" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Multiple geoms</h3>
+<p>Further geoms can be added. For example let’s add a regression line. When multiple geoms with the same aesthetics are used, they can be specified as a common mapping.
+<i class="fas fa-exclamation-circle"></i> Note   that the order in which geoms are plotted depends on the order in which the geoms are supplied in the code. In the code below, the points are plotted first and then the regression line.</p>
+<pre class="r"><code>ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point()+
+  geom_smooth(method=&quot;lm&quot;)</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-20-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p>There are many other <code>geoms</code> and you can find most of them here in this <a href="assets/data-visualization-1.pdf" target="_blank">cheatsheet</a></p>
+</div>
+<div id="gene-counts-data" class="section level3" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Gene counts data</h3>
+<p>Let’s also try to use <code>ggplot</code> for a “more common” gene counts dataset. Let’s use the <code>merged_data_long</code> or the <code>gc_long</code> object we created in the earlier session.</p>
+<pre class="r"><code>ggplot(data = gc_long) +
+  geom_boxplot(mapping = aes(x = Sample_Name, y = log10(count +1)))</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-22-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p><i class="fas fa-exclamation-circle"></i> Note   You can notice that the ggplot sorts the <code>factors</code> or <code>vaiables</code> alpha-numerically, like in the case above with <code>Sample_Name</code>.</p>
+<p><i class="fas fa-lightbulb"></i> Tip   There is a trick that you can use to give the order of variables manually. The example is shown below:</p>
+<pre class="r"><code>gc_long$Sample_Name &lt;- factor(gc_long$Sample_Name, levels = c(&quot;t0_A&quot;,&quot;t0_B&quot;,&quot;t0_C&quot;,&quot;t2_A&quot;,&quot;t2_B&quot;,&quot;t2_C&quot;,&quot;t6_A&quot;,&quot;t6_B&quot;,&quot;t6_C&quot;,&quot;t24_A&quot;,&quot;t24_B&quot;,&quot;t24_C&quot;))
+ggplot(data = gc_long) +
+  geom_boxplot(mapping = aes(x = Sample_Name, y = log10(count + 1)))</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-23-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+</div>
+</div>
+<div id="colors" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Colors</h2>
+<div id="iris-data" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Iris data</h3>
+<p>First, if we look at the <code>iris</code> data, we can use the categorical column <code>Species</code> to color the points. The color aesthetic is used by geom_point and geom_smooth. Three different regression lines are now drawn. Notice that a legend is automatically created</p>
+<pre class="r"><code>ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width,color=Species))+
+  geom_point()+
+  geom_smooth(method=&quot;lm&quot;)</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-24-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p>If we wanted to keep a common regression line while keeping the colors for the points, we could specify color aesthetic only for <code>geom_point</code>.</p>
+<pre class="r"><code>ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Species))+
+  geom_smooth(method=&quot;lm&quot;)</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-25-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+</div>
+<div id="gc-data" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> GC data</h3>
+<p>Similarly, we can do the same with the gene counts data.</p>
+<pre class="r"><code>ggplot(data = gc_long) +
+  geom_boxplot(mapping = aes(x = Sample_Name, y = log10(count + 1), color = Time))</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-26-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p><i class="fas fa-lightbulb"></i> Tip   We can also use the <code>fill</code> aesthetic to give it a better look.</p>
+<pre class="r"><code>ggplot(data = gc_long) +
+  geom_boxplot(mapping = aes(x = Sample_Name, y = log10(count + 1), fill = Time))</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-27-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+</div>
+<div id="discrete-colors" class="section level3" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Discrete colors</h3>
+<p>We can change the default colors by specifying new values inside a scale.</p>
+<pre class="r"><code>ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Species))+
+  geom_smooth(method=&quot;lm&quot;)+
+  scale_color_manual(values=c(&quot;red&quot;,&quot;blue&quot;,&quot;green&quot;))</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-28-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p><i class="fas fa-lightbulb"></i> Tip   To specify manual colors, you could specify by their <code>names</code> or their <code>hexadecimal codes</code>. For example, you can choose the colors based on <code>names</code> from an online source like in this <a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf" target="_blank">cheatsheet</a> or you can use the <code>hexadecimal code</code> and choose it from a source like <a href="https://htmlcolorcodes.com/" target="_blank">here</a>. I personally prefer the <code>hexa</code> based options for manual colors.</p>
+</div>
+<div id="continuous-colors" class="section level3" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> Continuous colors</h3>
+<p>We can also map the colors to a continuous variable. This creates a color bar legend item.</p>
+<pre class="r"><code>ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Sepal.Width))+
+  geom_smooth(method=&quot;lm&quot;)</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-29-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p><i class="fas fa-lightbulb"></i> Tip   Here, you can also choose different <code>palettes</code> for choosing the right continuous pallet. There are some common packages of palettes that are used very often. <a href="https://www.r-graph-gallery.com/38-rcolorbrewers-palettes.html" target="_blank">RColorBrewer</a> and <a href="https://github.com/karthik/wesanderson" target="_blank">wesanderson</a>, if you are fan of his choice of colors ;)</p>
+<pre class="r"><code>library(wesanderson)
+ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Sepal.Width))+
+  geom_smooth(method=&quot;lm&quot;) +
+  scale_color_gradientn(colours = wes_palette(&quot;Moonrise3&quot;))</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-30-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p><i class="fas fa-lightbulb"></i> Tip   You can also use simple R base color palettes like <code>rainbow()</code> or <code>terrain.colors()</code>. Use <code>?</code> and look at these functions to see, how to use them.</p>
+</div>
+</div>
+<div id="aesthetics" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Aesthetics</h2>
+<div id="aesthetic-parameter" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Aesthetic parameter</h3>
+<p>We can change the size of all points by a fixed amount by specifying size outside the aesthetic parameter.</p>
+<pre class="r"><code>ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Species),size=3)+
+  geom_smooth(method=&quot;lm&quot;)</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-31-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+</div>
+<div id="aesthetic-mapping" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Aesthetic mapping</h3>
+<p>We can map another variable as size of the points. This is done by specifying size inside the aesthetic mapping. Now the size of the points denote <code>Sepal.Width</code>. A new legend group is created to show this new aesthetic.</p>
+<pre class="r"><code>ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Species,size=Sepal.Width))+
+  geom_smooth(method=&quot;lm&quot;)</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-32-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+</div>
+</div>
+</div>
+<div id="histogram" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Histogram</h1>
+<p>Here, as a quick example, we will try to make use of the different combinations of <code>geoms</code>, <code>aes</code> and <code>color</code> in simple plots.</p>
+<p>Let’s take a quick look at some of widely used functions like histograms and density plots in <code>ggplot</code>. Intuitively, these can be drawn with <code>geom_histogram()</code> and <code>geom_density()</code>. Using <code>bins</code> and <code>binwidth</code> in <code>geom_histogram()</code>, one can customize the histogram.</p>
+<pre class="r"><code>ggplot(data=iris,mapping=aes(x=Sepal.Length))+
+  geom_histogram()</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-33-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<div id="density" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Density</h2>
+<p>Let’s look at the sample plot in density.</p>
+<pre class="r"><code>ggplot(data=iris,mapping=aes(x=Sepal.Length))+
+  geom_density()</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-34-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p>The above plot is not very informative, let’s see how the different species contribute:</p>
+<pre class="r"><code>ggplot(data=iris,mapping=aes(x=Sepal.Length))+
+  geom_density(aes(fill = Species), alpha = 0.8)</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-35-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p><i class="fas fa-exclamation-circle"></i> Note   The <code>alpha</code> option inside <code>geom_density</code> controls the transparency of the plot.</p>
+</div>
+</div>
+<div id="exercise" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Exercise</h1>
+<p><i class="fas fa-clipboard-list"></i> Task   Make <code>boxplots</code> similar to the one we did here in this exercise for the other three counts (<code>counts_filtered.txt</code>, <code>counts_vst.txt</code> and <code>counts_deseq2.txt</code>).</p>
+<p><i class="fas fa-lightbulb"></i> Tip   You can save the plots themselves as R objects. You will get the plot by just calling those objects. You can then add layers to those objects. An example is shown below:</p>
+<pre class="r"><code>plot_obj_1 &lt;- ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Sepal.Width))+
+  geom_smooth(method=&quot;lm&quot;) 
+plot_obj_1</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-36-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<pre class="r"><code>plot_obj_2 &lt;- plot_obj_1 +
+  scale_color_gradientn(colours = wes_palette(&quot;Moonrise3&quot;))
+plot_obj_2</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_gg1_files/figure-html/unnamed-chunk-37-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p>This way, you can create different plot objects for the different counts, we will use them in the later exercises.</p>
+</div>
+<div id="session-info" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Session info</h1>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 4.1.3 (2022-03-10)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Ubuntu 18.04.6 LTS
+## 
+## Matrix products: default
+## BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
+## LAPACK: /usr/lib/x86_64-linux-gnu/libopenblasp-r0.2.20.so
+## 
+## locale:
+##  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
+##  [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
+##  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
+## [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] wesanderson_0.3.6      forcats_1.0.0          stringr_1.5.0         
+##  [4] purrr_1.0.1            readr_2.1.4            tidyr_1.3.0           
+##  [7] tibble_3.1.8           tidyverse_2.0.0        reshape2_1.4.4        
+## [10] ggplot2_3.4.1          formattable_0.2.1      kableExtra_1.3.4      
+## [13] dplyr_1.1.0            lubridate_1.9.2        leaflet_2.1.1         
+## [16] yaml_2.3.7             fontawesome_0.5.0.9000 captioner_2.2.3       
+## [19] bookdown_0.32          knitr_1.42            
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_1.0.10       svglite_2.1.1     lattice_0.20-45   digest_0.6.31    
+##  [5] utf8_1.2.3        R6_2.5.1          plyr_1.8.8        evaluate_0.20    
+##  [9] httr_1.4.4        highr_0.10        pillar_1.8.1      rlang_1.0.6      
+## [13] rstudioapi_0.14   jquerylib_0.1.4   Matrix_1.5-3      rmarkdown_2.20   
+## [17] labeling_0.4.2    splines_4.1.3     webshot_0.5.4     htmlwidgets_1.6.1
+## [21] munsell_0.5.0     compiler_4.1.3    xfun_0.37         pkgconfig_2.0.3  
+## [25] systemfonts_1.0.4 mgcv_1.8-39       htmltools_0.5.4   tidyselect_1.2.0 
+## [29] fansi_1.0.4       viridisLite_0.4.1 tzdb_0.3.0        withr_2.5.0      
+## [33] grid_4.1.3        nlme_3.1-155      jsonlite_1.8.4    gtable_0.3.1     
+## [37] lifecycle_1.0.3   magrittr_2.0.3    scales_1.2.1      cli_3.6.0        
+## [41] stringi_1.7.12    cachem_1.0.6      farver_2.1.1      xml2_1.3.3       
+## [45] bslib_0.4.2       ellipsis_0.3.2    generics_0.1.3    vctrs_0.5.2      
+## [49] tools_4.1.3       glue_1.6.2        hms_1.1.2         crosstalk_1.2.0  
+## [53] fastmap_1.1.0     timechange_0.2.0  colorspace_2.1-0  rvest_1.0.3      
+## [57] sass_0.4.5</code></pre>
+<hr />
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
