@@ -9,7 +9,7 @@ hooks = knitr::knit_hooks$get()
 hook_foldable = function(type) {
   force(type)
   function(x, options) {
-    res = hooks[[type]](x, options)
+    res = hooks[[type]](x, options) # nolint
     
     if (isFALSE(options[[paste0("fold.", type)]])) return(res)
     
