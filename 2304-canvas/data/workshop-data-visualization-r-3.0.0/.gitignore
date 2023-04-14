@@ -1,0 +1,10 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Release directory 2109
+2204/
+
+# Admin for particular release
+#2109_Admin/
