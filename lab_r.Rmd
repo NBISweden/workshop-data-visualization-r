@@ -61,7 +61,7 @@ Input and output of data and images is an important aspect with data analysis.
 
 Data can come in a variety of formats which needs to be read into R and converted to an R data type.
 
-Text files are the most commonly used input. Text files can be read in using the function `read.table`. We have a sample file to use: **iris.txt**.
+Text files are the most commonly used input. Text files can be read in using the function `read.table`. We have a sample file to use: **metadata.csv**.
 
 ```{r}
 dfr <- read.table("data/metadata.csv",sep = ";", header=TRUE,stringsAsFactors=F)
