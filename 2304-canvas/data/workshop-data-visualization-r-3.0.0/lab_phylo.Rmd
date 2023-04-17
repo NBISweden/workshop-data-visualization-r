@@ -1,0 +1,369 @@
+---
+title: "Phylogenetic Trees"
+subtitle: "Workshop on Data Visualization in R"
+author: "`r paste0('<b>Lokesh Mano</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
+---
+
+```{r, include=FALSE}
+hooks = knitr::knit_hooks$get()
+hook_foldable = function(type) {
+  force(type)
+  function(x, options) {
+    res = hooks[[type]](x, options)
+    
+    if (isFALSE(options[[paste0("fold.", type)]])) return(res)
+    
+    paste0(
+      "<details><summary>", type, "</summary>\n\n",
+      res,
+      "\n\n</details>"
+    )
+  }
+}
+knitr::knit_hooks$set(
+  output = hook_foldable("output"),
+  plot = hook_foldable("plot")
+)
+```
+
+```{r,child="assets/header-lab.Rmd"}
+```
+
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+library(ggplot2)
+library(reshape2)
+library(tidyverse)
+```
+
+For this course, I have used one of my very simple tree from a few different organisms within the Archaea superkingdom. More specifically, it is the concatenated ribosomal protein tree within archaea, with representatives from the different Phyla: Asgard archaea (Thorarchaeota,  Odinarchaeota, Lokiarchaeota and Heimdallarchaeota), TACK, Euryarchaeota and DPANN. The maximum likelihood phylogeny was reconstructed in IQ-TREE with the LG+F+I+G4 model. The alignment was trimmed to 6,732 positions with the BMGE (Block Mapping and Gathering with Entropy) tool.
+
+# ggtree
+
+`ggtree` is an R package that extends ggplot2 for visualizating and annotating phylogenetic trees with their covariates and other associated data. `ggtree` in combination with `treeio` supports several file formats, including: 
+
+* `read.tree` for reading Newick files.
+* `read.phylip` for reading Phylip files.
+* `read.jplace` for reading Jplace files.
+* `read.nhx` for reading NHX files.
+* `read.beast` for parsing output of BEAST
+* `read.codeml` for parsing output of CODEML (rst and mlc files)
+* `read.codeml_mlc` for parsing mlc file (output of CODEML)
+* `read.hyphy` for parsing output of HYPHY
+* `read.jplace` for parsing jplace file including output from EPA and pplacer
+* `read.nhx` for parsing NHX file including output from PHYLODOG and RevBayes
+* `read.paml_rst` for parsing rst file (output of BASEML and CODEML)
+* `read.r8s` for parsing output of r8s
+* `read.raxml` for parsing output of RAxML
+
+# Reading treefile
+
+```{r, warning=FALSE, message=FALSE}
+library(ggtree)
+library(treeio)
+
+arch_tree <- read.newick("data/arch_newick.txt")
+arch_tree
+```
+
+Just like with `ggplot2` we created a basic canvas with `ggplot(...)` and added layers with `+geom_???()`, we can do the same here. The `ggtree` package gives us a `geom_tree()` function. Because `ggtree` is built on top of `ggplot2`, you get `ggplot2`’s default gray theme with white lines. You can override this with a theme from the `ggtree` package.
+
+Because you’ll almost always want to add a tree geom and remove the default background and axes, the `ggtree()` function is essentially a shortcut for `ggplot(...) + geom_tree() + theme_tree()`.
+
+```{r, warning=FALSE, message=FALSE}
+ggtree(arch_tree)
+#Same as:
+#ggplot(arch_tree) + geom_tree() + theme_tree()
+```
+
+One can also customize how the tree looks like, just as in `ggplot`
+
+```{r, warning=FALSE, message=FALSE}
+ggtree(arch_tree, branch.length="none", color="blue", size=2, linetype=3)
+```
+
+You can also use different orientations to show the tree.
+
+```{r, warning=FALSE, message=FALSE}
+ggtree(arch_tree, color="blue", layout = "circular")
+```
+
+# Geoms and annotation
+
+Just like in `ggplot()` you can add layers to the tree as `geoms`.
+
+```{r, warning=FALSE, message=FALSE}
+p <- ggtree(arch_tree)
+p + geom_tiplab(color = "blue") + theme_tree2()
+```
+
+Before we can go further into annotating the tree, we need to understand how ggtree is handling the tree structure internally. Some of the functions in ggtree for annotating clades need a parameter specifying the internal node number. To get the internal node number, user can use `geom_text` to display it, where the label is an aesthetic mapping to the “node variable” stored inside the tree object (think of this like the continent variable inside the gapminder object). 
+
+```{r, warning=FALSE, message=FALSE}
+p + geom_text(aes(label=node), hjust=-.3)
+```
+
+Another way to get the internal node number is using the function `MRCA()` which stands for Most Recent Common Ancestor. From the tree above, if you would like to get the number of the particular node that is common to all the "Lokiarchaea". You can do so like below:
+
+```{r}
+MRCA(arch_tree, .node1 = "Baja_Loki3", .node2 =  "Loki_CR4")
+```
+
+## Clade labeling
+
+Now, let us see how we can use this information to make it scientifically intuitive.
+
+```{r}
+p + 
+  geom_cladelabel(node=46, label="Lokiarchaeota", color="green")
+```
+
+ALternatively, we can also highlight an entire clade:
+
+```{r}
+p + 
+  geom_hilight(node=39, fill = "purple") +
+  geom_cladelabel(node=39, label="Thorarchaeota", color="purple") +
+  geom_hilight(node=46, fill = "green") +
+  geom_cladelabel(node=46, label="Lokiarchaeota", color="green")
+```
+
+## Taxa connections
+
+You can make connections to represent processes like gene transfer events on the tree.
+
+```{r}
+p + 
+  geom_hilight(node=30, fill = "orange") +
+  geom_cladelabel(node=30, label="Euryarchaeota", color="orange") +
+  geom_hilight(node=46, fill = "green") +
+  geom_cladelabel(node=46, label="Lokiarchaeota", color="green") +
+  geom_taxalink("Eury_Methanothermococcus_okinawensis", "Loki_GC14", color = "red")
+```
+
+## Group clades and OTUs
+
+You can group the different tips using the `groupOTU` function or you can group the tips based on a node using `groupClade` function. These groups you can then further use it for other geoms and so on.
+
+Let us say, we want to show the Asgrad archaea separately from the other archaea in this tree. One way to this would be:
+
+### groupOTU
+
+```{r, message=FALSE, warning=FALSE}
+arch_tree <- groupOTU(arch_tree, c("DPANN_Pace_RBG_13_36_9", "DPANN_Woese_UBA94",
+                                   "EURY_Thermoplasma_volcanium_GSS1", "Eury_Halobaculum_gomorrense", "Eury_Methanothermococcus_okinawensis", 
+                                   "TACK_Bathy_SMTZ80", "TACK_Nitrososphaera_viennensis", "TACK_Sulfolobus_islandicus_LS215"))
+
+ggtree(arch_tree, aes(color=group)) + geom_tiplab()
+
+```
+
+We can also get more detailed:
+
+```{r, message=FALSE, warning=FALSE}
+ cls <- list(Heimdallarchaeota = c("Heim_AB125", "Heim_LC2", "Heim_LC3"), 
+             Thorarchaeota = c("Baja_Thor", "Thor_AB25", "Thor_MP11T", "Thor_SMTZ45", "Thor_SMTZ_145", "Thor_MP8T", "Thor_MP9T", "Thor_SMTZ_183"), 
+             Lokiarchaeota = c("Loki_CR4", "Loki_GC14", "Baja_Loki2", "Baja_Loki1", "Baja_Loki3"),
+             Odinarchaeota = "Odin_LCB4")
+
+arch_tree <- groupOTU(arch_tree, cls)
+ggtree(arch_tree) + geom_tiplab(aes(color=group)) + 
+  scale_color_manual(values=c("black", rainbow(4)), labels = c("OutGroup", names(cls)))
+```
+
+One thing to notice hear that you can group tips from different clades together as well.
+
+```{r, message=FALSE, warning=FALSE}
+baja <- list(Baja = c("Baja_Thor", "Baja_Loki2", 
+                      "Baja_Loki1", "Baja_Loki3"))
+
+arch_tree <- groupOTU(arch_tree, baja)
+ggtree(arch_tree) + geom_tiplab(aes(color=group)) + 
+  scale_color_manual(values=c("black", "blue"), 
+                     labels = c("Public genomes", "Baja genomes"))
+```
+
+### groupClade
+
+Now, if we are only interested in showing the differences based on the clades, we can use `groupClade`.
+
+```{r, message=FALSE, warning=FALSE}
+arch_tree <- groupClade(arch_tree, c(39, 46, 35, 27))
+
+ggtree(arch_tree) + geom_tiplab(aes(color=group)) + 
+  scale_color_manual(values=c(rainbow(4), "black"), 
+                     labels = c("Odin", "Thor", "Loki", "Heimdall", "OutGroup"))
+```
+
+## Showing bootstrap values
+
+If you notice the tree object, it actually contains `node.label` that are bootstrap values. 
+
+```{r, message=FALSE, warning=FALSE}
+arch_tree
+```
+
+There are different ways we could show this values on the tree. For example,
+
+```{r, message=FALSE, warning=FALSE}
+ggtree(arch_tree) + geom_nodelab() + geom_tiplab() + theme_tree()
+```
+
+Now, let us say that you only want to show the values that are above 80, then you would have to do some trick here, like:
+
+```{r, message=FALSE, warning=FALSE}
+ggtree(arch_tree) + 
+  geom_nodepoint(aes(subset = as.numeric(label) > 80), size = 3) + 
+  geom_tiplab() + 
+  theme_tree()
+```
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; Notice that the `node.label` are in string, so must remember to use `as.numeric()` option be able to filter them to show them.
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; If the tree does not have bootstrap values with in the treefile, one can add them separately as a `data.frame` using `%<+%` function, as shown in the **Adding data to tree** section below.
+
+## Subsetting trees
+
+It is possible to specific `tips` from the tree using `drop.tip()` fuction. Let us say, we want to remove `Thor_SMTZ45` and `Baja_Loki1`, becuase of the reason that their genomes are not close to complete. We can do that by:
+
+```{r, message=FALSE, warning=FALSE}
+to_drop <- c("Thor_SMTZ45", "Baja_Loki1")
+arch_tree_reduced <- drop.tip(arch_tree, to_drop)
+arch_tree_reduced <- groupClade(arch_tree_reduced, c(37, 43, 33, 25))
+
+ggtree(arch_tree_reduced) + geom_tiplab(aes(color=group)) + 
+  scale_color_manual(values=c(rainbow(4), "black"), 
+                     labels = c("Odin", "Thor", "Loki", "Heimdall", "OutGroup"))
+```
+
+One can also subset a tree, by using the internal node number as shown in the exercises earlier. We can do this by using the `tree_subset()` function:
+
+```{r, message=FALSE, warning=FALSE}
+asg_tree <- tree_subset(arch_tree, node=34, levels_back=0)
+ggtree(asg_tree) + geom_tiplab() 
+```
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; The branch lengths and all the other information from the tree are maintained in the new object, when remove tips or subset a tree.
+
+# Adding data to tree
+
+In this part, let us try to see what kind of ways one could add metadata to a tree.
+
+## Tables
+
+```{r, message=FALSE, warning=FALSE}
+
+env_info <- read.table("data/tree_env.tsv", sep="\t", 
+                stringsAsFactor=F, row.names = 1, header = T)
+
+p <- ggtree(arch_tree) + 
+  geom_tiplab(aes(color=group)) +
+  scale_color_manual(values=c(rainbow(4), "black"), 
+    labels = c("Odin", "Thor", "Loki", "Heimdall", "OutGroup")) +
+  theme(legend.position = "none")
+
+gheatmap(p, env_info, offset = 4, width=1.5, 
+    colnames_angle = 90, colnames_offset_y = 5,
+    legend_title = "Environment sampled") 
+```
+
+Similarly we can plot a heatmap:
+
+```{r, message=FALSE, warning=FALSE}
+
+env_hmap <- read.table("data/tree_hmap.tsv", sep="\t", 
+                stringsAsFactor=F, row.names = 1, header = T)
+
+p <- ggtree(arch_tree) + 
+  geom_tiplab(aes(color=group)) +
+  scale_color_manual(values=c(rainbow(4), "black"), 
+    labels = c("Odin", "Thor", "Loki", "Heimdall", "OutGroup")) +
+  theme(legend.position = "none")
+
+gheatmap(p, env_hmap, offset = 4, width=1.5, 
+    colnames_angle = 90, colnames_offset_y = 5,
+    legend_title = "Environment sampled") 
+```
+
+## Images
+
+One can use [phylopic](http://phylopic.org/) database, which is part of the `ggtree` package to use many silhouette images of organisms. Here, we can see how one could add some of those images to a tree.
+
+```{r, eval=FALSE}
+if (!requireNamespace("ggimage", quietly = TRUE))
+    install.packages("ggimage", dependencies = TRUE )
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+library(ggimage)
+p <- ggtree(arch_tree) + 
+  geom_tiplab(aes(color=group)) +
+  scale_color_manual(values=c(rainbow(4), "black"), 
+    labels = c("Odin", "Thor", "Loki", "Heimdall", "OutGroup")) +
+  theme(legend.position = "none")
+
+p + geom_phylopic(size = Inf, image = "e4dde003-8a3b-4c9e-b4ed-1f6e4d894163", 
+                  color="steelblue", alpha = .3)
+```
+
+One can add specific images to the specific nodes as well. For this, we would include the `phylopic` information as a dataframe and which specific node number, should these images be matched. Then we could add this information to the `ggtree` object using `%<+%` function.
+
+```{r, message=FALSE, warning=FALSE}
+phylopic_info <- data.frame(node = c(39, 46, 35, 27, 20),
+                            phylopic = c("6b79f4f2-3c34-4130-9e60-4ba2fe68ff48",
+                                        "f04e96a5-8c19-4caf-af64-ee51e69431fd",
+                                        "e4dde003-8a3b-4c9e-b4ed-1f6e4d894163",
+                                        "3cabf30c-eed6-4dc4-824e-f7eac992f554",
+                                        "5254d3c6-6865-46c4-beaa-4a9306a50bc8"))
+
+p <- ggtree(arch_tree) + 
+  geom_tiplab(aes(color=group)) +
+  scale_color_manual(values=c(rainbow(4), "black"), 
+    labels = c("Odin", "Thor", "Loki", "Heimdall", "OutGroup")) +
+  theme(legend.position = "none")
+
+p %<+% phylopic_info + 
+  geom_nodelab(aes(image=phylopic), 
+               geom="phylopic", alpha=.8, color='steelblue') + 
+  geom_tiplab(aes(image=phylopic), 
+              geom="phylopic", alpha=.8, color='steelblue')
+
+
+```
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; Notice that for `Odin`, we had to use `geom_tiplab()` as it is a tip and not a node!
+
+There are more fun images in `phylopic` that one can use:
+
+```{r, message=FALSE, warning=FALSE}
+phylopic_info <- data.frame(node = c(39, 46, 35, 27, 38),
+                  phylopic = c("bac25f49-97a4-4aec-beb6-f542158ebd23",
+                               "f598fb39-facf-43ea-a576-1861304b2fe4",
+                               "aceb287d-84cf-46f1-868c-4797c4ac54a8",
+                               "0174801d-15a6-4668-bfe0-4c421fbe51e8",
+                               "72f2f854-f3cd-4666-887c-35d5c256ab0f"))
+
+p <- ggtree(arch_tree) + 
+  geom_tiplab(aes(color=group)) +
+  scale_color_manual(values=c(rainbow(4), "black"), 
+    labels = c("Odin", "Thor", "Loki", "Heimdall", "OutGroup")) +
+  theme(legend.position = "none")
+
+p %<+% phylopic_info + 
+  geom_nodelab(aes(image=phylopic), geom="phylopic", 
+               alpha=.8, color='steelblue') 
+
+
+```
+
+# Session info
+
+```{r, fold.output=FALSE, fold.plot=FALSE}
+sessionInfo()
+```
+
+***
+
