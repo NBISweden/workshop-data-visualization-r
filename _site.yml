@@ -11,6 +11,7 @@ assistants:
  - "MR: Markus Ringńer"
  - "LV: Louella Vasquez"
  - "JA: Juliana Assis"
+ - "YL: Yuan Li"
 
 favicon: assets/favicon.png
 exclude: ["docs","README.md","schedule.csv","LICENSE","LICENSE.md","scripts","tmprepo"]

@@ -58,10 +58,11 @@ gc_long$Replicate <- factor(gc_long$Replicate, levels = c("A","B","C"))
 We can create subplots using the faceting functionality.
 
 ```{r}
-ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+plot <- ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
   geom_point(aes(color=Sepal.Width))+
   geom_smooth(method="lm") + 
   facet_wrap(~Species)
+plot
 ```
 
 If we try the same with the gene counts data faceted by time.
