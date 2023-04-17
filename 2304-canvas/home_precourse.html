@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title> </title>
+
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.3.0/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.3.0/css/v4-shims.min.css" rel="stylesheet" />
+<link id="font-awesome-1-attachment" rel="attachment" href="site_libs/font-awesome-6.3.0/fonts/fontawesome-webfont.ttf"/>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="assets/lab.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div id="header">
+
+
+
+
+
+</div>
+
+
+<!-- rmd lab header -->
+<p><br></p>
+<div id="precourse" class="section level1 tabset tabset-fade">
+<h1>Precourse</h1>
+<p>These are absolutely necessary for the course, if you do not already have a working R environment with R studio:</p>
+<div class="instruction">
+<p><i class="fas fa-exclamation-circle"></i> Download and install the latest version of R from <a href="https://cloud.r-project.org/" target="_blank">r-project.org</a>. Install Rtools from <a href="https://cran.r-project.org/bin/" target="_blank">https://cran.r-project.org/bin/</a>. Rtools may be needed for installing new packages from source.</p>
+<p><i class="fas fa-exclamation-circle"></i> Install <a href="https://www.rstudio.com/products/rstudio/download/" target="_blank">RStudio</a>. RStudio provides you with tools like code editor with highlighting, project management, version control, package building, debugger, profiler and more.</p>
+<p><i class="fas fa-exclamation-circle"></i> install R packages necessary for this course:</p>
+<div class="block-title-parent">
+<div class="block-title small">
+R
+</div>
+<pre class="r"><code>install.packages(c(&quot;ggplot2&quot;,&quot;tidyverse&quot;,&quot;ggmap&quot;,&quot;pheatmap&quot;,&quot;devtools&quot;,&quot;cowplot&quot;,
+                   &quot;reshape2&quot;, &quot;dplyr&quot;, &quot;wesanderson&quot;, &quot;scales&quot;, &quot;ggthemes&quot;, &quot;ggrepel&quot;,
+                   &quot;ggpubr&quot;, &quot;gridExtra&quot;, &quot;gganimate&quot;, &quot;shiny&quot;, &quot;rsconnect&quot;,
+                   &quot;grid&quot;, &quot;shinythemes&quot;, &quot;colourpicker&quot;), dependencies = TRUE)
+
+if (!requireNamespace(&quot;BiocManager&quot;, quietly = TRUE))
+    install.packages(&quot;BiocManager&quot;)
+
+BiocManager::install(c(&quot;ggtree&quot;, &quot;treeio&quot;))</code></pre>
+</div>
+<div class="boxy boxy-lightbulb">
+<p><i class="fas fa-exclamation-circle"></i> To make sure that the installations went well, we will try to make a quick plot using the packages you just installed. In this plot, we try to see if there is correlation plot between <code>BMI</code> and average <code>no.of steps</code> taken by some volunteers per day. The data and the code for plotting is available <a href="./data/Installation_check/packages_check.zip" target="_blank">here</a>. Just <code>knit</code> the <code>Rmarkdown</code> file and you should see correlation the plot, if all the packages are installed properly.</p>
+</div>
+</div>
+<p>The following are the steps that are recommended for the course participants.</p>
+<ul>
+<li><p>Although you would have a small session on how to handle data in R, it is advisable for you to freshen up your memory on data-types such as <code>data.frame</code>, <code>matrix</code> and <code>read/write files</code> and so on.</p></li>
+<li><p>Some warm-up exercises in R if you are interested can be found <a href="https://immuntech.github.io/Bioinformatics_Workshop_ImmTech/Data/2019-10-15/R_exercise_Lokesh.html" target="_blank">here</a></p></li>
+<li><p>The data that is necessary for this course is available <a href="https://nbisweden.github.io/workshop-data-visualization-r/2204/data/data.zip" target="_blank">here</a> and it is important to check that the <code>file-tree</code> looks OK.</p></li>
+</ul>
+</div>
+<div id="hackmd" class="section level1">
+<h1>HackMD</h1>
+<p><a href="https://hackmd.io/BcwXnvdVS469hIHXnDSvJg?both" class="uri">https://hackmd.io/BcwXnvdVS469hIHXnDSvJg?both</a></p>
+<hr />
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+---
+title: "Content"
+output:
+  bookdown::html_document2:
+    toc: true
+    number_sections: true
+---
+
+<br>
+
+```{r,child="assets/header-lab.Rmd"}
+```
+
+# Course objectives
+
+In this course you will learn how to visualize your data in R.
+In particular, you will learn:
+ 
+- how to format the data necessary for ggplot 
+- how to make bar-charts, box-plots and others using ggplot
+- how to make PCA plots in ggplot
+- how to use R packages for heatmaps
+- how to plot data on maps using R (optional)
+- how to plot and handle phylogenetic trees in R (optional)
+- how to make interactive plots in R using Rshiny
+- how to host a Rshiny app in one of the available ser
+
+# Page Info
+
+This page contains links to different lectures (slides) and practical exercises (labs) that are part of this workshop. The links below are similar to that under [Schedule](home_schedule.html) but organised here by topic.
+
+<div class="boxy boxy-lightbulb">
+Input code blocks are displayed like shown below. The code language is displayed above the block. Shell scripts (**SH**) are to be executed in the linux terminal. **R** scripts are to be run in R either through the terminal, RGui or RStudio.
+
+```{sh,eval=FALSE,block.title=TRUE}
+command
+```
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; <i class="fas fa-lightbulb"></i> Tip &nbsp; <i class="fas fa-comments"></i> Discuss &nbsp; <i class="fas fa-clipboard-list"></i> Task
+</div>
+
+<br>
+
+This topic covers retrieving data needed for all the exercises in the entire course can be found in the following link. 
+
+[<i class="fas fa-link"></i> <span class="large">Downloading data</span>](lab_download.html)
+
+Some pre-course R warm-up below, if you fancy that:
+
+[<i class="fas fa-link"></i> <span class="large">R warmup</span>](https://immuntech.github.io/Bioinformatics_Workshop_ImmTech/Data/2019-10-15/R_exercise_Lokesh.html)
+
+# Introduction
+
+Most of the analyses is carried out in R and it will be useful to learn some basics in R that are very much necessary for this course. Even if you have learnt these things already, it is good to freshen up your memory. 
+
+[<i class="fas fa-link"></i> <span class="large">Introduction to R</span>](lab_r.html)  
+
+
+# Main lab
+
+## Data
+
+In most of the exercises, we will use RNA-seq data (Illumina short reads) from the human A431 cell line. It is an epidermoid carcinoma cell line which is often used to study cancer and the cell cycle, and as a sort of positive control of epidermal growth factor receptor (EGFR) expression. A431 cells express very high levels of EGFR, in contrast to normal human fibroblasts.
+
+The A431 cells were treated with gefinitib, which is an EGFR inhibitor and is used (under the trade name Iressa) as a drug to treat cancers with mutated and overactive EGFR. In the experiment, RNA was extracted at four time points: before the gefinitib treatment (t=0), and two, six and twenty-four hours after treatment (t=2, t=6, t=24, respectively), and sequenced using an Illumina HiSeq instrument in triplicates (thus there are 3x4=12 samples).
+
+This data is part of the transcriptomics course that is also given by NBIS. We will use some of the `counts table` that was generated in the course after different transformations like manual filtering for low counts, VST and DESeq2. You don't have to know what these exactly mean to do these exercises :) These are basically the same data at different stages of the transcriptomics analysis.    
+
+## ggplot part 1
+
+Below is the link for the basic plotting exercise. there will be some basic plotting exercises first using R base graphics and comparing them to the grid graphics using `ggplot2`. Followed by practicing the first basics in ggplot: geoms, colors and aesthetics.
+
+[<i class="fas fa-link"></i> <span class="large">Geoms, colors and aesthetics</span>](lab_gg1.html)
+
+## ggplot part 2
+
+Below is the link for the second exercise where you will look into facets, barplots and errorbars.
+
+[<i class="fas fa-link"></i> <span class="large">Facets, barplots and errorbars</span>](lab_gg2.html)
+
+## ggplot part 3
+
+Below is the link for the third exercise where you will look into facets, barplots and errorbars.
+
+[<i class="fas fa-link"></i> <span class="large">Axes, labels, legends and themes</span>](lab_gg3.html)
+
+## Combining plots
+
+In this part of the lab, we will look into: how one can combine different plots that we have made using different tools. Also to look into some of the advantages of `cowplot` and `ggpubr`.
+
+[<i class="fas fa-link"></i> <span class="large">Combining plots</span>](lab_gg4.html)
+
+## PCA and Heatmaps
+
+Here, we look into building PCA plots with `ggplot`. We will also look into making heatmaps with both `pheatmap` and `geom_tile` in `ggplot`.
+
+[<i class="fas fa-link"></i> <span class="large">PCA and Heatmap</span>](lab_pca_hmap.html)
+
+## Rshiny Part I
+
+Here, we get introduced to how to start writing a Rshiny code. So, naturally we start to play around with the `UI` mainly to see what kinds of different `UIs` that one can use.
+
+[<i class="fas fa-link"></i> <span class="large">Rshiny Part I</span>](lab_shiny1.html)
+
+## Rshiny Part II
+
+Here, we look into some of the important Rshiny functions that one can use in the `server` part of the shiny code like `reactivity`, `Error validation` and `Download` options in the server.
+
+[<i class="fas fa-link"></i> <span class="large">Rshiny Part II</span>](lab_shiny2.html)
+
+## Rshiny Covid App
+
+In this part, we learn how to write an app from scratch! So, we take the visualization of the covid data as an example from few countries that we would like to plot!
+
+[<i class="fas fa-link"></i> <span class="large">Rshiny Covid App</span>](lab_shiny3.html)
+
+# Optional exercises
+
+Below are specific exercises for people who are interested in specific topics.
+
+## Phylogenetic trees
+
+Below are some exercises in working with phylogenetic trees in R using mainly a package called `ggtree`.
+
+[<i class="fas fa-link"></i> <span class="large">Phylogenetic trees</span>](lab_phylo.html)
+
+## Map-data using ggmap
+
+Below is if you want publication-grade phylogenetic trees.
+
+[<i class="fas fa-link"></i> <span class="large">Map-data using ggmap</span>](lab_ggmap.html)
+
+# Solutions to exercises:
+
+Here I have compiled all the solutions for the different exercises in each of the sections:
+
+[<i class="fas fa-link"></i> <span class="large">Solutions</span>](solutions.html)
+
+# Rshiny
+
+This part contains all the labs and details to learn to make a simple Rshiny app.
+
+## Rshiny Intro
+
+This section contains the very simple terms of what an Rshiny app is and it's main components.
+
+[<i class="fas fa-link"></i> <span class="large">Rshiny Intro</span>](lab_shiny1.html)
+
+## Rshiny modules
+
+This section contains explanations and tutorials of some of the functions to modularize the Rshiny app's function in general.
+
+[<i class="fas fa-link"></i> <span class="large">Modularizing Rshiny</span>](lab_shiny2.html)
+
+## A simple app
+
+This section basically contains how to go about starting and making a simple Rshiny app.
+
+[<i class="fas fa-link"></i> <span class="large">A simple app</span>](lab_shiny3.html)
+
+# Lectures in PDF
+
+- [Introduction to R](assets/Introduction_to_R.pdf)
+- [Overview R](assets/Overview_R.pdf)
+- [ggplot Part I](assets/ggplot_Part_I.pdf)
+- [ggplot Part II](assets/ggplot_Part_II.pdf)
+- [ggplot Part III](assets/ggplot_Part_III.pdf)
+- [Lecture on Images](assets/Vector_Bitmap_Images.pdf)
+- [ggplot Part IV](assets/ggplot_Part_IV.pdf)
+- [Rshiny Part I](assets/Introduction_to_R_Shiny.pdf)
+- [Rshiny Part II](assets/RShiny-Part_II.pdf)
+- [Rshiny Part III](assets/RShiny-Deployments.pdf)
+
+# Extra Tutorial for ggplot
+
+In the following link, you can find several different ways to use `ggplot` and obtain incredible visualizations of the data. Depending on the kind of data you have and the kind of visualization you would like to see, you can follow it on the table contents in this following page:
+
+[<i class="fas fa-link"></i> <span class="large">Top 50 ggplot2 Visualizations</span>](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)
+
+***
