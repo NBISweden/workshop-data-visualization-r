@@ -1,8 +1,8 @@
 date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_room
 17/04/2023;Retina D227;09:00;09:15;Welcome;MR;;Intro_of_NBIS.pdf;;https://link.mazemap.com/NQj3ZZyI
-;;09:15;10:00;R Introduction lecture;LM;;slide_r_intro.html;;
+;;09:15;10:00;Data format;LM;;slide_r_intro.html;;
 ;;10:00;10:15;Coffee Break;;;;;
-;;10:15;11:30;R Introduction Lab;LM;MR,JA;slide_overview_r.html;lab_r.html;
+;;10:15;11:30;Data Manipulation;LM;MR,JA;slide_overview_r.html;lab_r.html;
 ;;11:30;12:00;Lecture on grammar, geoms, colors and aesthetics;LM;;slide_gg1.html;;
 ;;12:00;13:00;Lunch;;;;;
 ;;13:00;13:50;Lab on grammar, geoms, colors and aesthetics;LM;MR,JA;;lab_gg1.html;
