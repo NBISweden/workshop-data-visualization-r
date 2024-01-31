@@ -1,17 +1,16 @@
 name: workshop-data-visualization-r
 # output directory used on gh-pages branch. format: YYMM
-output_dir: 2304
+output_dir: 2404
 # used site-wide wherever uppmax project ids are used
 uppmax_project: XXXXXXXX
 uppmax_res_1: XXXXXX
 # location options are linkoping, lund, umea or uppsala
-location: lund
+location: solna
 assistants:
  - "LM: Lokesh Mano"
  - "MR: Markus Ringńer"
  - "LV: Louella Vasquez"
- - "JA: Juliana Assis"
- - "YL: Yuan Li"
+ - "KK: Katja Kozjek"
 
 favicon: assets/favicon.png
 exclude: ["docs","README.md","schedule.csv","LICENSE","LICENSE.md","scripts","tmprepo"]

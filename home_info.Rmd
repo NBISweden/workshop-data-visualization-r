@@ -48,6 +48,13 @@ if(loc=="linkoping") {
                     description="Use the [Östgötatrafiken website](https://www.ostgotatrafiken.se) or the [Östgötatrafiken app](https://www.ostgotatrafiken.se/kundservice/hur-kan-vi-hjalpa-dig/nya-appen/) for bus services around Linköping. Tickets can be bought in the app, or you can by a travel card in advance which you can load with tickets as described [here](https://www.ostgotatrafiken.se/biljetter/kopa-biljett/utan-app/). From Linköping Resecentrum, take bus 12 (towards Lambohov) or bus 543 (towards Slaka) and get off at the stop *Mäster Mattias väg*.",
                     stringsAsFactors=F)
 }
+if(loc=="solna") {
+  dfr <- data.frame(venue_lat=59.350451,
+                    venue_lon=18.023393,
+                    venue_address="<b>SciLifeLab</b>, Tomtebodavägen 23, 171 65 Solna",
+                    description="Use the [Stockholms Län trafiken website](https://www.sl.se) or the [Stockholms Län trafiken app](https://sl.se/sl/om-sl/om-sl-appen) for bus services around Stockholm. You can find more information about the site [here](https://www.scilifelab.se/community-pages/at-campus-solna/).",
+                    stringsAsFactors=F)
+}
 ```
 
 ```{r,eval=TRUE,echo=FALSE,chunk.title=NULL}
