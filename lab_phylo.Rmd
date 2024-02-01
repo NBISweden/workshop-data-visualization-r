@@ -241,7 +241,7 @@ ggtree(arch_tree_reduced) + geom_tiplab(aes(color=group)) +
 One can also subset a tree, by using the internal node number as shown in the exercises earlier. We can do this by using the `tree_subset()` function:
 
 ```{r, message=FALSE, warning=FALSE}
-asg_tree <- tree_subset(arch_tree, node=34, levels_back=0)
+asg_tree <- treeio::tree_subset(arch_tree, node=34, levels_back=0)
 ggtree(asg_tree) + geom_tiplab() 
 ```
 
