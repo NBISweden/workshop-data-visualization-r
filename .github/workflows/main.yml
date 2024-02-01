@@ -73,6 +73,10 @@ jobs:
           Rscript -e 'if(!is.null(yaml::read_yaml("_site.yml")$packages$packages_github_repo)) remotes::install_github(yaml::read_yaml("_site.yml")$packages$packages_github_repo)'
           Rscript -e 'if(!is.null(yaml::read_yaml("_site.yml")$packages$packages_github_student)) remotes::install_github(yaml::read_yaml("_site.yml")$packages$packages_github_student)'
           Rscript -e 'installed.packages()'
+          Rscript -e 'url <- "https://cran.r-project.org/src/contrib/Archive/captioner/captioner_2.2.3.tar.gz"'
+          Rscript -e 'pkgFile <- "captioner_2.2.3.tar.gz"'
+          Rscript -e 'download.file(url = url, destfile = pkgFile)'
+          Rscript -e 'install.packages(pkgs=pkgFile, type="source", repos=NULL)'
           echo "R directory size:"
           du -sh ${{ env.R_LIBS_USER }}
       - name: Render site, pull repo, copy folder, create index, push repo
