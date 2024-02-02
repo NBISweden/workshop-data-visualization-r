@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Lokesh Mano • 02-Feb-2024" />
+
+
+<title>Maps</title>
+
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link id="font-awesome-1-attachment" rel="attachment" href="site_libs/font-awesome-6.4.2/fonts/fontawesome-webfont.ttf"/>
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="site_libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="site_libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="site_libs/leaflet-binding-2.2.1/leaflet.js"></script>
+<script src="site_libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script>
+<script src="site_libs/leaflet-providers-plugin-2.2.1/leaflet-providers-plugin.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="assets/lab.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+#TOC {
+  display: none !important;
+}
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"><img src="assets/logo.svg" id="logo" style="height:22px;margin:0;"/></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="home_schedule.html">Schedule</a>
+</li>
+<li>
+  <a href="home_content.html">Content</a>
+</li>
+<li>
+  <a href="home_precourse.html">Precourse</a>
+</li>
+<li>
+  <a href="home_info.html">Info</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Maps</h1>
+<h3 class="subtitle">Workshop on Data Visualization in R</h3>
+<h4 class="author"><b>Lokesh Mano</b> • 02-Feb-2024</h4>
+
+</div>
+
+
+<!-- rmd lab header -->
+<p><br></p>
+<div id="making-maps-with-r" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Making maps with R</h1>
+<p>To do this exercise, we will use a separate dataset and it can be downloaded <a href="data/ggmap_data/ggmap_data.zip">here</a>.</p>
+<p>If you would like to keep the data tree same as the exercises here, you can extract the zip file inside the data directory. So, the file tree would like this:</p>
+<ul>
+<li><span style="color:blue">ggplot_geneco_course</span>
+<ul>
+<li><span style="color:blue">data</span>
+<ul>
+<li>archaea_nexus.txt</li>
+<li>arch_newick.txt</li>
+<li>counts_deseq2.txt</li>
+<li>counts_filtered.txt</li>
+<li>counts_raw.txt</li>
+<li>counts_vst.txt</li>
+<li>human_biomaRt_annotation.csv</li>
+<li>metadata.csv</li>
+<li>Time_t24_vs_t0.txt</li>
+<li>Time_t2_vs_t0.txt</li>
+<li>Time_t6_vs_t0.txt</li>
+<li>tree_env.tsv</li>
+<li>tree_hmap.tsv</li>
+<li><span style="color:blue">ggmap_data</span>
+<ul>
+<li>running.csv</li>
+<li>sisquoc-points.txt</li>
+<li>world_population.tsv</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Before we go into <code>ggmap</code> package and its options, let us take a quick look about some of the other options available for making maps in R.</p>
+<div id="maps-and-mapdata" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> maps and mapdata</h2>
+<p>Here we will see, how some of the traditional R packages <code>maps</code> and <code>mapdata</code> were used and how we could implement the information from these packages into <code>ggplot</code>. Some pointers about these packages are:</p>
+<ul>
+<li>The maps package contains a lot of outlines of continents, countries, states, and counties that have been with R for a long time.</li>
+<li>The mapdata package contains a few more, higher-resolution outlines.</li>
+<li>The maps package comes with a plotting function, but, we will opt to use ggplot2 to plot the maps in the maps package.</li>
+<li>Recall that ggplot2 operates on data frames. Therefore we need some way to translate the maps data into a data frame format the ggplot can use.</li>
+</ul>
+<p>Let us start with how to install these packages and look at their simple functions:</p>
+<pre class="r"><code>if (!requireNamespace(&quot;maps&quot;, quietly = TRUE)){
+  install.packages(&quot;maps&quot;, dependencies = TRUE)
+}
+
+if (!requireNamespace(&quot;mapdata&quot;, quietly = TRUE)){
+  install.packages(&quot;mapdata&quot;, dependencies = TRUE)
+}</code></pre>
+<pre class="r"><code>library(maps)
+library(mapdata)
+library(ggplot2)
+library(dplyr)
+library(reshape2)
+library(tidyverse)
+world &lt;- map_data(&quot;world&quot;)
+head(world)</code></pre>
+<details>
+<summary>
+output
+</summary>
+<pre><code>##        long      lat group order region subregion
+## 1 -69.89912 12.45200     1     1  Aruba      &lt;NA&gt;
+## 2 -69.89571 12.42300     1     2  Aruba      &lt;NA&gt;
+## 3 -69.94219 12.43853     1     3  Aruba      &lt;NA&gt;
+## 4 -70.00415 12.50049     1     4  Aruba      &lt;NA&gt;
+## 5 -70.06612 12.54697     1     5  Aruba      &lt;NA&gt;
+## 6 -70.05088 12.59707     1     6  Aruba      &lt;NA&gt;</code></pre>
+</details>
+<p>The structure of this data-set could be explained as follows:</p>
+<ul>
+<li><code>long</code> is longitude. Things to the west of the prime meridian are negative.</li>
+<li><code>lat</code> is latitude.</li>
+<li><code>order</code>: This just shows in which order ggplot should “connect the dots”</li>
+<li><code>region</code> and <code>subregion</code> tell what region or subregion a set of points surrounds.</li>
+<li><code>group</code>: This is very important! ggplot2’s functions can take a group argument which controls (amongst other things) whether adjacent points should be connected by lines. If they are in the same group, then they get connected, but if they are in different groups then they don’t.
+<ul>
+<li>Essentially, having to points in different groups means that ggplot “lifts the pen” when going between them.</li>
+</ul></li>
+</ul>
+<p>To plot the map, in a pretty way:</p>
+<pre class="r"><code>gg1 &lt;- ggplot(data = world, aes(x=long, y = lat)) + 
+  geom_polygon(aes(group = group)) + 
+  theme(legend.position = &quot;none&quot;)
+gg1</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_ggmap_files/figure-html/unnamed-chunk-5-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p><i class="fas fa-exclamation-circle"></i> Note   New Zealand was not missed in this map ;)</p>
+<div class="instruction">
+<ul>
+<li>Maps in this format can be plotted with the polygon geom. i.e. using geom_polygon().</li>
+<li><code>geom_polygon()</code> drawn lines between points and “closes them up” (i.e. draws a line from the last point back to the first point)</li>
+<li>You have to map the group aesthetic to the group column</li>
+<li>Of course, x = long and y = lat are the other aesthetics.</li>
+</ul>
+<p>You can test it out how the data looks like without using the group aesthetic</p>
+<pre class="r"><code>gg1 &lt;- ggplot(data = world, aes(x=long, y = lat)) + 
+  geom_polygon() + 
+  theme(legend.position = &quot;none&quot;)
+gg1</code></pre>
+</div>
+<p>From the dataset we have, we can also draw the border lines representing the different countries based on the variable <code>region</code>.</p>
+<pre class="r"><code>gg2 &lt;- ggplot(data = world, aes(x=long, y = lat)) + 
+  geom_polygon(aes(group = group, fill = region)) + 
+  theme(legend.position = &quot;none&quot;)
+gg2</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_ggmap_files/figure-html/unnamed-chunk-7-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<div id="adding-points-to-map" class="section level3" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> Adding points to map</h3>
+<p>Now, in this huge map, let us try to add some points like our favourite city Lund and few others.</p>
+<pre class="r"><code>labs &lt;- data.frame(
+  long = c(13.1629767,11.7537556,16.3100205,80.0689272),
+  lat = c(55.7068448,57.7010982,48.220778,13.0478223),
+  names = c(&quot;LUND&quot;, &quot;GBG&quot;, &quot;Vienna&quot;, &quot;Chennai&quot;),
+  stringsAsFactors = FALSE
+  )  
+
+gg2 + 
+  geom_point(data = labs, aes(x = long, y = lat), color = &quot;black&quot;, size = 2) </code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_ggmap_files/figure-html/unnamed-chunk-8-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p><i class="fas fa-exclamation-circle"></i> Note   You can also import the points from a file and store in a data frame.</p>
+</div>
+<div id="zooming-in" class="section level3" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Zooming in</h3>
+<p>Unlike in normal ggplots, to zoom into a section of the map, if we try to use the <code>xlim()</code> and <code>ylim()</code> functions:</p>
+<pre class="r"><code>gg2 + 
+  geom_point(data = labs, aes(x = long, y = lat), color = &quot;black&quot;, size = 2) +
+  xlim(c(-30,40)) +
+  ylim(c(50,85))</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_ggmap_files/figure-html/unnamed-chunk-9-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p>You can see that this subsection of the map is not very good, you can notice it especially in the area of Germany and Poland. This is because the latitude and longtitude does not really work like axes on a plot and the structure of the data-set we have here doesn’t support it that way.</p>
+<p>We will go through a function in <code>ggmap</code> to get one of the nicer ways to get a subsection in those measures. But, with the data we have here, it is possible get a subset of countries:</p>
+<pre class="r"><code>scandic &lt;- subset(world, region %in% c(&quot;Sweden&quot;, &quot;Denmark&quot;, &quot;Norway&quot;, &quot;Finland&quot;, &quot;Iceland&quot;, &quot;Faroe Islands&quot;))
+
+gg_scan &lt;- ggplot(data = scandic, aes(x=long, y=lat)) + 
+  geom_polygon(aes(group = group, fill = region)) 
+gg_scan</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_ggmap_files/figure-html/unnamed-chunk-10-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+</div>
+<div id="continous-data" class="section level3" number="1.1.3">
+<h3><span class="header-section-number">1.1.3</span> Continous data</h3>
+<p>Let’s see how we can add a continous data like the World population statistics on to the above map. We can do this by importing the file with the population information and join it to the data set, we have with <code>left_join()</code></p>
+<pre class="r"><code>pop_info &lt;- read.table(&quot;data/ggmap_data/world_population.tsv&quot;, header = T, row.names = 1, sep = &quot;\t&quot;)
+head(pop_info)</code></pre>
+<details>
+<summary>
+output
+</summary>
+<pre><code>##                          region   PopMale PopFemale   PopTotal PopDensity
+## 1                   Afghanistan  19976.26  18952.08   38928.34     59.627
+## 2                        Africa 669878.34 670719.77 1340598.11     45.216
+## 3                 African Group 668995.56 669831.03 1338826.59     45.571
+## 4                 African Union 669307.82 670116.10 1339423.92     45.182
+## 5 African Union: Central Africa  79260.91  79358.73  158619.64     30.066
+## 6 African Union: Eastern Africa 195662.62 196901.05  392563.67     61.404</code></pre>
+</details>
+<p><i class="fas fa-exclamation-circle"></i> Note   Here the values are in the unit of thousands.</p>
+<pre class="r"><code>world_pop &lt;- left_join(world, pop_info, by = &quot;region&quot;) 
+
+gg_pop &lt;- ggplot(data = world_pop, aes(x=long, y = lat, group = group, fill =PopTotal))
+gg_pop + geom_polygon(color = &quot;white&quot;) +
+  scale_fill_gradientn(colours = rev(rainbow(8)))</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_ggmap_files/figure-html/unnamed-chunk-12-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+</div>
+</div>
+</div>
+<div id="ggmap" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> ggmap</h1>
+<p><code>ggmap</code> is an R package that makes it easy to retrieve raster map tiles from popular online mapping services like Google Maps and Stamen Maps and plot them using the <code>ggplot2</code> framework:</p>
+<p>You can find more information about the R package <a href="https://github.com/dkahle/ggmap">here</a></p>
+<div id="how-ggmap-works" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> How ggmap works</h2>
+<ul>
+<li>ggmap simplifies the process of downloading base maps from Google or Open Street Maps or Stamen Maps to use in the background of your plots.</li>
+<li>It also sets the axis scales, etc, in a nice way.</li>
+<li>Once you have gotten your maps, you make a call with <code>ggmap()</code> much as you would with <code>ggplot()</code></li>
+</ul>
+<p>The <code>ggmap()</code> related tutorials here requires that you need to register for an API with google to be able to do this! Follow the instructions below to get an API:</p>
+<div class="instruction">
+<p><i class="fas fa-exclamation-circle"></i> Note   To use Google maps, it is necessary to get an API key from <a href="https://developers.google.com/maps/gmp-get-started">google</a> for your account and then register for an API key for example for a free trail. They might ask for your credit-card information! Then under <code>credentials</code> you should be able to find your API key and copy it. Then after lpading <code>ggmap</code> package in your R, you should able to register the key using the function <code>register_google()</code>.</p>
+</div>
+</div>
+<div id="discrete-data" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Discrete data</h2>
+<pre class="r"><code>if (!requireNamespace(&quot;ggmap&quot;, quietly = TRUE)){
+  install.packages(&quot;ggmap&quot;, dependencies = TRUE)
+}
+library(ggmap)
+register_google(&lt;INSERT YOUR PERSONAL KEY HERE&gt;)</code></pre>
+<pre class="r"><code>sisquoc &lt;- read.table(&quot;data/ggmap_data/sisquoc-points.txt&quot;, sep = &quot;\t&quot;, header = TRUE)
+head(sisquoc)</code></pre>
+<details>
+<summary>
+output
+</summary>
+<pre><code>##     name       lon      lat
+## 1    a17 -119.7603 34.75474
+## 2 a20-24 -119.7563 34.75380
+## 3 a25-28 -119.7537 34.75371
+## 4 a18,19 -119.7573 34.75409
+## 5 a35,36 -119.7467 34.75144
+## 6    a31 -119.7478 34.75234</code></pre>
+</details>
+<p><i class="fas fa-exclamation-circle"></i> Note   <code>ggmap</code> tends to use “lon” instead of “long” for longitude.</p>
+<p>Now that we have the zoom region we are after, we can get the map from “google” using the <code>get_map()</code> function. Then plot the points on the river from the data using <code>geom_point()</code></p>
+<p><code>get_map()</code> function requires:</p>
+<ul>
+<li><code>location</code>: for which I prefer to give a centroid location meaning like one location point with latitude and longtitude. So, here one could take the mean of all the latitude and longtitude values.</li>
+<li><code>maptype</code> and <code>source</code>: This is more upto your taste. You can find all the different options by <code>?get_map()</code></li>
+<li><code>zoom</code>: This typically from the center point how much zoom do you need to acquire: In google maps, this is in the range of 3 (to a continent) to 21 (a house)</li>
+</ul>
+<pre class="r"><code>ll_means &lt;- sapply(sisquoc[2:3], mean)
+sq_map2 &lt;- get_map(location = as.array(ll_means),  maptype = &quot;satellite&quot;, source = &quot;google&quot;, zoom = 15)
+ggmap(sq_map2) + geom_point(data = sisquoc, mapping = aes(x = lon, y = lat), color = &quot;red&quot;) </code></pre>
+<p><img src="assets/images/goog_map1.jpeg" /></p>
+<p>In here, we just managed to get an average of all the latitudes and the longtiudes in our data points that would give a centroid value and grabbed the map around the centroid.</p>
+<p>Here we can also add some more information around these points</p>
+<pre class="r"><code>ggmap(sq_map2) + 
+  geom_point(data = sisquoc, mapping = aes(x = lon, y = lat), color = &quot;red&quot;, size = 3) +
+  geom_text(data = sisquoc, aes(x = lon, y = lat, label = paste(&quot;  &quot;, as.character(name), sep=&quot;&quot;)), angle = 60, hjust = 0, color = &quot;yellow&quot;)</code></pre>
+<p><img src="assets/images/goog_map2.jpeg" /></p>
+<p>How about if we use the “terrain” type of map:</p>
+<pre class="r"><code>sq_map3 &lt;- get_map(location = ll_means,  maptype = &quot;terrain&quot;, source = &quot;google&quot;, zoom = 15)
+
+ggmap(sq_map3) + 
+  geom_point(data = sisquoc, mapping = aes(x = lon, y = lat), color = &quot;red&quot;, size = 3) +
+  geom_text(data = sisquoc, aes(x = lon, y = lat, label = paste(&quot;  &quot;, as.character(name), sep=&quot;&quot;)), angle = 60, hjust = 0, color = &quot;yellow&quot;)</code></pre>
+<p><img src="assets/images/goog_map3.jpeg" /></p>
+</div>
+<div id="continous-data-1" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Continous data</h2>
+<p>Let us take the data points from a bike ride and see how we can plot it better:</p>
+<pre class="r"><code>run_df &lt;- read.csv(&quot;data/ggmap_data/running.csv&quot;)
+head(run_df)</code></pre>
+<details>
+<summary>
+output
+</summary>
+<pre><code>##        lat      lon elevation                 time
+## 1 55.72165 13.21811      74.2 2016-07-21T14:54:18Z
+## 2 55.72163 13.21827      74.3 2016-07-21T14:54:27Z
+## 3 55.72161 13.21841      74.4 2016-07-21T14:54:30Z
+## 4 55.72159 13.21858      74.4 2016-07-21T14:54:33Z
+## 5 55.72160 13.21877      74.5 2016-07-21T14:54:37Z
+## 6 55.72165 13.21890      74.6 2016-07-21T14:54:40Z</code></pre>
+</details>
+<p>Now let us try to plot the data:</p>
+<pre class="r"><code>run_means &lt;- sapply(run_df[1:2], mean)
+runmap1 &lt;- get_map(location = run_means, maptype = &quot;terrain&quot;, source = &quot;google&quot;, zoom = 14)
+
+ggmap(runmap1) + 
+  geom_path(data = run_df, aes(x = lon, y = lat, color = elevation), size = 3, lineend = &quot;round&quot;) + 
+  scale_color_gradientn(colours = rev(rainbow(7)))</code></pre>
+<p><img src="assets/images/goog_map4.jpeg" /></p>
+<p><i class="fas fa-exclamation-circle"></i> Note   getting the right zoom and position for the map is sort of trial and error. You can go to google maps to figure out where the center should be (right click and choose “What’s here?” to get the lat-long of any point)</p>
+</div>
+</div>
+<div id="swedish-map" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Swedish map</h1>
+<p>I found one of the simplest Swedish maps that could be used in R from Reinholdsson’s <a href="https://github.com/reinholdsson/swemaps">GitHub page</a>
+Here, I will show you how to install it in your R and then how to use it!
+This package gives you the map-data for Sweden like the one we had with the world-map. The dtasets that are included are:</p>
+<ul>
+<li><code>map_ln</code>: regions polygon data</li>
+<li><code>map_kn</code>: municipalities polygon data</li>
+<li><code>cent_ln</code>: regions centroids data</li>
+<li><code>cent_kn</code>: municipalities centroids data</li>
+</ul>
+<div id="map-data-sets" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Map data-sets</h2>
+<p>Let us take a quick look on how the <code>map_ln</code> data looks like:</p>
+<pre class="r"><code>if (!requireNamespace(&quot;devtools&quot;, quietly = TRUE)){
+  install.packages(&quot;devtools&quot;, dependencies = TRUE)
+}
+
+if (!requireNamespace(&quot;swemaps&quot;, quietly = TRUE)){
+  devtools::install_github(&quot;reinholdsson/swemaps&quot;, dependencies = TRUE)
+}</code></pre>
+<pre class="r"><code>library(swemaps)
+head(map_ln)</code></pre>
+<details>
+<summary>
+output
+</summary>
+<pre><code>##   lnkod order piece group ggplot_long ggplot_lat leaflet_long leaflet_lat
+## 1  0001     1     1   0.1    674300.8    6580047     18.06328    59.32317
+## 2  0001     2     1   0.1    674495.0    6581094     18.06754    59.33248
+## 3  0001     3     1   0.1    673269.9    6580797     18.04579    59.33032
+## 4  0001     4     1   0.1    672305.9    6580724     18.02882    59.33006
+## 5  0001     5     1   0.1    671274.1    6581212     18.01110    59.33486
+## 6  0001     6     1   0.1    670197.8    6582411     17.99315    59.34605
+##           lnnamn landareakm
+## 1 Stockholms län     6487.9
+## 2 Stockholms län     6487.9
+## 3 Stockholms län     6487.9
+## 4 Stockholms län     6487.9
+## 5 Stockholms län     6487.9
+## 6 Stockholms län     6487.9</code></pre>
+</details>
+<p>And the <code>map_kn</code> data:</p>
+<pre class="r"><code>head(map_kn)</code></pre>
+<details>
+<summary>
+output
+</summary>
+<pre><code>##   knkod order piece group ggplot_long ggplot_lat leaflet_long leaflet_lat lnkod
+## 1  0114     1     1   0.1    665734.0    6599286     17.92782    59.49916  0001
+## 2  0114     2     1   0.1    664503.5    6598352     17.90539    59.49127  0001
+## 3  0114     3     1   0.1    663096.4    6598467     17.88067    59.49285  0001
+## 4  0114     4     1   0.1    662865.2    6597495     17.87585    59.48422  0001
+## 5  0114     5     1   0.1    660757.5    6596513     17.83794    59.47623  0001
+## 6  0114     6     1   0.1    660952.3    6598920     17.84319    59.49774  0001
+##           knnamn         lnnamn landareakm
+## 1 Upplands Väsby Stockholms län       75.4
+## 2 Upplands Väsby Stockholms län       75.4
+## 3 Upplands Väsby Stockholms län       75.4
+## 4 Upplands Väsby Stockholms län       75.4
+## 5 Upplands Väsby Stockholms län       75.4
+## 6 Upplands Väsby Stockholms län       75.4</code></pre>
+</details>
+<p>It is quite clear from the beginning that <code>map_kn</code> is more detailed than the <code>map_ln</code>, as expected.</p>
+<pre class="r"><code>gg_swe &lt;- ggplot(data = map_kn, aes(x=leaflet_long, y = leaflet_lat)) + 
+  geom_polygon(aes(group = group, fill = lnnamn), color = &quot;white&quot;) +
+  coord_fixed(1.5)
+gg_swe</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_ggmap_files/figure-html/unnamed-chunk-23-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p><i class="fas fa-exclamation-circle"></i> Note   Here we use <code>coord_fixed()</code> for the first time, this is to control the dimentions of the axis to keep the map for in a proper shape than make it looked streched in one axis or the other.</p>
+</div>
+<div id="centroid-data-sets" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> centroid data-sets</h2>
+<p>Let us take a quick look on how and what actually is the <code>cent_ln</code> data contain.</p>
+<p>Here, let us take <code>cent_ln</code> for example:</p>
+<pre class="r"><code>head(cent_ln)</code></pre>
+<details>
+<summary>
+output
+</summary>
+<pre><code>##   lnkod ggplot_long ggplot_lat leaflet_long leaflet_lat            lnnamn
+## 1  0001    688467.8    6624421     18.35107    59.71489    Stockholms län
+## 2  0003    644137.1    6661613     17.58976    60.06625       Uppsala län
+## 3  0004    596461.6    6548892     16.68244    59.06848 Södermanlands län
+## 4  0005    541011.9    6469637     15.70100    58.36568 Östergötlands län
+## 5  0006    464673.6    6375090     14.41027    57.51698    Jönköpings län
+## 6  0007    473304.1    6295472     14.56286    56.80237    Kronobergs län</code></pre>
+</details>
+<p>As you can see, it is basically the centroid points of each of the län. And similarly, <code>cent_kn</code> contains the centroids of each kommun. We can for example use this datasets in this way:</p>
+<pre class="r"><code>gg_cen &lt;- ggplot() + 
+  geom_polygon(data = map_kn, aes(x=leaflet_long, y = leaflet_lat, group = group, fill = lnnamn)) +
+  coord_fixed(1.3) +
+   geom_text(data = cent_ln, aes(x=leaflet_long, y = leaflet_lat, label = lnnamn), color = &quot;black&quot;, size = 3) +
+  theme(legend.position = &quot;none&quot;) + 
+  theme_nothing()
+gg_cen</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_ggmap_files/figure-html/unnamed-chunk-25-1.svg" width="576" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+<p><i class="fas fa-exclamation-circle"></i> Note   It is important to remember that when you use multiple datsets, you can initate the plot by just <code>ggplot()</code> and add the “data” and “aesthetics” in each of the <code>geoms</code> you are plotting.</p>
+</div>
+<div id="particular-region" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Particular region</h2>
+<p>Now, similar to world-map let us try to extract a particular län, like our “Skåne”.</p>
+<pre class="r"><code>scania &lt;- subset(map_kn, lnnamn %in% c(&quot;Skåne län&quot;))
+
+gg_scania &lt;- ggplot(data = scania, aes(x=leaflet_long, y=leaflet_lat)) + 
+  geom_polygon(aes(group = group, fill = knnamn)) +
+  coord_fixed(1.1) +
+  theme_void()
+gg_scania</code></pre>
+<details>
+<summary>
+plot
+</summary>
+<p><img src="lab_ggmap_files/figure-html/unnamed-chunk-26-1.svg" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</details>
+</div>
+</div>
+<div id="interactive-maps" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Interactive maps</h1>
+<p>Here I will show a quick demo of how to make interactive maps in R based on a package called <code>leaflet</code>. This is the reason why <code>swemaps</code> had the labels <code>leaflet_long</code> and <code>leaflet_lat</code>.</p>
+<p>There is quite a lot of things you can do with this! You can follow the tutorial <a href="https://rstudio.github.io/leaflet/">here</a>. But here I will show you some of the very simple things.</p>
+<pre class="r"><code>if (!requireNamespace(&quot;leaflet&quot;, quietly = TRUE)){
+  devtools::install_github(&quot;rstudio/leaflet&quot;, dependencies = TRUE)
+}</code></pre>
+<pre class="r"><code>library(leaflet)
+m &lt;- leaflet() %&gt;% setView(lng = 13.1914692, lat = 55.7040588, zoom = 12)
+m %&gt;% addTiles()</code></pre>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-5c7dc38a17934578025e" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-5c7dc38a17934578025e">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[55.7040588,13.1914692],12,[]],"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]}]},"evals":[],"jsHooks":[]}</script>
+<div id="discrete-data-1" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Discrete data</h2>
+<p>Now let us add some data to these maps. Let us first look into the discrete data that we have.</p>
+<pre class="r"><code>m &lt;- leaflet(data = sisquoc) %&gt;% setView(lng = -119.75132, lat = 34.75312, zoom = 15)
+m %&gt;% addTiles() %&gt;%
+  addMarkers(~lon, ~lat, popup = ~as.character(name), label = ~as.character(name))</code></pre>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-a6fe679e547b16681069" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-a6fe679e547b16681069">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[34.75312,-119.75132],15,[]],"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addMarkers","args":[[34.754738,34.753796,34.753708,34.754093,34.751442,34.752338,34.752304,34.752514],[-119.760315,-119.75634,-119.753716,-119.757271,-119.746735,-119.74781,-119.744728,-119.743675],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["a17","a20-24","a25-28","a18,19","a35,36","a31","a38","a43"],null,null,null,["a17","a20-24","a25-28","a18,19","a35,36","a31","a38","a43"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[34.751442,34.754738],"lng":[-119.760315,-119.743675]}},"evals":[],"jsHooks":[]}</script>
+<p>Now let us see if we can make it look prettier:</p>
+<pre class="r"><code>m &lt;- leaflet(data = sisquoc) %&gt;% setView(lng = -119.75132, lat = 34.75312, zoom = 15)
+m %&gt;% addProviderTiles(providers$Esri.NatGeoWorldMap) %&gt;%
+  addMarkers(~lon, ~lat, popup = ~as.character(name), label = ~as.character(name))</code></pre>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-e73159c26a99a247e272" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-e73159c26a99a247e272">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[34.75312,-119.75132],15,[]],"calls":[{"method":"addProviderTiles","args":["Esri.NatGeoWorldMap",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addMarkers","args":[[34.754738,34.753796,34.753708,34.754093,34.751442,34.752338,34.752304,34.752514],[-119.760315,-119.75634,-119.753716,-119.757271,-119.746735,-119.74781,-119.744728,-119.743675],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["a17","a20-24","a25-28","a18,19","a35,36","a31","a38","a43"],null,null,null,["a17","a20-24","a25-28","a18,19","a35,36","a31","a38","a43"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[34.751442,34.754738],"lng":[-119.760315,-119.743675]}},"evals":[],"jsHooks":[]}</script>
+<p><i class="fas fa-exclamation-circle"></i> Note   Here you can choose the different kinds of base maps available from the function <code>addProviderTiles()</code></p>
+</div>
+<div id="continous-data-2" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Continous data</h2>
+<p>Let us see, if we can add the GPS recordings to in a similar interactive map.</p>
+<pre class="r"><code>m &lt;- leaflet(data = run_df) %&gt;% setView(lng = 13.21943, lat = 55.73118, zoom = 14)
+m %&gt;% addProviderTiles(providers$CartoDB.Voyager) %&gt;%
+  addPolylines(~lon, ~lat)</code></pre>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-cbd5b9cc2ade120a9729" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-cbd5b9cc2ade120a9729">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[55.73118,13.21943],14,[]],"calls":[{"method":"addProviderTiles","args":["CartoDB.Voyager",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addPolylines","args":[[[[{"lng":[13.218106,13.218266,13.218408,13.218581,13.218772,13.218904,13.219053,13.219229,13.219389,13.219556,13.219727,13.219898,13.22005,13.220194,13.220357,13.220513,13.220683,13.220836,13.221008,13.221197,13.221379,13.221551,13.221723,13.221806,13.221874,13.221954,13.221975,13.222025,13.222037,13.222123,13.222124,13.222161,13.222222,13.222163,13.222202,13.222261,13.222302,13.222352,13.222195,13.222046,13.221895,13.221723,13.221534,13.22136,13.221164,13.221005,13.220839,13.220659,13.220498,13.220542,13.220576,13.220549,13.220543,13.220551,13.220578,13.220557,13.220589,13.220569,13.220567,13.220612,13.220541,13.22038,13.220211,13.220058,13.21991,13.219727,13.219551,13.219375,13.219214,13.219058,13.218897,13.2187,13.218517,13.218354,13.218172,13.218018,13.217857,13.217824,13.217818,13.217832,13.217832,13.217839,13.217809,13.217816,13.2178,13.217812,13.217836,13.217814,13.217787,13.217793,13.217752,13.21777,13.21787,13.217909,13.217929,13.217913,13.217925,13.217945,13.217932,13.217925,13.217941,13.217932,13.217938,13.217905,13.217895,13.217756,13.217582,13.21742,13.217272,13.217294,13.217306,13.217162,13.21704,13.216925,13.216819,13.216688,13.216577,13.216485,13.216463,13.216465,13.216475,13.216466,13.216493,13.216467,13.216494,13.216559,13.216691,13.216749,13.216785,13.21681,13.216821,13.216819,13.216833,13.216788,13.216806,13.21692,13.217045,13.21717,13.217328,13.217203,13.21701,13.216826,13.216637,13.216497,13.216337,13.216184,13.216032,13.215883,13.215708,13.215515,13.215352,13.215198,13.215016,13.21486,13.214705,13.214539,13.214395,13.214245,13.214072,13.213914,13.213763,13.213644,13.213645,13.213657,13.213639,13.213628,13.213613,13.213598,13.21362,13.213665,13.213669,13.213691,13.213692,13.213692,13.213711,13.213734,13.213752,13.213772,13.213766,13.213762,13.213768,13.213746,13.213768,13.21378,13.213793,13.213788,13.213802,13.213819,13.213807,13.213809,13.213836,13.213859,13.213873,13.213899,13.213956,13.213927,13.213942,13.213923,13.213928,13.213943,13.213979,13.213996,13.214,13.214023,13.214015,13.214016,13.214023,13.214041,13.214044,13.214039,13.214065,13.214097,13.214113,13.214125,13.214144,13.214152,13.214167,13.214169,13.21416,13.21419,13.214226,13.214241,13.214211,13.214201,13.214248,13.214263,13.214275,13.214271,13.214304,13.214396,13.214389,13.214403,13.21444,13.214443,13.214448,13.214468,13.214468,13.214425,13.214288,13.214124,13.213955,13.213806,13.213609,13.213437,13.213283,13.213139,13.212985,13.212816,13.212651,13.212491,13.212311,13.212162,13.212002,13.211833,13.211682,13.211523,13.211352,13.211198,13.211046,13.210846,13.210684,13.210518,13.21034,13.210158,13.209997,13.209819,13.209666,13.209531,13.209417,13.2093,13.209222,13.209132,13.209037,13.209049,13.209061,13.209067,13.209076,13.209032,13.208945,13.208808,13.208645,13.208492,13.208344,13.208201,13.208038,13.207903,13.207739,13.2076,13.207445,13.207323,13.20722,13.207114,13.207091,13.207067,13.207179,13.207357,13.207548,13.20775,13.207892,13.207997,13.208139,13.208324,13.208479,13.208662,13.208827,13.208967,13.209123,13.209298,13.209463,13.209623,13.209763,13.209905,13.210064,13.210231,13.210377,13.21052,13.210693,13.210858,13.211017,13.211186,13.211324,13.211501,13.211677,13.211827,13.211974,13.212131,13.212309,13.212502,13.212659,13.21283,13.212982,13.213151,13.213316,13.213487,13.213637,13.213779,13.213956,13.214101,13.214265,13.214396,13.214545,13.214699,13.214861,13.215033,13.215177,13.215334,13.215477,13.215622,13.215798,13.215942,13.216097,13.216276,13.216436,13.216605,13.216775,13.216928,13.217082,13.217234,13.21738,13.217555,13.217717,13.217894,13.218037,13.218187,13.218349,13.218504,13.218694,13.218881,13.219058,13.219298,13.219475,13.219625,13.219802,13.219952,13.220052,13.220156,13.220255,13.22033,13.220408,13.220478,13.220568,13.220636,13.220718,13.22079,13.220881,13.220942,13.221024,13.221095,13.221155,13.221232,13.221323,13.221421,13.221495,13.221565,13.221642,13.221739,13.221814,13.2219,13.221988,13.222082,13.222181,13.222251,13.222306,13.222386,13.222484,13.222558,13.222642,13.222694,13.222759,13.22284,13.222923,13.223016,13.22308,13.223168,13.223235,13.223325,13.223423,13.223512,13.223611,13.223701,13.223768,13.223868,13.223983,13.224097,13.224166,13.224257,13.224328,13.224408,13.224501,13.224599,13.224689,13.22475,13.224824,13.224905,13.224997,13.225065,13.225153,13.22524,13.225331,13.225387,13.225434,13.225497,13.225606,13.225667,13.225747,13.225821,13.225932,13.225998,13.226079,13.226189,13.226255,13.226328,13.226397,13.226474,13.226558,13.226633,13.226718,13.226808,13.226891,13.226993,13.227062,13.22714,13.227218,13.22731,13.227382,13.227488,13.227587,13.227664,13.22775,13.227833,13.227908,13.22798,13.228065,13.228151,13.228225,13.228301,13.228379,13.228461,13.228554,13.228622,13.228694,13.228792,13.228842,13.228887,13.228954,13.229025,13.229098,13.229139,13.229214,13.229276,13.229317,13.229342,13.229387,13.229428,13.229454,13.229486,13.229529,13.229563,13.229582,13.229591,13.229583,13.229585,13.229544,13.229509,13.229456,13.229411,13.229343,13.229291,13.229238,13.229195,13.229134,13.229092,13.229042,13.228928,13.228799,13.228677,13.228559,13.2284,13.228222,13.228079,13.227958,13.227778,13.227626,13.227491,13.227347,13.227223,13.227061,13.226888,13.22672,13.226563,13.226416,13.226355,13.226319,13.226283,13.226238,13.226171,13.226084,13.226005,13.225942,13.225897,13.225879,13.225905,13.225778,13.225604,13.225424,13.225279,13.225168,13.225103,13.225014,13.224915,13.224822,13.224841,13.224905,13.224993,13.225098,13.225137,13.225249,13.225357,13.225447,13.225496,13.225637,13.225816,13.225948,13.226093,13.226211,13.226358,13.226475,13.226581,13.226559,13.226572,13.226534,13.226465,13.226404,13.226344,13.226301,13.226266,13.226224,13.226165,13.226082,13.225987,13.225873,13.225705,13.225517,13.225365,13.225243,13.225125,13.225029,13.224937,13.22485,13.224891,13.224866,13.224879,13.224887,13.224891,13.224818,13.224713,13.224567,13.22441,13.224259,13.224122,13.224072,13.224045,13.224033,13.223982,13.223949,13.223897,13.223897,13.223858,13.223813,13.223646,13.223503,13.223462,13.223444,13.223445,13.22346,13.22343,13.223375,13.223358,13.223328,13.223336,13.223293,13.223248,13.223217,13.223107,13.222952,13.222806,13.222613,13.222453,13.222286,13.222112,13.221955,13.221766,13.221593,13.221385,13.22122,13.221068,13.220894,13.220735,13.220635,13.220585,13.220565,13.220518,13.220505,13.220521,13.220506,13.220406,13.220258,13.220097,13.219946,13.219802,13.219633,13.219473,13.219312,13.219141,13.218927,13.218801,13.218663,13.218493,13.218244,13.218074,13.21794,13.217765,13.217605,13.217434,13.217274,13.217173,13.217111],"lat":[55.721653,55.721628,55.721606,55.721594,55.721597,55.72165,55.721647,55.721631,55.721654,55.72165,55.72166,55.721673,55.72167,55.721683,55.721693,55.721696,55.721704,55.721717,55.721714,55.721706,55.721698,55.721702,55.721714,55.721794,55.72189,55.721994,55.722078,55.722174,55.722263,55.722358,55.722469,55.722561,55.722646,55.722723,55.722827,55.722914,55.723001,55.723105,55.723147,55.723133,55.723145,55.723151,55.723175,55.723168,55.723173,55.723169,55.72315,55.723122,55.723142,55.72322,55.723313,55.723409,55.723512,55.723598,55.723701,55.723798,55.723878,55.723964,55.724067,55.724173,55.724252,55.724254,55.724249,55.724271,55.724274,55.724277,55.724247,55.724227,55.724231,55.724231,55.724248,55.724241,55.724249,55.724241,55.724243,55.724238,55.724238,55.724348,55.724438,55.72452,55.724616,55.724703,55.724817,55.724909,55.72499,55.725102,55.725206,55.7253,55.725387,55.725493,55.725591,55.725672,55.725756,55.725848,55.72594,55.726027,55.726112,55.726197,55.726299,55.726401,55.72649,55.726594,55.726681,55.726793,55.726894,55.726932,55.726932,55.726923,55.72699,55.727079,55.727164,55.727214,55.727269,55.727319,55.727379,55.727446,55.727501,55.727597,55.72769,55.727801,55.727897,55.72798,55.72808,55.728182,55.728265,55.728362,55.728402,55.728487,55.72858,55.728676,55.728769,55.728886,55.728974,55.72908,55.729182,55.729244,55.729286,55.729332,55.729385,55.729427,55.729433,55.72945,55.7295,55.729531,55.729532,55.729566,55.729578,55.729587,55.729581,55.729578,55.729593,55.729593,55.729624,55.729622,55.729644,55.729656,55.729663,55.72967,55.729629,55.729635,55.729639,55.729725,55.729814,55.729932,55.730048,55.730144,55.730225,55.73032,55.730414,55.730495,55.730582,55.730683,55.73077,55.730864,55.730963,55.731069,55.731153,55.731246,55.731344,55.731433,55.731527,55.73162,55.73172,55.731837,55.731938,55.732021,55.732124,55.732215,55.732302,55.732385,55.732475,55.732558,55.732663,55.732751,55.732826,55.732921,55.733005,55.733089,55.733187,55.733301,55.733381,55.733481,55.733595,55.73369,55.733795,55.733888,55.733991,55.7341,55.734189,55.734276,55.734362,55.734445,55.734542,55.734627,55.734714,55.73481,55.734917,55.735011,55.735094,55.735208,55.735311,55.735405,55.735505,55.735601,55.73569,55.735778,55.735867,55.735975,55.736089,55.736898,55.736995,55.737111,55.737222,55.737315,55.737424,55.737516,55.737607,55.737702,55.737743,55.737769,55.737747,55.737767,55.737784,55.737782,55.73779,55.737776,55.737768,55.737773,55.737767,55.737762,55.73777,55.73778,55.7378,55.737806,55.737844,55.737861,55.737863,55.737883,55.737913,55.737908,55.737892,55.73789,55.737921,55.737949,55.737969,55.737986,55.738018,55.738079,55.73814,55.738213,55.738308,55.738403,55.738497,55.738602,55.738686,55.738785,55.738883,55.738968,55.739049,55.739104,55.739118,55.739134,55.73915,55.739146,55.739181,55.739215,55.739243,55.739287,55.739315,55.739367,55.739425,55.739485,55.739565,55.739647,55.739709,55.739727,55.739698,55.739671,55.739685,55.739757,55.739739,55.739732,55.739701,55.739668,55.739646,55.739628,55.739589,55.739559,55.739539,55.739522,55.739545,55.739566,55.739577,55.739588,55.739603,55.739616,55.739647,55.739661,55.739676,55.739679,55.739706,55.739711,55.739737,55.73976,55.739775,55.739795,55.739813,55.73984,55.739855,55.73987,55.739886,55.73988,55.739885,55.739888,55.739917,55.739942,55.739971,55.73997,55.739951,55.739987,55.739992,55.739999,55.740019,55.740041,55.740047,55.740058,55.740084,55.740116,55.740158,55.740166,55.740175,55.740193,55.740213,55.740231,55.740245,55.740266,55.740261,55.740281,55.740278,55.740302,55.740312,55.74033,55.740342,55.74036,55.740376,55.740399,55.740412,55.740445,55.740465,55.740491,55.740496,55.740491,55.740482,55.740414,55.740335,55.74024,55.740162,55.740091,55.740019,55.739947,55.739877,55.7398,55.73972,55.739645,55.739578,55.739504,55.739423,55.739346,55.739271,55.739198,55.739123,55.739033,55.738962,55.73887,55.7388,55.73873,55.738659,55.738574,55.738508,55.738439,55.738377,55.7383,55.738215,55.738145,55.73805,55.737979,55.737899,55.737822,55.737747,55.737674,55.737603,55.737537,55.737456,55.737383,55.737308,55.737228,55.737145,55.737055,55.736971,55.736892,55.736819,55.736728,55.736637,55.736553,55.736481,55.736402,55.736313,55.73623,55.736164,55.736087,55.736018,55.735945,55.735867,55.735788,55.735712,55.735635,55.735569,55.735454,55.735378,55.735296,55.735212,55.735139,55.735054,55.734976,55.734905,55.73481,55.734733,55.734657,55.73458,55.734522,55.734448,55.734358,55.734271,55.734185,55.734108,55.734033,55.733953,55.733881,55.733803,55.73372,55.733637,55.733564,55.733493,55.733395,55.733315,55.733247,55.733173,55.733097,55.73302,55.73294,55.732864,55.732789,55.732718,55.732649,55.732566,55.732489,55.73242,55.732345,55.732279,55.732196,55.732118,55.732041,55.73195,55.731865,55.731786,55.731714,55.731611,55.731512,55.731403,55.731309,55.731221,55.731137,55.731037,55.730937,55.730848,55.73076,55.730673,55.730582,55.730498,55.730405,55.730295,55.730195,55.730105,55.730008,55.729915,55.729812,55.729714,55.729634,55.729548,55.729455,55.729373,55.729278,55.7292,55.729121,55.729079,55.728997,55.72895,55.72899,55.729009,55.729061,55.729125,55.729176,55.729237,55.729279,55.729323,55.729363,55.729392,55.729418,55.729398,55.729373,55.729311,55.729237,55.729157,55.729072,55.728989,55.728915,55.728836,55.728756,55.728683,55.728602,55.728521,55.728427,55.728367,55.728363,55.728346,55.728295,55.728226,55.728135,55.728051,55.72798,55.727893,55.727798,55.727715,55.72765,55.727566,55.727476,55.727396,55.727335,55.727234,55.727151,55.727103,55.727069,55.727005,55.726983,55.72693,55.726874,55.726825,55.726747,55.726649,55.726566,55.726484,55.726388,55.726314,55.726229,55.726121,55.726029,55.725925,55.725839,55.725746,55.725644,55.725576,55.725552,55.725549,55.725579,55.725631,55.725698,55.725765,55.725829,55.725762,55.725679,55.725584,55.725502,55.725401,55.725306,55.725189,55.725112,55.725084,55.725057,55.725062,55.725037,55.724949,55.724864,55.724775,55.724688,55.724606,55.724522,55.724438,55.724355,55.724271,55.724287,55.724265,55.724177,55.724077,55.723984,55.723893,55.723802,55.723713,55.723611,55.723529,55.723441,55.723362,55.723272,55.723176,55.72311,55.72312,55.723143,55.72317,55.723163,55.723143,55.723137,55.723141,55.723139,55.723121,55.723121,55.723131,55.723113,55.723115,55.723117,55.723032,55.722956,55.722854,55.722776,55.722683,55.722597,55.7225,55.722442,55.722419,55.722419,55.722408,55.722412,55.722391,55.72239,55.722385,55.722389,55.722372,55.722324,55.722292,55.722308,55.722326,55.722342,55.722308,55.722329,55.722353,55.722324,55.722337,55.722261,55.722185]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":false,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[55.721594,55.740496],"lng":[13.207067,13.229591]}},"evals":[],"jsHooks":[]}</script>
+<p>Now, let us try to make something pretty with it.</p>
+<pre class="r"><code>m &lt;- leaflet(data = run_df) %&gt;% setView(lng = 13.21943, lat = 55.73118, zoom = 14)
+m %&gt;% addProviderTiles(providers$CartoDB.Voyager) %&gt;%
+  addPolylines(~lon, ~lat, color = &quot;blue&quot;) %&gt;%
+  addCircleMarkers(data = run_df[1,], ~lon, ~lat, stroke = FALSE, fillOpacity = 0.5, label = &quot;Start&quot;, color = &quot;green&quot;) %&gt;%
+  addCircleMarkers(data = run_df[667,], ~lon, ~lat, stroke = FALSE, fillOpacity = 0.5, label = &quot;End&quot;, color = &quot;red&quot;) %&gt;%
+  addMarkers(data = run_df[seq(50,667, 50), ], ~lon, ~lat, popup = ~as.character(elevation), label = ~as.character(time))</code></pre>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-e13235e496e5e8b28b46" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-e13235e496e5e8b28b46">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"setView":[[55.73118,13.21943],14,[]],"calls":[{"method":"addProviderTiles","args":["CartoDB.Voyager",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addPolylines","args":[[[[{"lng":[13.218106,13.218266,13.218408,13.218581,13.218772,13.218904,13.219053,13.219229,13.219389,13.219556,13.219727,13.219898,13.22005,13.220194,13.220357,13.220513,13.220683,13.220836,13.221008,13.221197,13.221379,13.221551,13.221723,13.221806,13.221874,13.221954,13.221975,13.222025,13.222037,13.222123,13.222124,13.222161,13.222222,13.222163,13.222202,13.222261,13.222302,13.222352,13.222195,13.222046,13.221895,13.221723,13.221534,13.22136,13.221164,13.221005,13.220839,13.220659,13.220498,13.220542,13.220576,13.220549,13.220543,13.220551,13.220578,13.220557,13.220589,13.220569,13.220567,13.220612,13.220541,13.22038,13.220211,13.220058,13.21991,13.219727,13.219551,13.219375,13.219214,13.219058,13.218897,13.2187,13.218517,13.218354,13.218172,13.218018,13.217857,13.217824,13.217818,13.217832,13.217832,13.217839,13.217809,13.217816,13.2178,13.217812,13.217836,13.217814,13.217787,13.217793,13.217752,13.21777,13.21787,13.217909,13.217929,13.217913,13.217925,13.217945,13.217932,13.217925,13.217941,13.217932,13.217938,13.217905,13.217895,13.217756,13.217582,13.21742,13.217272,13.217294,13.217306,13.217162,13.21704,13.216925,13.216819,13.216688,13.216577,13.216485,13.216463,13.216465,13.216475,13.216466,13.216493,13.216467,13.216494,13.216559,13.216691,13.216749,13.216785,13.21681,13.216821,13.216819,13.216833,13.216788,13.216806,13.21692,13.217045,13.21717,13.217328,13.217203,13.21701,13.216826,13.216637,13.216497,13.216337,13.216184,13.216032,13.215883,13.215708,13.215515,13.215352,13.215198,13.215016,13.21486,13.214705,13.214539,13.214395,13.214245,13.214072,13.213914,13.213763,13.213644,13.213645,13.213657,13.213639,13.213628,13.213613,13.213598,13.21362,13.213665,13.213669,13.213691,13.213692,13.213692,13.213711,13.213734,13.213752,13.213772,13.213766,13.213762,13.213768,13.213746,13.213768,13.21378,13.213793,13.213788,13.213802,13.213819,13.213807,13.213809,13.213836,13.213859,13.213873,13.213899,13.213956,13.213927,13.213942,13.213923,13.213928,13.213943,13.213979,13.213996,13.214,13.214023,13.214015,13.214016,13.214023,13.214041,13.214044,13.214039,13.214065,13.214097,13.214113,13.214125,13.214144,13.214152,13.214167,13.214169,13.21416,13.21419,13.214226,13.214241,13.214211,13.214201,13.214248,13.214263,13.214275,13.214271,13.214304,13.214396,13.214389,13.214403,13.21444,13.214443,13.214448,13.214468,13.214468,13.214425,13.214288,13.214124,13.213955,13.213806,13.213609,13.213437,13.213283,13.213139,13.212985,13.212816,13.212651,13.212491,13.212311,13.212162,13.212002,13.211833,13.211682,13.211523,13.211352,13.211198,13.211046,13.210846,13.210684,13.210518,13.21034,13.210158,13.209997,13.209819,13.209666,13.209531,13.209417,13.2093,13.209222,13.209132,13.209037,13.209049,13.209061,13.209067,13.209076,13.209032,13.208945,13.208808,13.208645,13.208492,13.208344,13.208201,13.208038,13.207903,13.207739,13.2076,13.207445,13.207323,13.20722,13.207114,13.207091,13.207067,13.207179,13.207357,13.207548,13.20775,13.207892,13.207997,13.208139,13.208324,13.208479,13.208662,13.208827,13.208967,13.209123,13.209298,13.209463,13.209623,13.209763,13.209905,13.210064,13.210231,13.210377,13.21052,13.210693,13.210858,13.211017,13.211186,13.211324,13.211501,13.211677,13.211827,13.211974,13.212131,13.212309,13.212502,13.212659,13.21283,13.212982,13.213151,13.213316,13.213487,13.213637,13.213779,13.213956,13.214101,13.214265,13.214396,13.214545,13.214699,13.214861,13.215033,13.215177,13.215334,13.215477,13.215622,13.215798,13.215942,13.216097,13.216276,13.216436,13.216605,13.216775,13.216928,13.217082,13.217234,13.21738,13.217555,13.217717,13.217894,13.218037,13.218187,13.218349,13.218504,13.218694,13.218881,13.219058,13.219298,13.219475,13.219625,13.219802,13.219952,13.220052,13.220156,13.220255,13.22033,13.220408,13.220478,13.220568,13.220636,13.220718,13.22079,13.220881,13.220942,13.221024,13.221095,13.221155,13.221232,13.221323,13.221421,13.221495,13.221565,13.221642,13.221739,13.221814,13.2219,13.221988,13.222082,13.222181,13.222251,13.222306,13.222386,13.222484,13.222558,13.222642,13.222694,13.222759,13.22284,13.222923,13.223016,13.22308,13.223168,13.223235,13.223325,13.223423,13.223512,13.223611,13.223701,13.223768,13.223868,13.223983,13.224097,13.224166,13.224257,13.224328,13.224408,13.224501,13.224599,13.224689,13.22475,13.224824,13.224905,13.224997,13.225065,13.225153,13.22524,13.225331,13.225387,13.225434,13.225497,13.225606,13.225667,13.225747,13.225821,13.225932,13.225998,13.226079,13.226189,13.226255,13.226328,13.226397,13.226474,13.226558,13.226633,13.226718,13.226808,13.226891,13.226993,13.227062,13.22714,13.227218,13.22731,13.227382,13.227488,13.227587,13.227664,13.22775,13.227833,13.227908,13.22798,13.228065,13.228151,13.228225,13.228301,13.228379,13.228461,13.228554,13.228622,13.228694,13.228792,13.228842,13.228887,13.228954,13.229025,13.229098,13.229139,13.229214,13.229276,13.229317,13.229342,13.229387,13.229428,13.229454,13.229486,13.229529,13.229563,13.229582,13.229591,13.229583,13.229585,13.229544,13.229509,13.229456,13.229411,13.229343,13.229291,13.229238,13.229195,13.229134,13.229092,13.229042,13.228928,13.228799,13.228677,13.228559,13.2284,13.228222,13.228079,13.227958,13.227778,13.227626,13.227491,13.227347,13.227223,13.227061,13.226888,13.22672,13.226563,13.226416,13.226355,13.226319,13.226283,13.226238,13.226171,13.226084,13.226005,13.225942,13.225897,13.225879,13.225905,13.225778,13.225604,13.225424,13.225279,13.225168,13.225103,13.225014,13.224915,13.224822,13.224841,13.224905,13.224993,13.225098,13.225137,13.225249,13.225357,13.225447,13.225496,13.225637,13.225816,13.225948,13.226093,13.226211,13.226358,13.226475,13.226581,13.226559,13.226572,13.226534,13.226465,13.226404,13.226344,13.226301,13.226266,13.226224,13.226165,13.226082,13.225987,13.225873,13.225705,13.225517,13.225365,13.225243,13.225125,13.225029,13.224937,13.22485,13.224891,13.224866,13.224879,13.224887,13.224891,13.224818,13.224713,13.224567,13.22441,13.224259,13.224122,13.224072,13.224045,13.224033,13.223982,13.223949,13.223897,13.223897,13.223858,13.223813,13.223646,13.223503,13.223462,13.223444,13.223445,13.22346,13.22343,13.223375,13.223358,13.223328,13.223336,13.223293,13.223248,13.223217,13.223107,13.222952,13.222806,13.222613,13.222453,13.222286,13.222112,13.221955,13.221766,13.221593,13.221385,13.22122,13.221068,13.220894,13.220735,13.220635,13.220585,13.220565,13.220518,13.220505,13.220521,13.220506,13.220406,13.220258,13.220097,13.219946,13.219802,13.219633,13.219473,13.219312,13.219141,13.218927,13.218801,13.218663,13.218493,13.218244,13.218074,13.21794,13.217765,13.217605,13.217434,13.217274,13.217173,13.217111],"lat":[55.721653,55.721628,55.721606,55.721594,55.721597,55.72165,55.721647,55.721631,55.721654,55.72165,55.72166,55.721673,55.72167,55.721683,55.721693,55.721696,55.721704,55.721717,55.721714,55.721706,55.721698,55.721702,55.721714,55.721794,55.72189,55.721994,55.722078,55.722174,55.722263,55.722358,55.722469,55.722561,55.722646,55.722723,55.722827,55.722914,55.723001,55.723105,55.723147,55.723133,55.723145,55.723151,55.723175,55.723168,55.723173,55.723169,55.72315,55.723122,55.723142,55.72322,55.723313,55.723409,55.723512,55.723598,55.723701,55.723798,55.723878,55.723964,55.724067,55.724173,55.724252,55.724254,55.724249,55.724271,55.724274,55.724277,55.724247,55.724227,55.724231,55.724231,55.724248,55.724241,55.724249,55.724241,55.724243,55.724238,55.724238,55.724348,55.724438,55.72452,55.724616,55.724703,55.724817,55.724909,55.72499,55.725102,55.725206,55.7253,55.725387,55.725493,55.725591,55.725672,55.725756,55.725848,55.72594,55.726027,55.726112,55.726197,55.726299,55.726401,55.72649,55.726594,55.726681,55.726793,55.726894,55.726932,55.726932,55.726923,55.72699,55.727079,55.727164,55.727214,55.727269,55.727319,55.727379,55.727446,55.727501,55.727597,55.72769,55.727801,55.727897,55.72798,55.72808,55.728182,55.728265,55.728362,55.728402,55.728487,55.72858,55.728676,55.728769,55.728886,55.728974,55.72908,55.729182,55.729244,55.729286,55.729332,55.729385,55.729427,55.729433,55.72945,55.7295,55.729531,55.729532,55.729566,55.729578,55.729587,55.729581,55.729578,55.729593,55.729593,55.729624,55.729622,55.729644,55.729656,55.729663,55.72967,55.729629,55.729635,55.729639,55.729725,55.729814,55.729932,55.730048,55.730144,55.730225,55.73032,55.730414,55.730495,55.730582,55.730683,55.73077,55.730864,55.730963,55.731069,55.731153,55.731246,55.731344,55.731433,55.731527,55.73162,55.73172,55.731837,55.731938,55.732021,55.732124,55.732215,55.732302,55.732385,55.732475,55.732558,55.732663,55.732751,55.732826,55.732921,55.733005,55.733089,55.733187,55.733301,55.733381,55.733481,55.733595,55.73369,55.733795,55.733888,55.733991,55.7341,55.734189,55.734276,55.734362,55.734445,55.734542,55.734627,55.734714,55.73481,55.734917,55.735011,55.735094,55.735208,55.735311,55.735405,55.735505,55.735601,55.73569,55.735778,55.735867,55.735975,55.736089,55.736898,55.736995,55.737111,55.737222,55.737315,55.737424,55.737516,55.737607,55.737702,55.737743,55.737769,55.737747,55.737767,55.737784,55.737782,55.73779,55.737776,55.737768,55.737773,55.737767,55.737762,55.73777,55.73778,55.7378,55.737806,55.737844,55.737861,55.737863,55.737883,55.737913,55.737908,55.737892,55.73789,55.737921,55.737949,55.737969,55.737986,55.738018,55.738079,55.73814,55.738213,55.738308,55.738403,55.738497,55.738602,55.738686,55.738785,55.738883,55.738968,55.739049,55.739104,55.739118,55.739134,55.73915,55.739146,55.739181,55.739215,55.739243,55.739287,55.739315,55.739367,55.739425,55.739485,55.739565,55.739647,55.739709,55.739727,55.739698,55.739671,55.739685,55.739757,55.739739,55.739732,55.739701,55.739668,55.739646,55.739628,55.739589,55.739559,55.739539,55.739522,55.739545,55.739566,55.739577,55.739588,55.739603,55.739616,55.739647,55.739661,55.739676,55.739679,55.739706,55.739711,55.739737,55.73976,55.739775,55.739795,55.739813,55.73984,55.739855,55.73987,55.739886,55.73988,55.739885,55.739888,55.739917,55.739942,55.739971,55.73997,55.739951,55.739987,55.739992,55.739999,55.740019,55.740041,55.740047,55.740058,55.740084,55.740116,55.740158,55.740166,55.740175,55.740193,55.740213,55.740231,55.740245,55.740266,55.740261,55.740281,55.740278,55.740302,55.740312,55.74033,55.740342,55.74036,55.740376,55.740399,55.740412,55.740445,55.740465,55.740491,55.740496,55.740491,55.740482,55.740414,55.740335,55.74024,55.740162,55.740091,55.740019,55.739947,55.739877,55.7398,55.73972,55.739645,55.739578,55.739504,55.739423,55.739346,55.739271,55.739198,55.739123,55.739033,55.738962,55.73887,55.7388,55.73873,55.738659,55.738574,55.738508,55.738439,55.738377,55.7383,55.738215,55.738145,55.73805,55.737979,55.737899,55.737822,55.737747,55.737674,55.737603,55.737537,55.737456,55.737383,55.737308,55.737228,55.737145,55.737055,55.736971,55.736892,55.736819,55.736728,55.736637,55.736553,55.736481,55.736402,55.736313,55.73623,55.736164,55.736087,55.736018,55.735945,55.735867,55.735788,55.735712,55.735635,55.735569,55.735454,55.735378,55.735296,55.735212,55.735139,55.735054,55.734976,55.734905,55.73481,55.734733,55.734657,55.73458,55.734522,55.734448,55.734358,55.734271,55.734185,55.734108,55.734033,55.733953,55.733881,55.733803,55.73372,55.733637,55.733564,55.733493,55.733395,55.733315,55.733247,55.733173,55.733097,55.73302,55.73294,55.732864,55.732789,55.732718,55.732649,55.732566,55.732489,55.73242,55.732345,55.732279,55.732196,55.732118,55.732041,55.73195,55.731865,55.731786,55.731714,55.731611,55.731512,55.731403,55.731309,55.731221,55.731137,55.731037,55.730937,55.730848,55.73076,55.730673,55.730582,55.730498,55.730405,55.730295,55.730195,55.730105,55.730008,55.729915,55.729812,55.729714,55.729634,55.729548,55.729455,55.729373,55.729278,55.7292,55.729121,55.729079,55.728997,55.72895,55.72899,55.729009,55.729061,55.729125,55.729176,55.729237,55.729279,55.729323,55.729363,55.729392,55.729418,55.729398,55.729373,55.729311,55.729237,55.729157,55.729072,55.728989,55.728915,55.728836,55.728756,55.728683,55.728602,55.728521,55.728427,55.728367,55.728363,55.728346,55.728295,55.728226,55.728135,55.728051,55.72798,55.727893,55.727798,55.727715,55.72765,55.727566,55.727476,55.727396,55.727335,55.727234,55.727151,55.727103,55.727069,55.727005,55.726983,55.72693,55.726874,55.726825,55.726747,55.726649,55.726566,55.726484,55.726388,55.726314,55.726229,55.726121,55.726029,55.725925,55.725839,55.725746,55.725644,55.725576,55.725552,55.725549,55.725579,55.725631,55.725698,55.725765,55.725829,55.725762,55.725679,55.725584,55.725502,55.725401,55.725306,55.725189,55.725112,55.725084,55.725057,55.725062,55.725037,55.724949,55.724864,55.724775,55.724688,55.724606,55.724522,55.724438,55.724355,55.724271,55.724287,55.724265,55.724177,55.724077,55.723984,55.723893,55.723802,55.723713,55.723611,55.723529,55.723441,55.723362,55.723272,55.723176,55.72311,55.72312,55.723143,55.72317,55.723163,55.723143,55.723137,55.723141,55.723139,55.723121,55.723121,55.723131,55.723113,55.723115,55.723117,55.723032,55.722956,55.722854,55.722776,55.722683,55.722597,55.7225,55.722442,55.722419,55.722419,55.722408,55.722412,55.722391,55.72239,55.722385,55.722389,55.722372,55.722324,55.722292,55.722308,55.722326,55.722342,55.722308,55.722329,55.722353,55.722324,55.722337,55.722261,55.722185]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"blue","weight":5,"opacity":0.5,"fill":false,"fillColor":"blue","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[55.721653,13.218106,10,null,null,{"interactive":true,"className":"","stroke":false,"color":"green","weight":5,"opacity":0.5,"fill":true,"fillColor":"green","fillOpacity":0.5},null,null,null,null,"Start",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[55.722185,13.217111,10,null,null,{"interactive":true,"className":"","stroke":false,"color":"red","weight":5,"opacity":0.5,"fill":true,"fillColor":"red","fillOpacity":0.5},null,null,null,null,"End",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addMarkers","args":[[55.72322,55.726401,55.729578,55.733301,55.737762,55.739757,55.740166,55.738439,55.734522,55.730405,55.72798,55.725037,55.722412],[13.220542,13.217925,13.215515,13.213943,13.212491,13.207997,13.215942,13.222082,13.226189,13.229591,13.224915,13.224122,13.219802],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["76","78.3","74.8","68.4","60.3","60.5","62.7","63","73.5","79","74.5","79.1","75"],null,null,null,["2016-07-21T14:57:19Z","2016-07-21T15:00:10Z","2016-07-21T15:03:25Z","2016-07-21T15:06:50Z","2016-07-21T15:10:34Z","2016-07-21T15:14:37Z","2016-07-21T15:18:37Z","2016-07-21T15:22:43Z","2016-07-21T15:26:53Z","2016-07-21T15:31:11Z","2016-07-21T15:34:51Z","2016-07-21T15:40:16Z","2016-07-21T15:44:48Z"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[55.721594,55.740496],"lng":[13.207067,13.229591]}},"evals":[],"jsHooks":[]}</script>
+<p><i class="fas fa-exclamation-circle"></i> Note   Here I have used <code>seq()</code> function to create a sequence of numbers to pick up the GPS positions from equal intervals. Then using that function I subset the dataframe <code>run_df</code> in the last line of the command above. In the <code>addCircleMarkers()</code> function I only used the first and the last line of the dataframe to specify the start and the end.</p>
+</div>
+</div>
+<div id="session-info" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Session info</h1>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 4.1.3 (2022-03-10)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Ubuntu 22.04.3 LTS
+## 
+## Matrix products: default
+## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3
+## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so
+## 
+## locale:
+##  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
+##  [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
+##  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
+## [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
+## 
+## attached base packages:
+## [1] grid      stats     graphics  grDevices utils     datasets  methods  
+## [8] base     
+## 
+## other attached packages:
+##  [1] swemaps_1.0            mapdata_2.3.1          maps_3.4.2            
+##  [4] gridExtra_2.3          jpeg_0.1-10            ggpubr_0.6.0          
+##  [7] cowplot_1.1.3          ggthemes_5.0.0         scales_1.3.0          
+## [10] ggrepel_0.9.5          wesanderson_0.3.7      forcats_1.0.0         
+## [13] stringr_1.5.1          purrr_1.0.2            readr_2.1.5           
+## [16] tidyr_1.3.1            tibble_3.2.1           tidyverse_2.0.0       
+## [19] reshape2_1.4.4         ggplot2_3.4.4          formattable_0.2.1     
+## [22] kableExtra_1.4.0       dplyr_1.1.4            lubridate_1.9.3       
+## [25] leaflet_2.2.1          yaml_2.3.8             fontawesome_0.5.2.9000
+## [28] captioner_2.2.3        bookdown_0.37          knitr_1.45            
+## 
+## loaded via a namespace (and not attached):
+##  [1] sass_0.4.8              jsonlite_1.8.8          viridisLite_0.4.2      
+##  [4] splines_4.1.3           carData_3.0-5           bslib_0.6.1            
+##  [7] highr_0.10              pillar_1.9.0            backports_1.4.1        
+## [10] lattice_0.20-45         glue_1.7.0              digest_0.6.34          
+## [13] ggsignif_0.6.4          leaflet.providers_2.0.0 colorspace_2.1-0       
+## [16] htmltools_0.5.7         Matrix_1.6-5            plyr_1.8.9             
+## [19] pkgconfig_2.0.3         broom_1.0.5             svglite_2.1.3          
+## [22] tzdb_0.4.0              timechange_0.3.0        mgcv_1.8-39            
+## [25] generics_0.1.3          farver_2.1.1            car_3.1-2              
+## [28] ellipsis_0.3.2          cachem_1.0.8            withr_3.0.0            
+## [31] cli_3.6.2               magrittr_2.0.3          evaluate_0.23          
+## [34] fansi_1.0.6             nlme_3.1-155            rstatix_0.7.2          
+## [37] xml2_1.3.6              tools_4.1.3             hms_1.1.3              
+## [40] lifecycle_1.0.4         munsell_0.5.0           compiler_4.1.3         
+## [43] jquerylib_0.1.4         systemfonts_1.0.5       rlang_1.1.3            
+## [46] rstudioapi_0.15.0       htmlwidgets_1.6.4       crosstalk_1.2.1        
+## [49] labeling_0.4.3          rmarkdown_2.25          gtable_0.3.4           
+## [52] abind_1.4-5             R6_2.5.1                fastmap_1.1.1          
+## [55] utf8_1.2.4              stringi_1.8.3           Rcpp_1.0.12            
+## [58] vctrs_0.6.5             tidyselect_1.2.0        xfun_0.41</code></pre>
+<hr />
+</div>
+
+<footer class="footer">
+<div class="container container-footer">
+<div class="row">
+<div class="col-sm-8" style="text-align:left;vertical-align:middle;">
+<p style="color:#bdbdbd;">
+<b>2023</b> • NBIS • SciLifeLab
+</p>
+</div>
+<div class="col-sm-4" style="text-align:right;vertical-align:middle;">
+<p style="color:#bdbdbd;">
+<span> <span class="footericon" style="padding-right:4px; padding-left:4px"> <a href="https://nbis.se/"><svg aria-hidden="true" role="img" viewBox="0 0 496 512" style="height:1em;width:0.97em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#bdbdbd;overflow:visible;position:relative;"><path d="M248 8C111.03 8 0 119.03 0 256s111.03 248 248 248 248-111.03 248-248S384.97 8 248 8zm82.29 357.6c-3.9 3.88-7.99 7.95-11.31 11.28-2.99 3-5.1 6.7-6.17 10.71-1.51 5.66-2.73 11.38-4.77 16.87l-17.39 46.85c-13.76 3-28 4.69-42.65 4.69v-27.38c1.69-12.62-7.64-36.26-22.63-51.25-6-6-9.37-14.14-9.37-22.63v-32.01c0-11.64-6.27-22.34-16.46-27.97-14.37-7.95-34.81-19.06-48.81-26.11-11.48-5.78-22.1-13.14-31.65-21.75l-.8-.72a114.792 114.792 0 0 1-18.06-20.74c-9.38-13.77-24.66-36.42-34.59-51.14 20.47-45.5 57.36-82.04 103.2-101.89l24.01 12.01C203.48 89.74 216 82.01 216 70.11v-11.3c7.99-1.29 16.12-2.11 24.39-2.42l28.3 28.3c6.25 6.25 6.25 16.38 0 22.63L264 112l-10.34 10.34c-3.12 3.12-3.12 8.19 0 11.31l4.69 4.69c3.12 3.12 3.12 8.19 0 11.31l-8 8a8.008 8.008 0 0 1-5.66 2.34h-8.99c-2.08 0-4.08.81-5.58 2.27l-9.92 9.65a8.008 8.008 0 0 0-1.58 9.31l15.59 31.19c2.66 5.32-1.21 11.58-7.15 11.58h-5.64c-1.93 0-3.79-.7-5.24-1.96l-9.28-8.06a16.017 16.017 0 0 0-15.55-3.1l-31.17 10.39a11.95 11.95 0 0 0-8.17 11.34c0 4.53 2.56 8.66 6.61 10.69l11.08 5.54c9.41 4.71 19.79 7.16 30.31 7.16s22.59 27.29 32 32h66.75c8.49 0 16.62 3.37 22.63 9.37l13.69 13.69a30.503 30.503 0 0 1 8.93 21.57 46.536 46.536 0 0 1-13.72 32.98zM417 274.25c-5.79-1.45-10.84-5-14.15-9.97l-17.98-26.97a23.97 23.97 0 0 1 0-26.62l19.59-29.38c2.32-3.47 5.5-6.29 9.24-8.15l12.98-6.49C440.2 193.59 448 223.87 448 256c0 8.67-.74 17.16-1.82 25.54L417 274.25z"></path></svg></a> </span> <span class="footericon" style="padding-right:4px; padding-left:4px"> <a href="https://twitter.com/NBISwe"><svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#bdbdbd;overflow:visible;position:relative;"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path></svg></a> </span> <span class="footericon" style="padding-left:4px"> <a href="https://www.linkedin.com/company/nbisweden/"><svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#bdbdbd;overflow:visible;position:relative;"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"></path></svg></a> </span> </span>
+</p>
+</div>
+</div>
+</div>
+</footer>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

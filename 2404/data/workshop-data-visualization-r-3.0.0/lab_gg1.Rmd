@@ -1,0 +1,402 @@
+---
+title: "ggplot: Part I"
+subtitle: "Workshop on Data Visualization in R"
+author: "`r paste0('<b>Lokesh Mano</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
+---
+
+```{r, include=FALSE}
+hooks = knitr::knit_hooks$get()
+hook_foldable = function(type) {
+  force(type)
+  function(x, options) {
+    res = hooks[[type]](x, options)
+    
+    if (isFALSE(options[[paste0("fold.", type)]])) return(res)
+    
+    paste0(
+      "<details><summary>", type, "</summary>\n\n",
+      res,
+      "\n\n</details>"
+    )
+  }
+}
+knitr::knit_hooks$set(
+  output = hook_foldable("output"),
+  plot = hook_foldable("plot")
+)
+```
+
+```{r,child="assets/header-lab.Rmd"}
+```
+
+```{r,include=FALSE}
+# data handling
+library(dplyr)
+#library(tidyr)
+#library(stringr)
+
+# plotting
+library(ggplot2)
+
+#library(biomaRt) # annotation
+#library(DESeq2) # rna-seq
+#library(edgeR) # rna-seq
+```
+
+
+# Base vs grid graphics
+
+## Base
+
+R is an excellent tool for creating graphs and plots. The graphic capabilities and functions provided by the base R installation is called the base R graphics. Numerous packages exist to extend the functionality of base graphics.
+
+We can try out plotting a few of the common plot types. Let's start with a scatterplot. First we create a `data.frame` as this is the most commonly used data object.
+
+```{r}
+dfr <- data.frame(a=sample(1:100,10),b=sample(1:100,10))
+```
+
+Now we have a dataframe with two continuous variables that can be plotted against each other.
+
+```{r}
+plot(dfr$a,dfr$b)
+```
+
+This is probably the simplest and most basic plots. We can modify the x and y axis labels.
+
+```{r}
+plot(dfr$a,dfr$b,xlab="Variable a",ylab="Variable b")
+```
+
+We can change the point to a line.
+
+```{r}
+plot(dfr$a,dfr$b,xlab="Variable a",ylab="Variable b",type="b")
+```
+
+Let's add a categorical column to our dataframe.
+
+```{r}
+dfr$cat <- rep(c("C1","C2"),each=5)
+```
+
+And then colour the points by category.
+
+```{r}
+# subset data
+dfr_c1 <- subset(dfr,dfr$cat == "C1")
+dfr_c2 <- subset(dfr,dfr$cat == "C2")
+
+plot(dfr_c1$a,dfr_c1$b,xlab="Variable a",ylab="Variable b",col="red",pch=1)
+points(dfr_c2$a,dfr_c2$b,col="blue",pch=2)
+
+legend(x="topright",legend=c("C1","C2"),
+       col=c("red","blue"),pch=c(1,2))
+```
+
+Let's create a barplot.
+
+```{r}
+ldr <- data.frame(a=letters[1:10],b=sample(1:50,10))
+barplot(ldr$b,names.arg=ldr$a)
+```
+
+## Grid
+
+Grid graphics have a completely different underlying framework compared to base graphics. Generally, base graphics and grid graphics cannot be plotted together. The most popular grid-graphics based plotting library is **ggplot2**.
+
+Let's create the same plot as before using **ggplot2**. Make sure you have the package installed.
+
+```{r}
+library(ggplot2)
+
+ggplot(dfr)+
+  geom_point(mapping = aes(x=a,y=b,colour=cat))+
+  labs(x="Variable a",y="Variable b")
+```
+
+It is generally easier and more consistent to create plots using the ggplot2 package compared to the base graphics.
+
+Let's create a barplot as well.
+
+```{r}
+ggplot(ldr,aes(x=a,y=b))+
+  geom_col()
+```
+
+
+## Saving images
+
+Let's take a look at saving plots. 
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; This part is just to give you a quick look into how you can save images from Rstudio quickly. The different format of images will be explained in a lecture tomorrow.
+
+### Base graphics
+
+The general idea for saving plots is open a graphics device, create the plot and then close the device. We will use **png** here. Check out `?png` for the arguments and other devices.
+
+```{r,eval=FALSE}
+dfr <- data.frame(a=sample(1:100,10),b=sample(1:100,10))
+
+png(filename="plot-base.png")
+plot(dfr$a,dfr$b)
+dev.off()
+```
+
+### ggplot2
+
+The same idea can be applied to ggplot2, but in a slightly different way. First save the file to a variable, and then export the plot.
+
+```{r,eval=FALSE}
+p <- ggplot(dfr,aes(a,b)) + geom_point()
+
+png(filename="plot-ggplot-1.png")
+print(p)
+dev.off()
+```
+
+<i class="fas fa-lightbulb"></i> Tip &nbsp;
+**ggplot2** also has another easier helper function to export images.
+
+```{r,eval=FALSE}
+ggsave(filename="plot-ggplot-2.png",plot=p)
+```
+
+# Ggplot basics
+
+Make sure the library is loaded in your environment.
+
+```{r, eval=FALSE}
+library(ggplot2)
+```
+
+## Geoms
+
+In the previous section we saw very quickly how to use `ggplot`. Let's take a look at it again a bit more carefully. For this let's first look into a simple data that is available in R. We use the `iris` data for this to start with.
+
+This dataset has four continuous variables and one categorical variable. It is important to remember about the data type when plotting graphs
+
+```{r, fold.output=FALSE}
+data("iris")
+head(iris)
+```
+
+When we initiate the ggplot object using the data, it just creates a blank plot!
+
+```{r}
+ggplot(iris) 
+```
+
+Now we can specify what we want on the x and y axes using aesthetic mapping. And we specify the geometric using `geoms`. <i class="fas fa-exclamation-circle"></i> Note &nbsp; that the variable names do not have double quotes `""` like in base plots.
+
+```{r}
+ggplot(data=iris)+
+  geom_point(mapping=aes(x=Petal.Length,y=Petal.Width))
+```
+
+### Multiple geoms
+
+Further geoms can be added. For example let’s add a regression line. When multiple geoms with the same aesthetics are used, they can be specified as a common mapping. 
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; that the order in which geoms are plotted depends on the order in which the geoms are supplied in the code. In the code below, the points are plotted first and then the regression line.
+
+```{r}
+ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point()+
+  geom_smooth(method="lm")
+```
+
+There are many other `geoms` and you can find most of them here in this [cheatsheet](https://rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf)
+
+### Gene counts data
+
+Let's also try to use `ggplot` for a "more common" gene counts dataset. Let's use the `merged_data_long` or the `gc_long` object we created in the earlier session.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(reshape2)
+gc <- read.table("data/counts_raw.txt", header = T, row.names = 1, sep = "\t")
+md <- read.table("data/metadata.csv", header = T, sep = ";")
+rownames(md) <- md$Sample_ID
+
+#merging gene counts table with metadata
+merged_data_wide <- merge(md, t(gc), by = 0)
+#removing redundant columns
+merged_data_wide$Row.names <- NULL
+
+library(tidyverse)
+gc_long <- gc %>%
+  rownames_to_column(var = "Gene") %>%
+  gather(Sample_ID, count, -Gene) %>% 
+  full_join(md, by = "Sample_ID") %>% 
+  select(Sample_ID, everything()) %>% 
+  select(-c(Gene,count), c(Gene,count)) 
+```
+
+```{r}
+ggplot(data = gc_long) +
+  geom_boxplot(mapping = aes(x = Sample_Name, y = log10(count +1)))
+```
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; You can notice that the ggplot sorts the `factors` or `vaiables` alpha-numerically, like in the case above with `Sample_Name`. 
+
+<i class="fas fa-lightbulb"></i> Tip &nbsp; There is a trick that you can use to give the order of variables manually. The example is shown below:
+
+```{r}
+gc_long$Sample_Name <- factor(gc_long$Sample_Name, levels = c("t0_A","t0_B","t0_C","t2_A","t2_B","t2_C","t6_A","t6_B","t6_C","t24_A","t24_B","t24_C"))
+ggplot(data = gc_long) +
+  geom_boxplot(mapping = aes(x = Sample_Name, y = log10(count + 1)))
+```
+
+## Colors
+
+### Iris data
+
+First, if we look at the `iris` data, we can use the categorical column `Species` to color the points. The color aesthetic is used by geom_point and geom_smooth. Three different regression lines are now drawn. Notice that a legend is automatically created
+
+```{r}
+ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width,color=Species))+
+  geom_point()+
+  geom_smooth(method="lm")
+
+```
+
+If we wanted to keep a common regression line while keeping the colors for the points, we could specify color aesthetic only for `geom_point`.
+
+```{r}
+ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Species))+
+  geom_smooth(method="lm")
+
+```
+
+### GC data
+
+Similarly, we can do the same with the gene counts data. 
+
+```{r}
+ggplot(data = gc_long) +
+  geom_boxplot(mapping = aes(x = Sample_Name, y = log10(count + 1), color = Time))
+```
+
+<i class="fas fa-lightbulb"></i> Tip &nbsp; We can also use the `fill` aesthetic to give it a better look.
+
+```{r}
+ggplot(data = gc_long) +
+  geom_boxplot(mapping = aes(x = Sample_Name, y = log10(count + 1), fill = Time))
+```
+
+### Discrete colors
+
+We can change the default colors by specifying new values inside a scale.
+
+```{r}
+ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Species))+
+  geom_smooth(method="lm")+
+  scale_color_manual(values=c("red","blue","green"))
+```
+
+<i class="fas fa-lightbulb"></i> Tip &nbsp; To specify manual colors, you could specify by their `names` or their `hexadecimal codes`. For example, you can choose the colors based on `names` from an online source like in this [cheatsheet](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) or you can use the `hexadecimal code` and choose it from a source like [here](https://htmlcolorcodes.com/). I personally prefer the `hexa` based options for manual colors.
+
+### Continuous colors
+
+We can also map the colors to a continuous variable. This creates a color bar legend item.
+
+```{r}
+ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Sepal.Width))+
+  geom_smooth(method="lm")
+```
+
+<i class="fas fa-lightbulb"></i> Tip &nbsp; Here, you can also choose different `palettes` for choosing the right continuous pallet. There are some common packages of palettes that are used very often. [RColorBrewer](https://www.r-graph-gallery.com/38-rcolorbrewers-palettes.html) and [wesanderson](https://github.com/karthik/wesanderson), if you are fan of his choice of colors ;)
+
+```{r}
+library(wesanderson)
+ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Sepal.Width))+
+  geom_smooth(method="lm") +
+  scale_color_gradientn(colours = wes_palette("Moonrise3"))
+```
+
+<i class="fas fa-lightbulb"></i> Tip &nbsp; You can also use simple R base color palettes like `rainbow()` or `terrain.colors()`. Use `?` and look at these functions to see, how to use them.
+
+## Aesthetics
+
+### Aesthetic parameter
+
+We can change the size of all points by a fixed amount by specifying size outside the aesthetic parameter.
+
+```{r}
+ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Species),size=3)+
+  geom_smooth(method="lm")
+```
+
+### Aesthetic mapping
+
+We can map another variable as size of the points. This is done by specifying size inside the aesthetic mapping. Now the size of the points denote `Sepal.Width`. A new legend group is created to show this new aesthetic.
+
+```{r}
+ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Species,size=Sepal.Width))+
+  geom_smooth(method="lm")
+```
+
+# Histogram
+
+Here, as a quick example, we will try to make use of the different combinations of `geoms`, `aes` and `color` in simple plots.
+
+Let's take a quick look at some of widely used functions like histograms and density plots in `ggplot`. Intuitively, these can be drawn with `geom_histogram()` and `geom_density()`. Using `bins` and `binwidth` in `geom_histogram()`, one can customize the histogram.
+
+```{r}
+ggplot(data=iris,mapping=aes(x=Sepal.Length))+
+  geom_histogram()
+```
+
+## Density
+
+Let's look at the sample plot in density.
+
+```{r}
+ggplot(data=iris,mapping=aes(x=Sepal.Length))+
+  geom_density()
+```
+
+The above plot is not very informative, let's see how the different species contribute:
+
+```{r}
+ggplot(data=iris,mapping=aes(x=Sepal.Length))+
+  geom_density(aes(fill = Species), alpha = 0.8)
+```
+
+<i class="fas fa-exclamation-circle"></i> Note &nbsp; The `alpha` option inside `geom_density` controls the transparency of the plot.
+
+# Exercise
+
+<i class="fas fa-clipboard-list"></i> Task &nbsp; Make `boxplots` similar to the one we did here in this exercise for the other three counts (`counts_filtered.txt`, `counts_vst.txt` and `counts_deseq2.txt`). 
+
+<i class="fas fa-lightbulb"></i> Tip &nbsp; You can save the plots themselves as R objects. You will get the plot by just calling those objects. You can then add layers to those objects. An example is shown below:
+
+```{r}
+plot_obj_1 <- ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
+  geom_point(aes(color=Sepal.Width))+
+  geom_smooth(method="lm") 
+plot_obj_1
+```
+
+```{r}
+plot_obj_2 <- plot_obj_1 +
+  scale_color_gradientn(colours = wes_palette("Moonrise3"))
+plot_obj_2
+```
+
+This way, you can create different plot objects for the different counts, we will use them in the later exercises.
+
+
+# Session info
+
+```{r, fold.output=FALSE, fold.plot=FALSE}
+sessionInfo()
+```
+
+***
+

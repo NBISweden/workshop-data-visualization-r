@@ -1,0 +1,47 @@
+---
+title: "Title"
+author: "Lokesh"
+date: "`r paste0('<b>Lokesh Mano</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
+output: 
+  rmarkdown::html_document:
+    code_folding: 'hide'
+    toc: true
+    toc_float: true
+    smart: true
+    number_sections: true
+    highlight: tango
+    self_contained: true
+    smaller: true
+---
+
+```{r, include=FALSE}
+# Ignore this part! This is only for formatting this document in the html file!
+library(knitr)
+hook_output = knit_hooks('output')
+knit_hooks(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options)) {
+    x = knitr:::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+```
+
+```{r, include=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(phyloseq)
+library(dplyr)
+library(tidyverse)
+library(DESeq2)
+library(limma)
+library(ggpubr)
+library(vegan)
+library(pheatmap)
+library(rafalib)
+theme_set(theme_bw())
+
+
+```
