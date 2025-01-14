@@ -1,39 +1,43 @@
-# workshop-data-visualization-r [![gh-actions-build-status](https://github.com/royfrancis/workshop-template-rmd-ga/workflows/build/badge.svg)](https://github.com/NBISweden/workshop-data-visualization-r/actions?workflow=build)
+# specky
 
-This repo contains the course material for NBIS workshop **Workshop on Data Visualization in R**. The rendered view of this repo is available [here](https://nbisweden.github.io/workshop-data-visualization-r/).
+[![ci_badge](https://github.com/royfrancis/specky/workflows/deploy/badge.svg)](https://github.com/royfrancis/specky/actions?workflow=deploy)    [![lifecycle_badge](https://lifecycle.r-lib.org/articles/figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 
-## Contributing
+Quarto website template for courses
 
-To add or update contents of this repo (for collaborators), first clone the repo.
+![Report home](preview-home.webp)
+
+![Report preview](preview-report.webp)
+
+![Slide preview](preview-slide.webp)
+
+For a demo site and usage, see [here](https://royfrancis.github.io/specky).
+
+## Usage
+
+- Required quarto 1.4.0 or higher
+- To download and use a starter template, run in the terminal
+
+:exclamation: Demo files are not downloaded
 
 ```
-git clone https://github.com/nbisweden/workshop-data-visualization-r.git
+quarto use template royfrancis/specky
 ```
 
-Make changes/updates as needed. Add the changed files. Commit it. Then push the repo back.
+- Render all html files into `docs` directory to make sure everything works as expected
 
 ```
-git add .
-git commit -m "I did this and that"
-git push origin
+quarto render
 ```
 
-If you are not added as a collaborator, first fork this repo to your account, then clone it locally, make changes, commit, push to your repo, then submit a pull request to this repo.
+- Use `##` as the highest level heading.
+- Limited documentation is available on the [demo site](https://royfrancis.github.io/specky/home_contents.html) for customization
 
-:exclamation: When updating repo for a new course, change `output_dir: XXXX` in `_site.yml` as the first thing, so that old rendered files are not overwritten.
+## Acknowledgements
 
-:exclamation: Do not push any rendered .html files or intermediates.
-
-## Repo organisation
-
-The source material is located on the *main* branch (default). The rendered material is located on the *gh-pages* branch. For most part, one only needs to update content in master. Changes pushed to the *main* branch is automatically rendered to the *gh-pages* branch.
-
-:exclamation: The first build can take around 30-40 mins depending on the number of R packages (listed in **_site.yml**). Subsequent builds take about 2-3 minutes since caching is enabled. Caches are removed after 7 days of last access. A push after that will require a full rebuild.
-
-For more details about repo organisation, updating and modifying this repo, check out the [template repo](https://github.com/royfrancis/workshop-template-rmd-ga).
-
-
+- Built using [Quarto](https://quarto.org/)
+- Uses the [fontawesome extension](https://github.com/quarto-ext/fontawesome) for icons
+- Uses the [reveal-logo extension](https://github.com/royfrancis/reveal-logo) for logos in presentation 
 
 ---
 
-**2023** NBIS • SciLifeLab
+2024 • Roy Francis

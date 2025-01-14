@@ -3,10 +3,29 @@
 .RData
 .Ruserdata
 
+# From specky
+
+**/.Rhistory
+*.Rproj*
+*.code-workspace
+**/.ipynb_checkpoints
+/.luarc.json
+/.quarto/
+.DS_Store
+**/*_cache/
+**/__pycache__
+todo.txt
+slides/**/*_files
+labs/**/*_files
+_freeze
+docs
+
 # Release directories 
 2204/
 2210/
 2304/
+old_rmd_files/
+specky/
 
 # Admin for particular release
 #2109_Admin/
