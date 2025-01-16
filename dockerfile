@@ -38,5 +38,3 @@ WORKDIR /qmd
 #ENV XDG_DATA_HOME=/tmp/quarto_data_home
 CMD ["quarto", "render"]
 
-# docker build --platform linux/amd64 -t ghcr.io/nbisweden/workshop-ngsintro:2.3.0 -t ghcr.io/nbisweden/workshop-ngsintro:latest .
-# docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/work kaczmarj/apptainer build ngsintro.sif docker://ghcr.io/nbisweden/workshop-ngsintro:latest
