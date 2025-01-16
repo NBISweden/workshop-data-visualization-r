@@ -1,10 +1,10 @@
-# DOCKER FILE FOR WORKSHOP-NGSINTRO
-# 2025 Roy Francis
+# DOCKER FILE FOR WORKSHOP-ADVANCED-DATA-VISULAIZATION
+# 2025 Lokesh Mano
 
 FROM rocker/verse:4.4
 LABEL Description="Docker image for NBIS workshop"
-LABEL Maintainer="roy.francis@nbis.se"
-LABEL org.opencontainers.image.source="https://github.com/NBISweden/workshop-ngsintro"
+LABEL Maintainer="lokeshwaran.manoharan@nbis.se"
+LABEL org.opencontainers.image.source="https://github.com/NBISweden/workshop-data-visualization-r"
 #ARG QUARTO_VERSION="1.6.40"
 
 RUN apt-get update -y \
