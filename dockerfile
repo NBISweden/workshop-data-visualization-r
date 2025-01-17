@@ -31,7 +31,7 @@ RUN apt-get update -y \
 USER rstudio
 
 ## Required when editing rnaseq lab
-RUN Rscript -e 'install.packages(c("ggplot2", "ggmap","pheatmap","devtools","cowplot","reshape2", "dplyr", "wesanderson", "scales", "ggthemes", "ggrepel", "grid","ggpubr", "gridExtra", "shiny", "gganimate", "shinythemes","rsconnect", "colourpicker", "kableExtra"),dependencies = TRUE, repos = "http://cran.us.r-project.org");'
+RUN Rscript -e 'install.packages(c("ggplot2", "ggmap","pheatmap","devtools","cowplot","reshape2", "dplyr", "wesanderson", "scales", "ggthemes", "ggrepel", "grid","ggpubr", "gridExtra", "shiny", "gganimate", "shinythemes","rsconnect", "colourpicker", "kableExtra", "highcharter"),dependencies = TRUE, repos = "http://cran.us.r-project.org");'
 
 WORKDIR /qmd
 #ENV XDG_CACHE_HOME=/tmp/quarto_cache_home
