@@ -1,12 +1,4 @@
-All current and previous workshop materials are listed below.
-
-<div style='display:block;'><p style='line-height:2;'>
-<span style='display:block;'><a href='https://NBISweden.github.io/workshop-data-visualization-r/2404/'>2024 Apr</a></span><span style='display:block;'><a href='https://NBISweden.github.io/workshop-data-visualization-r/2304/'>2023 Apr</a></span><span style='display:block;'><a href='https://NBISweden.github.io/workshop-data-visualization-r/2210/'>2022 Oct</a></span><span style='display:block;'><a href='https://NBISweden.github.io/workshop-data-visualization-r/2204/'>2022 Apr</a></span></p></div>
-
-Previous workshops:
-<div style='display:block;'><p style='line-height:2;'> 
-<span style='display:block;'><a href='https://NBISweden.github.io/workshop-plotting-in-r/2109/'>2021 Sep: Different Course Title</a></span> 
-</p></div> 
-<div style='display:block;'><p style='line-height:2;'> 
-<span style='display:block;'><a href='https://nbisweden.github.io/Workshop_geneco_2020_05/docs/index.html'>2020 GENECO Research School</a></span> 
-</p></div> 
+<div class='wrapper-logo'><img class='logo' src='assets/logo.svg'></div>The current and all previous instances of this workshop are listed below.
+<hr>
+<div class='workshop-list'>
+<h3><a href='https://NBISweden.github.io/workshop-data-visualization-r/2505/'>2025 May</a></h3><h3><a href='https://NBISweden.github.io/workshop-data-visualization-r/2404/'>2024 Apr</a></h3><h3><a href='https://NBISweden.github.io/workshop-data-visualization-r/2304/'>2023 Apr</a></h3><h3><a href='https://NBISweden.github.io/workshop-data-visualization-r/2210/'>2022 Oct</a></h3><h3><a href='https://NBISweden.github.io/workshop-data-visualization-r/2204/'>2022 Apr</a></h3></div>
