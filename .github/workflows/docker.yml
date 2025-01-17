@@ -6,7 +6,7 @@ on:
 env:
   REGISTRY: ghcr.io
   ORG: nbisweden
-  IMAGE: workshop-data-visualization-r:latest
+  IMAGE: workshop-adv-data-viz:latest
 
 jobs:
   quarto-render-job:
