@@ -97,6 +97,7 @@ jobs:
           printf "</div>\n" >> index.md
           # printf "<hr>\n" >> index.md
           # printf "$(date +'%Y') • NBIS\n" >> index.md
+          # test comment
 
           echo "Folder contents at $(pwd):"
           ls -lh
