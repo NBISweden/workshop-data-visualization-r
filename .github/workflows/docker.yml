@@ -2,12 +2,11 @@ name: build
 on:
   push:
     branches:
-      - master
       - main
 env:
   REGISTRY: ghcr.io
   ORG: nbisweden
-  IMAGE: workshop-ngsintro:latest
+  IMAGE: workshop-data-visualization-r:latest
 
 jobs:
   quarto-render-job:
@@ -89,7 +88,7 @@ jobs:
           	if [ ${i:2:2} -lt 1 ] || [ ${i:2:2} -gt 12 ]
           		then echo "Month: ${i:2:2}. Last 2 values in output_dir must be a month between 01 and 12."
           	fi
-          	# This code works for year 2000 and later
+          	# This code works for year 2000 and later.
           	printf -v thedate '2000-01-01 +%s years +%s months -1 day' "${i:0:2}" "${i:2}"
           	dt=$(date -d "$thedate" +'%Y %b')
           	echo $dt
