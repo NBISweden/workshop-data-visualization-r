@@ -1,5 +1,5 @@
 ---
-pagetitle: "Specky: Course Template"
+pagetitle: "NBIS Workshop | Advanced Data Visualization"
 subtitle: ""
 toc: false
 date: ""
@@ -19,15 +19,21 @@ execute:
 ::: {.home-grid-parent}
 ::: {.home-grid-child-left}
 
-## [**Specky: Course Template**]{.large}
-### A quarto course template
+### NBIS Workshop
+## Advanced Data Visualization
 
-- [Report](reports/sample/index.html)
-- [Presentation](slides/sample/index.html)
+::: {.large}
 
-For usage instructions and demo examples, see [Contents](home_contents.html)
+Using the language of graphics: ggplot2
+Basic and advanced plotting in ggplot2
+Single-cell data visualizations with Seurat objects
+Quarto notebooks and reports
+Dynamic plotting with quarto
+Developing interactive web applications using Shiny
 
----
+:::
+
+
 
 ::: small
 Updated: {{< meta current_date >}}  at {{< meta current_time >}} .
