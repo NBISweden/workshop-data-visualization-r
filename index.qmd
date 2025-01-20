@@ -24,12 +24,12 @@ execute:
 
 ::: {.large}
 
-Using the language of graphics: ggplot2
-Basic and advanced plotting in ggplot2
-Single-cell data visualizations with Seurat objects
-Quarto notebooks and reports
-Dynamic plotting with quarto
-Developing interactive web applications using Shiny
+ - Using the language of graphics: ggplot2
+ - Basic and advanced plotting in ggplot2
+ - Single-cell data visualizations with Seurat objects
+ - Quarto notebooks and reports
+ - Dynamic plotting with quarto
+ - Developing interactive web applications using Shiny
 
 :::
 
