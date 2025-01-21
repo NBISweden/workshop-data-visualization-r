@@ -27,6 +27,7 @@ docs
 old_rmd_files/
 specky/
 test_files/
+gh-pages-branch/
 
 # Admin for particular release
 #2109_Admin/
