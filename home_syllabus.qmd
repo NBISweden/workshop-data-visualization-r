@@ -14,31 +14,41 @@ format: html
 
 The syllabus for this workshop are as follows.
 
-- Working on the unix/linux command line
-  - Command line navigation and related commands: cd, mkdir, rm, rmdir
-  - Commonly used linux tools: cp, mv, tar, less, more, head, tail, nano, grep, top, man
-  - Wildcards
-  - Ownership and permissions
-  - Symbolic links
-  - Piping commands
-- Working on remote computing cluster
-  - Logging on to UPPMAX
-  - Booking resources
-  - Job templates, submission and queues
-  - Modules
+- Advanced level
+  - Using the language of graphics: ggplot2
+  - Basic and advanced plotting in ggplot2
+  - Single-cell data visualizations with Seurat
+  - Quarto notebooks and reports
+  - Dynamic plotting with quarto
+  - Interactive web apps with Shiny
+
+- Beginner level
+  - Handle data in R for visualizations
+  - Apply ggplot grammar to get publication-grade plots
+  - Combine different data and/or different plots
+  - PCA, Heatmaps, Phylogenetic trees and Maps
 
 ## Learning outcomes
 
 After this workshop you should be able to:
 
-- Describe the basic principles of next generation sequencing.
-- Use the Linux command line interface to manage simple file processing operations, and organise directory structures.
-- Connect to and work on a remote compute cluster.
-- Apply programs in Linux for analysis of NGS data.
+- Advanced level
+  - Handle data in R for visualizations
+  - Familiarize with ggplot2 functions and techniques at adavanced level
+  - Combine different data and/or different plots that are of publication-ready
+  - Create interactive documents with Quarto for data exploration and analysis
+  - Write your own simple Shiny app in R
+
+- Beginner level
+  - handle data in R for visualizations
+  - apply the grammar efficiently in ggplot to obtain the desired plot
+  - combine different data and/or different plots that are of publication-grade
 
 ## Entry requirements
 
-- This is a national course open to PhD students, postdocs, group leaders and core facility staff.
-- A background in genetics, cell biology, biomedicine, biochemistry, bioinformatics or comparable is desirable.
+- Familiarity with R and R Studio
+- Plotting using standard R graphics
+- Participants are expected to use their own computers with pre-installed R, R Studio and different R packages (detailed instructions will be given upon acceptance).
+
 
 :::

@@ -128,7 +128,7 @@ assistants:
  - "LV: Louella Vasquez"
  - "KK: Katja Kozjek"
 
-schedule_message: "Breaks are planned for approximately 10:00 and 15:00 every day."
+schedule_message: "Breaks are planned for approximately at 10:15 and 15:00 every day."
 colors:
   primary: "#95b540"
   secondary: "#E9F2D1"

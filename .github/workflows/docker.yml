@@ -94,7 +94,7 @@ jobs:
           	echo $dt
             printf "<h3><a href='https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO}/${i}/'>$dt</a></h3>" >> index.md
           done
-          printf "<h3><a href='https://nbisweden.github.io/Workshop_geneco_2020_05/docs/'>'2020 Nov'</a></h3>" >> index.md
+          printf "<h3><a href='https://nbisweden.github.io/Workshop_geneco_2020_05/docs/'>2020 Nov</a></h3>" >> index.md
           printf "</div>\n" >> index.md
           # printf "<hr>\n" >> index.md
           # printf "$(date +'%Y') • NBIS\n" >> index.md
