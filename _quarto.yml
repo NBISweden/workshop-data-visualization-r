@@ -121,7 +121,7 @@ filters:
 # location is used to render the info page
 # location options are linkoping, lund, umea, stockholm, uppsala or online
 # one or more separated by commas or semicolon.
-location: lund
+location: lund_mv
 assistants:
  - "LM: Lokesh Mano"
  - "MR: Markus Ringńer"

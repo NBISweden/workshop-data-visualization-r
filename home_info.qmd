@@ -1,0 +1,107 @@
+---
+title: "Practical Info"
+subtitle: "Venue, address, travel and contact information"
+date: ""
+toc: false
+number-sections: false
+sidebar: false
+format: html
+---
+
+```{r,eval=TRUE,include=FALSE}
+library(yaml)
+library(here)
+library(leaflet)
+
+#' Get location data from YAML into a list and data.frame
+#' @param y YAML data
+#' @param loc Name of location
+#' @return List with description and data.frame with map data
+#'
+get_info <- function(y, loc) {
+  loc <- tolower(loc)
+
+  if (loc %in% names(y)) {
+    info <- y[[loc]]
+    if (!is.null(info$description)) {
+      d <- info$description
+    } else {
+      d <- NULL
+    }
+    if (!is.null(info$map)) {
+      m <- do.call(rbind, lapply(info$map, function(x){
+        required_fields <- c("label", "marker_icon", "marker_color", "lat", "lon", "popup")
+        missing_fields <- setdiff(required_fields, names(x))
+        
+        if (length(missing_fields) > 0) {
+          stop(paste("Missing fields:", paste(missing_fields, collapse = ", ")))
+        }
+        as.data.frame(x)
+      }))
+    } else {
+      m <- NULL
+    }
+    return(list(description = d, map = m))
+  } else {
+    message(paste0("Location ", loc, " not found in the data"))
+    return(NULL)
+  }
+}
+
+# set location in _quarto.yml
+loc <- sapply(unlist(strsplit(yaml::read_yaml(here("_quarto.yml"))$location, ";|,")), trimws)
+l <- yaml::yaml.load_file(here("info.yml"))
+```
+
+## Location
+
+```{r,echo=FALSE,eval=TRUE,results="asis"}
+cat("\n::: {.panel-tabset}\n")
+
+for (i in seq_along(loc)) {
+  p <- loc[i]
+  cat(paste0("\n### ", tools::toTitleCase(p), "\n"))
+
+  idata <- get_info(l, p)
+  if (!is.null(idata)) {
+    if (!is.null(idata$map)) {
+      dfr1 <- idata$map
+      dfr1$popup <- gsub(";|; ", "<br>", dfr1$popup)
+      dfr2 <- dfr1[complete.cases(dfr1$lat, dfr1$lon), ]
+      
+      cat(knitr::knit_child(input = "assets/_child-info.qmd", envir = environment(), quiet = TRUE))
+      cat("\n")
+    }
+
+    if (!is.null(idata$description)) {
+      cat("\n", idata$description)
+    }
+  } else {
+    cat("No additional information is provided.")
+  }
+  cat("\n")
+}
+
+cat(":::\n")
+```
+
+### Lunch
+
+The lunches during the course will be provided at **Cafe Bryggan** located at **IKDC Building** which is 5 minutes walk from the course location. The location of the restaurant is [here](https://goo.gl/maps/94UhgmtaEw4396857).
+
+### Dinner
+
+The restaurant for the dinner on the 2nd day will be at [Valvet Steakhouse](https://goo.gl/maps/rMfdSM79ddTodzxE9).
+
+## Contact
+
+This workshop is run by the **National Bioinformatics Infrastructure Sweden (NBIS)**. NBIS is a platform that is part of **SciLifeLab**.
+
+If you would like to get in touch with us regarding this workshop, please contact us at **edu.plotting.r@nbis.se**.
+
+
+If you would like to get in touch with us regarding the course at GitHub, kindly write to us at the [issues](https://github.com/NBISweden/workshop-data-visualization-r/issues) page.
+
+***
+
+![](assets/logos/nbis-scilifelab.svg){height="26px"}

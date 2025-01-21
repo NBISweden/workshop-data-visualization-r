@@ -25,6 +25,29 @@ lund:
       lat: 55.705311
       lon: 13.187432
       popup: "Centralstation; Bangatan 1; 222 21 Lund; Sweden"
+lund_mv:
+  description: |
+    Room E24  
+    Building 404  
+    Medicon Village  
+    Scheelevägen 2  
+    223 63 Lund  
+    Sweden  
+
+    For Lund city buses, tram, regional buses and regional trains, use [skanetrafiken.se](https://www.skanetrafiken.se/). You can buy a ticket at the central station in Lund or at the regional bus (card only). You can also use the app [Skånetrafiken](https://www.skanetrafiken.se/appen/#/) From the Lund C the easiest is to take the tram from **Clemens torget** towards **ESS** and get off at  **Lund Ideontorget**. The trip take about 5 minutes and a tram leaves about four times an hour.
+  map:
+    - label: Venue
+      marker_icon: briefcase
+      marker_color: red
+      lat: 55.713031
+      lon: 13.220657
+      popup: "Room E24; Building 404; Medicon Village; Scheelevägen 2; 223 63 Lund, Sweden"
+    - label: Centralstation
+      marker_icon: train
+      marker_color: purple
+      lat: 55.705311
+      lon: 13.187432
+      popup: "Centralstation; Bangatan 1; 222 21 Lund; Sweden"
 umea:
   description: |
     Room UB341  
