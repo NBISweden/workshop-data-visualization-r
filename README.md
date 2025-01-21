@@ -1,4 +1,4 @@
-# workshop-data-visualization-r [![gh-actions-build-status](https://github.com/nbisweden/data-visualization-r/workflows/build/badge.svg)](https://github.com/nbisweden/workshop-data-visualization-r/actions?workflow=build)
+# workshop-data-visualization-r [![gh-actions-build-status](https://github.com/NBISweden/workshop-data-visualization-r/actions/workflows/docker.yml/badge.svg)](https://github.com/NBISweden/workshop-data-visualization-r/actions/workflows/docker.yml)
 
 This repo contains the course material for NBIS workshop **Advanced Data Visualization**. The rendered view of this repo is available [here](https://nbisweden.github.io/workshop-data-visualization-r/).
 
