@@ -78,7 +78,7 @@ jobs:
           ls -lh
 
           # create index file
-          printf "<div class='wrapper-logo'><img class='logo' src='assets/logos/nbis.svg'></div>" > index.md
+          printf "<div class='wrapper-logo'><img class='logo' src='assets/logos/nbis.png'></div>" > index.md
           printf "The current and all previous instances of this workshop are listed below.\n" >> index.md
           printf "<hr>\n" >> index.md
           printf "<div class='workshop-list'>\n" >> index.md

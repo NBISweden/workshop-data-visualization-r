@@ -39,8 +39,8 @@ lund_mv:
     - label: Venue
       marker_icon: briefcase
       marker_color: red
-      lat: 55.713031
-      lon: 13.220657
+      lat: 55.712807
+      lon: 13.219363
       popup: "Room E24; Building 404; Medicon Village; Scheelevägen 2; 223 63 Lund, Sweden"
     - label: Centralstation
       marker_icon: train
