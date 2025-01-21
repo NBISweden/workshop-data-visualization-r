@@ -13,7 +13,7 @@ project:
     - "*.qmd"
 
 website:
-  image: "assets/images/seo.webp"
+  image: "assets/images/banner.webp"
   favicon: "assets/favicon.png"
   navbar:
     logo: "assets/logos/nbis-scilifelab.png"
