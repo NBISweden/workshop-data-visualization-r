@@ -26,10 +26,10 @@ execute:
 
  - Using the language of graphics: ggplot2
  - Basic and advanced plotting in ggplot2
- - Single-cell data visualizations with Seurat objects
+ - Single-cell data visualizations with Seurat
  - Quarto notebooks and reports
  - Dynamic plotting with quarto
- - Developing interactive web applications using Shiny
+ - Interactive web apps with Shiny
 
 :::
 
