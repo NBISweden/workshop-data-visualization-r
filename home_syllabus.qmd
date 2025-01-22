@@ -19,7 +19,7 @@ The syllabus for this workshop are as follows.
   - Basic and advanced plotting in ggplot2
   - Single-cell data visualizations with Seurat
   - Quarto notebooks and reports
-  - Dynamic plotting with quarto
+  - Dynamic plotting with Quarto
   - Interactive web apps with Shiny
 
 - Beginner level
