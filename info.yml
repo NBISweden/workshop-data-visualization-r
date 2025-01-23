@@ -25,6 +25,18 @@ lund:
       lat: 55.705311
       lon: 13.187432
       popup: "Centralstation; Bangatan 1; 222 21 Lund; Sweden"
+    - label: Lunch
+      marker_icon: cutlery
+      marker_color: cadetblue
+      lat: 55.71505
+      lon: 13.21240
+      popup: "Bryggan Kitchen & Café, IKDC, Formstråket 13, 223 62 Lund"
+    - label: Dinner
+      marker_icon: glass
+      marker_color: green
+      lat: 55.70847
+      lon: 13.19594
+      popup: "Valvet Steakhouse, Allhelgona kyrkogata 7, 223 62 Lund"
 lund_mv:
   description: |
     Room E24  
@@ -48,6 +60,18 @@ lund_mv:
       lat: 55.705311
       lon: 13.187432
       popup: "Centralstation; Bangatan 1; 222 21 Lund; Sweden"
+    - label: Lunch
+      marker_icon: cutlery
+      marker_color: cadetblue
+      lat: 55.71505
+      lon: 13.21240
+      popup: "Bryggan Kitchen & Café, IKDC, Formstråket 13, 223 62 Lund"
+    - label: Dinner
+      marker_icon: glass
+      marker_color: green
+      lat: 55.70847
+      lon: 13.19594
+      popup: "Valvet Steakhouse, Allhelgona kyrkogata 7, 223 62 Lund"
 umea:
   description: |
     Room UB341  

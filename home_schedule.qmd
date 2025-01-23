@@ -75,7 +75,7 @@ s <- readxl::read_xlsx("schedule.xlsx") %>%
     # style topic
     dplyr::mutate(topic = ifelse(tolower(topic) == "break" | tolower(topic) == "lunch" | tolower(topic) == "fika", paste0("<span style='color:white;border-radius:4px;padding:1px;background:#BDBDBD;'><span class='topic'>", topic, "</span></span>"), topic)) %>%
     dplyr::mutate(topic = ifelse(grepl("dinner",tolower(topic)), paste0("<span style='color:white;border-radius:4px;padding:1px;background:#BDBDBD;'><span class='topic-dinner'>", topic, "</span></span>"), topic)) %>%
-    dplyr::mutate(topic = ifelse(!startsWith(topic, "<span"), paste0("<span style='font-weight:bold;margin-right:5px;'>", topic, "</span>"), topic)) %>%
+    dplyr::mutate(topic = ifelse(!startsWith(topic, "<span"), paste0("<span style='font-size:110%;font-weight:bold;margin-right:5px;'>", topic, "</span>"), topic)) %>%
     # add links to topic
     dplyr::mutate(topic = ifelse(is.na(link_slide), topic, paste0("<span>", topic, "<a class='marker' href='", link_slide, "'>", fa("fas fa-file-powerpoint"), "</a></span>"))) %>%
     dplyr::mutate(topic = ifelse(is.na(link_lab), topic, paste0("<span>", topic, "<a class='marker' href='", link_lab, "'>", fa("fas fa-file-lines"), "</a></span>"))) %>%
