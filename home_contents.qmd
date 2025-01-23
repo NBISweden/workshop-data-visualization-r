@@ -11,6 +11,6 @@ format: html
 ::: {.callout-note} 
 
 The contents of this course are currently being generated. It will be updated here regularly until the course. 
-Please check the [**Schedule**](file:///home/lokesh/Teaching/NBIS_Teaching/workshop-data-visualization-r/2505/home_schedule.html) for the proposed topics.
+Please check the [**Schedule**](https://nbisweden.github.io/workshop-data-visualization-r/2505/home_schedule.html) for the proposed topics.
 
 :::
