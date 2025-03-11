@@ -1,24 +1,9 @@
 ---
-title: "R Shiny - Part II"
-subtitle: "Workshop on Advanced Data Visualization"
-author: "`r paste0('<b>Lokesh Mano</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
+title: "Introduction to R Shiny"
+author: Lokesh Mano
 institute: NBIS, SciLifeLab
 keywords: bioinformatics, course, workshop, scilifelab, nbis
-output:
-  xaringan::moon_reader:
-    encoding: 'UTF-8'
-    self_contained: false
-    chakra: 'assets/remark-latest.min.js'
-    css: 'assets/slide.css'
-    lib_dir: libs
-    nature:
-      ratio: '4:3'
-      highlightLanguage: r
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
-      slideNumberFormat: "%current%/%total%"
-    include: NULL
+format: revealjs
 ---
 
 exclude: true
