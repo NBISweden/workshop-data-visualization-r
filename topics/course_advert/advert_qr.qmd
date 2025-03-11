@@ -1,0 +1,6 @@
+---
+format: revealjs
+logo: 
+---
+
+## Advanced Data Visualization {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
