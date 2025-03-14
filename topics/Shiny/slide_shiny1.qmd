@@ -3,7 +3,9 @@ title: "Introduction to R Shiny"
 author: Lokesh Mano
 institute: NBIS, SciLifeLab
 keywords: bioinformatics, course, workshop, scilifelab, nbis
-format: revealjs
+format: 
+  revealjs: 
+    slide-number: true
 ---
 
 ## Setup {visibility="hidden"}
@@ -24,34 +26,43 @@ library(kableExtra)
 
 ## Contents
 
-* [Introduction to RShiny](#intro)
+* [Introduction to RShiny](#gallery)
 * [Code Structure](#code-structure)
-* [App execution](#execute)
+* [App execution](#app-execution)
 * [UI](#ui-layout)
 * [Server](#server)
 
-## Gallery
+## [Gallery](https://shiny.posit.co/r/gallery/)
 
-![](assets/images/shiny_gallery.png){height="90%" width="95%"}
-[Gallery](https://shiny.rstudio.com/gallery/)
+::: {.center-xy}
+
+![](../../assets/images/shiny_gallery.png){height="60%" width="60%" fig-align="center"}
+
+:::
 
 
 ## What is shiny?
+
+::: {.fragment}
 
 * Interactive documents & web applications
 * Completely created using R
 * Needs a live environment
 
---
+:::
+
+::: {.fragment}
 
 ### Usage
 
 * [Standalone web applications](http://shiny.rstudio.com/gallery/see-more.html)
 * [Dashboard/Flexboard](http://rstudio.github.io/shinydashboard/examples.html)
-* Interactive RMarkdown
-* Gadgets/RStudio extensions
+* [Interactive RMarkdown](https://shiny.posit.co/r/articles/build/rmarkdown/)
+* [VScode extensions](https://shiny.posit.co/blog/posts/shiny-vscode-1.0.0/)
 
---
+:::
+
+::: {.fragment}
 
 ### App structure
 
@@ -61,14 +72,13 @@ library(kableExtra)
 * Renderer
 * Builder
 
----
-
-name: code-structure
-class: spaced
+:::
 
 ## Code structure
 
-.pull-left-50[
+::: {.fragment .column width="45%"}
+
+
 __One file format__
 
 _app.R_
@@ -78,9 +88,12 @@ ui <- fluidPage()
 server <- function(input,output) {}
 shinyApp(ui=ui,server=server)
 ```
-]
+:::
 
-.pull-right-50[
+::: {.column width="5%"}
+:::
+
+::: {.fragment .column width="45%"}
 
 __Two file format__
 
@@ -95,12 +108,7 @@ _server.R_
 ```
 server <- function(input,output) {}
 ```
-]
-
----
-
-
-name: execute
+:::
 
 ## App execution
 
@@ -117,18 +125,23 @@ server=function(input,output) {}
 * From Rmd file using `rmarkdown::run()`
 * Running as a separate process from terminal
 
-```
+```{bash,eval=FALSE}
 R -e "shiny::runApp('~/shinyapp')"
 ```
 
----
+## UI • Layout {height=800}
 
-name: ui-layout
+::: { .fragment }
 
-## UI • Layout
+![](../../assets/images/app-layout.png){ width="50%" }
 
-.limity300[
-```{r,eval=FALSE}
+:::
+
+::: {.smaller .fragment}
+
+```{r}
+#| eval: false
+
 shinyApp(
 ui=fluidPage(
   titlePanel("Title Panel"),
@@ -168,17 +181,11 @@ ui=fluidPage(
 ),
 server=function(input,output) {})
 ```
-]
-
-<img src="assets/images/app-layout.png" style="width: 90%;" />
-
----
-
-name: ui-input
+:::
 
 ## UI • Widgets • Input
 
-.pull-left-60[
+:::: {.column width="55%"}
 ```{r,eval=FALSE}
 shinyApp(
 ui=fluidPage(
@@ -203,24 +210,30 @@ ui=fluidPage(
 server=function(input,output) {
 })
 ```
-]
-.pull-right-40[
-<img src="assets/images/app-widgets-input.png" style="width: 60%;" />
-]
 
-.small[[Widgets gallery](http://shiny.rstudio.com/gallery/widget-gallery.html)]
+::: {.small}
 
-???
+[Widgets gallery](http://shiny.rstudio.com/gallery/widget-gallery.html)
 
-Widgets are visual objects on a page to allow for data input. Input and output variables.
+:::
 
----
+:::: 
 
-name: ui-output
+::: {.column width="5%"}
+::: 
+
+::: {.fragment .column width="40%"}
+
+![](../../assets/images/app-widgets-input.png){  width="45%" }
+
+:::
+
+
+
 
 ## UI • Widgets • Outputs
 
-.pull-left-60[
+::: {.column width="60%"}
 ```{r,eval=FALSE}
 shinyApp(
 ui=fluidPage(fluidRow(column(5,
@@ -242,21 +255,19 @@ server=function(input, output) {
   })
 })
 ```
-]
+:::
 
-.pull-right-40[
-<img src="assets/images/app-widgets-output.png" style="width: 80%;" />
-]
+::: {.column width="40%"}
 
----
+![](../../assets/images/app-widgets-output.png){ width="70%" }
 
-name: ui-dynamic
+:::
 
 ## Dynamic UI
 
 - UI elements are created conditionally using `uiOutput()`/`renderUI()`
 
-```
+```{r,eval=FALSE}
 shinyApp(
 ui=fluidPage(
   selectInput("data",label="Select data",
@@ -279,27 +290,18 @@ server=function(input, output) {
 
 * Other options include `conditionalPanel()`, `ìnsertUI()` and `removeUI()`
 
----
-
-
-name: server
-class: spaced
-
 ## Server
 
 * `Server` is a function that assembles your `input` into `output` using R based code.
 * Three rules to be followed to write a server function:
 
---
+::: {.fragment}
 
 **Rule 1:** Save objects to display to `output$`
 
-<img src="assets/images/server1.png.svg" style="width: 80%;" />
+![](../../assets/images/server1.png.svg){ width="70%" fig-align="center"}
 
----
-
-name: server-2
-class: spaced
+:::
 
 ## Server
 
@@ -307,43 +309,49 @@ class: spaced
 
 * R-Code block (can even be an entire R script) between the braces `{}` inside the `render*()` function.
 
---
+::: {.fragment}
 
-```
+```{r,eval=FALSE}
   output$hist <- renderPlot({
                     tile <- "histogram of 100 random numbers"
                     hist(rnorm(100), main = title)
                 })
 ```
---
-.small[[Different Render functions](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf)]
+::: 
 
----
+::: {.fragment}
 
-name: server-3
+:::: {.small}
+
+[Different Render functions](https://rstudio.github.io/cheatsheets/html/shiny.html#outputs)
+
+::::
+
+:::
 
 ## Server
 
 **Rule 3:** Use input values with `input$`
 
---
+::: {.fragment}
 
-<img src="assets/images/shiny-input.png" style="width: 80%;" />
+![](../../assets/images/shiny-input.png){width="60%" fig-align="center"}
 
---
+::: 
 
-<img src="assets/images/shiny-input2.png" style="width: 80%;" />
+::: {.fragment}
 
----
+![](../../assets/images/shiny-input2.png){width="60%" fig-align="center"}
 
+::: 
 
-name: end_slide
-class: end-slide, middle
-count: false
+## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
 
-# Thank you. Questions?
+::: {.center-xy}
 
-Slide courtesy: Roy Francis (NBIS, RaukR2024)
+### Thank you. Questions? {style="text-align: center;"}
+Slide inspirations: Roy Francis (NBIS, RaukR2024)
 
+:::
 
 
