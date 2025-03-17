@@ -1,13 +1,14 @@
 ---
-title: "Introduction to R Shiny"
+title: "R Shiny - Part II"
 author: Lokesh Mano
 institute: NBIS, SciLifeLab
 keywords: bioinformatics, course, workshop, scilifelab, nbis
-format: revealjs
+format: 
+  revealjs: 
+    slide-number: true
 ---
 
-exclude: true
-count: false
+## Setup {visibility="hidden"}
 
 ```{r,include=FALSE}
 # load the packages you need
@@ -23,154 +24,126 @@ library(ggplot2)
 library(kableExtra)
 ```
 
----
-
-name: content
-class: spaced
-
 ## Contents
 
-* [Reactivity](#react)
-* [Isolate reactivity](#isolate)
-* [observeEvent()](#observe)
-* [Updating Widgets](#updating)
-* [Error Validation](#error)
-* [Download Button](#download)
-* [Modularizing reactivity](#module)
-
----
-
-name: react
+* [Reactivity](#reactivity)
+* [Isolate reactivity](#isolate-reactivity)
+* [observeEvent()](#observeevent())
+* [Updating Widgets](#updating-widgets)
+* [Error Validation](#error-validation)
+* [Download Button](#download-•-data)
+* [Modularizing reactivity](#modularizing-reactivity)
 
 ## Reactivity
 
-.size-95[
-<img src="assets/images/react-code1.png" alt="drawing" width="800"/>
-]
+::: {.center-xy}
 
----
+![](../../assets/images/react-code1.png){height="80%" width="80%" fig-align="center"}
 
-name: react1
+:::
 
 ## Reactivity
 
-.size-95[
-<img src="assets/images/react-code2.png" alt="drawing" width="800"/>
-]
+::: {.center-xy}
 
----
+![](../../assets/images/react-code2.png){height="80%" width="80%" fig-align="center"}
 
-name: react2
+:::
 
 ## Reactivity
 
-.size-95[
-<img src="assets/images/react-code3.png" alt="drawing" width="800"/>
-]
+::: {.center-xy}
 
----
+![](../../assets/images/react-code3.png){height="80%" width="80%" fig-align="center"}
 
-name: react3
+:::
 
 ## Reactivity
 
-.size-95[
-<img src="assets/images/react-code4.png" alt="drawing" width="800"/>
-]
+::: {.center-xy}
 
----
+![](../../assets/images/react-code4.png){height="80%" width="80%" fig-align="center"}
 
-name: react4
+:::
 
 ## Reactivity
 
-.size-95[
-<img src="assets/images/react5.png" alt="drawing" width="800"/>
-]
+::: {.center-xy}
 
----
+![](../../assets/images/react5.png){height="80%" width="80%" fig-align="center"}
 
-name: react5
+:::
 
 ## Reactivity
 
-.size-95[
-<img src="assets/images/react6.png" alt="drawing" width="800"/>
-]
+::: {.center-xy}
 
----
+![](../../assets/images/react6.png){height="80%" width="80%" fig-align="center"}
 
-name: isolate
+:::
 
 ## Isolate reactivity
 
 * Reactivity can be controlled.
 
---
+:::: {.fragment}
 
 * You will notice that as soon as you try to change the title, the histogram will update with new values
 
-.size-95[
-<img src="assets/images/isolate1.png" alt="drawing" width="800"/>
-]
----
+::: {.center-xy}
 
+![](../../assets/images/isolate1.png){height="60%" width="60%" fig-align="center"}
 
-name: isolate2
+:::
 
-## Isolate reactivity
-
-.size-95[
-<img src="assets/images/isolate2.png" alt="drawing" width="800"/>
-]
----
-
-name: isolate3
+::::
 
 ## Isolate reactivity
 
-.size-95[
-<img src="assets/images/isolate3.png" alt="drawing" width="800"/>
-]
+::: {.center-xy}
 
----
+![](../../assets/images/isolate2.png){height="80%" width="80%" fig-align="center"}
 
-name:isolate4
+:::
 
 ## Isolate reactivity
 
-.size-95[
-<img src="assets/images/isolate4.png" alt="drawing" width="800"/>
-]
+::: {.center-xy}
 
----
+![](../../assets/images/isolate3.png){height="60%" width="60%" fig-align="center"}
 
-name:observe
+:::
+
+## Isolate reactivity
+
+::: {.center-xy}
+
+![](../../assets/images/isolate4.png){height="80%" width="80%" fig-align="center"}
+
+:::
 
 ## observeEvent()
 
-.size-95[
-<img src="assets/images/observe.png" alt="drawing" width="500"/>
-]
+::: {.center-xy}
 
----
+![](../../assets/images/observe.png){height="80%" width="80%" fig-align="center"}
 
-name: updating
+:::
 
 ## Updating widgets
 
 * Widgets can be updated once initialised.
 * Add third argument **session** to server function
 
-```
-server=function(input,output,session) {}
+```{r, eval=FALSE}
+server=function(input,output,session){}
 ```
 
---
+::: {.fragment}
 
 * Example of a typical UI
 
-```
+```{r, eval=FALSE}
 ui=fluidPage(
   selectInput("select-input",label="selectInput",choices=c("A","B","C")),
   numericInput("numeric-input",label="numericInput",value=5,min=1,max=10),
@@ -178,12 +151,16 @@ ui=fluidPage(
 )
 ```
 
---
+:::
 
-* Update functions can be used to update input widgets
+## Updating widgets
+
+* Update functions can be used to update **input widgets**
 * Reactive observer `observe({})` monitors for a conditional change
 
-```
+::: {.fragment}
+
+```{r, eval=FALSE}
 server=function(input,output,session) {
   observe({
     if(something) {
@@ -195,15 +172,15 @@ server=function(input,output,session) {
 }
 ```
 
----
-
-name: error
+:::
 
 ## Error validation
 
 * Shiny returns an error with missing or incorrect values
 
-.pull-left-70[.limity100[
+:::: {.fragment} 
+
+::: {.column width="65%"}
 ```{r,eval=FALSE}
 shinyApp(
 ui=fluidPage(
@@ -216,23 +193,40 @@ server=function(input, output) {
   output$table_output <- renderTable({head(getdata())})
 })
 ```
-]]
 
-.pull-right-30[
-![](assets/images/val1.png)
-]
+:::
 
---
+::: {.column width="5%"}
+:::
+
+::: {.column width="30%"}
+
+![](../../assets/images/val1.png)
+
+:::
+
+::::
+
+:::: {.fragment}
 
 * Errors can be handled in a controlled manner
 
---
+::::
+
+## Error validation
+
+::: {.incremental}
 
 * `validate()` can be used to check input
 * `validate()` using `need()`
 
-.pull-left-70[.limity100[
-```
+:::
+
+:::: {.fragment}
+
+::: {.column width="65%"}
+
+```{r, eval= FALSE}
 shinyApp(
 ui=fluidPage(
   selectInput("data_input",label="Select data",
@@ -247,18 +241,29 @@ server=function(input, output) {
   output$table_output <- renderTable({head(getdata())})
 })
 ```
-]]
 
-.pull-right-30[
-![](assets/images/val2.png)
-]
+:::
 
---
+::: {.column width="5%"}
+:::
+
+::: {.column width="30%"}
+
+![](../../assets/images/val2.png)
+
+:::
+
+::::
+
+## Error validation
 
 * `validate()` using custom function
 
-.pull-left-70[.limity100[
-```
+:::: {.fragment}
+
+::: {.column width="65%"}
+
+```{r, eval=FALSE}
 valfn <- function(x) if(is.null(x) | is.na(x) | x=="") return("Input data is incorrect.")
 shinyApp(
 ui=fluidPage(
@@ -274,25 +279,30 @@ server=function(input,output) {
   output$table_output <- renderTable({head(getdata())})
 })
 ```
-]]
+:::
 
-.pull-right-30[
-![](assets/images/val3.png)
-]
+::: {.column width="5%"}
+:::
 
---
+::: {.fragment .column width="30%"}
+
+![](../../assets/images/val3.png)
+
+:::
+
+::::
+
+:::: {.fragment}
 
 * `shiny::req()` checks input variable and silently stops execution
 
----
-
-name: download
+::::
 
 ## Download • Data
 
 * Add button and `downloadHandler()` function
 
-```
+```{r, eval=FALSE}
 shinyApp(
 ui=fluidPage(
   selectInput("data_input",label="Select data",
@@ -317,13 +327,9 @@ server=function(input, output) {
 * Run in system browser if Rstudio browser doesn't work
 * See usage of download buttons
 
----
-
-name: download-plot
-
 ## Download • Plots
 
-```
+```{r, eval=FALSE}
 shinyApp(
 ui=fluidPage(
   selectInput("data_input",label="Select data",
@@ -352,26 +358,22 @@ output$button_download <- downloadHandler(
 * Run in system browser if Rstudio browser doesn't work
 * See usage of download buttons
 
----
-
-
-name: module
-
 ## Modularizing Reactivity
 
-.size-95[
-<img src="assets/images/shiny-mod.png" alt="drawing" width="800"/>
-]
+::: {.center-xy}
 
----
+![](../../assets/images/shiny-mod.png){height="80%" width="80%" fig-align="center"}
+
+:::
 
 
-name: end_slide
-class: end-slide, middle
-count: false
+## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
 
-# Thank you. Questions?
+::: {.center-xy}
 
-Slide courtesy: Roy Francis (NBIS, RaukR2024)
+### Thank you. Questions? {style="text-align: center;"}
+Slide inspirations: Roy Francis (NBIS, RaukR2024)
+
+:::
 
 
