@@ -5,7 +5,7 @@ FROM rocker/verse:4.4
 LABEL Description="Docker image for NBIS workshop"
 LABEL Maintainer="lokeshwaran.manoharan@nbis.se"
 LABEL org.opencontainers.image.source="https://github.com/NBISweden/workshop-data-visualization-r"
-#ARG QUARTO_VERSION="1.6.40"
+ARG QUARTO_VERSION="1.6.42"
 
 RUN apt-get update -y \
   && apt-get clean \
@@ -19,7 +19,7 @@ RUN apt-get update -y \
   #&& wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
   #&& apt-get install -y ./google-chrome-stable_current_amd64.deb \
   #&& rm -rf ./google-chrome-stable_current_amd64.deb \
-  #&& curl -o quarto-linux-amd64.deb -L https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb \
+  && curl -o quarto-linux-amd64.deb -L https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb \
   #&& apt-get install -y ./quarto-linux-amd64.deb \
   #&& rm -rf ./quarto-linux-amd64.deb \
   && rm -rf /var/lib/apt/lists/* \
@@ -32,6 +32,8 @@ USER rstudio
 
 ## Required when editing rnaseq lab
 RUN Rscript -e 'install.packages(c("ggplot2", "ggmap","pheatmap","devtools","cowplot","reshape2", "dplyr", "wesanderson", "scales", "ggthemes", "ggrepel", "grid","ggpubr", "gridExtra", "shiny", "gganimate", "shinythemes","rsconnect", "colourpicker", "kableExtra", "highcharter", "plotly", "ggiraph", "dygraphs", "networkD3", "leaflet", "crosstalk", "fontawesome", "knitr"),dependencies = TRUE, repos = "http://cran.us.r-project.org");'
+
+RUN Rscript -e 'install.packages(c("shinylive"), dependencies = TRUE, repos = "http://cran.us.r-project.org");'
 
 WORKDIR /qmd
 #ENV XDG_CACHE_HOME=/tmp/quarto_cache_home

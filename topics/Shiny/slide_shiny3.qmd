@@ -1,0 +1,146 @@
+---
+title: "R Shiny - Deployments"
+author: Lokesh Mano
+institute: NBIS, SciLifeLab
+keywords: bioinformatics, course, workshop, scilifelab, nbis
+format: 
+  revealjs: 
+    slide-number: true
+---
+
+## Setup {visibility="hidden"}
+
+```{r,include=FALSE}
+# load the packages you need
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+#library(stringr)
+library(ggplot2)
+#library(plotly)
+#library(pheatmap)
+#library(DESeq2)
+#library(edgeR)
+library(kableExtra)
+```
+
+## Deployment
+
+:::: {.fragment}
+
+* R scripts
+  * GitHub
+  * R Package
+  * Docker container
+
+::::
+
+:::: {.fragment}
+
+* Webpage
+  * Shinyapps.io
+  * Shiny Server (Free)
+  * Posit Connect
+
+:::: 
+
+:::: {.fragment}
+
+* Automatically deploying to shinyapps.io
+
+::::
+
+## Shinyapps.io
+
+```{r, eval=FALSE}
+library(rsconnect)
+rsconnect::setAccountInfo(name="username", token="HDFGT46YF7TDT6474G47", secret="hdgTDF5FStgdkpJ")
+deployApp(appName="name")
+```
+
+:::: {.fragment}
+
+* [Shiny apps user guide](https://docs.posit.co/shinyapps.io/guide/index.html)
+* [Shiny server guide](https://posit.co/products/open-source/shiny-server/)
+
+::::
+
+## Interactive documents
+
+* Shiny can run in RMarkdown documents. Set YAML `runtime: shiny`.  
+
+:::: {.fragment}
+
+```
+---
+
+title: Interactive document
+output: html_document
+runtime: shiny
+---
+
+```
+
+:::: 
+
+:::: {.fragment}
+
+* Shiny widgets can be included directly  
+
+```{r,echo=FALSE,comment=""}
+cat(paste0("```{r}\n","selectInput('n_breaks',label='Number of bins:',choices=c(10,20,35,50),selected=20)\n","```\n"))
+```
+
+::::
+
+## Interactive documents
+
+* Whole shiny apps can be included directly  
+
+```{r,echo=FALSE,comment=""}
+cat(paste0("```{r}\n","shinyApp(\n","  ui=fluidPage(),\n","  server=function(input,output) {}\n",")\n","```\n"))
+```
+
+:::: {.fragment}
+
+* Hosted shiny apps can be embedded using `<iframe>`  
+
+```
+<iframe src="https://user.shinyapps.io/app"></iframe>
+```
+
+::::
+
+## Extensions
+
+* [Naxstats](https://github.com/nanxstats/awesome-shiny-extensions): Repo collection all shiny extensions
+* [shinythemes](https://github.com/rstudio/shinythemes): Bootswatch themes for shiny
+* shinyurl: using URLs to recreate state of an app
+* shinypod: Reusable modules
+* [shinyjs](https://deanattali.com/shinyjs/): custom javascript functionality
+* [shinyWidgets](https://github.com/dreamRs/shinyWidgets): Bootstrap 3 custom widgets
+* [shinyBS](https://github.com/ebailey78/shinyBS): Bootstrap 3 widgets
+
+## Help
+
+* [**Posit Shiny home**](https://shiny.posit.co/) 
+* [**Posit Shiny tutorial**](https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/)
+* [**Posit Shiny articles**](https://shiny.posit.co/r/articles/)
+* [**Shiny using python**](https://shiny.posit.co/py/docs/overview.html)
+
+### Other topics
+
+* [Applications of action buttons](https://shiny.posit.co/r/articles/build/action-buttons/)  
+* [Progress indicators](https://shiny.posit.co/r/articles/build/progress/)  
+* [Shiny modules](https://shiny.posit.co/r/articles/improve/modules/)
+
+
+## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
+
+::: {.center-xy}
+
+### Thank you. Questions? {style="text-align: center;"}
+Slide inspirations: Roy Francis (NBIS, RaukR2024)
+
+:::
+

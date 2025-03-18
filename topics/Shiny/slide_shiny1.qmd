@@ -6,25 +6,25 @@ keywords: bioinformatics, course, workshop, scilifelab, nbis
 format: 
   revealjs: 
     slide-number: true
+filters:
+  - shinylive
 ---
 
 ## Setup {visibility="hidden"}
 
-```{r,include=FALSE}
+```{r}
+#| echo: false
 # load the packages you need
 library(dplyr)
 library(tidyr)
 library(tidyverse)
-#library(stringr)
 library(ggplot2)
-#library(plotly)
-#library(pheatmap)
-#library(DESeq2)
-#library(edgeR)
 library(kableExtra)
+library(gridExtra)
+library(shiny)
 ```
 
-## Contents
+## Contents 
 
 * [Introduction to RShiny](#gallery)
 * [Code Structure](#code-structure)
@@ -34,9 +34,67 @@ library(kableExtra)
 
 ## [Gallery](https://shiny.posit.co/r/gallery/)
 
-::: {.center-xy}
+::: {.shiny-gallery-parent}
 
-![](../../assets/images/shiny_gallery.png){height="60%" width="60%" fig-align="center"}
+::: {.shiny-gallery-child}
+![[K-means](https://gallery.shinyapps.io/050-kmeans-example/) [sidebar, simple]{.badge .smaller}](assets/examples/kmeans.jpg){group="shiny-examples"}
+:::
+
+::: {.shiny-gallery-child}
+![[Movie explorer](https://gallery.shinyapps.io/051-movie-explorer/) [sidebar, simple]{.badge .smaller}](assets/examples/movie-explorer.jpg){group="shiny-examples"}
+:::
+
+::: {.shiny-gallery-child}
+![[freeR](https://committedtotape.shinyapps.io/freeR/) [simple]{.badge .smaller}](assets/examples/freer.jpg){group="shiny-examples"}
+:::
+
+::: {.shiny-gallery-child}
+![[SuperZip](https://gallery.shinyapps.io/063-superzip-example/) [intermediate, geo]{.badge .smaller}](assets/examples/superzip.jpg){group="shiny-examples"}
+:::
+
+::: {.shiny-gallery-child}
+![[Workout creator](https://parmsam.shinyapps.io/MixThingsUp/) [intermediate]{.badge .smaller} ](assets/examples/workout-generator.jpg){group="shiny-examples"}
+:::
+
+::: {.shiny-gallery-child}
+![[WildLift](https://abbiodiversity.shinyapps.io/WildLift/) [intermediate, dashboard]{.badge .smaller}](assets/examples/wildlift.jpg){group="shiny-examples"}
+:::
+
+::: {.shiny-gallery-child}
+![[Covid tracker](https://vac-lshtm.shinyapps.io/ncov_tracker/) [intermediate]{.badge .smaller} ](assets/examples/covid-tracker.jpg){group="shiny-examples"}
+:::
+
+::: {.shiny-gallery-child}
+![[Cashflow calc](https://cashflowcalc.com/) [intermediate]{.badge .smaller} ](assets/examples/cashflow-calculator.jpg){group="shiny-examples"}
+:::
+
+::: {.shiny-gallery-child}
+![[Genome browser](https://gallery.shinyapps.io/genome_browser/) [intermediate]{.badge .smaller} ](assets/examples/genome-browser.jpg){group="shiny-examples"}
+:::
+
+::: {.shiny-gallery-child}
+![[Species selection](https://thebeczone.ca/shiny/cciss/) [adv]{.badge .smaller} ](assets/examples/climate-change.jpg){group="shiny-examples"}
+:::
+
+::: {.shiny-gallery-child}
+![[Protein structure](https://niels-van-der-velden.shinyapps.io/shinyNGLVieweR/) [adv, dashboard]{.badge .smaller} ](assets/examples/protein-structure.jpg){group="shiny-examples"}
+:::
+
+::: {.shiny-gallery-child}
+![[Commute explorer](https://nz-stefan.shinyapps.io/commute-explorer-2/) [adv, geo]{.badge .smaller} ](assets/examples/commute-explorer.jpg){group="shiny-examples"}
+:::
+
+::: {.shiny-gallery-child}
+![[Steam explorer](https://eki-anjo.shinyapps.io/steam-shiny/) [adv, dashboard]{.badge .smaller}](assets/examples/steam-explorer.jpg){group="shiny-examples"}
+:::
+
+::: {.shiny-gallery-child}
+![[System pipe](https://tgirke.shinyapps.io/systemPipeShiny/) [adv, dashboard]{.badge .smaller} ](assets/examples/system-pipe.jpg){group="shiny-examples"}
+:::
+
+::: {.shiny-gallery-child}
+![[Shark attack](https://mdubel.shinyapps.io/shark-attack/) [adv]{.badge .smaller} ](assets/examples/shark-attack.jpg){group="shiny-examples"}
+:::
 
 :::
 
