@@ -198,3 +198,22 @@ div.callout-important .callout-icon::before {
   object-fit: cover;
   border-radius: 50%;
 }
+
+/* shinylive */
+
+.shinylive-wrapper {
+  position: relative;
+  margin: 2em 0 !important;
+}
+
+.shinylive-wrapper::before {
+  content: "\e05d";
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size:  1rem;
+  position: absolute;
+  top: -40px;
+  left: 0px;
+  padding: 2px;
+  margin: 4px;
+}

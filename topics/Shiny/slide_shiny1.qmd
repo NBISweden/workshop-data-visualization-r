@@ -5,6 +5,7 @@ institute: NBIS, SciLifeLab
 keywords: bioinformatics, course, workshop, scilifelab, nbis
 format: 
   revealjs: 
+    css: "assets/styles.css"
     slide-number: true
 filters:
   - shinylive
@@ -26,74 +27,74 @@ library(shiny)
 
 ## Contents 
 
-* [Introduction to RShiny](#gallery)
+* [Introduction to RShiny](#what-is-shiny)
 * [Code Structure](#code-structure)
 * [App execution](#app-execution)
 * [UI](#ui-layout)
 * [Server](#server)
 
-## [Gallery](https://shiny.posit.co/r/gallery/)
+## 
 
 ::: {.shiny-gallery-parent}
 
 ::: {.shiny-gallery-child}
-![[K-means](https://gallery.shinyapps.io/050-kmeans-example/) [sidebar, simple]{.badge .smaller}](assets/examples/kmeans.jpg){group="shiny-examples"}
+![[K-means](https://gallery.shinyapps.io/050-kmeans-example/){.small} [sidebar, simple]{.badge .smaller}](assets/examples/kmeans.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Movie explorer](https://gallery.shinyapps.io/051-movie-explorer/) [sidebar, simple]{.badge .smaller}](assets/examples/movie-explorer.jpg){group="shiny-examples"}
+![[Movie explorer](https://gallery.shinyapps.io/051-movie-explorer/){.small} [sidebar, simple]{.badge .smaller}](assets/examples/movie-explorer.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[freeR](https://committedtotape.shinyapps.io/freeR/) [simple]{.badge .smaller}](assets/examples/freer.jpg){group="shiny-examples"}
+![[freeR](https://committedtotape.shinyapps.io/freeR/){.small} [simple]{.badge .smaller}](assets/examples/freer.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[SuperZip](https://gallery.shinyapps.io/063-superzip-example/) [intermediate, geo]{.badge .smaller}](assets/examples/superzip.jpg){group="shiny-examples"}
+![[SuperZip](https://gallery.shinyapps.io/063-superzip-example/){.small} [intermediate, geo]{.badge .smaller}](assets/examples/superzip.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Workout creator](https://parmsam.shinyapps.io/MixThingsUp/) [intermediate]{.badge .smaller} ](assets/examples/workout-generator.jpg){group="shiny-examples"}
+![[Workout creator](https://parmsam.shinyapps.io/MixThingsUp/){.small} [intermediate]{.badge .smaller} ](assets/examples/workout-generator.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[WildLift](https://abbiodiversity.shinyapps.io/WildLift/) [intermediate, dashboard]{.badge .smaller}](assets/examples/wildlift.jpg){group="shiny-examples"}
+![[WildLift](https://abbiodiversity.shinyapps.io/WildLift/){.small} [intermediate, dashboard]{.badge .smaller}](assets/examples/wildlift.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Covid tracker](https://vac-lshtm.shinyapps.io/ncov_tracker/) [intermediate]{.badge .smaller} ](assets/examples/covid-tracker.jpg){group="shiny-examples"}
+![[Covid tracker](https://vac-lshtm.shinyapps.io/ncov_tracker/){.small} [intermediate]{.badge .smaller} ](assets/examples/covid-tracker.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Cashflow calc](https://cashflowcalc.com/) [intermediate]{.badge .smaller} ](assets/examples/cashflow-calculator.jpg){group="shiny-examples"}
+![[Cashflow calc](https://cashflowcalc.com/){.small} [intermediate]{.badge .smaller} ](assets/examples/cashflow-calculator.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Genome browser](https://gallery.shinyapps.io/genome_browser/) [intermediate]{.badge .smaller} ](assets/examples/genome-browser.jpg){group="shiny-examples"}
+![[Genome browser](https://gallery.shinyapps.io/genome_browser/){.small} [intermediate]{.badge .smaller} ](assets/examples/genome-browser.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Species selection](https://thebeczone.ca/shiny/cciss/) [adv]{.badge .smaller} ](assets/examples/climate-change.jpg){group="shiny-examples"}
+![[Species selection](https://thebeczone.ca/shiny/cciss/){.small} [adv]{.badge .smaller} ](assets/examples/climate-change.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Protein structure](https://niels-van-der-velden.shinyapps.io/shinyNGLVieweR/) [adv, dashboard]{.badge .smaller} ](assets/examples/protein-structure.jpg){group="shiny-examples"}
+![[Protein structure](https://niels-van-der-velden.shinyapps.io/shinyNGLVieweR/){.small} [adv, dashboard]{.badge .smaller} ](assets/examples/protein-structure.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Commute explorer](https://nz-stefan.shinyapps.io/commute-explorer-2/) [adv, geo]{.badge .smaller} ](assets/examples/commute-explorer.jpg){group="shiny-examples"}
+![[Commute explorer](https://nz-stefan.shinyapps.io/commute-explorer-2/){.small} [adv, geo]{.badge .smaller} ](assets/examples/commute-explorer.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Steam explorer](https://eki-anjo.shinyapps.io/steam-shiny/) [adv, dashboard]{.badge .smaller}](assets/examples/steam-explorer.jpg){group="shiny-examples"}
+![[Steam explorer](https://eki-anjo.shinyapps.io/steam-shiny/){.small} [adv, dashboard]{.badge .smaller}](assets/examples/steam-explorer.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[System pipe](https://tgirke.shinyapps.io/systemPipeShiny/) [adv, dashboard]{.badge .smaller} ](assets/examples/system-pipe.jpg){group="shiny-examples"}
+![[System pipe](https://tgirke.shinyapps.io/systemPipeShiny/){.small} [adv, dashboard]{.badge .smaller} ](assets/examples/system-pipe.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Shark attack](https://mdubel.shinyapps.io/shark-attack/) [adv]{.badge .smaller} ](assets/examples/shark-attack.jpg){group="shiny-examples"}
+![[Shark attack](https://mdubel.shinyapps.io/shark-attack/){.small} [adv]{.badge .smaller} ](assets/examples/shark-attack.jpg){group="shiny-examples"}
 :::
 
 :::
@@ -104,8 +105,10 @@ library(shiny)
 ::: {.fragment}
 
 * Interactive documents & web applications
-* Completely created using R
+* Completely created using R or Python
 * Needs a live environment
+* [shiny.posit.co/r/gallery/](https://shiny.posit.co/r/gallery/)
+* [shinyapps.org](http://shinyapps.org/) 
 
 :::
 
@@ -132,74 +135,74 @@ library(shiny)
 
 :::
 
-## Code structure
+## App organization
 
-::: {.fragment .column width="45%"}
+**One file format**
 
-
-__One file format__
-
-_app.R_
-
-```
+```{r}
+#| eval: false
+#| filename: app.r
 ui <- fluidPage()
 server <- function(input,output) {}
 shinyApp(ui=ui,server=server)
 ```
-:::
 
-::: {.column width="5%"}
-:::
+::: {.fragment}
+**Two file format**
 
-::: {.fragment .column width="45%"}
-
-__Two file format__
-
-_ui.R_
-
-```
+```{r}
+#| eval: false
+#| filename: ui.r
 ui <- fluidPage()
 ```
 
-_server.R_
-
-```
+```{r}
+#| eval: false
+#| filename: server.r     
 server <- function(input,output) {}
 ```
+
 :::
 
 ## App execution
 
-* Change to app directory, then run `runApp()`
-* Use `shinyApp()`
+- Run `shiny::runApp("path/to/folder")`
 
-```{r,eval=FALSE}
-shinyApp(
-ui=fluidPage(),
-server=function(input,output) {}
-)
-```
+. . .
 
-* From Rmd file using `rmarkdown::run()`
-* Running as a separate process from terminal
-
-```{bash,eval=FALSE}
-R -e "shiny::runApp('~/shinyapp')"
-```
-
-## UI • Layout {height=800}
-
-::: { .fragment }
-
-![](../../assets/images/app-layout.png){ width="50%" }
-
-:::
-
-::: {.smaller .fragment}
+- Use `shinyApp()`
 
 ```{r}
 #| eval: false
 
+shinyApp(
+  ui=fluidPage(),
+  server=function(input,output) {}
+)
+```
+
+. . .
+
+- Running as a separate process from terminal
+
+```         
+R -e "shiny::runApp('~/shinyapp')"
+```
+
+. . .
+
+- From Rmd file using `rmarkdown::run()`
+
+
+## {.center}
+
+[User Interface (UI)]{.largest}
+
+## UI
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
 shinyApp(
 ui=fluidPage(
   titlePanel("Title Panel"),
@@ -207,39 +210,13 @@ ui=fluidPage(
     sidebarPanel(
       helpText("Sidebar Panel")
     ),
-    mainPanel(tabsetPanel(
-                tabPanel("tab1",
-                         fluidRow(
-                           column(6,helpText("Col1")),
-                           column(6,
-                                  helpText("Col2"),
-                                  fluidRow(
-                                    column(4,style="background-color:#b0c6fb",
-                                           helpText("Col1")
-                                    ),
-                                    column(4,style="background-color:#ffa153",
-                                           helpText("Col2")
-                                    ),
-                                    column(4,style="background-color:#b1f6c6",
-                                           helpText("Col3")
-                                    )
-                                  )
-                           )
-                         )
-                ),
-                tabPanel("tab2",
-                         inputPanel(helpText("Input Panel"))
-                ),
-                tabPanel("tab3",
-                  wellPanel(helpText("Well Panel"))
-                )
-              )
+    mainPanel(
+      "hello"
     )
   )
 ),
 server=function(input,output) {})
 ```
-:::
 
 ## UI • Widgets • Input
 
