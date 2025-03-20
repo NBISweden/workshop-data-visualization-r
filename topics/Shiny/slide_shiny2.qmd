@@ -5,12 +5,16 @@ institute: NBIS, SciLifeLab
 keywords: bioinformatics, course, workshop, scilifelab, nbis
 format: 
   revealjs: 
+    css: "assets/styles.css"
     slide-number: true
+filters:
+  - shinylive
 ---
 
 ## Setup {visibility="hidden"}
 
-```{r,include=FALSE}
+```{r}
+#| echo: false
 # load the packages you need
 library(dplyr)
 library(tidyr)
@@ -22,6 +26,8 @@ library(ggplot2)
 #library(DESeq2)
 #library(edgeR)
 library(kableExtra)
+library(gridExtra)
+library(shiny)
 ```
 
 ## Contents
@@ -36,108 +42,361 @@ library(kableExtra)
 
 ## Reactivity
 
-::: {.center-xy}
+- Code doesn't always run line-by-line (Non-linear execution)
+- Code executes when dependencies change
 
-![](../../assets/images/react-code1.png){height="80%" width="80%" fig-align="center"}
+![](assets/reactivity/reactlog.png){width="50%"}  
+[[reactlog](https://rstudio.github.io/reactlog/index.html)]{.smaller}
+
+## Reactives
+
+Functions with reactive context
+
+- `reactive()`: Defines an expression
+- `reactiveVal()`: Defines single value
+- `reactiveValues()`: Defines a list of values
+
+Regular function `fn <- function()`: Runs wherever it is is used  
+Reactive function `fn <- reactive()`: Runs only when input changes
+
+## Reactive context
+
+Reactive values cannot be accessed outside a reactive context
+
+:::: {.columns}
+::: {.column width="55%"}
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+shinyApp(
+  ui = fluidPage(
+    numericInput("num", "Enter number",
+                 value = 1),
+    textOutput("result")
+  ),
+  server = function(input, output) {
+    val = input$num^2
+    output$result <- renderText({
+      paste("Squared number is:", val)
+    })
+  }
+)
+```
+:::
+::: {.column width="45%"}
+![](assets/reactive-context-error.jpg)
+:::
+::::
+
+## Reactive dynamics
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+shinyApp(
+  ui=fluidPage(
+    numericInput("num_input",label="Observations",value=50),
+    textOutput("text_output")),
+  server=function(input,output) {
+    output$text_output <- renderText({
+        mean(rnorm(input$num_input))
+    })
+  })
+```
+
+:::: {.r-stack}
+::: {.fragment}
+![](assets/reactivity/rg-1/1.jpg)
+
+:::
+::: {.fragment}
+
+![](assets/reactivity/rg-1/2.jpg)
+
+:::
+::: {.fragment}
+
+![](assets/reactivity/rg-1/3.jpg)
+
+:::
+::: {.fragment}
+
+![](assets/reactivity/rg-1/4.jpg)
+
+:::
+::::
+
+## Reactive dynamics
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+shinyApp(
+  ui=fluidPage(
+    numericInput("num_input",label="Observations",value=50),
+    textOutput("text_output1"), textOutput("text_output2")),
+  server=function(input,output) {
+    output$text_output1 <- renderText({
+      mean(rnorm(input$num_input))
+    })
+    output$text_output2 <- renderText({
+      mean(rnorm(input$num_input))
+    })
+  })
+```
+
+:::: {.r-stack}
+::: {.fragment}
+![](assets/reactivity/rg-2/1.jpg)
+
+:::
+::: {.fragment}
+
+![](assets/reactivity/rg-2/2.jpg)
+
+:::
+::: {.fragment}
+
+![](assets/reactivity/rg-2/3.jpg)
+
+:::
+::: {.fragment}
+
+![](assets/reactivity/rg-2/4.jpg)
 
 :::
 
-## Reactivity
+::: {.fragment}
 
-::: {.center-xy}
-
-![](../../assets/images/react-code2.png){height="80%" width="80%" fig-align="center"}
+![](assets/reactivity/rg-2/5.jpg)
 
 :::
 
-## Reactivity
+::: {.fragment}
 
-::: {.center-xy}
-
-![](../../assets/images/react-code3.png){height="80%" width="80%" fig-align="center"}
+![](assets/reactivity/rg-2/6.jpg)
 
 :::
 
-## Reactivity
+::: {.fragment}
 
-::: {.center-xy}
-
-![](../../assets/images/react-code4.png){height="80%" width="80%" fig-align="center"}
+![](assets/reactivity/rg-2/7.jpg)
 
 :::
 
-## Reactivity
+::: {.fragment}
 
-::: {.center-xy}
-
-![](../../assets/images/react5.png){height="80%" width="80%" fig-align="center"}
-
-:::
-
-## Reactivity
-
-::: {.center-xy}
-
-![](../../assets/images/react6.png){height="80%" width="80%" fig-align="center"}
-
-:::
-
-## Isolate reactivity
-
-* Reactivity can be controlled.
-
-:::: {.fragment}
-
-* You will notice that as soon as you try to change the title, the histogram will update with new values
-
-::: {.center-xy}
-
-![](../../assets/images/isolate1.png){height="60%" width="60%" fig-align="center"}
+![](assets/reactivity/rg-2/8.jpg)
 
 :::
 
 ::::
 
-## Isolate reactivity
+## Reactive dynamics
 
-::: {.center-xy}
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+shinyApp(
+  ui=fluidPage(
+    numericInput("num_input",label="Observations",value=50),
+    textOutput("text_output1"), textOutput("text_output2")),
+  server=function(input,output) {
+    rand <- function(x) rnorm(x)
+    output$text_output1 <- renderText({
+      mean(rand(input$num_input))
+    })
+    output$text_output2 <- renderText({
+      mean(rand(input$num_input))
+    })
+  })
+```
 
-![](../../assets/images/isolate2.png){height="80%" width="80%" fig-align="center"}
+![](assets/reactivity/rg-2/8.jpg)
+
+## Reactive dynamics
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+shinyApp(
+  ui=fluidPage(
+    numericInput("num_input",label="Observations",value=50),
+    textOutput("text_output1"), textOutput("text_output2")
+    ),
+  server=function(input,output) {
+    rand <- reactive({ rnorm(input$num_input) })
+    output$text_output1 <- renderText({
+      mean(rand())
+    })
+    output$text_output2 <- renderText({
+      mean(rand())
+    })
+  })
+```
+
+:::: {.r-stack}
+::: {.fragment}
+![](assets/reactivity/rg-3/1.jpg)
+:::
+
+::: {.fragment}
+![](assets/reactivity/rg-3/2.jpg)
+:::
+
+::: {.fragment}
+![](assets/reactivity/rg-3/3.jpg)
+:::
+
+::: {.fragment}
+![](assets/reactivity/rg-3/4.jpg)
+:::
+
+::: {.fragment}
+![](assets/reactivity/rg-3/5.jpg)
+:::
+
+::: {.fragment}
+![](assets/reactivity/rg-3/6.jpg)
+:::
+
+::: {.fragment}
+![](assets/reactivity/rg-3/7.jpg)
+:::
+
+::: {.fragment}
+![](assets/reactivity/rg-3/8.jpg)
+:::
+
+::: {.fragment}
+![](assets/reactivity/rg-3/9.jpg)
+:::
+
+::: {.fragment}
+![](assets/reactivity/rg-3/10.jpg)
+:::
+
+::: {.fragment}
+![](assets/reactivity/rg-3/11.jpg)
+:::
+
+::: {.fragment}
+![](assets/reactivity/rg-3/12.jpg)
+:::
+
+::::
+
+::: {.notes}
+Reactive functions can be use to share output from a common source. They can be used to reduce computation for demanding functions. Reactive values cannot be accessed from outside the reactive environment.
+
+Try changing the reactive function
+
+`rand <- reactive({ rnorm(input$num_input) })`
+
+to a regular function
+
+`rand <- function(){ rnorm(input$num_input) }`
+
+Saving a reactlog,
+
+```{r}
+#| eval: false
+# reset log
+reactlogReset()
+# run the app and exit
+# save react log as text
+dput(shiny::reactlog(), file = "assets/reactlog-reactivity-3.txt")
+# open and visualize
+"assets/reactlog-reactivity-3.txt" |>
+  dget() |>
+  reactlog::reactlog_show()
+```
 
 :::
 
-## Isolate reactivity
+## Reactive values
 
-::: {.center-xy}
+- `reactVal()` `reactValues()`
+- Store reactive values that can be accessed from any reactive context
 
-![](../../assets/images/isolate3.png){height="60%" width="60%" fig-align="center"}
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+shinyApp(
+  ui = fluidPage(
+    actionButton("add","Add"),
+    actionButton("subtract","Subtract"),
+    textOutput("counter")
+  ),
+  server = function(input, output) {
+    reactive_values <- reactiveValues(counter = 0) 
+    
+    observeEvent(input$add, {
+      reactive_values$counter <- reactive_values$counter + 1
+    }) 
+    observeEvent(input$subtract, {
+      reactive_values$counter <- reactive_values$counter - 1
+    }) 
+  
+    output$counter <- renderText({
+      reactive_values$counter
+    })
+  }
+)
+```
 
-:::
+## Controlling reactivity using action buttons
 
-## Isolate reactivity
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+shinyApp(
+ui = fluidPage(
+  h3("Temperature Converter"),
+  numericInput("celsius", "Degrees Celsius:", value = 0),
+  actionButton("btn_go", "Go!"),
+  textOutput("fahrenheit")
+),
 
-::: {.center-xy}
+server = function(input, output) {
+  evr <- eventReactive(input$btn_go, {
+    paste(input$celsius, "°C is ", (input$celsius * 9/5) + 32, " °F")
+  })
+  
+  output$fahrenheit <- renderText({
+    evr()
+  })
+  
+  #output$fahrenheit <- renderText({
+  #    paste(input$celsius, "°C is ", (input$celsius * 9/5) + 32, " °F")
+  #  }) |>
+  #  bindEvent(input$btn_go)
+})
+```
 
-![](../../assets/images/isolate4.png){height="80%" width="80%" fig-align="center"}
+## Observers
 
-:::
+Reactive functions that automatically re-executes whenever its dependencies change. Usually used for side-effects rather than returning a value.
 
-## observeEvent()
+### `observe()`  
+Doesn't return a value. Constantly runs as long as the app is alive.
 
-::: {.center-xy}
+### `observeEvent()`
+Similar to `observe()`, but only re-executes on specific event (like a button click). Doesn't return a value.
 
-![](../../assets/images/observe.png){height="80%" width="80%" fig-align="center"}
+### `eventReactive()`
+Similar to `observeEvent()`, but returns a value.
 
+### `bindEvent()`
+Bind an action to a specific event. Similar to `observeEvent()`, but allows for the event to be determined dynamically. Links an input (like a button) to an output and ensures that reactive expressions are only updated when bound event is triggered.
+
+:::{.notes}
+Observers are reactive functions that run when their dependencies change similar to regular reactive output functions,affect HTML output. Observers are used for side-effect.
 :::
 
 ## Updating widgets
 
 * Widgets can be updated once initialised.
-* Add third argument **session** to server function
-
-```{r, eval=FALSE}
-server=function(input,output,session){}
-```
 
 ::: {.fragment}
 
@@ -153,12 +412,11 @@ ui=fluidPage(
 
 :::
 
-## Updating widgets
+::: {.fragment}
 
+* Add third argument **session** to server function
 * Update functions can be used to update **input widgets**
 * Reactive observer `observe({})` monitors for a conditional change
-
-::: {.fragment}
 
 ```{r, eval=FALSE}
 server=function(input,output,session) {
@@ -173,6 +431,55 @@ server=function(input,output,session) {
 ```
 
 :::
+
+## Updating widgets
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+shinyApp(
+  ui = fluidPage(
+    selectInput("data", "Choose a dataset:", choices = c("mtcars", "iris", "faithful")),
+    selectInput("variable", "Choose a variable:", choices = names(mtcars))
+  ),
+  
+  server = function(input, output, session) {
+    
+    dataset <- reactive({
+      switch(input$data,
+             "mtcars" = mtcars,
+             "iris" = iris,
+             "faithful" = faithful)
+    })
+    
+    observe({
+      updateSelectInput(session,"variable",choices=names(dataset()))
+    })
+  }
+)
+```
+
+## Updating widgets
+
+|Input function|Update function|
+|---|---|
+|`checkboxInput()`|`updateCheckboxInput()`|
+|`checkboxGroupInput()`|`updateCheckboxGroupInput()`|
+|`radioButtons()`|`updateRadioButtons()`|
+|`dateInput()`|`updateDateInput()`|
+|`dateRangeInput()`|`updateDateRangeInput()`|
+|`fileInput()`||
+|`numericInput()`|`updateNumericInput()`|
+|`sliderInput()`|`updateSliderInput()`|
+|`textInput()`|`updateTextInput()`|
+|`textAreaInput()`|`updateTextAreaInput()`|
+|`passwordInput()`||
+|`selectInput()`|`updateSelectInput()`|
+|`actionButton()`||
+|`submitButton()`||
+|`tabsetPanel()`|`updateTabsetPanel()`|
+|`navbarPage()`|`updateNavbarPage()`|
+
 
 ## Error validation
 
@@ -357,14 +664,6 @@ output$button_download <- downloadHandler(
 
 * Run in system browser if Rstudio browser doesn't work
 * See usage of download buttons
-
-## Modularizing Reactivity
-
-::: {.center-xy}
-
-![](../../assets/images/shiny-mod.png){height="80%" width="80%" fig-align="center"}
-
-:::
 
 
 ## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
