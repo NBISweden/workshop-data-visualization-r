@@ -1,0 +1,223 @@
+---
+title: "Introduction to Quarto"
+author: "Katja Kozjek"
+institute: "NBIS, SciLifeLab"
+format: 
+  revealjs: 
+    slide-number: true
+---
+
+## [Quarto](https://quarto.org/)
+
+**An open-source scientific and technical publishing system**
+
+- Quarto is a **command line tool**, not an R package
+- Quarto combine codes, comments, and other features to tell a story about your data
+- Quarto support numerous output formats
+- Quarto documents are fully reproducible
+
+<br>
+
+![](./images/horst_quarto_schematic.png){height="80%" width="80%" fig-align="center"}
+
+## Quarto notebook
+
+This is a Quarto file – a plain text file that has the extension `.qmd`
+
+:::: {.columns}
+::: {.column width="65%"}
+
+````
+---
+title: "Palmer penguins"
+author: "Allison Horst"
+date: today
+format: 
+  html: 
+    code-tools: true
+    code-fold: true
+---
+
+# Exploring the dataset
+The `palmerpenguins` data contains size measurements for three penguin species 
+observed on three islands in the Palmer Archipelago, Antarctica.
+
+See @fig-flipper-length for an exploration of flipper length by penguin species.
+
+```{{r}}
+#| label: load packages and data
+#| warning: false
+library("ggplot2")
+library("palmerpenguins")
+data(penguins, package = "palmerpenguins")
+```
+
+```{{r filpper length}}
+#| label: fig-flipper-length
+#| warning: false
+#| fig-width: 10
+#| fig-height: 5
+#| fig-cap: "Figure 1: Penguin flipper length"
+
+ggplot(data = penguins, aes(x = species, y = flipper_length_mm)) +
+  geom_boxplot(aes(color = species), width = 0.3, show.legend = FALSE) +
+  geom_jitter(aes(color = species), alpha = 0.5, show.legend = FALSE, position = position_jitter(width = 0.2, seed = 0)) +
+  scale_color_manual(values = c("darkorange","purple","cyan4")) +
+  labs(x = "Species",
+       y = "Flipper length (mm)") + 
+  theme_bw()
+```
+````
+:::
+
+::: {.column width="35%"}
+::: {.fragment}
+![](./images/example-report.png)
+:::
+:::
+::::
+
+## Quarto document anatomy
+
+:::: {.columns}
+::: {.column width="50%"}
+<br>
+
+````
+---
+title: "Palmer penguins"
+author: "Allison Horst"
+date: today
+format: html
+---
+
+# Penguins
+Let's explore the dataset.
+
+```{{r}}
+#| echo: true
+str(penguins)
+```
+````
+:::
+
+::: {.column}
+::: {.fragment}
+**Metadata (YAML header):**
+
+- Bracketed by `---`
+- Defines document-wide options
+- Specifies the output format
+- Can include [several parameters](https://quarto.org/docs/reference/)
+
+::: {.fragment}
+**Text (Markdown formatting):**
+
+- Images, tables, text, etc.
+- Freely add and format text using markdown
+:::
+
+::: {.fragment}
+**Code chunks:**
+
+- Evaluate code and show its output
+- Specify global and/or local [chunk options](https://quarto.org/docs/computations/execution-options.html) (_e.g._ figure dimensions)
+- Also works with other languages (_e.g._ Python)
+:::
+:::
+:::
+::::
+
+## Rendering Quarto document
+
+::: {.fragment}
+Render from the command line:
+```bash
+quarto render report.qmd
+```
+:::
+
+::: {.fragment}
+Render to a specific format:
+```bash
+quarto render report.qmd --to html
+```
+:::
+
+<br>
+
+::: {.fragment}
+*Many IDEs like VS Code and RStudio also have buttons to render Quarto documents.*
+:::
+
+## Output formats
+
+::: {.incremental}
+- Reports and general documents (HTML, PDF, Jupyter Notebook, Microsoft Word)
+- Presentations (reveal.js, PowerPoint, Beamer)
+- Interactive documents (Observable, R Shiny)
+- Books, blogs and websites
+- Journal articles
+:::
+
+::: {.incremental}
+- Moving between output formats in Quarto is straightforward
+:::
+
+::: columns
+::: {.column width="33%"}
+::: fragment
+**Document**
+
+::: {.code-file .sourceCode .cell-code}
+{{< fa file >}} report-1.qmd
+:::
+
+``` yaml
+title: "Report 1"
+format: html
+```
+:::
+:::
+
+::: {.column width="33%"}
+::: fragment
+**Presentation**
+
+::: {.code-file .sourceCode .cell-code}
+{{< fa file >}} report-1.qmd
+:::
+
+``` yaml
+title: "Report 1"
+format: revealjs
+```
+:::
+:::
+
+::: {.column width="33%"}
+::: fragment
+**Website**
+
+::: {.code-file .sourceCode .cell-code}
+{{< fa file >}} _quarto.yml
+:::
+
+``` yaml
+project:
+  type: website
+
+website: 
+  navbar: 
+    left:
+      - report-1.qmd
+```
+:::
+:::
+:::
+
+## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
+
+::: {.center-xy}
+### Thank you. Questions? {style="text-align: center;"}
+:::
