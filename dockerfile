@@ -39,6 +39,8 @@ RUN Rscript -e 'install.packages(c("ggplot2", "ggmap","pheatmap","devtools","cow
 
 RUN Rscript -e 'install.packages(c("shinylive", "Seurat"), dependencies = TRUE, repos = "http://cran.us.r-project.org");'
 
+RUN Rscript -e 'install.packages("palmerpenguins", dependencies = TRUE, repos = "http://cran.us.r-project.org")'
+
 WORKDIR /qmd
 #ENV XDG_CACHE_HOME=/tmp/quarto_cache_home
 #ENV XDG_DATA_HOME=/tmp/quarto_data_home
