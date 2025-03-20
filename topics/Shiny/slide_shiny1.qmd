@@ -28,9 +28,10 @@ library(shiny)
 ## Contents 
 
 * [Introduction to RShiny](#what-is-shiny)
-* [Code Structure](#code-structure)
+* [Code Structure](#app-organization)
 * [App execution](#app-execution)
-* [UI](#ui-layout)
+* [UI](#ui)
+  * [Dynamic UI](#dynamic-ui)
 * [Server](#server)
 
 ## 
@@ -254,7 +255,6 @@ sidebarPanel(helpText("Sidebar Panel"))
 ```{shinylive-r}
 #| standalone: true
 #| components: [editor, viewer]
-#| viewerHeight: 300
 shinyApp(
 ui=fluidPage(
   titlePanel("Title Panel"),
@@ -477,9 +477,11 @@ server = function(input, output) {
 })
 ```
 
-## Rendering UI
+## Dynamic UI
 
 - UI elements are created conditionally using `uiOutput()`/`renderUI()`
+
+::: {.fragment}
 
 ```{r}
 #| eval: false
@@ -511,7 +513,13 @@ server=function(input, output) {
 })
 ```
 
+:::
+
+::: {.fragment}
+
 - Other options include `conditionalPanel()`, `insertUI()` and `removeUI()`
+
+:::
 
 ## Rendering UI
 
