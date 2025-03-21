@@ -20,6 +20,14 @@ format:
 
 ![](./images/horst_quarto_schematic.png){height="80%" width="80%" fig-align="center"}
 
+## Installation
+::: {.incremental}
+- Install the latest [quarto executable](https://quarto.org/docs/get-started/)
+- R package **quarto** is a wrapper that runs quarto from R
+- If using [RStudio](https://posit.co/download/rstudio-desktop/), you need a version v2022.07.1 or newer
+- [Visual Studio Code](https://code.visualstudio.com/) along with quarto extension is a great option too
+:::
+
 ## Quarto notebook
 
 This is a Quarto file – a plain text file that has the extension `.qmd`
