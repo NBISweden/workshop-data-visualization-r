@@ -28,9 +28,9 @@ format:
 - [Visual Studio Code](https://code.visualstudio.com/) along with quarto extension is a great option too
 :::
 
-## Quarto notebook
+## Quarto notebook{.smaller}
 
-This is a Quarto file – a plain text file that has the extension `.qmd`
+This is a Quarto file – a plain text file that has the extension **.qmd**
 
 :::: {.columns}
 ::: {.column width="65%"}
@@ -60,7 +60,7 @@ library("palmerpenguins")
 data(penguins, package = "palmerpenguins")
 ```
 
-```{{r filpper length}}
+```{{r flipper length}}
 #| label: fig-flipper-length
 #| warning: false
 #| fig-width: 10
@@ -137,25 +137,16 @@ str(penguins)
 ::::
 
 ## Rendering Quarto document
-
 ::: {.fragment}
-Render from the command line:
-```bash
-quarto render report.qmd
-```
+- Live preview
+    - From R console: `quarto::quarto_preview("report.qmd")`
+    - From terminal: `quarto preview report.qmd`
 :::
-
 ::: {.fragment}
-Render to a specific format:
-```bash
-quarto render report.qmd --to html
-```
-:::
-
-<br>
-
-::: {.fragment}
-*Many IDEs like VS Code and RStudio also have buttons to render Quarto documents.*
+- Render
+    - Interactively using the **Render** button
+    - From R console: `quarto::quarto_render("report.qmd")`
+    - From terminal: `quarto render report.qmd`
 :::
 
 ## Output formats
