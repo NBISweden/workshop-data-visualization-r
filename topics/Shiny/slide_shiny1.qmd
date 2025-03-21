@@ -5,6 +5,7 @@ institute: NBIS, SciLifeLab
 keywords: bioinformatics, course, workshop, scilifelab, nbis
 format: 
   revealjs: 
+    css: "assets/styles.css"
     slide-number: true
 filters:
   - shinylive
@@ -26,74 +27,75 @@ library(shiny)
 
 ## Contents 
 
-* [Introduction to RShiny](#gallery)
-* [Code Structure](#code-structure)
+* [Introduction to RShiny](#what-is-shiny)
+* [Code Structure](#app-organization)
 * [App execution](#app-execution)
-* [UI](#ui-layout)
+* [UI](#ui)
+  * [Dynamic UI](#dynamic-ui)
 * [Server](#server)
 
-## [Gallery](https://shiny.posit.co/r/gallery/)
+## 
 
 ::: {.shiny-gallery-parent}
 
 ::: {.shiny-gallery-child}
-![[K-means](https://gallery.shinyapps.io/050-kmeans-example/) [sidebar, simple]{.badge .smaller}](assets/examples/kmeans.jpg){group="shiny-examples"}
+![[K-means](https://gallery.shinyapps.io/050-kmeans-example/){.small} [sidebar, simple]{.badge .smaller}](assets/examples/kmeans.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Movie explorer](https://gallery.shinyapps.io/051-movie-explorer/) [sidebar, simple]{.badge .smaller}](assets/examples/movie-explorer.jpg){group="shiny-examples"}
+![[Movie explorer](https://gallery.shinyapps.io/051-movie-explorer/){.small} [sidebar, simple]{.badge .smaller}](assets/examples/movie-explorer.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[freeR](https://committedtotape.shinyapps.io/freeR/) [simple]{.badge .smaller}](assets/examples/freer.jpg){group="shiny-examples"}
+![[freeR](https://committedtotape.shinyapps.io/freeR/){.small} [simple]{.badge .smaller}](assets/examples/freer.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[SuperZip](https://gallery.shinyapps.io/063-superzip-example/) [intermediate, geo]{.badge .smaller}](assets/examples/superzip.jpg){group="shiny-examples"}
+![[SuperZip](https://gallery.shinyapps.io/063-superzip-example/){.small} [intermediate, geo]{.badge .smaller}](assets/examples/superzip.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Workout creator](https://parmsam.shinyapps.io/MixThingsUp/) [intermediate]{.badge .smaller} ](assets/examples/workout-generator.jpg){group="shiny-examples"}
+![[Workout creator](https://parmsam.shinyapps.io/MixThingsUp/){.small} [intermediate]{.badge .smaller} ](assets/examples/workout-generator.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[WildLift](https://abbiodiversity.shinyapps.io/WildLift/) [intermediate, dashboard]{.badge .smaller}](assets/examples/wildlift.jpg){group="shiny-examples"}
+![[WildLift](https://abbiodiversity.shinyapps.io/WildLift/){.small} [intermediate, dashboard]{.badge .smaller}](assets/examples/wildlift.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Covid tracker](https://vac-lshtm.shinyapps.io/ncov_tracker/) [intermediate]{.badge .smaller} ](assets/examples/covid-tracker.jpg){group="shiny-examples"}
+![[Covid tracker](https://vac-lshtm.shinyapps.io/ncov_tracker/){.small} [intermediate]{.badge .smaller} ](assets/examples/covid-tracker.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Cashflow calc](https://cashflowcalc.com/) [intermediate]{.badge .smaller} ](assets/examples/cashflow-calculator.jpg){group="shiny-examples"}
+![[Cashflow calc](https://cashflowcalc.com/){.small} [intermediate]{.badge .smaller} ](assets/examples/cashflow-calculator.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Genome browser](https://gallery.shinyapps.io/genome_browser/) [intermediate]{.badge .smaller} ](assets/examples/genome-browser.jpg){group="shiny-examples"}
+![[Genome browser](https://gallery.shinyapps.io/genome_browser/){.small} [intermediate]{.badge .smaller} ](assets/examples/genome-browser.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Species selection](https://thebeczone.ca/shiny/cciss/) [adv]{.badge .smaller} ](assets/examples/climate-change.jpg){group="shiny-examples"}
+![[Species selection](https://thebeczone.ca/shiny/cciss/){.small} [adv]{.badge .smaller} ](assets/examples/climate-change.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Protein structure](https://niels-van-der-velden.shinyapps.io/shinyNGLVieweR/) [adv, dashboard]{.badge .smaller} ](assets/examples/protein-structure.jpg){group="shiny-examples"}
+![[Protein structure](https://niels-van-der-velden.shinyapps.io/shinyNGLVieweR/){.small} [adv, dashboard]{.badge .smaller} ](assets/examples/protein-structure.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Commute explorer](https://nz-stefan.shinyapps.io/commute-explorer-2/) [adv, geo]{.badge .smaller} ](assets/examples/commute-explorer.jpg){group="shiny-examples"}
+![[Commute explorer](https://nz-stefan.shinyapps.io/commute-explorer-2/){.small} [adv, geo]{.badge .smaller} ](assets/examples/commute-explorer.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Steam explorer](https://eki-anjo.shinyapps.io/steam-shiny/) [adv, dashboard]{.badge .smaller}](assets/examples/steam-explorer.jpg){group="shiny-examples"}
+![[Steam explorer](https://eki-anjo.shinyapps.io/steam-shiny/){.small} [adv, dashboard]{.badge .smaller}](assets/examples/steam-explorer.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[System pipe](https://tgirke.shinyapps.io/systemPipeShiny/) [adv, dashboard]{.badge .smaller} ](assets/examples/system-pipe.jpg){group="shiny-examples"}
+![[System pipe](https://tgirke.shinyapps.io/systemPipeShiny/){.small} [adv, dashboard]{.badge .smaller} ](assets/examples/system-pipe.jpg){group="shiny-examples"}
 :::
 
 ::: {.shiny-gallery-child}
-![[Shark attack](https://mdubel.shinyapps.io/shark-attack/) [adv]{.badge .smaller} ](assets/examples/shark-attack.jpg){group="shiny-examples"}
+![[Shark attack](https://mdubel.shinyapps.io/shark-attack/){.small} [adv]{.badge .smaller} ](assets/examples/shark-attack.jpg){group="shiny-examples"}
 :::
 
 :::
@@ -104,8 +106,10 @@ library(shiny)
 ::: {.fragment}
 
 * Interactive documents & web applications
-* Completely created using R
+* Completely created using R or Python
 * Needs a live environment
+* [shiny.posit.co/r/gallery/](https://shiny.posit.co/r/gallery/)
+* [shinyapps.org](http://shinyapps.org/) 
 
 :::
 
@@ -132,74 +136,74 @@ library(shiny)
 
 :::
 
-## Code structure
+## App organization
 
-::: {.fragment .column width="45%"}
+**One file format**
 
-
-__One file format__
-
-_app.R_
-
-```
+```{r}
+#| eval: false
+#| filename: app.r
 ui <- fluidPage()
 server <- function(input,output) {}
 shinyApp(ui=ui,server=server)
 ```
-:::
 
-::: {.column width="5%"}
-:::
+::: {.fragment}
+**Two file format**
 
-::: {.fragment .column width="45%"}
-
-__Two file format__
-
-_ui.R_
-
-```
+```{r}
+#| eval: false
+#| filename: ui.r
 ui <- fluidPage()
 ```
 
-_server.R_
-
-```
+```{r}
+#| eval: false
+#| filename: server.r     
 server <- function(input,output) {}
 ```
+
 :::
 
 ## App execution
 
-* Change to app directory, then run `runApp()`
-* Use `shinyApp()`
+- Run `shiny::runApp("path/to/folder")`
 
-```{r,eval=FALSE}
-shinyApp(
-ui=fluidPage(),
-server=function(input,output) {}
-)
-```
+. . .
 
-* From Rmd file using `rmarkdown::run()`
-* Running as a separate process from terminal
-
-```{bash,eval=FALSE}
-R -e "shiny::runApp('~/shinyapp')"
-```
-
-## UI • Layout {height=800}
-
-::: { .fragment }
-
-![](../../assets/images/app-layout.png){ width="50%" }
-
-:::
-
-::: {.smaller .fragment}
+- Use `shinyApp()`
 
 ```{r}
 #| eval: false
 
+shinyApp(
+  ui=fluidPage(),
+  server=function(input,output) {}
+)
+```
+
+. . .
+
+- Running as a separate process from terminal
+
+```         
+R -e "shiny::runApp('~/shinyapp')"
+```
+
+. . .
+
+- From Rmd file using `rmarkdown::run()`
+
+
+## {.center}
+
+[User Interface (UI)]{.largest}
+
+## UI
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
 shinyApp(
 ui=fluidPage(
   titlePanel("Title Panel"),
@@ -207,6 +211,54 @@ ui=fluidPage(
     sidebarPanel(
       helpText("Sidebar Panel")
     ),
+    mainPanel(
+      "hello"
+    )
+  )
+),
+server=function(input,output) {})
+```
+
+## Language of the web: HTML, CSS & Javascript
+
+:::: {.columns}
+::: {.column width="50%"}
+**Hypertext Markup Language (HTML)**
+
+- All UI code is translated to HTML
+- Inspect with browser
+
+```{r}
+#| eval: false
+sidebarPanel(helpText("Sidebar Panel"))
+```
+
+```
+<div class="col-sm-4">
+  <form class="well" role="complementary">
+    <span class="help-block">Sidebar Panel</span>
+  </form>
+</div>
+```
+:::
+::: {.column width="50%" .fragment}
+**Cascading style sheet (CSS)**
+
+- Shiny is built on [Bootstrap 3](https://getbootstrap.com/docs/3.3/)
+
+![](assets/ui-nostyle.jpg)
+:::
+::::
+
+## 
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+shinyApp(
+ui=fluidPage(
+  titlePanel("Title Panel"),
+  sidebarLayout(sidebarPanel(helpText("Sidebar Panel")),
     mainPanel(tabsetPanel(
                 tabPanel("tab1",
                          fluidRow(
@@ -214,15 +266,9 @@ ui=fluidPage(
                            column(6,
                                   helpText("Col2"),
                                   fluidRow(
-                                    column(4,style="background-color:#b0c6fb",
-                                           helpText("Col1")
-                                    ),
-                                    column(4,style="background-color:#ffa153",
-                                           helpText("Col2")
-                                    ),
-                                    column(4,style="background-color:#b1f6c6",
-                                           helpText("Col3")
-                                    )
+                                    column(4,style="background-color:#b0c6fb",helpText("Col1")),
+                                    column(4,style="background-color:#ffa153",helpText("Col2")),
+                                    column(4,style="background-color:#b1f6c6",helpText("Col3"))
                                   )
                            )
                          )
@@ -239,20 +285,56 @@ ui=fluidPage(
 ),
 server=function(input,output) {})
 ```
-:::
 
 ## UI • Widgets • Input
 
-:::: {.column width="55%"}
-```{r,eval=FALSE}
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
+shinyApp(
+ui=fluidPage(
+  fluidRow(
+    column(4,
+           selectInput("select-input",
+                       label="selectInput",
+                       choices=c("A","B","C")),
+    )
+  )
+),
+server=function(input,output) {
+})
+```
+
+::: {.fragment}
+
+```{r}
+#| eval: false
+?selectInput
+selectInput(inputId, label, choices, selected = NULL, multiple = FALSE, 
+            selectize = TRUE, width = NULL, size = NULL
+)
+```
+
+- Input ID has to be unique
+
+:::
+
+
+## UI • Widgets • Input
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
 shinyApp(
 ui=fluidPage(
   fluidRow(
     column(4,
            fileInput("file-input","fileInput:"),
            selectInput("select-input",label="selectInput",choices=c("A","B","C")),
-           numericInput("numeric-input",label="numericInput",value=5,min=1,max=10),
            sliderInput("slider-input",label="sliderInput",value=5,min=1,max=10),
+           numericInput("numeric-input",label="numericInput",value=5,min=1,max=10),
            textInput("text-input",label="textInput"),
            textAreaInput("text-area-input",label="textAreaInput"),
            dateInput("date-input",label="dateInput"),
@@ -267,32 +349,81 @@ ui=fluidPage(
 ),
 server=function(input,output) {
 })
+
+
+
 ```
 
-::: {.small}
+[[Widgets gallery](https://shiny.posit.co/r/gallery/widgets/widget-gallery/)]{.smaller}
 
-[Widgets gallery](http://shiny.rstudio.com/gallery/widget-gallery.html)
-
-:::
-
-:::: 
-
-::: {.column width="5%"}
-::: 
-
-::: {.fragment .column width="40%"}
-
-![](../../assets/images/app-widgets-input.png){  width="45%" }
-
+::: {.notes}
+Widgets are visual objects on a page to allow for data input. Input and output variables.
 :::
 
 
+## UI • Widgets • Input Functions
 
+:::: {.columns}
+::: {.column width="50%"}
+|Function|Description|
+|---|---|
+|`checkboxInput()`|Checkbox|
+|`checkboxGroupInput()`|Checkbox group|
+|`radioButtons()`|Radio buttons|
+|`dateInput()`|Single date|
+|`dateRangeInput()`|Date range|
+|`fileInput()`|Upload file|
+|`numericInput()`|Input number|
+|`sliderInput()`|Input number|
+:::
+::: {.column width="50%"}
+|Function|Description|
+|---|---|
+|`textInput()`|Single line text input|
+|`textAreaInput()`|Multi-line text input|
+|`passwordInput()`|Password input|
+|`selectInput()`|Dropdown selection|
+|`actionButton()`|Action button|
+|`submitButton()`|Submit button|
+|`tabsetPanel()`|Tabset panel|
+|`navbarPage()`|Page with navbar|
+:::
+::::
+
+[[Widgets gallery](https://shiny.posit.co/r/gallery/widgets/widget-gallery/)]{.smaller}
 
 ## UI • Widgets • Outputs
 
-::: {.column width="60%"}
-```{r,eval=FALSE}
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+shinyApp(
+ui=fluidPage(
+           textInput("text_input",label="textInput",value="hello world"),
+           textOutput("text_output")
+    ),
+server=function(input, output) {
+  output$text_output <- renderText({input$text_input})
+})
+```
+
+::: {.fragment}
+
+```{r}
+#| eval: false
+?textOutput
+textOutput(outputId)
+```
+
+- Output ID has to be unique
+
+:::
+
+## UI • Widgets • Outputs
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
 shinyApp(
 ui=fluidPage(fluidRow(column(5,
            textInput("text_input",label="textInput",value="<h3 style='color:red'>Red text</h3>"),
@@ -303,6 +434,7 @@ ui=fluidPage(fluidRow(column(5,
            tableOutput("table_output"),
            plotOutput("plot_output",width="300px",height="300px")
     ))),
+
 server=function(input, output) {
   output$html_output <- renderText({input$text_input})
   output$text_output <- renderText({input$text_input})
@@ -313,26 +445,128 @@ server=function(input, output) {
   })
 })
 ```
-:::
 
-::: {.column width="40%"}
+## UI • Widgets • Output Functions
 
-![](../../assets/images/app-widgets-output.png){ width="70%" }
+|Output|Renderer|Description|
+|---|---|---|
+|`textOutput()`|`renderText()`/`renderPrint()`|Standard text|
+|`verbatimTextOutput()`|`renderText()`/`renderPrint()`|Monospaced text|
+|`htmlOutput()`|`renderText()`/`renderPrint()`|HTML text output|
+|`plotOutput()`|`renderPlot()`|Create and display image|
+|`imageOutput()`|`renderImage()`|Display existing image|
+|`tableOutput()`|`renderTable()`|Table output|
+|`uiOutput()`|`renderUI()`|HTML components|
 
-:::
+## A complete app
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+shinyApp(
+ui = fluidPage(
+  h3("Temperature Converter"),
+  numericInput("celsius", "Degrees Celsius:", value = 0),
+  textOutput("fahrenheit")
+),
+
+server = function(input, output) {
+  output$fahrenheit <- renderText({
+    paste(input$celsius, "°C is ", (input$celsius * 9/5) + 32, " °F")
+  })
+})
+```
 
 ## Dynamic UI
 
 - UI elements are created conditionally using `uiOutput()`/`renderUI()`
 
-```{r,eval=FALSE}
+::: {.fragment}
+
+```{r}
+#| eval: false
+#| code-line-numbers: "4,10-16"
+shinyApp(
+ui=fluidPage(
+  selectInput("type",label="Select input type", choices=c("Text","Number")),
+  uiOutput("ui"),
+  textOutput("text_output"),
+),
+
+server=function(input, output) {
+  
+ output$ui <- renderUI({
+    if(input$type=="Text") {
+      textInput("input_text","Enter text")
+    }else{
+      sliderInput("input_number", "Select number", value=5, min=1, max=10)
+    }
+  })
+  
+  output$text_output <- renderText({
+    if(input$type=="Text") {
+      input$input_text
+    }else{
+      input$input_number
+    }
+  })
+})
+```
+
+:::
+
+::: {.fragment}
+
+- Other options include `conditionalPanel()`, `insertUI()` and `removeUI()`
+
+:::
+
+## Rendering UI
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+shinyApp(
+ui=fluidPage(
+  selectInput("type", label="Select input type", choices=c("Text","Number")),
+  uiOutput("ui"),
+  textOutput("text_output"),
+),
+
+server=function(input, output) {
+  
+ output$ui <- renderUI({
+    if(input$type=="Text") {
+      textInput("input_text", "Enter text", value="hello")
+    }else{
+      sliderInput("input_number", "Select number", value=5, min=1, max=10)
+    }
+  })
+  
+  output$text_output <- renderText({
+    if(input$type=="Text") {
+      input$input_text
+    }else{
+      input$input_number
+    }
+  })
+})
+```
+
+## Rendering UI
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
 shinyApp(
 ui=fluidPage(
   selectInput("data",label="Select data",
               choices=c("mtcars","faithful","iris")),
   tableOutput("table"),
- uiOutput("ui")
+  uiOutput("ui")
 ),
+
 server=function(input, output) {
   
   data <- reactive({ get(input$data, 'package:datasets') })
@@ -344,9 +578,38 @@ server=function(input, output) {
   output$plot <- renderPlot({hist(data()[, 1])})
   output$table <- renderTable({head(data())})
 })
+
+
+
+
+
+
 ```
 
-* Other options include `conditionalPanel()`, `ìnsertUI()` and `removeUI()`
+## Rendering UI
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
+shinyApp(
+ui=fluidPage(
+  sliderInput("persons",label="Select number of persons", value=1, min=1,max=4),
+  uiOutput("ui")
+),
+
+server=function(input, output) {
+  output$ui <- renderUI({
+    lapply(1:input$persons, function(i) {
+         div(
+           textInput(paste0("name",i),"Enter name:",paste0("Person ",i)),
+           textInput(paste0("tel",i),"Enter phone number:",value = "0773921562"),
+           hr()
+         )
+    })
+  })
+})
+```
 
 ## Server
 
