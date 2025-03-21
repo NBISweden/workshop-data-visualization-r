@@ -1,0 +1,478 @@
+[
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#contents",
+    "href": "topics/Shiny/slide_shiny1.html#contents",
+    "title": "Introduction to R Shiny",
+    "section": "Contents",
+    "text": "Contents\n\nIntroduction to RShiny\nCode Structure\nApp execution\nUI\n\nDynamic UI\n\nServer"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#section",
+    "href": "topics/Shiny/slide_shiny1.html#section",
+    "title": "Introduction to R Shiny",
+    "section": "",
+    "text": "K-means sidebar, simple\n\n\n\n\n\n\n\nMovie explorer sidebar, simple\n\n\n\n\n\n\n\nfreeR simple\n\n\n\n\n\n\n\nSuperZip intermediate, geo\n\n\n\n\n\n\n\nWorkout creator intermediate\n\n\n\n\n\n\n\nWildLift intermediate, dashboard\n\n\n\n\n\n\n\nCovid tracker intermediate\n\n\n\n\n\n\n\nCashflow calc intermediate\n\n\n\n\n\n\n\nGenome browser intermediate\n\n\n\n\n\n\n\nSpecies selection adv\n\n\n\n\n\n\n\nProtein structure adv, dashboard\n\n\n\n\n\n\n\nCommute explorer adv, geo\n\n\n\n\n\n\n\nSteam explorer adv, dashboard\n\n\n\n\n\n\n\nSystem pipe adv, dashboard\n\n\n\n\n\n\n\nShark attack adv"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#what-is-shiny",
+    "href": "topics/Shiny/slide_shiny1.html#what-is-shiny",
+    "title": "Introduction to R Shiny",
+    "section": "What is shiny?",
+    "text": "What is shiny?\n\n\nInteractive documents & web applications\nCompletely created using R or Python\nNeeds a live environment\nshiny.posit.co/r/gallery/\nshinyapps.org\n\n\n\n\nUsage\n\nStandalone web applications\nDashboard/Flexboard\nInteractive RMarkdown\nVScode extensions\n\n\n\n\nApp structure\n\nUI Layout\nUI Inputs (Widgets)\nUI Outputs\nRenderer\nBuilder"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#app-organization",
+    "href": "topics/Shiny/slide_shiny1.html#app-organization",
+    "title": "Introduction to R Shiny",
+    "section": "App organization",
+    "text": "App organization\nOne file format\n\n\n\napp.r\n\nui &lt;- fluidPage()\nserver &lt;- function(input,output) {}\nshinyApp(ui=ui,server=server)\n\n\n\nTwo file format\n\n\n\nui.r\n\nui &lt;- fluidPage()\n\n\n\n\n\nserver.r\n\nserver &lt;- function(input,output) {}"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#app-execution",
+    "href": "topics/Shiny/slide_shiny1.html#app-execution",
+    "title": "Introduction to R Shiny",
+    "section": "App execution",
+    "text": "App execution\n\nRun shiny::runApp(\"path/to/folder\")\n\n\n\nUse shinyApp()\n\n\nshinyApp(\n  ui=fluidPage(),\n  server=function(input,output) {}\n)\n\n\n\n\nRunning as a separate process from terminal\n\nR -e \"shiny::runApp('~/shinyapp')\"\n\n\n\nFrom Rmd file using rmarkdown::run()"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#section-1",
+    "href": "topics/Shiny/slide_shiny1.html#section-1",
+    "title": "Introduction to R Shiny",
+    "section": "",
+    "text": "User Interface (UI)"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#ui",
+    "href": "topics/Shiny/slide_shiny1.html#ui",
+    "title": "Introduction to R Shiny",
+    "section": "UI",
+    "text": "UI\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\nshinyApp(\nui=fluidPage(\n  titlePanel(\"Title Panel\"),\n  sidebarLayout(\n    sidebarPanel(\n      helpText(\"Sidebar Panel\")\n    ),\n    mainPanel(\n      \"hello\"\n    )\n  )\n),\nserver=function(input,output) {})"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#language-of-the-web-html-css-javascript",
+    "href": "topics/Shiny/slide_shiny1.html#language-of-the-web-html-css-javascript",
+    "title": "Introduction to R Shiny",
+    "section": "Language of the web: HTML, CSS & Javascript",
+    "text": "Language of the web: HTML, CSS & Javascript\n\n\nHypertext Markup Language (HTML)\n\nAll UI code is translated to HTML\nInspect with browser\n\n\nsidebarPanel(helpText(\"Sidebar Panel\"))\n\n&lt;div class=\"col-sm-4\"&gt;\n  &lt;form class=\"well\" role=\"complementary\"&gt;\n    &lt;span class=\"help-block\"&gt;Sidebar Panel&lt;/span&gt;\n  &lt;/form&gt;\n&lt;/div&gt;\n\nCascading style sheet (CSS)\n\nShiny is built on Bootstrap 3"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#section-2",
+    "href": "topics/Shiny/slide_shiny1.html#section-2",
+    "title": "Introduction to R Shiny",
+    "section": "",
+    "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\nshinyApp(\nui=fluidPage(\n  titlePanel(\"Title Panel\"),\n  sidebarLayout(sidebarPanel(helpText(\"Sidebar Panel\")),\n    mainPanel(tabsetPanel(\n                tabPanel(\"tab1\",\n                         fluidRow(\n                           column(6,helpText(\"Col1\")),\n                           column(6,\n                                  helpText(\"Col2\"),\n                                  fluidRow(\n                                    column(4,style=\"background-color:#b0c6fb\",helpText(\"Col1\")),\n                                    column(4,style=\"background-color:#ffa153\",helpText(\"Col2\")),\n                                    column(4,style=\"background-color:#b1f6c6\",helpText(\"Col3\"))\n                                  )\n                           )\n                         )\n                ),\n                tabPanel(\"tab2\",\n                         inputPanel(helpText(\"Input Panel\"))\n                ),\n                tabPanel(\"tab3\",\n                  wellPanel(helpText(\"Well Panel\"))\n                )\n              )\n    )\n  )\n),\nserver=function(input,output) {})"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#ui-widgets-input",
+    "href": "topics/Shiny/slide_shiny1.html#ui-widgets-input",
+    "title": "Introduction to R Shiny",
+    "section": "UI • Widgets • Input",
+    "text": "UI • Widgets • Input\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n\nshinyApp(\nui=fluidPage(\n  fluidRow(\n    column(4,\n           selectInput(\"select-input\",\n                       label=\"selectInput\",\n                       choices=c(\"A\",\"B\",\"C\")),\n    )\n  )\n),\nserver=function(input,output) {\n})\n\n\n?selectInput\nselectInput(inputId, label, choices, selected = NULL, multiple = FALSE, \n            selectize = TRUE, width = NULL, size = NULL\n)\n\n\nInput ID has to be unique"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#ui-widgets-input-1",
+    "href": "topics/Shiny/slide_shiny1.html#ui-widgets-input-1",
+    "title": "Introduction to R Shiny",
+    "section": "UI • Widgets • Input",
+    "text": "UI • Widgets • Input\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n\nshinyApp(\nui=fluidPage(\n  fluidRow(\n    column(4,\n           fileInput(\"file-input\",\"fileInput:\"),\n           selectInput(\"select-input\",label=\"selectInput\",choices=c(\"A\",\"B\",\"C\")),\n           sliderInput(\"slider-input\",label=\"sliderInput\",value=5,min=1,max=10),\n           numericInput(\"numeric-input\",label=\"numericInput\",value=5,min=1,max=10),\n           textInput(\"text-input\",label=\"textInput\"),\n           textAreaInput(\"text-area-input\",label=\"textAreaInput\"),\n           dateInput(\"date-input\",label=\"dateInput\"),\n           dateRangeInput(\"date-range-input\",label=\"dateRangeInput\"),\n           radioButtons(\"radio-button\",label=\"radioButtons\",choices=c(\"A\",\"B\",\"C\"),inline=T),\n           checkboxInput(\"checkbox\",\"checkboxInput\",value=FALSE),\n           actionButton(\"action-button\",\"Action\"),\n           hr(),\n           submitButton()\n    )\n  )\n),\nserver=function(input,output) {\n})\n\n\nWidgets gallery\n\nWidgets are visual objects on a page to allow for data input. Input and output variables."
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#ui-widgets-input-functions",
+    "href": "topics/Shiny/slide_shiny1.html#ui-widgets-input-functions",
+    "title": "Introduction to R Shiny",
+    "section": "UI • Widgets • Input Functions",
+    "text": "UI • Widgets • Input Functions\n\n\n\n\n\nFunction\nDescription\n\n\n\n\ncheckboxInput()\nCheckbox\n\n\ncheckboxGroupInput()\nCheckbox group\n\n\nradioButtons()\nRadio buttons\n\n\ndateInput()\nSingle date\n\n\ndateRangeInput()\nDate range\n\n\nfileInput()\nUpload file\n\n\nnumericInput()\nInput number\n\n\nsliderInput()\nInput number\n\n\n\n\n\n\n\nFunction\nDescription\n\n\n\n\ntextInput()\nSingle line text input\n\n\ntextAreaInput()\nMulti-line text input\n\n\npasswordInput()\nPassword input\n\n\nselectInput()\nDropdown selection\n\n\nactionButton()\nAction button\n\n\nsubmitButton()\nSubmit button\n\n\ntabsetPanel()\nTabset panel\n\n\nnavbarPage()\nPage with navbar\n\n\n\n\nWidgets gallery"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#ui-widgets-outputs",
+    "href": "topics/Shiny/slide_shiny1.html#ui-widgets-outputs",
+    "title": "Introduction to R Shiny",
+    "section": "UI • Widgets • Outputs",
+    "text": "UI • Widgets • Outputs\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\nshinyApp(\nui=fluidPage(\n           textInput(\"text_input\",label=\"textInput\",value=\"hello world\"),\n           textOutput(\"text_output\")\n    ),\nserver=function(input, output) {\n  output$text_output &lt;- renderText({input$text_input})\n})\n\n\n?textOutput\ntextOutput(outputId)\n\n\nOutput ID has to be unique"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#ui-widgets-outputs-1",
+    "href": "topics/Shiny/slide_shiny1.html#ui-widgets-outputs-1",
+    "title": "Introduction to R Shiny",
+    "section": "UI • Widgets • Outputs",
+    "text": "UI • Widgets • Outputs\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\nshinyApp(\nui=fluidPage(fluidRow(column(5,\n           textInput(\"text_input\",label=\"textInput\",value=\"&lt;h3 style='color:red'&gt;Red text&lt;/h3&gt;\"),\n           hr(),\n           htmlOutput(\"html_output\"),\n           textOutput(\"text_output\"),\n           verbatimTextOutput(\"verbatim_text_output\"),\n           tableOutput(\"table_output\"),\n           plotOutput(\"plot_output\",width=\"300px\",height=\"300px\")\n    ))),\n\nserver=function(input, output) {\n  output$html_output &lt;- renderText({input$text_input})\n  output$text_output &lt;- renderText({input$text_input})\n  output$verbatim_text_output &lt;- renderText({input$text_input})\n  output$table_output &lt;- renderTable({iris[1:3,1:3]})\n  output$plot_output &lt;- renderPlot({\n    plot(iris[,1],iris[,2])\n  })\n})"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#ui-widgets-output-functions",
+    "href": "topics/Shiny/slide_shiny1.html#ui-widgets-output-functions",
+    "title": "Introduction to R Shiny",
+    "section": "UI • Widgets • Output Functions",
+    "text": "UI • Widgets • Output Functions\n\n\n\nOutput\nRenderer\nDescription\n\n\n\n\ntextOutput()\nrenderText()/renderPrint()\nStandard text\n\n\nverbatimTextOutput()\nrenderText()/renderPrint()\nMonospaced text\n\n\nhtmlOutput()\nrenderText()/renderPrint()\nHTML text output\n\n\nplotOutput()\nrenderPlot()\nCreate and display image\n\n\nimageOutput()\nrenderImage()\nDisplay existing image\n\n\ntableOutput()\nrenderTable()\nTable output\n\n\nuiOutput()\nrenderUI()\nHTML components"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#a-complete-app",
+    "href": "topics/Shiny/slide_shiny1.html#a-complete-app",
+    "title": "Introduction to R Shiny",
+    "section": "A complete app",
+    "text": "A complete app\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\nshinyApp(\nui = fluidPage(\n  h3(\"Temperature Converter\"),\n  numericInput(\"celsius\", \"Degrees Celsius:\", value = 0),\n  textOutput(\"fahrenheit\")\n),\n\nserver = function(input, output) {\n  output$fahrenheit &lt;- renderText({\n    paste(input$celsius, \"°C is \", (input$celsius * 9/5) + 32, \" °F\")\n  })\n})"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#dynamic-ui",
+    "href": "topics/Shiny/slide_shiny1.html#dynamic-ui",
+    "title": "Introduction to R Shiny",
+    "section": "Dynamic UI",
+    "text": "Dynamic UI\n\nUI elements are created conditionally using uiOutput()/renderUI()\n\n\n\nshinyApp(\nui=fluidPage(\n  selectInput(\"type\",label=\"Select input type\", choices=c(\"Text\",\"Number\")),\n  uiOutput(\"ui\"),\n  textOutput(\"text_output\"),\n),\n\nserver=function(input, output) {\n  \n output$ui &lt;- renderUI({\n    if(input$type==\"Text\") {\n      textInput(\"input_text\",\"Enter text\")\n    }else{\n      sliderInput(\"input_number\", \"Select number\", value=5, min=1, max=10)\n    }\n  })\n  \n  output$text_output &lt;- renderText({\n    if(input$type==\"Text\") {\n      input$input_text\n    }else{\n      input$input_number\n    }\n  })\n})\n\n\n\n\nOther options include conditionalPanel(), insertUI() and removeUI()"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#rendering-ui",
+    "href": "topics/Shiny/slide_shiny1.html#rendering-ui",
+    "title": "Introduction to R Shiny",
+    "section": "Rendering UI",
+    "text": "Rendering UI\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\nshinyApp(\nui=fluidPage(\n  selectInput(\"type\", label=\"Select input type\", choices=c(\"Text\",\"Number\")),\n  uiOutput(\"ui\"),\n  textOutput(\"text_output\"),\n),\n\nserver=function(input, output) {\n  \n output$ui &lt;- renderUI({\n    if(input$type==\"Text\") {\n      textInput(\"input_text\", \"Enter text\", value=\"hello\")\n    }else{\n      sliderInput(\"input_number\", \"Select number\", value=5, min=1, max=10)\n    }\n  })\n  \n  output$text_output &lt;- renderText({\n    if(input$type==\"Text\") {\n      input$input_text\n    }else{\n      input$input_number\n    }\n  })\n})"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#rendering-ui-1",
+    "href": "topics/Shiny/slide_shiny1.html#rendering-ui-1",
+    "title": "Introduction to R Shiny",
+    "section": "Rendering UI",
+    "text": "Rendering UI\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n\nshinyApp(\nui=fluidPage(\n  selectInput(\"data\",label=\"Select data\",\n              choices=c(\"mtcars\",\"faithful\",\"iris\")),\n  tableOutput(\"table\"),\n  uiOutput(\"ui\")\n),\n\nserver=function(input, output) {\n  \n  data &lt;- reactive({ get(input$data, 'package:datasets') })\n  \n output$ui &lt;- renderUI({\n  if(input$data==\"iris\") plotOutput(\"plot\",width=\"400px\")\n  })\n  \n  output$plot &lt;- renderPlot({hist(data()[, 1])})\n  output$table &lt;- renderTable({head(data())})\n})"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#rendering-ui-2",
+    "href": "topics/Shiny/slide_shiny1.html#rendering-ui-2",
+    "title": "Introduction to R Shiny",
+    "section": "Rendering UI",
+    "text": "Rendering UI\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n\nshinyApp(\nui=fluidPage(\n  sliderInput(\"persons\",label=\"Select number of persons\", value=1, min=1,max=4),\n  uiOutput(\"ui\")\n),\n\nserver=function(input, output) {\n  output$ui &lt;- renderUI({\n    lapply(1:input$persons, function(i) {\n         div(\n           textInput(paste0(\"name\",i),\"Enter name:\",paste0(\"Person \",i)),\n           textInput(paste0(\"tel\",i),\"Enter phone number:\",value = \"0773921562\"),\n           hr()\n         )\n    })\n  })\n})"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#server",
+    "href": "topics/Shiny/slide_shiny1.html#server",
+    "title": "Introduction to R Shiny",
+    "section": "Server",
+    "text": "Server\n\nServer is a function that assembles your input into output using R based code.\nThree rules to be followed to write a server function:\n\n\nRule 1: Save objects to display to output$"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#server-1",
+    "href": "topics/Shiny/slide_shiny1.html#server-1",
+    "title": "Introduction to R Shiny",
+    "section": "Server",
+    "text": "Server\nRule 2: Build objects to display with render*()\n\nR-Code block (can even be an entire R script) between the braces {} inside the render*() function.\n\n\n\n  output$hist &lt;- renderPlot({\n                    tile &lt;- \"histogram of 100 random numbers\"\n                    hist(rnorm(100), main = title)\n                })\n\n\n\n\nDifferent Render functions"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#server-2",
+    "href": "topics/Shiny/slide_shiny1.html#server-2",
+    "title": "Introduction to R Shiny",
+    "section": "Server",
+    "text": "Server\nRule 3: Use input values with input$"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny1.html#section-3",
+    "href": "topics/Shiny/slide_shiny1.html#section-3",
+    "title": "Introduction to R Shiny",
+    "section": "",
+    "text": "Thank you. Questions?\nSlide inspirations: Roy Francis (NBIS, RaukR2024)"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#contents",
+    "href": "topics/Shiny/slide_shiny2.html#contents",
+    "title": "R Shiny - Part II",
+    "section": "Contents",
+    "text": "Contents\n\nReactivity\nObservers\nUpdating Widgets\nError Validation\nDownload"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#reactivity",
+    "href": "topics/Shiny/slide_shiny2.html#reactivity",
+    "title": "R Shiny - Part II",
+    "section": "Reactivity",
+    "text": "Reactivity\n\nCode doesn’t always run line-by-line (Non-linear execution)\nCode executes when dependencies change\n\n\nreactlog"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#reactives",
+    "href": "topics/Shiny/slide_shiny2.html#reactives",
+    "title": "R Shiny - Part II",
+    "section": "Reactives",
+    "text": "Reactives\nFunctions with reactive context\n\nreactive(): Defines an expression\nreactiveVal(): Defines single value\nreactiveValues(): Defines a list of values\n\nRegular function fn &lt;- function(): Runs wherever it is is used\nReactive function fn &lt;- reactive(): Runs only when input changes"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#reactive-context",
+    "href": "topics/Shiny/slide_shiny2.html#reactive-context",
+    "title": "R Shiny - Part II",
+    "section": "Reactive context",
+    "text": "Reactive context\nReactive values cannot be accessed outside a reactive context\n\n\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\nshinyApp(\n  ui = fluidPage(\n    numericInput(\"num\", \"Enter number\",\n                 value = 1),\n    textOutput(\"result\")\n  ),\n  server = function(input, output) {\n    val = input$num^2\n    output$result &lt;- renderText({\n      paste(\"Squared number is:\", val)\n    })\n  }\n)"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#reactive-dynamics",
+    "href": "topics/Shiny/slide_shiny2.html#reactive-dynamics",
+    "title": "R Shiny - Part II",
+    "section": "Reactive dynamics",
+    "text": "Reactive dynamics\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\nshinyApp(\n  ui=fluidPage(\n    numericInput(\"num_input\",label=\"Observations\",value=50),\n    textOutput(\"text_output\")),\n  server=function(input,output) {\n    output$text_output &lt;- renderText({\n        mean(rnorm(input$num_input))\n    })\n  })"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#reactive-dynamics-1",
+    "href": "topics/Shiny/slide_shiny2.html#reactive-dynamics-1",
+    "title": "R Shiny - Part II",
+    "section": "Reactive dynamics",
+    "text": "Reactive dynamics\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\nshinyApp(\n  ui=fluidPage(\n    numericInput(\"num_input\",label=\"Observations\",value=50),\n    textOutput(\"text_output1\"), textOutput(\"text_output2\")),\n  server=function(input,output) {\n    output$text_output1 &lt;- renderText({\n      mean(rnorm(input$num_input))\n    })\n    output$text_output2 &lt;- renderText({\n      mean(rnorm(input$num_input))\n    })\n  })"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#reactive-dynamics-2",
+    "href": "topics/Shiny/slide_shiny2.html#reactive-dynamics-2",
+    "title": "R Shiny - Part II",
+    "section": "Reactive dynamics",
+    "text": "Reactive dynamics\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\nshinyApp(\n  ui=fluidPage(\n    numericInput(\"num_input\",label=\"Observations\",value=50),\n    textOutput(\"text_output1\"), textOutput(\"text_output2\")),\n  server=function(input,output) {\n    rand &lt;- function(x) rnorm(x)\n    output$text_output1 &lt;- renderText({\n      mean(rand(input$num_input))\n    })\n    output$text_output2 &lt;- renderText({\n      mean(rand(input$num_input))\n    })\n  })"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#reactive-dynamics-3",
+    "href": "topics/Shiny/slide_shiny2.html#reactive-dynamics-3",
+    "title": "R Shiny - Part II",
+    "section": "Reactive dynamics",
+    "text": "Reactive dynamics\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\nshinyApp(\n  ui=fluidPage(\n    numericInput(\"num_input\",label=\"Observations\",value=50),\n    textOutput(\"text_output1\"), textOutput(\"text_output2\")\n    ),\n  server=function(input,output) {\n    rand &lt;- reactive({ rnorm(input$num_input) })\n    output$text_output1 &lt;- renderText({\n      mean(rand())\n    })\n    output$text_output2 &lt;- renderText({\n      mean(rand())\n    })\n  })\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nReactive functions can be use to share output from a common source. They can be used to reduce computation for demanding functions. Reactive values cannot be accessed from outside the reactive environment.\nTry changing the reactive function\nrand &lt;- reactive({ rnorm(input$num_input) })\nto a regular function\nrand &lt;- function(){ rnorm(input$num_input) }\nSaving a reactlog,\n\n# reset log\nreactlogReset()\n# run the app and exit\n# save react log as text\ndput(shiny::reactlog(), file = \"assets/reactlog-reactivity-3.txt\")\n# open and visualize\n\"assets/reactlog-reactivity-3.txt\" |&gt;\n  dget() |&gt;\n  reactlog::reactlog_show()"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#reactive-values",
+    "href": "topics/Shiny/slide_shiny2.html#reactive-values",
+    "title": "R Shiny - Part II",
+    "section": "Reactive values",
+    "text": "Reactive values\n\nreactVal() reactValues()\nStore reactive values that can be accessed from any reactive context\n\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\nshinyApp(\n  ui = fluidPage(\n    actionButton(\"add\",\"Add\"),\n    actionButton(\"subtract\",\"Subtract\"),\n    textOutput(\"counter\")\n  ),\n  server = function(input, output) {\n    reactive_values &lt;- reactiveValues(counter = 0) \n    \n    observeEvent(input$add, {\n      reactive_values$counter &lt;- reactive_values$counter + 1\n    }) \n    observeEvent(input$subtract, {\n      reactive_values$counter &lt;- reactive_values$counter - 1\n    }) \n  \n    output$counter &lt;- renderText({\n      reactive_values$counter\n    })\n  }\n)"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#controlling-reactivity-using-action-buttons",
+    "href": "topics/Shiny/slide_shiny2.html#controlling-reactivity-using-action-buttons",
+    "title": "R Shiny - Part II",
+    "section": "Controlling reactivity using action buttons",
+    "text": "Controlling reactivity using action buttons\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\nshinyApp(\nui = fluidPage(\n  h3(\"Temperature Converter\"),\n  numericInput(\"celsius\", \"Degrees Celsius:\", value = 0),\n  actionButton(\"btn_go\", \"Go!\"),\n  textOutput(\"fahrenheit\")\n),\n\nserver = function(input, output) {\n  evr &lt;- eventReactive(input$btn_go, {\n    paste(input$celsius, \"°C is \", (input$celsius * 9/5) + 32, \" °F\")\n  })\n  \n  output$fahrenheit &lt;- renderText({\n    evr()\n  })\n  \n  #output$fahrenheit &lt;- renderText({\n  #    paste(input$celsius, \"°C is \", (input$celsius * 9/5) + 32, \" °F\")\n  #  }) |&gt;\n  #  bindEvent(input$btn_go)\n})"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#observers",
+    "href": "topics/Shiny/slide_shiny2.html#observers",
+    "title": "R Shiny - Part II",
+    "section": "Observers",
+    "text": "Observers\nReactive functions that automatically re-executes whenever its dependencies change. Usually used for side-effects rather than returning a value.\nobserve()\nDoesn’t return a value. Constantly runs as long as the app is alive.\nobserveEvent()\nSimilar to observe(), but only re-executes on specific event (like a button click). Doesn’t return a value.\neventReactive()\nSimilar to observeEvent(), but returns a value.\nbindEvent()\nBind an action to a specific event. Similar to observeEvent(), but allows for the event to be determined dynamically. Links an input (like a button) to an output and ensures that reactive expressions are only updated when bound event is triggered.\n\nObservers are reactive functions that run when their dependencies change similar to regular reactive output functions,affect HTML output. Observers are used for side-effect."
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#updating-widgets",
+    "href": "topics/Shiny/slide_shiny2.html#updating-widgets",
+    "title": "R Shiny - Part II",
+    "section": "Updating widgets",
+    "text": "Updating widgets\n\nWidgets can be updated once initialised.\n\n\n\nExample of a typical UI\n\n\n\nui=fluidPage(\n  selectInput(\"select-input\",label=\"selectInput\",choices=c(\"A\",\"B\",\"C\")),\n  numericInput(\"numeric-input\",label=\"numericInput\",value=5,min=1,max=10),\n  sliderInput(\"slider-input\",label=\"sliderInput\",value=5,min=1,max=10),\n)\n\n\n\n\n\nAdd third argument session to server function\nUpdate functions can be used to update input widgets\nReactive observer observe({}) monitors for a conditional change\n\n\n\nserver=function(input,output,session) {\n  observe({\n    if(something) {\n      updateSelectInput(session,\"select-input\",label=\"selectInput\",choices=c(\"D\",\"E\",\"F\"))\n      updateNumericInput(session,\"numeric-input\",label=\"numericInput\",value=10,min=1,max=10)\n      updateSliderInput(session,\"slider-input\",label=\"sliderInput\",value=8,min=1,max=10)\n    }\n  })\n}"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#updating-widgets-1",
+    "href": "topics/Shiny/slide_shiny2.html#updating-widgets-1",
+    "title": "R Shiny - Part II",
+    "section": "Updating widgets",
+    "text": "Updating widgets\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\nshinyApp(\n  ui = fluidPage(\n    selectInput(\"data\", \"Choose a dataset:\", choices = c(\"mtcars\", \"iris\", \"faithful\")),\n    selectInput(\"variable\", \"Choose a variable:\", choices = names(mtcars))\n  ),\n  \n  server = function(input, output, session) {\n    \n    dataset &lt;- reactive({\n      switch(input$data,\n             \"mtcars\" = mtcars,\n             \"iris\" = iris,\n             \"faithful\" = faithful)\n    })\n    \n    observe({\n      updateSelectInput(session,\"variable\",choices=names(dataset()))\n    })\n  }\n)"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#updating-widgets-2",
+    "href": "topics/Shiny/slide_shiny2.html#updating-widgets-2",
+    "title": "R Shiny - Part II",
+    "section": "Updating widgets",
+    "text": "Updating widgets\n\n\n\nInput function\nUpdate function\n\n\n\n\ncheckboxInput()\nupdateCheckboxInput()\n\n\ncheckboxGroupInput()\nupdateCheckboxGroupInput()\n\n\nradioButtons()\nupdateRadioButtons()\n\n\ndateInput()\nupdateDateInput()\n\n\ndateRangeInput()\nupdateDateRangeInput()\n\n\nfileInput()\n\n\n\nnumericInput()\nupdateNumericInput()\n\n\nsliderInput()\nupdateSliderInput()\n\n\ntextInput()\nupdateTextInput()\n\n\ntextAreaInput()\nupdateTextAreaInput()\n\n\npasswordInput()\n\n\n\nselectInput()\nupdateSelectInput()\n\n\nactionButton()\n\n\n\nsubmitButton()\n\n\n\ntabsetPanel()\nupdateTabsetPanel()\n\n\nnavbarPage()\nupdateNavbarPage()"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#error-validation",
+    "href": "topics/Shiny/slide_shiny2.html#error-validation",
+    "title": "R Shiny - Part II",
+    "section": "Error validation",
+    "text": "Error validation\n\nShiny returns an error with missing or incorrect values\n\n\n\n\nshinyApp(\nui=fluidPage(\n  selectInput(\"data_input\",label=\"Select data\",\n              choices=c(\"\",\"mtcars\",\"faithful\",\"iris\")),\n  tableOutput(\"table_output\")\n),\nserver=function(input, output) {\n  getdata &lt;- reactive({ get(input$data_input,'package:datasets') })\n  output$table_output &lt;- renderTable({head(getdata())})\n})\n\n\n\n\n\n\n\n\nErrors can be handled in a controlled manner"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#error-validation-1",
+    "href": "topics/Shiny/slide_shiny2.html#error-validation-1",
+    "title": "R Shiny - Part II",
+    "section": "Error validation",
+    "text": "Error validation\n\n\nvalidate() can be used to check input\nvalidate() using need()\n\n\n\n\n\nshinyApp(\nui=fluidPage(\n  selectInput(\"data_input\",label=\"Select data\",\n              choices=c(\"\",\"mtcars\",\"faithful\",\"iris\")),\n  tableOutput(\"table_output\")\n),\nserver=function(input, output) {\n  getdata &lt;- reactive({ \n  validate(need(try(input$data_input),\"Please select a data set\"))\n    get(input$data_input,'package:datasets') \n    })\n  output$table_output &lt;- renderTable({head(getdata())})\n})"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#error-validation-2",
+    "href": "topics/Shiny/slide_shiny2.html#error-validation-2",
+    "title": "R Shiny - Part II",
+    "section": "Error validation",
+    "text": "Error validation\n\nvalidate() using custom function\n\n\n\n\nvalfn &lt;- function(x) if(is.null(x) | is.na(x) | x==\"\") return(\"Input data is incorrect.\")\nshinyApp(\nui=fluidPage(\n  selectInput(\"data_input\",label=\"Select data\",\n              choices=c(\"\",\"mtcars\",\"faithful\",\"iris\")),\n  tableOutput(\"table_output\")\n),\nserver=function(input,output) {\n  getdata &lt;- reactive({ \n  validate(valfn(try(input$data_input)))\n    get(input$data_input,'package:datasets')\n    })\n  output$table_output &lt;- renderTable({head(getdata())})\n})\n\n\n\n\n\n\n\n\nshiny::req() checks input variable and silently stops execution"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#download-data",
+    "href": "topics/Shiny/slide_shiny2.html#download-data",
+    "title": "R Shiny - Part II",
+    "section": "Download • Data",
+    "text": "Download • Data\n\nAdd button and downloadHandler() function\n\n\nshinyApp(\nui=fluidPage(\n  selectInput(\"data_input\",label=\"Select data\",\n              choices=c(\"mtcars\",\"faithful\",\"iris\")),\n  textOutput(\"text_output\"),\n  downloadButton(\"button_download\",\"Download\")\n),\nserver=function(input, output) {\n  getdata &lt;- reactive({ get(input$data_input, 'package:datasets') })\n  output$text_output &lt;- renderText(paste0(\"Selected dataset: \",input$data_input))\n  \n  output$button_download &lt;- downloadHandler(\n  filename = function() {\n     paste0(input$data_input,\".csv\")\n   },\n  content = function(file) {\n     write.csv(getdata(),file,row.names=FALSE,quote=F)\n   })\n})\n\n\nRun in system browser if Rstudio browser doesn’t work"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#download-plots",
+    "href": "topics/Shiny/slide_shiny2.html#download-plots",
+    "title": "R Shiny - Part II",
+    "section": "Download • Plots",
+    "text": "Download • Plots\n\nshinyApp(\nui=fluidPage(\n  selectInput(\"data_input\",label=\"Select data\",\n              choices=c(\"mtcars\",\"faithful\",\"iris\")),\n  textOutput(\"text_output\"),\n  plotOutput(\"plot_output\",width=\"400px\"),\n  downloadButton(\"button_download\", \"Download\")\n),\nserver=function(input, output) {\n  getdata &lt;- reactive({ get(input$data_input, 'package:datasets') })\n  output$text_output &lt;- renderText(paste0(\"Selected dataset: \",input$data_input))\n  output$plot_output &lt;- renderPlot({hist(getdata()[, 1])})\n  \noutput$button_download &lt;- downloadHandler(\n  filename = function() {\n    paste0(input$data_input,\".png\")\n  },\n  content = function(file) {\n    png(file)\n    hist(getdata()[, 1])\n    dev.off()\n  })\n})\n\n\nRun in system browser if Rstudio browser doesn’t work\nSee usage of download buttons"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny2.html#section",
+    "href": "topics/Shiny/slide_shiny2.html#section",
+    "title": "R Shiny - Part II",
+    "section": "",
+    "text": "Thank you. Questions?\nSlide inspirations: Roy Francis (NBIS, RaukR2024)"
+  },
+  {
+    "objectID": "home_info.html",
+    "href": "home_info.html",
+    "title": "Practical Info",
+    "section": "",
+    "text": "Lund_mv\n\n\n\n\n\n\n\n\n\n\nRoom E24\nBuilding 404\nMedicon Village\nScheelevägen 2\n223 63 Lund\nSweden\nFor Lund city buses, tram, regional buses and regional trains, use skanetrafiken.se. You can buy a ticket at the central station in Lund or at the regional bus (card only). You can also use the app Skånetrafiken From the Lund C the easiest is to take the tram from Clemens torget towards ESS and get off at Lund Ideontorget. The trip take about 5 minutes and a tram leaves about four times an hour.\n\n\n\n\n\nThe lunches during the course will be provided at Cafe Bryggan located at IKDC Building which is 5 minutes walk from the course location. The location of the restaurant is here.\n\n\n\nThe restaurant for the dinner on the 2nd day will be at Valvet Steakhouse."
+  },
+  {
+    "objectID": "home_info.html#location",
+    "href": "home_info.html#location",
+    "title": "Practical Info",
+    "section": "",
+    "text": "Lund_mv\n\n\n\n\n\n\n\n\n\n\nRoom E24\nBuilding 404\nMedicon Village\nScheelevägen 2\n223 63 Lund\nSweden\nFor Lund city buses, tram, regional buses and regional trains, use skanetrafiken.se. You can buy a ticket at the central station in Lund or at the regional bus (card only). You can also use the app Skånetrafiken From the Lund C the easiest is to take the tram from Clemens torget towards ESS and get off at Lund Ideontorget. The trip take about 5 minutes and a tram leaves about four times an hour.\n\n\n\n\n\nThe lunches during the course will be provided at Cafe Bryggan located at IKDC Building which is 5 minutes walk from the course location. The location of the restaurant is here.\n\n\n\nThe restaurant for the dinner on the 2nd day will be at Valvet Steakhouse."
+  },
+  {
+    "objectID": "home_info.html#contact",
+    "href": "home_info.html#contact",
+    "title": "Practical Info",
+    "section": "Contact",
+    "text": "Contact\nThis workshop is run by the National Bioinformatics Infrastructure Sweden (NBIS). NBIS is a platform that is part of SciLifeLab.\nIf you would like to get in touch with us regarding this workshop, please contact us at edu.plotting.r@nbis.se.\nIf you would like to get in touch with us regarding the course at GitHub, kindly write to us at the issues page."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "",
+    "section": "",
+    "text": "Using the language of graphics: ggplot2\nBasic and advanced plotting in ggplot2\nSingle-cell data visualizations with Seurat\nQuarto notebooks and reports\nDynamic plotting with quarto\nInteractive web apps with Shiny\n\n\n\nBeginner-level course content\n\n\nUpdated: 21-03-2025 at 12:38:57 ."
+  },
+  {
+    "objectID": "index.html#advanced-data-visualization",
+    "href": "index.html#advanced-data-visualization",
+    "title": "",
+    "section": "",
+    "text": "Using the language of graphics: ggplot2\nBasic and advanced plotting in ggplot2\nSingle-cell data visualizations with Seurat\nQuarto notebooks and reports\nDynamic plotting with quarto\nInteractive web apps with Shiny\n\n\n\nBeginner-level course content\n\n\nUpdated: 21-03-2025 at 12:38:57 ."
+  },
+  {
+    "objectID": "home_precourse.html",
+    "href": "home_precourse.html",
+    "title": "Precourse",
+    "section": "",
+    "text": "Detailed instructions on the tools necessary for this course and the means of installation will be updated here closer to the schedule. So, keep an eye on this page until then."
+  },
+  {
+    "objectID": "home_precourse.html#installations",
+    "href": "home_precourse.html#installations",
+    "title": "Precourse",
+    "section": "",
+    "text": "Detailed instructions on the tools necessary for this course and the means of installation will be updated here closer to the schedule. So, keep an eye on this page until then."
+  },
+  {
+    "objectID": "home_precourse.html#preparations",
+    "href": "home_precourse.html#preparations",
+    "title": "Precourse",
+    "section": "2 Preparations",
+    "text": "2 Preparations\nTo prepare for the course, you can follow one of the links below to warm up your skills necessary for the course.\n\n\n\n\n\n\nTip\n\n\n\n\nBeginner-level: Basic warm-up exercises in R\nAdvanced-level: ggplot warm-up"
+  },
+  {
+    "objectID": "home_contents.html",
+    "href": "home_contents.html",
+    "title": "Contents",
+    "section": "",
+    "text": "Note\n\n\n\nThe contents of this course are currently being generated. It will be updated here regularly until the course. Please check the Schedule for the proposed topics."
+  },
+  {
+    "objectID": "home_syllabus.html",
+    "href": "home_syllabus.html",
+    "title": "Syllabus",
+    "section": "",
+    "text": "SyllabusLearning outcomesEntry requirements\n\n\nThe syllabus for this workshop are as follows.\n\nAdvanced level\n\nUsing the language of graphics: ggplot2\nBasic and advanced plotting in ggplot2\nSingle-cell data visualizations with Seurat\nQuarto notebooks and reports\nDynamic plotting with Quarto\nInteractive web apps with Shiny\n\nBeginner level\n\nHandle data in R for visualizations\nApply ggplot grammar to get publication-grade plots\nCombine different data and/or different plots\nPCA, Heatmaps, Phylogenetic trees and Maps\n\n\n\n\nAfter this workshop you should be able to:\n\nAdvanced level\n\nHandle data in R for visualizations\nFamiliarize with ggplot2 functions and techniques at adavanced level\nCombine different data and/or different plots that are of publication-ready\nCreate interactive documents with Quarto for data exploration and analysis\nWrite your own simple Shiny app in R\n\nBeginner level\n\nhandle data in R for visualizations\napply the grammar efficiently in ggplot to obtain the desired plot\ncombine different data and/or different plots that are of publication-grade\n\n\n\n\n\nFamiliarity with R and R Studio\nPlotting using standard R graphics\nParticipants are expected to use their own computers with pre-installed R, R Studio and different R packages (detailed instructions will be given upon acceptance)."
+  },
+  {
+    "objectID": "topics/Quarto/intro.html#quarto",
+    "href": "topics/Quarto/intro.html#quarto",
+    "title": "Introduction to Quarto",
+    "section": "Quarto",
+    "text": "Quarto\nAn open-source scientific and technical publishing system\n\nQuarto is a command line tool, not an R package\nQuarto combine codes, comments, and other features to tell a story about your data\nQuarto support numerous output formats\nQuarto documents are fully reproducible"
+  },
+  {
+    "objectID": "topics/Quarto/intro.html#quarto-notebook",
+    "href": "topics/Quarto/intro.html#quarto-notebook",
+    "title": "Introduction to Quarto",
+    "section": "Quarto notebook",
+    "text": "Quarto notebook\nThis is a Quarto file – a plain text file that has the extension .qmd\n\n\n---\ntitle: \"Palmer penguins\"\nauthor: \"Allison Horst\"\ndate: today\nformat: \n  html: \n    code-tools: true\n    code-fold: true\n---\n\n# Exploring the dataset\nThe `palmerpenguins` data contains size measurements for three penguin species \nobserved on three islands in the Palmer Archipelago, Antarctica.\n\nSee @fig-flipper-length for an exploration of flipper length by penguin species.\n\n```{r}\n#| label: load packages and data\n#| warning: false\nlibrary(\"ggplot2\")\nlibrary(\"palmerpenguins\")\ndata(penguins, package = \"palmerpenguins\")\n```\n\n```{r filpper length}\n#| label: fig-flipper-length\n#| warning: false\n#| fig-width: 10\n#| fig-height: 5\n#| fig-cap: \"Figure 1: Penguin flipper length\"\n\nggplot(data = penguins, aes(x = species, y = flipper_length_mm)) +\n  geom_boxplot(aes(color = species), width = 0.3, show.legend = FALSE) +\n  geom_jitter(aes(color = species), alpha = 0.5, show.legend = FALSE, position = position_jitter(width = 0.2, seed = 0)) +\n  scale_color_manual(values = c(\"darkorange\",\"purple\",\"cyan4\")) +\n  labs(x = \"Species\",\n       y = \"Flipper length (mm)\") + \n  theme_bw()\n```"
+  },
+  {
+    "objectID": "topics/Quarto/intro.html#quarto-document-anatomy",
+    "href": "topics/Quarto/intro.html#quarto-document-anatomy",
+    "title": "Introduction to Quarto",
+    "section": "Quarto document anatomy",
+    "text": "Quarto document anatomy\n\n\n\n---\ntitle: \"Palmer penguins\"\nauthor: \"Allison Horst\"\ndate: today\nformat: html\n---\n\n# Penguins\nLet's explore the dataset.\n\n```{r}\n#| echo: true\nstr(penguins)\n```\n\n\nMetadata (YAML header):\n\nBracketed by ---\nDefines document-wide options\nSpecifies the output format\nCan include several parameters\n\n\nText (Markdown formatting):\n\nImages, tables, text, etc.\nFreely add and format text using markdown\n\n\n\nCode chunks:\n\nEvaluate code and show its output\nSpecify global and/or local chunk options (e.g. figure dimensions)\nAlso works with other languages (e.g. Python)"
+  },
+  {
+    "objectID": "topics/Quarto/intro.html#rendering-quarto-document",
+    "href": "topics/Quarto/intro.html#rendering-quarto-document",
+    "title": "Introduction to Quarto",
+    "section": "Rendering Quarto document",
+    "text": "Rendering Quarto document\n\nRender from the command line:\nquarto render report.qmd\n\n\nRender to a specific format:\nquarto render report.qmd --to html\n\n\n\nMany IDEs like VS Code and RStudio also have buttons to render Quarto documents."
+  },
+  {
+    "objectID": "topics/Quarto/intro.html#output-formats",
+    "href": "topics/Quarto/intro.html#output-formats",
+    "title": "Introduction to Quarto",
+    "section": "Output formats",
+    "text": "Output formats\n\n\nReports and general documents (HTML, PDF, Jupyter Notebook, Microsoft Word)\nPresentations (reveal.js, PowerPoint, Beamer)\nInteractive documents (Observable, R Shiny)\nBooks, blogs and websites\nJournal articles\n\n\n\n\nMoving between output formats in Quarto is straightforward\n\n\n\n\n\nDocument\n\n report-1.qmd\n\ntitle: \"Report 1\"\nformat: html\n\n\n\nPresentation\n\n report-1.qmd\n\ntitle: \"Report 1\"\nformat: revealjs\n\n\n\nWebsite\n\n _quarto.yml\n\nproject:\n  type: website\n\nwebsite: \n  navbar: \n    left:\n      - report-1.qmd"
+  },
+  {
+    "objectID": "topics/Quarto/intro.html#section",
+    "href": "topics/Quarto/intro.html#section",
+    "title": "Introduction to Quarto",
+    "section": "",
+    "text": "Thank you. Questions?"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny3.html#deployment",
+    "href": "topics/Shiny/slide_shiny3.html#deployment",
+    "title": "R Shiny - Deployments",
+    "section": "Deployment",
+    "text": "Deployment\n\n\nR scripts\n\nGitHub\nR Package\nDocker container\n\n\n\n\n\nWebpage\n\nShinyapps.io\nShiny Server (Free)\nPosit Connect\n\n\n\n\n\nAutomatically deploying to shinyapps.io"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny3.html#shinyapps.io",
+    "href": "topics/Shiny/slide_shiny3.html#shinyapps.io",
+    "title": "R Shiny - Deployments",
+    "section": "Shinyapps.io",
+    "text": "Shinyapps.io\n\nlibrary(rsconnect)\nrsconnect::setAccountInfo(name=\"username\", token=\"HDFGT46YF7TDT6474G47\", secret=\"hdgTDF5FStgdkpJ\")\ndeployApp(appName=\"name\")\n\n\n\nShiny apps user guide\nShiny server guide"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny3.html#interactive-documents",
+    "href": "topics/Shiny/slide_shiny3.html#interactive-documents",
+    "title": "R Shiny - Deployments",
+    "section": "Interactive documents",
+    "text": "Interactive documents\n\nShiny can run in RMarkdown documents. Set YAML runtime: shiny.\n\n\n---\n\ntitle: Interactive document\noutput: html_document\nruntime: shiny\n---\n\n\n\n\nShiny widgets can be included directly\n\n\n\n```{r}\nselectInput('n_breaks',label='Number of bins:',choices=c(10,20,35,50),selected=20)\n```"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny3.html#interactive-documents-1",
+    "href": "topics/Shiny/slide_shiny3.html#interactive-documents-1",
+    "title": "R Shiny - Deployments",
+    "section": "Interactive documents",
+    "text": "Interactive documents\n\nWhole shiny apps can be included directly\n\n\n\n```{r}\nshinyApp(\n  ui=fluidPage(),\n  server=function(input,output) {}\n)\n```\n\n\n\n\nHosted shiny apps can be embedded using &lt;iframe&gt;\n\n&lt;iframe src=\"https://user.shinyapps.io/app\"&gt;&lt;/iframe&gt;"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny3.html#extensions",
+    "href": "topics/Shiny/slide_shiny3.html#extensions",
+    "title": "R Shiny - Deployments",
+    "section": "Extensions",
+    "text": "Extensions\n\nNaxstats: Repo collection all shiny extensions\nshinythemes: Bootswatch themes for shiny\nshinyurl: using URLs to recreate state of an app\nshinypod: Reusable modules\nshinyjs: custom javascript functionality\nshinyWidgets: Bootstrap 3 custom widgets\nshinyBS: Bootstrap 3 widgets"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny3.html#help",
+    "href": "topics/Shiny/slide_shiny3.html#help",
+    "title": "R Shiny - Deployments",
+    "section": "Help",
+    "text": "Help\n\nPosit Shiny home\nPosit Shiny tutorial\nPosit Shiny articles\nShiny using python\n\nOther topics\n\nApplications of action buttons\n\nProgress indicators\n\nShiny modules"
+  },
+  {
+    "objectID": "topics/Shiny/slide_shiny3.html#section",
+    "href": "topics/Shiny/slide_shiny3.html#section",
+    "title": "R Shiny - Deployments",
+    "section": "",
+    "text": "Thank you. Questions?\nSlide inspirations: Roy Francis (NBIS, RaukR2024)"
+  },
+  {
+    "objectID": "home_schedule.html",
+    "href": "home_schedule.html",
+    "title": "Schedule",
+    "section": "",
+    "text": "Note\n\n\n\nBreaks are planned for approximately at 10:15 and 15:00 every day.\n\n\n\n\n\n\n\n\nTime\nTopic\nInstructor\n\n\n \n13-May-2025TueRoom E24, Building 404, Medicon Village\n\n09:00 - 09:15\nWelcome\nMarkus Ringner\n\n\n09:15 - 10:15\nggplot basics\nLokesh Mano\n\n\n10:15 - 10:30\nBreak\n\n\n\n10:30 - 12:00\nAdvanced ggplot\nLokesh Mano\n\n\n12:00 - 13:00\nLunch\n\n\n\n13:00 - 13:30\nVector and bitmap images\nMarkus Ringner\n\n\n13:30 - 15:00\nPCA plots\nMarkus Ringner\n\n\n15:00 - 15:30\nFika\n\n\n\n15:30 - 16:30\nSingle-cell data visualizations\nLokesh Mano\n\n\n16:30 - 17:00\nWrap-up day I\nLokesh Mano\n \n14-May-2025WedRoom E24, Building 404, Medicon Village\n\n09:00 - 10:15\nIntro to Quarto\nKatja Kozjek\n\n\n10:15 - 10:30\nBreak\n\n\n\n10:30 - 12:00\nAdvanced Quarto\nLokesh Mano\n\n\n12:00 - 13:00\nLunch\n\n\n\n13:00 - 15:00\nIntro to dynamic plotting\nKatja Kozjek\n\n\n13:30 - 15:30\nFika\n\n\n\n15:30 - 16:30\nAdvanced dynamic plotting\nLokesh Mano\n\n\n16:30 - 17:00\nWrap-up day II\nLokesh Mano\n \n14-May-2025WedRestaurang Valvet\n\n18:30 - 22:00\nDinner\n\n \n15-May-2025ThuRoom E24, Building 404, Medicon Village\n\n09:00 - 10:15\nIntro to R-Shiny app\nLokesh Mano\n\n\n10:15 - 10:30\nBreak\n\n\n\n10:30 - 12:00\nR-Shiny apps part-II\nLokesh Mano\n\n\n12:00 - 13:00\nLunch\n\n\n\n13:00 - 15:00\nR-Shiny apps part-III\nLokesh Mano\n\n\n15:00 - 15:30\nFika\n\n\n\n15:30 - 16:30\nOwn shiny app\n\n\n\n16:30 - 16:45\nWrap-up day III\nLokesh Mano\n\n\n16:45 - 17:00\nClosing and feedback sessions\nLokesh Mano\n\n\n\n\n\n\n\n   Date    Venue    Slides    Lab    Video"
+  }
+]
