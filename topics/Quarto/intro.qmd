@@ -316,6 +316,16 @@ website:
 - Easy collaboration and sharing
 :::
 
+## Sources
+::: {.fragment}
+- [R for Data Science book](https://r4ds.hadley.nz/quarto.html)
+- [Hello Quarto](https://mine.quarto.pub/hello-quarto/#/hello-quarto-title)
+- [Guides](https://quarto.org/docs/guide/)
+- [RaukR 2024](https://nbisweden.github.io/raukr-2024/slides/quarto/#/title-slide) (Quarto by Roy Francis)
+- [Getting started with Quarto](https://rstudio-conf-2022.github.io/get-started-quarto/)
+- [Quarto cheatsheet](https://rstudio.github.io/cheatsheets/quarto.pdf)
+:::
+
 ## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
 
 ::: {.center-xy}
