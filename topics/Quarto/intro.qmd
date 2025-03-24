@@ -30,111 +30,160 @@ format:
 
 ## Quarto notebook{.smaller}
 
-This is a Quarto file – a plain text file that has the extension **.qmd**
+Quarto file – a plain text file that has the extension **.qmd**
 
 :::: {.columns}
-::: {.column width="65%"}
-
+::: {.column}
 ````
 ---
 title: "Palmer penguins"
-author: "Allison Horst"
+author: "Katja"
 date: today
 format: 
   html: 
-    code-tools: true
     code-fold: true
+    code-tools: true
+    toc: true
+    number-sections: true
+execute:
+  warning: false
 ---
 
-# Exploring the dataset
+# Meet the penguins
 The `palmerpenguins` data contains size measurements for three penguin species 
 observed on three islands in the Palmer Archipelago, Antarctica.
 
-See @fig-flipper-length for an exploration of flipper length by penguin species.
+![](./images/lter_penguins.png)
 
-```{{r}}
+The three species of penguins have quite distinct 
+distributions of physical dimensions (@fig-penguins).
+
+```{{r packages}}
 #| label: load packages and data
 #| warning: false
-library("ggplot2")
-library("palmerpenguins")
+#| output: false
+library(ggplot2)
+library(palmerpenguins)
+library(dplyr)
 data(penguins, package = "palmerpenguins")
 ```
 
-```{{r flipper length}}
-#| label: fig-flipper-length
+## Bill dimensions
+```{{r bill dimensions}}
+#| label: fig-penguins
 #| warning: false
+#| fig-cap: "Bill dimensions of penguins across three species."
 #| fig-width: 10
 #| fig-height: 5
-#| fig-cap: "Figure 1: Penguin flipper length"
 
-ggplot(data = penguins, aes(x = species, y = flipper_length_mm)) +
-  geom_boxplot(aes(color = species), width = 0.3, show.legend = FALSE) +
-  geom_jitter(aes(color = species), alpha = 0.5, show.legend = FALSE, position = position_jitter(width = 0.2, seed = 0)) +
-  scale_color_manual(values = c("darkorange","purple","cyan4")) +
-  labs(x = "Species",
-       y = "Flipper length (mm)") + 
+penguins %>%
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point(aes(color = species, 
+                 shape = species),
+             size = 2) + 
+  geom_smooth(method = "lm", se = FALSE, aes(color = species)) +
+  scale_color_manual(values = c("darkorange","darkorchid","cyan4")) + 
+  labs(color = "Species", shape = "Species") + 
+  xlab("Bill length (mm)") + ylab("Bill depth (mm)") + 
   theme_bw()
-```
-````
-:::
-
-::: {.column width="35%"}
-::: {.fragment}
-![](./images/example-report.png)
-:::
-:::
-::::
-
-## Quarto document anatomy
-
-:::: {.columns}
-::: {.column width="50%"}
-<br>
-
-````
----
-title: "Palmer penguins"
-author: "Allison Horst"
-date: today
-format: html
----
-
-# Penguins
-Let's explore the dataset.
-
-```{{r}}
-#| echo: true
-str(penguins)
 ```
 ````
 :::
 
 ::: {.column}
 ::: {.fragment}
-**Metadata (YAML header):**
+![](images/example-report.png){width=65%}
+:::
+:::
+::::
 
+## Quarto document anatomy
+
+![](./images/doc-anatomy.png)
+
+## YAML metadata
+:::: {.columns}
+::: {.column width="50%"}
+````
+---
+title: "Palmer penguins"
+subtitle: "Intro to Quarto Exercise"
+author: "Katja"
+date: today
+format: 
+  html: 
+    code-fold: true
+    code-tools: true
+    toc: true
+    number-sections: true
+execute:
+  warning: false
+---
+````
+:::
+
+::: {.column}
+::: {.fragment}
 - Bracketed by `---`
 - Defines document-wide options
 - Specifies the output format
 - Can include [several parameters](https://quarto.org/docs/reference/)
+:::
+:::
+::::
 
+## Markdown text
 ::: {.fragment}
-**Text (Markdown formatting):**
-
 - Images, tables, text, etc.
 - Freely add and format text using markdown
 :::
 
 ::: {.fragment}
-**Code chunks:**
+````
+# Meet the penguins
+The `palmerpenguins` data contains size measurements for three penguin species 
+observed on three islands in the Palmer Archipelago, Antarctica.
 
+![](./images/lter_penguins.png)
+
+The three species of penguins have quite distinct 
+distributions of physical dimensions (@fig-penguins).
+
+## Bill dimensions
+````
+:::
+
+## Code chunks{.smaller}
+::: {.fragment}
+- Code blocks are called code chunks
 - Evaluate code and show its output
 - Specify global and/or local [chunk options](https://quarto.org/docs/computations/execution-options.html) (_e.g._ figure dimensions)
 - Also works with other languages (_e.g._ Python)
 :::
+
+::: {.fragment}
+````
+## Bill dimensions
+```{{r bill dimensions}}
+#| label: fig-penguins
+#| warning: false
+#| fig-cap: "Bill dimensions of penguins across three species."
+#| fig-width: 10
+#| fig-height: 5
+
+penguins %>%
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point(aes(color = species, 
+                 shape = species),
+             size = 2) + 
+  geom_smooth(method = "lm", se = FALSE, aes(color = species)) +
+  scale_color_manual(values = c("darkorange","darkorchid","cyan4")) + 
+  labs(color = "Species", shape = "Species") + 
+  xlab("Bill length (mm)") + ylab("Bill depth (mm)") + 
+  theme_bw()
+```
+````
 :::
-:::
-::::
 
 ## Rendering Quarto document
 ::: {.fragment}
@@ -149,6 +198,12 @@ str(penguins)
     - From terminal: `quarto render report.qmd`
 :::
 
+## How rendering works?
+
+<br>
+<br>
+![](./images/rendering.png)
+
 ## Output formats
 
 ::: {.incremental}
@@ -159,22 +214,36 @@ str(penguins)
 - Journal articles
 :::
 
-::: {.incremental}
-- Moving between output formats in Quarto is straightforward
-:::
+
+## Moving between output formats is straightforward
 
 ::: columns
 ::: {.column width="33%"}
 ::: fragment
-**Document**
+**Document HTML**
 
 ::: {.code-file .sourceCode .cell-code}
-{{< fa file >}} report-1.qmd
+{{< fa file >}} lesson-1.qmd
 :::
 
 ``` yaml
-title: "Report 1"
+title: "Lesson 1"
 format: html
+```
+:::
+:::
+
+::: {.column width="33%"}
+::: fragment
+**Document PDF**
+
+::: {.code-file .sourceCode .cell-code}
+{{< fa file >}} lesson-1.qmd
+:::
+
+``` yaml
+title: "Lesson 1"
+format: pdf
 ```
 :::
 :::
@@ -184,17 +253,17 @@ format: html
 **Presentation**
 
 ::: {.code-file .sourceCode .cell-code}
-{{< fa file >}} report-1.qmd
+{{< fa file >}} lesson-1.qmd
 :::
 
 ``` yaml
-title: "Report 1"
+title: "Lesson 1"
 format: revealjs
 ```
 :::
 :::
 
-::: {.column width="33%"}
+::: {.column width="45%"}
 ::: fragment
 **Website**
 
@@ -209,10 +278,42 @@ project:
 website: 
   navbar: 
     left:
-      - report-1.qmd
+      - lesson-1.qmd
 ```
 :::
 :::
+:::
+
+::: {.column width="45%"}
+::: fragment
+**Book**
+
+::: {.code-file .sourceCode .cell-code}
+{{< fa file >}} _quarto.yml
+:::
+
+``` yaml
+project:
+  type: book
+
+website: 
+  navbar: 
+    left:
+      - lesson-1.qmd
+```
+:::
+:::
+
+## Key advantages of Quarto
+
+::: {.incremental}
+- Text, code snippets, and visualizations in a single document
+- Supports multiple programming languages (R, Python, Julia, etc.)
+- Various output formats (HTML, PDF, presentations, etc.)
+- Compatible with multiple editors (RStudio, VS Code, Jupyter Lab, etc.)
+- Interactive elements (Shiny apps, HTML widgets, or JavaScript visualizations) can be incorporated directly into documents
+- Reproducible and transparent workflows
+- Easy collaboration and sharing
 :::
 
 ## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
