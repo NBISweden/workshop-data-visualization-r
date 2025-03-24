@@ -1,0 +1,13 @@
+Main,Topic,Lecture,Tutorial
+ggplot,Basic ggplot,,
+ggplot,Advanced ggplot,,
+ggplot,PCA plot,,
+Others Day 1,Vector and Bitmap images,,
+Others Day 1,Single-cell data,,
+Quarto,Basic Quarto,,
+Quarto,Advanced Quarto,,
+Dynamic Plotting,Intro Dynamic plotting,,
+Dynamic Plotting,Advanced Dynamic plotting,,
+Rshiny,Rshiny Part I,topics/Shiny/slide_shiny1.html,topics/Shiny/lab_shiny1.html
+Rshiny,Rshiny Part II,topics/Shiny/slide_shiny2.html,topics/Shiny/lab_shiny2.html
+Rshiny,Rshiny Part III,topics/Shiny/slide_shiny3.html,topics/Shiny/lab_shiny3.html
