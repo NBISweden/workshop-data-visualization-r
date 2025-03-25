@@ -40,9 +40,9 @@ After this workshop you should be able to:
   - Write your own simple Shiny app in R
 
 - Beginner level
-  - handle data in R for visualizations
-  - apply the grammar efficiently in ggplot to obtain the desired plot
-  - combine different data and/or different plots that are of publication-grade
+  - Handle data in R for visualizations
+  - Apply the grammar efficiently in ggplot to obtain the desired plot
+  - Combine different data and/or different plots that are of publication-grade
 
 ## Entry requirements
 
