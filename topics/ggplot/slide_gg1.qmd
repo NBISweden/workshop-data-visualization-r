@@ -1,0 +1,117 @@
+---
+title: "Introduction to ggplot"
+author: Lokesh Mano
+institute: NBIS, SciLifeLab
+keywords: bioinformatics, course, workshop, scilifelab, nbis
+format: 
+    revealjs: 
+        slide-number: true
+---
+
+## Setup {visibility="hidden"}
+
+```{r}
+#| echo: false
+# load the packages you need
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(ggplot2)
+library(kableExtra)
+```
+
+## Contents
+
+* [Quick checkup](#quick-checkups)
+* [Data formats](#data)
+* [Data frames](#data-frame)
+* [Important functions](#func)
+* [Tips](#tips)
+
+## Quick checkups
+
+![](../../assets/images/inst_check.png){ width="50%" fig-align="center"}
+
+. . .
+
+:::{.small}
+
+* Coffe breaks (Fika in the afternoon)
+* Webpage structure
+* Plots from drop-down
+* Times mentioned in schedule are **super** arbitrary
+
+:::
+
+## R basics
+
+```{r}
+n <- c(2,3,4,2,1,2,4,5,10,11,8,9)
+print(n)
+```
+
+. . .
+
+```{r}
+z <- n +3
+print(z)
+```
+
+. . .
+
+```{r}
+z <- n +3
+mean(z)
+```
+
+. . .
+
+```{r}
+s <- c("I", "love", "Batman")
+print(s)
+```
+
+## Data types
+
+* `int` stands for *integers*
+* `dbl` stands for *doubles* or real numbers
+* `chr` stands for *character* vectors or strings
+* `dttm` stands for *date and time*,
+* `lgl` stands for *logical* with just TRUE or FALSE
+* `fctr` stands for *factors* which R uses to state categorical variables.
+* `date` stands for *dates*
+
+You can find what kind of vectors you have or imported by using the function `class()`
+
+## Important tips
+
+- `?` and `??`
+  * `?` help manual for a particular function
+  * `??` searches the entire `R` library for the term
+  * `vignette("ggplot2")`
+
+. . .
+
+- TAB completion
+  * Probably most useful to avoid unnecessary error messages (and/or frustration)!
+
+. . .
+
+- Case sensitive 
+
+```{r, error=TRUE}
+print(N)
+```
+
+```{r}
+print(n)
+```
+
+## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
+
+::: {.center-xy}
+
+### Thank you. Questions? {style="text-align: center;"}
+Slide inspirations: Roy Francis (NBIS, RaukR2024)
+
+:::
