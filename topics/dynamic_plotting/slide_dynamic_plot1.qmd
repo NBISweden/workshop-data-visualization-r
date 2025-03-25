@@ -1,0 +1,21 @@
+---
+title: "Dynamic and Interactive applications"
+author: "Katja Kozjek"
+institute: "NBIS, SciLifeLab"
+format: 
+  revealjs: 
+    slide-number: true
+---
+
+## Dynamic and Interactive applications
+![](./images/dashboards.png)
+
+::: {.notes}
+Dynamic applications may resemble interactive Shiny dashboards in terms of appearance and user experience, but they differ significantly in structure. These applications are standalone and do not rely on a server component. Instead, all interactive features are pre-built within the application itself, and the final product is generated as an HTML file, ready to be hosted on a web platform. Tools like Quarto (and its predecessor, RMarkdown) are often used to create such dynamic applications.
+
+Interactive applications consist of both, a user interface (UI) and server, enabling users to send requests to the server through the UI. This setup allows the application’s components to be reactive, meaning the content displayed on the UI dynamically responds to the user’s inputs, creating a fully interactive experience. To build these applications, you need R scripts that define the UI and server components, either as separate or combined scripts.
+
+In this workshop, we will cover both dynamic and interactive applications. First, we will explore how to create dynamic applications using Quarto, especially how to incorporate dynamic components directly into a Quarto HTML document.
+
+Then, we will dive into building interactive applications with Shiny, focusing on the structure and components required for their development. By the end of today and tomorrow, you will have a clear understanding of the differences between these two approaches and the tools needed to implement them effectively.
+:::
