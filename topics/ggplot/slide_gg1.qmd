@@ -6,6 +6,10 @@ keywords: bioinformatics, course, workshop, scilifelab, nbis
 format: 
     revealjs: 
         slide-number: true
+webr:
+  packages: ['ggplot2', 'dplyr']
+filters:
+  - webr
 ---
 
 ## Setup {visibility="hidden"}
@@ -23,10 +27,10 @@ library(kableExtra)
 ## Contents
 
 * [Quick checkup](#quick-checkups)
-* [Data formats](#data)
-* [Data frames](#data-frame)
-* [Important functions](#func)
-* [Tips](#tips)
+* [R Basics](#r-basics)
+* [Data Types and Formats](#data-types)
+* [R Tips](#important-tips)
+* [Grammer of Graphics](#)
 
 ## Quick checkups
 
@@ -83,6 +87,116 @@ print(s)
 
 You can find what kind of vectors you have or imported by using the function `class()`
 
+## Data Formats
+
+. . .
+
+- Wide format
+
+```{r}
+#| echo: false
+
+gc <- read.table("../../data/counts_raw.txt", header = T, row.names = 1, sep = "\t")
+kable(gc[c(1:6),c(1:4)]) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F) %>%
+  row_spec(1:6, color = "orange") %>%
+  column_spec(1, color = "red") %>%
+  row_spec(0, bold = T, color = "blue")
+```
+
+. . .
+
+* familiarity
+* conveniency
+* you see more data
+
+## Data Formats
+
+- Long format
+
+. . .
+
+```{r}
+#| echo: false
+
+md <- read.table("../../data/metadata.csv", header = T, sep = ";")
+samples <- colnames(gc[,c(1:4)])
+gc[c(1:6),c(1:4)] %>%
+  rownames_to_column(var = "Gene") %>%
+  gather(Sample_ID, count, -Gene) %>%
+  select(Sample_ID, everything()) %>%   
+  head(6) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F) %>%
+  column_spec(1, color = "blue") %>%
+  column_spec(2, color = "red")%>%
+  column_spec(3, color = "orange")
+```
+
+. . .
+
+
+```{r}
+#| echo: false
+
+md <- read.table("../../data/metadata.csv", header = T, sep = ";")
+samples <- colnames(gc[,c(1:4)])
+gc[c(1:6),c(1:4)] %>%
+  rownames_to_column(var = "Gene") %>%
+  gather(Sample_ID, count, -Gene) %>% 
+  full_join(md[c(1:4),], by = "Sample_ID") %>% 
+  select(Sample_ID, everything()) %>% 
+  select(-c(Gene,count), c(Gene,count)) %>%
+  head(6) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F) %>%
+  column_spec(1:5, color = "blue") %>%
+  column_spec(6, color = "red")%>%
+  column_spec(7, color = "orange")
+```
+
+## Data Formats
+
+- Long format
+
+```{r}
+#| echo: false
+
+md <- read.table("../../data/metadata.csv", header = T, sep = ";")
+samples <- colnames(gc[,c(1:4)])
+gc[c(1:6),c(1:4)] %>%
+  rownames_to_column(var = "Gene") %>%
+  gather(Sample_ID, count, -Gene) %>% 
+  full_join(md[c(1:4),], by = "Sample_ID") %>% 
+  select(Sample_ID, everything()) %>% 
+  select(-c(Gene,count), c(Gene,count)) %>%
+  head(6) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F) %>%
+  column_spec(1:5, color = "blue") %>%
+  column_spec(6, color = "red")%>%
+  column_spec(7, color = "orange")
+```
+
+. . .
+
+* easier to add data to the existing
+* Most databases store and maintain in long-formats due to its efficiency
+* R tools **like ggplot** require data in long format.
+
+## Data Frames
+
+- Let us take a quick look into `data.frame` in `R`:
+
+
+![](../../assets/images/df.png){width="60%" fig-align="center"}
+
+
+* imported files re usually in `data.frame`
+* Structured matrix with `row.names` and `colnames`
+* Probably most used `data.type` in Biology! 
+
+
 ## Important tips
 
 - `?` and `??`
@@ -99,7 +213,9 @@ You can find what kind of vectors you have or imported by using the function `cl
 
 - Case sensitive 
 
-```{r, error=TRUE}
+```{r}
+#| error: true
+
 print(N)
 ```
 
@@ -107,11 +223,167 @@ print(N)
 print(n)
 ```
 
+## Grammar of Graphics
+
+:::: {.columns}
+::: {.column width="30%"}
+
+![](../../assets/images/gog.png)
+
+:::
+:::{.column width="5%"}
+:::
+
+:::{.fragment .column width="65%"}
+
+* **Data:** Input data
+* **Geom:** A geometry representing data. Points, Lines etc
+* **Aesthetics:** Visual characteristics of the geometry. Size, Color, Shape etc
+* **Scale:** How visual characteristics are converted to display values
+* **Statistics:** Statistical transformations. Counts, Means etc
+* **Coordinates:** Numeric system to determine position of geometry. Cartesian, Polar etc
+* **Facets:** Split data into subsets
+
+:::
+::::
+
+## Building a graph
+
+![](../../assets/images/gg-syntax.png){ width="60%" height="60%" fig-align="center"}
+
+## Build-Demo
+
+```{webr-r}
+#| message: false
+#| warning: false
+
+library(ggplot2)
+ggplot(iris)
+```
+
+## Build-Demo
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| code-line-numbers: "2"
+
+ggplot(iris,
+  aes(x = Sepal.Length, y = Sepal.Width))
+```
+
+## Build-Demo
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| code-line-numbers: "3"
+
+ggplot(iris,
+  aes(x = Sepal.Length, y = Sepal.Width)) +
+  geom_point()
+```
+
+## Build-Demo
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| code-line-numbers: "2"
+
+ggplot(iris,
+  aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
+  geom_point()
+```
+
+## Geoms
+
+![](../../assets/images/geoms.png){ width="75%" height="75%" fig-align="center"}
+
+## Geoms
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+p <- ggplot(iris)
+# scatterplot
+p+geom_point(aes(x=Sepal.Length,y=Sepal.Width))
+# barplot
+p+geom_bar(aes(x=Sepal.Length))
+# boxplot
+p+geom_boxplot(aes(x=Species,y=Sepal.Width))
+# search
+help.search("^geom_",package="ggplot2")
+```
+
+## Multiple geoms
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width))+
+      geom_point()+
+      geom_line()+
+      geom_smooth()+
+      geom_rug()+
+      geom_step()+
+      geom_text(data=subset(iris,iris$Species=="setosa"),aes(label=Species))
+```
+
+## Aesthetics
+
+* Aesthetic mapping vs aesthetic parameter
+
+## Aesthetics
+
+:::: {.columns}
+::: {.fragment .column width="47.5%"}
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+
+ggplot(iris)+
+  geom_point(aes(x=Sepal.Length,
+                 y=Sepal.Width,
+                 size=Petal.Length,
+                 alpha=Petal.Width,
+                 shape=Species,
+                 color=Species))
+```
+:::
+::: {.column width="5%"}
+::: 
+::: {.fragment .column width="47.5%"}
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+ggplot(iris)+
+  geom_point(aes(x=Sepal.Length,
+                 y=Sepal.Width),
+                 size=2,
+                 alpha=0.8,
+                 shape=15,
+                 color="steelblue")
+```
+::: 
+::::
+
+
+
 ## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
 
 ::: {.center-xy}
 
 ### Thank you. Questions? {style="text-align: center;"}
-Slide inspirations: Roy Francis (NBIS, RaukR2024)
 
 :::
