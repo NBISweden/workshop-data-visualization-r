@@ -1,0 +1,8 @@
+---
+title: "Advanced Quarto"
+author: "Katja Kozjek"
+institute: "NBIS, SciLifeLab"
+format: 
+  revealjs: 
+    slide-number: true
+---
