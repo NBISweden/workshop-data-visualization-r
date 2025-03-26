@@ -1,5 +1,5 @@
 ---
-title: "Dynamic and Interactive applications"
+title: "Dynamic applications"
 author: "Katja Kozjek"
 institute: "NBIS, SciLifeLab"
 format: 
@@ -15,7 +15,347 @@ Dynamic applications may resemble interactive Shiny dashboards in terms of appea
 
 Interactive applications consist of both, a user interface (UI) and server, enabling users to send requests to the server through the UI. This setup allows the application’s components to be reactive, meaning the content displayed on the UI dynamically responds to the user’s inputs, creating a fully interactive experience. To build these applications, you need R scripts that define the UI and server components, either as separate or combined scripts.
 
-In this workshop, we will cover both dynamic and interactive applications. First, we will explore how to create dynamic applications using Quarto, especially how to incorporate dynamic components directly into a Quarto HTML document.
+In this workshop, we will cover both dynamic and interactive applications. First, we will explore how to create dynamic applications using Quarto, especially how to incorporate dynamic components directly into a Quarto HTML document and consequently incorporate interactivity without learning JavaScript or requiring a Shiny Server to view your document. 
 
 Then, we will dive into building interactive applications with Shiny, focusing on the structure and components required for their development. By the end of today and tomorrow, you will have a clear understanding of the differences between these two approaches and the tools needed to implement them effectively.
+:::
+
+## Quarto using `htmlwidgets`
+
+::: {.fragment}
+- HTML widgets work just like R plots except they produce interactive web visualizations
+- Do not require any knowledge of JavaScript, nor use of a Shiny Server
+- There are [many widgets](https://gallery.htmlwidgets.org/) to choose from, most known are: 
+    - [plotly](https://plotly.com/r/)
+    - [ggiraph](https://davidgohel.github.io/ggiraph/)
+    - [leaflet](https://rstudio.github.io/leaflet/)
+    - [DT](https://www.htmlwidgets.org/showcase_datatables.html)
+:::
+
+## [plotly](https://plotly.com/r/) {.smaller}
+:::: {.columns}
+::: {.column width="55%"}
+````
+```{{r}}
+library(plotly)
+library(palmerpenguins)
+penguins %>%
+    plot_ly(x = ~body_mass_g, y = ~flipper_length_mm, 
+    color = ~sex, width = 550, height = 400) %>%
+    add_markers()
+```
+````
+:::
+
+::: {.column width="45%"}
+```{r}
+#| echo: false
+#| fig-cap: "Fig.1: Body mass and flipper length of Palmer penguins"
+library(plotly)
+library(palmerpenguins)
+penguins %>%
+    plot_ly(x = ~body_mass_g, y = ~flipper_length_mm, 
+    color = ~sex, width = 550, height = 400) %>%
+    add_markers()
+```
+:::
+::::
+
+## [ggiraph](https://davidgohel.github.io/ggiraph/) {.smaller}
+:::: {.columns}
+::: {.column}
+::: {style="font-size: 1.6rem"}
+- Works similar to `plotly`
+- It can connect 2 or more charts together
+:::
+
+````
+```{{r}}
+#| fig-width: 14
+#| fig-height: 10
+library(ggiraph)
+library(ggplot2)
+library(patchwork)
+
+tb_data <- read.csv("./data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv", sep = ",", header = T)
+
+tb_data_filt <- tb_data[tb_data$Year == 2020 & tb_data$Share_of_newborns < 60, ]
+
+p1 <- ggplot(tb_data_filt, aes(x = Entity, y = Share_of_newborns)) +
+    geom_col_interactive(aes(color = Entity, tooltip = Share_of_newborns, fill = Entity)) +
+    theme_minimal() +
+    labs(x = "Entity", y = "Share of Newborns (%)") + 
+    coord_flip() + 
+    scale_color_manual(values =c ("#88CCEE", "#44AA99", "#117733", "#332288", "#DDCC77", "#999933")) + 
+    scale_fill_manual(values =c ("#88CCEE", "#44AA99", "#117733", "#332288", "#DDCC77", "#999933")) + 
+    theme(axis.text = element_text(size = 14),
+    axis.title = element_text(size = 14),
+    legend.text = element_text(size = 14), 
+    legend.title = element_text(size = 14))
+
+tb_data_filt1 <- tb_data[tb_data$Year == 2023 & tb_data$Share_of_newborns < 60, ]
+
+p2 <- ggplot(tb_data_filt1, aes(x = Entity, y = Share_of_newborns)) +
+    geom_col_interactive(aes(color = Entity, tooltip = Share_of_newborns, fill = Entity)) +
+    theme_minimal() +
+    labs(x = "Entity", y = "Share of Newborns (%)") + 
+    coord_flip() + 
+    scale_color_manual(values =c ("#117733", "#332288", "#CC6677", "#999933")) + 
+    scale_fill_manual(values =c ("#117733", "#332288", "#CC6677", "#999933")) + 
+    theme(axis.text = element_text(size = 14), 
+    axis.title = element_text(size = 14),
+    legend.text = element_text(size = 14), 
+    legend.title = element_text(size = 14)) 
+
+girafe(ggobj = (p1 + p2))
+```
+````
+:::
+::: {.column}
+```{r}
+#| echo: false
+#| fig-width: 14
+#| fig-height: 10
+library(ggiraph)
+library(ggplot2)
+library(patchwork)
+
+tb_data <- read.csv("./data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv", sep = ",", header = T)
+
+tb_data_filt <- tb_data[tb_data$Year == 2020 & tb_data$Share_of_newborns < 60, ]
+
+p1 <- ggplot(tb_data_filt, aes(x = Entity, y = Share_of_newborns)) +
+    geom_col_interactive(aes(color = Entity, tooltip = Share_of_newborns, fill = Entity)) +
+    theme_minimal() +
+    labs(x = "Entity", y = "Share of Newborns (%)") + 
+    coord_flip() + 
+    scale_color_manual(values =c ("#88CCEE", "#44AA99", "#117733", "#332288", "#DDCC77", "#999933")) + 
+    scale_fill_manual(values =c ("#88CCEE", "#44AA99", "#117733", "#332288", "#DDCC77", "#999933")) + 
+    theme(axis.text = element_text(size = 14),
+    axis.title = element_text(size = 14),
+    legend.text = element_text(size = 14), 
+    legend.title = element_text(size = 14))
+
+tb_data_filt1 <- tb_data[tb_data$Year == 2023 & tb_data$Share_of_newborns < 60, ]
+
+p2 <- ggplot(tb_data_filt1, aes(x = Entity, y = Share_of_newborns)) +
+    geom_col_interactive(aes(color = Entity, tooltip = Share_of_newborns, fill = Entity)) +
+    theme_minimal() +
+    labs(x = "Entity", y = "Share of Newborns (%)") + 
+    coord_flip() + 
+    scale_color_manual(values =c ("#117733", "#332288", "#CC6677", "#999933")) + 
+    scale_fill_manual(values =c ("#117733", "#332288", "#CC6677", "#999933")) + 
+    theme(axis.text = element_text(size = 14), 
+    axis.title = element_text(size = 14),
+    legend.text = element_text(size = 14), 
+    legend.title = element_text(size = 14)) 
+
+girafe(ggobj = (p1 + p2))
+```
+:::
+::::
+
+:::{.notes}
+Data used: https://ourworldindata.org/grapher/bcg-immunization-coverage-for-tb-among-1-year-olds?time=2020
+:::
+
+## [leaflet](https://rstudio.github.io/leaflet/) {.smaller}
+::: {style="font-size: 1.6rem"}
+- For creating dynamic maps that support panning and zooming along with various annotations like markers, basemaps, and pop-ups
+- Let's check where **NBIS has drop-ins on Wednesdays at 10.30 in Lund**
+:::
+
+:::::{.fragment}
+::::{.columns}
+:::{.column}
+````
+```{{r}}
+library(leaflet)
+
+df <- data.frame(lng = c(13.20279, 13.20869, 13.21894),
+                 lat = c(55.71118, 55.71414, 55.71092))
+
+icons_list <- awesomeIcons(icon = 'drop-in',
+  iconColor = 'black',
+  library = 'ion', 
+  markerColor = "cadetblue")
+
+leaflet() %>%
+  addTiles() %>%
+  setView(lng = 13.20279,lat = 55.71092, zoom = 8) %>%
+  addAwesomeMarkers(data = df, icon = icons_list, popup = c("Forum Medicum Café", "Café Le Mani", "MV Inspira"))
+```
+````
+:::
+
+::: {.column}
+```{r}
+#| echo: false
+library(leaflet)
+
+df <- data.frame(lng = c(13.20279, 13.20869, 13.21894),
+                 lat = c(55.71118, 55.71414, 55.71092))
+
+icons_list <- awesomeIcons(icon = 'drop-in',
+  iconColor = 'black',
+  library = 'ion', 
+  markerColor = "cadetblue")
+
+leaflet() %>%
+  addTiles() %>%
+  setView(lng = 13.20279,lat = 55.71092, zoom = 8) %>%
+  addAwesomeMarkers(data = df, icon = icons_list, popup = c("Forum Medicum Café", "Café Le Mani", "MV Inspira"))
+```
+:::
+::::
+:::::
+
+## [DT](https://www.htmlwidgets.org/showcase_datatables.html) {.smaller}
+:::: {.columns}
+::: {.column width="30%"}
+````
+```{{r}}
+library(DT)
+
+tb_data <- read.csv("./data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv", sep = ",", header = T)
+
+datatable(tb_data, filter = "top", class = 'cell-border stripe')
+```
+````
+:::
+
+::: {.column width="70%"}
+```{r}
+#| echo: false
+library(DT)
+
+tb_data <- read.csv("./data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv", sep = ",", header = T)
+
+datatable(tb_data, filter = "top", class = 'cell-border stripe')
+```
+:::
+::::
+
+## Quarto using `crosstalk` {.smaller}
+
+````
+```{{r}}
+library(crosstalk)
+library(DT)
+library(plotly)
+
+tb_data <- read.csv("./data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv", sep = ",", header = T)
+tb_data_filt <- tb_data[grepl("^N", tb_data$Entity) & tb_data$Year == 2000, ]
+tb_data_cross <- SharedData$new(tb_data_filt)
+
+bscols(
+  list(filter_checkbox("Entity", "Entity", tb_data_cross, ~Entity, inline = TRUE)),
+  plot_ly(tb_data_cross, x = ~Entity, y=~Share_of_newborns),
+  datatable(tb_data_cross, width = "100%")
+)
+```
+````
+
+```{r}
+#| echo: false
+library(crosstalk)
+library(DT)
+library(plotly)
+
+tb_data <- read.csv("./data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv", sep = ",", header = T)
+tb_data_filt <- tb_data[grepl("^N", tb_data$Entity) & tb_data$Year == 2000, ]
+tb_data_cross <- SharedData$new(tb_data_filt)
+
+bscols(
+  list(filter_checkbox("Entity", "Entity", tb_data_cross, ~Entity, inline = TRUE)),
+  plot_ly(tb_data_cross, x = ~Entity, y=~Share_of_newborns),
+  datatable(tb_data_cross, width = "100%")
+)
+```
+
+## ObservableJS {.smaller}
+::: {style="font-size: 1.6rem"}
+- Quarto supports [OJS](https://quarto.org/docs/interactive/ojs/) for interactive visualizations in the browser
+- `{ojs}` executable code block
+:::
+````
+```{{ojs}}
+// Load the dataset from a CSV file
+data = FileAttachment("./data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv").csv()
+
+// Create a range slider to select the year dynamically
+viewof year = Inputs.range([2000, 2023], {step: 1, value: 2010, label: "Year"})
+
+// Create a checkbox input to filter data by specific entities
+viewof entity = Inputs.checkbox(
+  ["Bangladesh", "Belarus", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi"], 
+  { value: ["Belarus", "Belize", "Bolivia", "Brasil", "Bulgaria"], 
+    label: "Entity:"
+  }
+)
+
+// Filter the dataset based on the selected year and entity
+filteredData = data.filter(d => d.Year == year && entity.includes(d.Entity))
+
+// Generate a bar plot using the filtered data
+Plot.plot({
+    marks: [
+        Plot.barY(filteredData, {x: "Entity", y: "Share_of_newborns", fill: "Entity"})
+    ],
+    x: {label: "Entity"}, // Label for the x-axis
+    y: {label: "Share of Newborns (%)"}, // Label for the y-axis
+    color: {legend: true} // enable the color legend
+})
+```
+````
+## ObservableJS {.smaller}
+::: {style="font-size: 1.6rem"}
+- Quarto supports [OJS](https://quarto.org/docs/interactive/ojs/) for interactive visualizations in the browser
+- `{ojs}` executable code block
+:::
+
+```{ojs}
+//| echo: false
+
+// Load the dataset from a CSV file
+data = FileAttachment("./data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv").csv()
+
+// Create a range slider to select the year dynamically
+viewof year = Inputs.range([2000, 2023], {step: 1, value: 2010, label: "Year"})
+
+// Create a checkbox input to filter data by specific entities
+viewof entity = Inputs.checkbox(
+  ["Bangladesh", "Belarus", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi"], 
+  { value: ["Belarus", "Belize", "Bolivia", "Brasil", "Bulgaria"], 
+    label: "Entity:"
+  }
+)
+
+// Filter the dataset based on the selected year and entity
+filteredData = data.filter(d => d.Year == year && entity.includes(d.Entity))
+
+// Generate a bar plot using the filtered data
+Plot.plot({
+    marks: [
+        Plot.barY(filteredData, {x: "Entity", y: "Share_of_newborns", fill: "Entity"})
+    ],
+    x: {label: "Entity"}, // Label for the x-axis
+    y: {label: "Share of Newborns (%)"}, // Label for the y-axis
+    color: {legend: true} // enable the color legend
+})
+```
+
+## Sources
+::: {.fragment}
+- [htmlwidgets](https://www.htmlwidgets.org/)
+- [Quarto Tips & Tricks](https://www.productive-r-workflow.com/quarto-tricks)
+- [Observable JS](https://quarto.org/docs/interactive/ojs/)
+- [Our World in Data](https://ourworldindata.org/grapher/bcg-immunization-coverage-for-tb-among-1-year-olds?time=2020)
+
+:::
+
+## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
+
+::: {.center-xy}
+### Thank you. Questions? {style="text-align: center;"}
 :::
