@@ -7,7 +7,7 @@ format:
     revealjs: 
         slide-number: true
 webr:
-  packages: ['ggplot2', 'dplyr']
+  packages: ['ggplot2', 'dplyr', 'palmerpenguins']
 filters:
   - webr
 ---
@@ -549,7 +549,7 @@ p + scale_color_manual(name="New",
 * Split to subplots based on variable(s)
 * Facetting in one dimension
 
-::: {.fragment}
+## Facets
 
 **`facet_wrap`**
 
@@ -567,7 +567,6 @@ p
 p + facet_wrap(~Species)
 p + facet_wrap(~Species,nrow=3)
 ```
-:::
 
 ## Facets • `facet_grid`
 
@@ -579,11 +578,11 @@ p + facet_wrap(~Species,nrow=3)
 #| fig-width: 8
 #| fig-height: 5
 
-p <- diamonds %>%
-     ggplot(aes(carat,price))+
+p <- penguins %>%
+     ggplot(aes(species,flipper_length_mm))+
      geom_point()
 p
-p + facet_grid(~cut+clarity)
+p + facet_grid(~species+sex)
 ```
 
 ## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
