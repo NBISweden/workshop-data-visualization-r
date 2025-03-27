@@ -30,7 +30,12 @@ library(kableExtra)
 * [R Basics](#r-basics)
 * [Data Types and Formats](#data-types)
 * [R Tips](#important-tips)
-* [Grammer of Graphics](#)
+* [Grammer of Graphics](#grammar-of-graphics)
+  * [Geoms](#geoms)
+  * [Aesthetics](#aesthetics)
+  * [Scales](#scales)
+  * [Facets](#facets)
+
 
 ## Quick checkups
 
@@ -223,6 +228,58 @@ print(N)
 print(n)
 ```
 
+## Reading files
+
+:::: {.columns}
+::: {.column width="47.5%"}
+```{r}
+#| eval: false
+#| filename: iris-head-corrupted.csv
+#| code-line-numbers: "6"
+
+Sepal.Length,Sepal.Width,Petal.Length,Petal.Width,Species
+5.1,3.5,1.4,0.2,setosa
+4.9,3,1.4,0.2,setosa
+4.7,3.2,1.3,0.2,setosa
+4.6,3.1,1.5,0.2,setosa
+5,3.6,#1.4,0.2,setosa
+5.4,3.9,1.7,0.4,setosa
+```
+:::
+::: { .column width="5%"}
+::: 
+::: {.column width="47.5%"}
+```{webr-r}
+#| message: false
+#| warning: false
+#| auto-run: false
+url <- "https://nbisweden.github.io/workshop-data-visualization-r/2505/topics/data/iris-head-corrupted.csv"
+download.file(url, "iris-head.csv")
+ls()
+read.table("iris-head.csv", sep = ',')
+```
+::: 
+::::
+
+::: {.fragment}
+
+### Reserved variables
+
+* reserved variables like `T`, `F`, `character` and many others ...
+* How can you check if something is a reserved variable?
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| auto-run: false
+
+T
+F
+```
+
+:::
+
+
 ## Grammar of Graphics
 
 :::: {.columns}
@@ -341,7 +398,7 @@ ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width))+
 ## Aesthetics
 
 :::: {.columns}
-::: {.fragment .column width="47.5%"}
+::: { .column width="47.5%"}
 ```{webr-r}
 #| message: false
 #| warning: false
@@ -378,7 +435,156 @@ ggplot(iris)+
 ::: 
 ::::
 
+## Scales 
 
+* If you would like to change the default aesthetics
+* scales: position, color, fill, size, shape, alpha, linetype
+* syntax: `scale_<aesthetic>_<type>`
+
+::: {.fragment}
+
+**Discrete Colors:**
+
+
+![](../../assets/images/scales.png){width="60%" height="60%" fig-align="center"}
+
+:::
+
+## Scales • Discrete Colors
+
+:::: {.columns}
+::: {.column width="47.5%"}
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+p <- ggplot(iris) + 
+  geom_point(aes(x=Sepal.Length,
+                 y=Sepal.Width,
+                 color=Species))
+p
+```
+::: 
+::: {.column width="5%"}
+::: 
+::: {.fragment .column width="47.5%"}
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+p + scale_color_manual(
+     name="Manual",
+     values=c("#5BC0EB","#FDE74C","#9BC53D"))
+```
+:::
+::::
+
+## Scales • Continuous Colors
+
+:::: {.columns}
+::: {.column width="47.5%"}
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+p <- ggplot(iris) + 
+  geom_point(aes(x=Sepal.Length,
+                 y=Sepal.Width,
+                 shape=Species,
+                 color=Petal.Length))
+p
+```
+::: 
+::: {.column width="5%"}
+::: 
+::: {.fragment .column width="47.5%"}
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+p + scale_color_gradient(name="Pet Len",
+                         breaks=range(iris$Petal.Length),
+                         labels=c("Min","Max"),
+                         low="black",high="red")
+```
+:::
+::::
+
+## Scales • Shape
+
+* In RStudio, type `scale_`, then press **TAB**
+* Similarly you can use it for shape, axis, fill, etc..
+
+::: {.fragment}
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 6
+#| fig-height: 4
+
+p <- ggplot(iris)+
+      geom_point(aes(x=Sepal.Length,
+                     y=Sepal.Width,
+                     shape=Species,
+                     color=Species))
+p
+p + scale_color_manual(name="New",
+      values=c("blue","green","red")) +
+    scale_shape_manual(name="Bla",values=c(0,1,2))
+```
+:::
+
+## Facets  
+
+* Split to subplots based on variable(s)
+* Facetting in one dimension
+
+::: {.fragment}
+
+**`facet_wrap`**
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+p <- ggplot(iris)+
+      geom_point(aes(x=Sepal.Length,
+                     y=Sepal.Width,
+                     color=Species))
+p
+p + facet_wrap(~Species)
+p + facet_wrap(~Species,nrow=3)
+```
+:::
+
+## Facets • `facet_grid`
+
+* Facetting in two dimensions
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+p <- diamonds %>%
+     ggplot(aes(carat,price))+
+     geom_point()
+p
+p + facet_grid(~cut+clarity)
+```
 
 ## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
 
