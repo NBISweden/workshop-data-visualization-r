@@ -35,7 +35,7 @@ s %>%
     dplyr::mutate(Tutorial = ifelse(is.na(Tutorial), Tutorial, paste0("<span><a class='marker' href='", Tutorial, "'>", fa("fas fa-file-lines"), "</a></span>"))) %>%
     dplyr::select(-Main) %>%
     setNames(cnames) %>%
-    addHtmlTableStyle(align = "lcc", align.header = "ccc", css.rgroup = "color:#95b540;font-weight:800;", css.cell = "padding-right:1em;") %>%
+    addHtmlTableStyle(align = "lcc", align.header = "ccc", css.rgroup = "color:#4d6804;font-weight:800;", css.cell = "padding-right:1em;") %>%
     htmlTable(rnames = FALSE, rgroup = r$values, n.rgroup = r$lengths)
 ```
 
