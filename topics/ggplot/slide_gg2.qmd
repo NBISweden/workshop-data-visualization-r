@@ -1,0 +1,28 @@
+---
+title: "Advanced ggplot"
+author: Lokesh Mano
+institute: NBIS, SciLifeLab
+keywords: bioinformatics, course, workshop, scilifelab, nbis
+format: 
+    revealjs: 
+        slide-number: true
+webr:
+    packages: ['ggplot2', 'dplyr', 'palmerpenguins']
+filters:
+    - webr
+---
+
+## Setup {visibility="hidden"}
+
+```{r}
+#| echo: false
+# load the packages you need
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(ggplot2)
+library(kableExtra)
+library(palmerpenguins)
+```
+
+## Contents
