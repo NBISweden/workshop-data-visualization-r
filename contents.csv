@@ -1,8 +1,8 @@
 Main,Topic,Lecture,Tutorial
 ggplot,Basic ggplot,topics/ggplot/slide_gg1.html,
-ggplot,Advanced ggplot,,
+ggplot,Advanced ggplot,topics/ggplot/slide_gg2.html,
 ggplot,PCA plot,,
-Others Day 1,Vector and Bitmap images,,
+Others Day 1,Vector and Bitmap images,topics/others_day1/Vector_Bitmap_Images.pdf,
 Others Day 1,Single-cell data,,
 Quarto,Basic Quarto,topics/Quarto/slide_quarto1.html,
 Quarto,Advanced Quarto,topics/Quarto/slide_quarto2.html,
