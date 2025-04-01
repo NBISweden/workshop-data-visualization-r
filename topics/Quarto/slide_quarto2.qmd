@@ -6,3 +6,349 @@ format:
   revealjs: 
     slide-number: true
 ---
+
+## [Quarto dashboards](https://quarto.org/docs/dashboards/)
+- A new output format for creating dashboards from notebooks/ `.qmd` files
+- Dashboards are a great way to share results from analyses with others
+<br>
+
+- **Main goal:** To make it simple to build compelling interactive dashboards using R, Python, Julia, and Observable
+
+<br>
+
+- [Dashboards examples](https://quarto.org/docs/gallery/#dashboards)
+
+:::{.notes}
+You already analyzed and summarize your data in computational notebooks with R and/or Python. What’s next? You can share your insights or allow others to make their own conclusions in eye-catching dashboards and straight-forward to author, design, and deploy Quarto Dashboards, regardless of the language of your data processing, visualization, analysis, etc. With Quarto Dashboards, you can create elegant and production-ready dashboards using a variety of components, including static graphics (ggplot2, Matplotlib, Seaborn, etc.), interactive widgets (Plotly, Leaflet, Jupyter Widgets, htmlwidgets, etc.), tabular data, value boxes, text annotations, and more. Additionally, with intelligent resizing of components, your Quarto Dashboards look great on devices of all sizes. And importantly, you can author Quarto Dashboards without leaving the comfort of your “home” – in plain text markdown with any text editor (VS Code, RStudio, Neovim, etc.) or any notebook editor (JupyterLab, etc.).
+:::
+
+## Dashboard basics
+
+- Dashboards are composed of **cards**
+- Cards content: plots, tables, value boxes...
+- Cards are arranged into **rows** and **columns**
+- **Pages, tabsets,** and **sidebars** allow for more advanced layouts
+
+![](./images/cards.png)
+
+# Let's make a simple dashboard!
+
+## Step 1: `format: dashboard`
+
+::: r-box
+``` {.markdown filename="my-dashboard.qmd" style="overflow-y: hidden" code-line-numbers="|3"}
+---
+title: "My first Quarto dashboard"
+format: dashboard
+---
+
+# notebook content goes here...
+```
+:::
+
+## Step 2: Add a card 
+:::: columns
+::: {.column width="80%"}
+```` {.yaml filename="my-dashboard.qmd" style="overflow-y: hidden" code-line-numbers="|12-24"}
+---
+title: "Immunotechnology Cake Club"
+format: dashboard
+---
+
+```{{r}}
+library(dplyr)
+library(ggplot2)
+library(gt)
+```
+
+```{{r}}
+cake_data %>%
+    ggplot(aes(x = Gender, y = Score, fill = Gender)) +
+    geom_boxplot() +
+    theme_minimal() +
+    theme_bw() + 
+    scale_fill_manual(values = c("#F5E8E1", "#D0BBA8")) + 
+    labs(x = "Gender", y = "Score") + 
+    theme(axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    legend.text = element_text(size = 20), 
+    legend.title = element_text(size = 20))
+```
+````
+:::
+::::
+
+## Step 3: Add another card
+
+:::: columns
+::: {.column width="40%"}
+```` {.yaml filename="my-dashboard.qmd" style="overflow-y: hidden" code-line-numbers="|26-36"}
+---
+title: "Immunotechnology Cake Club"
+format: dashboard
+---
+
+```{{r}}
+library(dplyr)
+library(ggplot2)
+library(gt)
+```
+
+```{{r}}
+cake_data %>%
+    ggplot(aes(x = Gender, y = Score, fill = Gender)) +
+    geom_boxplot() +
+    theme_minimal() +
+    theme_bw() + 
+    scale_fill_manual(values = c("#F5E8E1", "#D0BBA8")) + 
+    labs(x = "Gender", y = "Score") + 
+    theme(axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    legend.text = element_text(size = 20), 
+    legend.title = element_text(size = 20))
+```
+
+```{{r}}
+cake_data %>%
+    ggplot(aes(x = Temperature, y = Score)) +
+    geom_line( color="darkgrey") +
+    geom_point(shape=21, color="black", fill="#DBD9DA", size=6) + 
+    theme_bw() + 
+    theme(axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    legend.text = element_text(size = 20), 
+    legend.title = element_text(size = 20))
+```
+````
+:::
+
+::: {.column width="60%"}
+:::
+::::
+
+## Step 4: Add titles to cards
+:::: columns
+::: {.column width="40%"}
+```` {.yaml filename="my-dashboard.qmd" style="overflow-y: hidden" code-line-numbers="|13,28"}
+---
+title: "Immunotechnology Cake Club"
+format: dashboard
+---
+
+```{{r}}
+library(dplyr)
+library(ggplot2)
+library(gt)
+```
+
+```{{r}}
+#| title: Who bakes better?
+cake_data %>%
+    ggplot(aes(x = Gender, y = Score, fill = Gender)) +
+    geom_boxplot() +
+    theme_minimal() +
+    theme_bw() + 
+    scale_fill_manual(values = c("#F5E8E1", "#D0BBA8")) + 
+    labs(x = "Gender", y = "Score") + 
+    theme(axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    legend.text = element_text(size = 20), 
+    legend.title = element_text(size = 20))
+```
+
+```{{r}}
+#| title: How does outdoor temperature influence final score?
+cake_data %>%
+    ggplot(aes(x = Temperature, y = Score)) +
+    geom_line( color="darkgrey") +
+    geom_point(shape=21, color="black", fill="#DBD9DA", size=6) + 
+    theme_bw() + 
+    theme(axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    legend.text = element_text(size = 20), 
+    legend.title = element_text(size = 20))
+```
+````
+:::
+
+::: {.column width="60%"}
+:::
+::::
+
+## Step 5: Add a logo
+- Logo added to the navigation bar
+
+```` {.yaml filename="my-dashboard.qmd" style="overflow-y: hidden" code-line-numbers="|3-5"}
+---
+title: "Immunotechnology Cake Club"
+format:
+  dashboard: 
+    logo: ../assets/images/cake-emoji.png
+---
+
+```{{r}}
+library(dplyr)
+library(ggplot2)
+library(gt)
+```
+
+```{{r}}
+#| title: Who bakes better?
+cake_data %>%
+    ggplot(aes(x = Gender, y = Score, fill = Gender)) +
+    geom_boxplot() +
+    theme_minimal() +
+    theme_bw() + 
+    scale_fill_manual(values = c("#F5E8E1", "#D0BBA8")) + 
+    labs(x = "Gender", y = "Score") + 
+    theme(axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    legend.text = element_text(size = 20), 
+    legend.title = element_text(size = 20))
+```
+
+```{{r}}
+#| title: How does outdoor temperature influence final score?
+cake_data %>%
+    ggplot(aes(x = Temperature, y = Score)) +
+    geom_line( color="darkgrey") +
+    geom_point(shape=21, color="black", fill="#DBD9DA", size=6) + 
+    theme_bw() + 
+    theme(axis.text = element_text(size = 20),
+    axis.title = element_text(size = 20),
+    legend.text = element_text(size = 20), 
+    legend.title = element_text(size = 20))
+```
+````
+
+## [Layout](https://quarto.org/docs/dashboards/layout.html)
+- Rows
+  - By default, cards are laid out in rows
+  - Default value of orientation is rows
+
+```` {.yaml filename="my-dashboard.qmd"}
+---
+title: "Immunotechnology Cake Club"
+format: dashboard
+---
+
+## Row {height=70%}
+
+```{{r}}
+```
+
+## Row {height=30%}
+
+```{{r}}
+```
+
+```{{r}}
+```
+````
+
+## [Layout](https://quarto.org/docs/dashboards/layout.html)
+- Columns
+  - Setting orientation to columns makes each ## indicate a column instead of a row
+
+```` {.yaml filename="my-dashboard.qmd"}
+---
+title: "Immunotechnology Cake Club"
+format: 
+  dashboard: 
+    orientation: columns
+---
+
+## Column {width=60%}
+
+```{{r}}
+```
+
+## Column {width=40%}
+
+```{{r}}
+```
+
+```{{r}}
+```
+````
+
+## Tabsets 
+- Put content in different tabs
+
+```` {.yaml filename="my-dashboard.qmd" style="overflow-y: hidden" code-line-numbers="|11"}
+---
+title: "Immunotechnology Cake Club"
+format: dashboard
+---
+
+## Row
+
+```{{r}}
+```
+
+## Row {.tabset}
+
+```{{r}}
+#| title: Chart 2
+```
+````
+
+## Pages
+- New page is created with a Level I heading (#)
+
+```` {.yaml filename="my-dashboard.qmd" style="overflow-y: hidden" code-line-numbers="|6,18"}
+---
+title: "Immunotechnology Cake Club"
+format: dashboard
+--- 
+
+# Overview
+## Row 
+```{{r}}
+#| title: "Cakes"
+
+list(
+  icon = "cake",
+  color = "#DDC3E3",
+  value = n_cake
+)
+```
+
+# International cakes
+## Row 
+```{{r}}
+#| content: valuebox
+#| title: "Cakes"
+
+list(
+  icon = "cake",
+  color = "#DDC3E3",
+  value = n_cake
+)
+```
+````
+
+## Interactive dashboards
+- Quarto dashboards can include interactive Shiny components (e.g. a plot with sliders that control its inputs)
+- [Quarto dashboard with Shiny](https://quarto.org/docs/dashboards/interactivity/shiny-r)
+
+## Extra Material
+
+- [Official quarto extensions](https://quarto.org/docs/extensions/)
+- [An awesome list of Quarto content](https://github.com/mcanouil/awesome-quarto)
+- [A gallery of Quarto examples](https://quarto.org/docs/gallery/)
+
+## Sources
+
+- [Quarto Dashboards](https://quarto.org/docs/dashboards/)
+- [Hello, Dashboards!](https://www.youtube.com/watch?v=HW7QbqI4fH0&ab_channel=PositPBC)
+- [Quarto Dashboard video by Charles Teague](https://www.youtube.com/watch?v=_VGJIPRGTy4&ab_channel=PositPBC)
+- [From Notebooks to Dashboards with Quarto](https://github.com/posit-dev/smalldatasf-quarto-workshop)
+- [Dashboard layout](https://quarto.org/docs/dashboards/layout.html)
+- [Dashboard options](https://quarto.org/docs/reference/formats/dashboard.html)
+
+## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
+
+::: {.center-xy}
+### Thank you. Questions? {style="text-align: center;"}
+:::
