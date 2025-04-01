@@ -21,7 +21,7 @@ format:
 ![](./images/horst_quarto_schematic.png){height="80%" width="80%" fig-align="center"}
 
 ## Installation
-::: {.incremental}
+::: {.fragment}
 - Install the latest [quarto executable](https://quarto.org/docs/get-started/)
 - R package **quarto** is a wrapper that runs quarto from R
 - If using [RStudio](https://posit.co/download/rstudio-desktop/), you need a version v2022.07.1 or newer
@@ -133,10 +133,8 @@ execute:
 ::::
 
 ## Markdown text
-::: {.fragment}
 - Images, tables, text, etc.
 - Freely add and format text using markdown
-:::
 
 ::: {.fragment}
 ````
@@ -155,10 +153,12 @@ distributions of physical dimensions (@fig-penguins).
 
 ## Code chunks{.smaller}
 ::: {.fragment}
+::: {style="font-size: 1.6rem"}
 - Code blocks are called code chunks
 - Evaluate code and show its output
 - Specify global and/or local [chunk options](https://quarto.org/docs/computations/execution-options.html) (_e.g._ figure dimensions)
 - Also works with other languages (_e.g._ Python)
+:::
 :::
 
 ::: {.fragment}
