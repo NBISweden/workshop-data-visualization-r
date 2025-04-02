@@ -97,7 +97,7 @@ p + coord_polar("y",start=0)
 #| message: false
 #| warning: false
 #| fig-width: 4
-#| fig-height: 3.6
+#| fig-height: 3
 
 ggplot(iris,aes(Petal.Length))+
   geom_histogram()+
@@ -112,7 +112,7 @@ ggplot(iris,aes(Petal.Length))+
 #| message: false
 #| warning: false
 #| fig-width: 4
-#| fig-height: 3.6
+#| fig-height: 3
 
 ggplot(iris,aes(Petal.Length))+
   geom_histogram()+
