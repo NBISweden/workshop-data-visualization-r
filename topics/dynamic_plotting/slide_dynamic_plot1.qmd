@@ -32,7 +32,7 @@ Then, we will dive into building interactive applications with Shiny, focusing o
     - [DT](https://www.htmlwidgets.org/showcase_datatables.html)
 :::
 
-## [plotly](https://plotly.com/r/) {.smaller}
+## [plotly](https://plotly.com/r/)
 :::: {.columns}
 ::: {.column width="55%"}
 ````
@@ -88,10 +88,10 @@ p1 <- ggplot(tb_data_filt, aes(x = Entity, y = Share_of_newborns)) +
     coord_flip() + 
     scale_color_manual(values =c ("#88CCEE", "#44AA99", "#117733", "#332288", "#DDCC77", "#999933")) + 
     scale_fill_manual(values =c ("#88CCEE", "#44AA99", "#117733", "#332288", "#DDCC77", "#999933")) + 
-    theme(axis.text = element_text(size = 14),
-    axis.title = element_text(size = 14),
-    legend.text = element_text(size = 14), 
-    legend.title = element_text(size = 14))
+    theme(axis.text = element_text(size = 18),
+    axis.title = element_text(size = 18),
+    legend.text = element_text(size = 18), 
+    legend.title = element_text(size = 18))
 
 tb_data_filt1 <- tb_data[tb_data$Year == 2023 & tb_data$Share_of_newborns < 60, ]
 
@@ -102,10 +102,10 @@ p2 <- ggplot(tb_data_filt1, aes(x = Entity, y = Share_of_newborns)) +
     coord_flip() + 
     scale_color_manual(values =c ("#117733", "#332288", "#CC6677", "#999933")) + 
     scale_fill_manual(values =c ("#117733", "#332288", "#CC6677", "#999933")) + 
-    theme(axis.text = element_text(size = 14), 
-    axis.title = element_text(size = 14),
-    legend.text = element_text(size = 14), 
-    legend.title = element_text(size = 14)) 
+    theme(axis.text = element_text(size = 18), 
+    axis.title = element_text(size = 18),
+    legend.text = element_text(size = 18), 
+    legend.title = element_text(size = 18)) 
 
 girafe(ggobj = (p1 + p2))
 ```
@@ -131,10 +131,10 @@ p1 <- ggplot(tb_data_filt, aes(x = Entity, y = Share_of_newborns)) +
     coord_flip() + 
     scale_color_manual(values =c ("#88CCEE", "#44AA99", "#117733", "#332288", "#DDCC77", "#999933")) + 
     scale_fill_manual(values =c ("#88CCEE", "#44AA99", "#117733", "#332288", "#DDCC77", "#999933")) + 
-    theme(axis.text = element_text(size = 14),
-    axis.title = element_text(size = 14),
-    legend.text = element_text(size = 14), 
-    legend.title = element_text(size = 14))
+    theme(axis.text = element_text(size = 18),
+    axis.title = element_text(size = 18),
+    legend.text = element_text(size = 18), 
+    legend.title = element_text(size = 18))
 
 tb_data_filt1 <- tb_data[tb_data$Year == 2023 & tb_data$Share_of_newborns < 60, ]
 
@@ -145,10 +145,10 @@ p2 <- ggplot(tb_data_filt1, aes(x = Entity, y = Share_of_newborns)) +
     coord_flip() + 
     scale_color_manual(values =c ("#117733", "#332288", "#CC6677", "#999933")) + 
     scale_fill_manual(values =c ("#117733", "#332288", "#CC6677", "#999933")) + 
-    theme(axis.text = element_text(size = 14), 
-    axis.title = element_text(size = 14),
-    legend.text = element_text(size = 14), 
-    legend.title = element_text(size = 14)) 
+    theme(axis.text = element_text(size = 18), 
+    axis.title = element_text(size = 18),
+    legend.text = element_text(size = 18), 
+    legend.title = element_text(size = 18)) 
 
 girafe(ggobj = (p1 + p2))
 ```
