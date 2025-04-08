@@ -1,6 +1,6 @@
 ---
 title: "Contents"
-description: "Sample reports and slides. Slides: {{< fa file-powerpoint >}} / {{< fa file-pdf >}}, Reports: {{< fa file-lines >}}"
+description: "The information about the course topics and the materials related to each topic can be found here"
 date: ""
 toc: false
 number-sections: false
@@ -11,6 +11,44 @@ format: html
 ::: {.callout-note} 
 
 The contents of this course are currently being generated. It will be updated here regularly until the course. 
-Please check the [**Schedule**](https://nbisweden.github.io/workshop-data-visualization-r/2505/home_schedule.html) for the proposed topics.
+Please check the [**Schedule**](https://nbisweden.github.io/workshop-data-visualization-r/2505/home_schedule.html) for the proposed topics and updated materials.
 
 :::
+
+```{r}
+#| echo: false
+#| eval: true
+
+
+library(dplyr)
+library(kableExtra)
+library(fontawesome)
+library(htmlTable)
+
+s <- read.table("./contents.csv", sep = ',', header = 1)
+r <- rle(s$Main)
+row.names(s) <- NULL
+cnames <- c('Topic','Lecture','Tutorial')
+color_group <- c()
+s %>%
+    dplyr::mutate(Lecture = ifelse(is.na(Lecture), Lecture, paste0("<span><a class='marker' href='", Lecture, "'>", fa("fas fa-file-powerpoint"), "</a></span>"))) %>%
+    dplyr::mutate(Tutorial = ifelse(is.na(Tutorial), Tutorial, paste0("<span><a class='marker' href='", Tutorial, "'>", fa("fas fa-file-lines"), "</a></span>"))) %>%
+    dplyr::select(-Main) %>%
+    setNames(cnames) %>%
+    addHtmlTableStyle(align = "lcc", align.header = "ccc", css.rgroup = "color:#4d6804;font-weight:800;", css.cell = "padding-right:1em;") %>%
+    htmlTable(rnames = FALSE, rgroup = r$values, n.rgroup = r$lengths)
+```
+
+
+<!-- marker legend -->
+<p class="small" style="margin-top:20px;text-align:center;">
+<span>
+<span style="margin-left:6px; margin-right:6px;">
+{{< fa file-powerpoint >}}  Slides
+</span>
+<span style="margin-left:6px; margin-right:6px;">
+{{< fa file-lines >}}  Lab
+</span>
+</span>
+</p>
+

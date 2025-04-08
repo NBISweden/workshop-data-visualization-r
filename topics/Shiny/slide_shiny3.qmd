@@ -1,16 +1,20 @@
 ---
-title: "R Shiny - Deployments"
+title: "R Shiny - Part III"
 author: Lokesh Mano
 institute: NBIS, SciLifeLab
 keywords: bioinformatics, course, workshop, scilifelab, nbis
 format: 
   revealjs: 
+    css: "assets/styles.css"
     slide-number: true
+filters:
+  - shinylive
 ---
 
 ## Setup {visibility="hidden"}
 
-```{r,include=FALSE}
+```{r}
+#| echo: false
 # load the packages you need
 library(dplyr)
 library(tidyr)
@@ -22,117 +26,388 @@ library(ggplot2)
 #library(DESeq2)
 #library(edgeR)
 library(kableExtra)
+library(gridExtra)
+library(shiny)
 ```
+
+## Contents
+
+ * [Modules](#modules)
+ * [Debugging](#debugging-optimizing)
+ * [Themes](#theming)
+ * [Deployment](#deployment)
+ * [Interactive documents](#interactive-documents-quarto)
+
+## Modules
+
+- Parts of an app can be modularized and reused like mini apps
+- They can be used where needed like functions
+- Modules have their own namespace
+- A module has a UI part and a server part
+- Define namespace using `NS()`
+- Modules can be nested
+
+## Modules
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+counter_ui <- function(id) {
+  ns <- NS(id)
+  div(
+    actionButton(ns("btn"), label = "Counter"),
+    textOutput(ns("txt"))
+  )
+}
+
+counter_server <- function(id) {
+  moduleServer(id, function(input, output, session) {
+    count <- reactiveVal(0)
+    output$txt <- renderText({
+      count(count() + 1)
+      paste0("Counter ", id, ":", count())
+    }) |> bindEvent(input$btn)
+  })
+}
+
+shinyApp(
+  ui = fluidPage(
+    counter_ui(id = "1"),
+    counter_ui(id = "2")
+  ),
+
+  server = function(input, output, session) {
+    counter_server("1")
+    counter_server("2")
+  }
+)
+```
+
+## Debugging & Optimizing
+
+:::{.incremental}
+- `print()` statements
+- Interrupt execution and inspect environment `browser()`
+- Visualize relationships using [**reactlog**](https://rstudio.github.io/reactlog)
+
+  ![](http://rstudio.github.io/reactlog/readme-images/pythagoras.gif)
+
+:::
+
+## Debugging & Optimizing
+
+- Assess compute and RAM usage using [**profvis**](https://shiny.posit.co/r/articles/improve/profiling/)
+
+  ![](assets/examples/profvis-shiny-demo.gif){width="60%"}
+
+- Simple profiling using **[shiny.tictoc](https://github.com/Appsilon/shiny.tictoc)**
+
+## Code execution
+
+**App launch**
+
+```{r}
+#| eval: false
+ui <- fluidPage(textInput("text_input",label="textInput"), textOutput("text_output"))
+server <- function(input,output) {
+  output$text_output <- renderText({input$text_input})
+}
+```
+
+. . .
+
+**New user**
+
+```{r}
+#| eval: false
+#| code-line-numbers: "2-4"
+ui <- fluidPage(textInput("text_input",label="textInput"), textOutput("text_output"))
+server <- function(input,output) {
+  output$text_output <- renderText({input$text_input})
+}
+```
+
+. . .
+
+**Widget update**
+
+```{r}
+#| eval: false
+#| code-line-numbers: "3"
+ui <- fluidPage(textInput("text_input",label="textInput"), textOutput("text_output"))
+server <- function(input,output) {
+  output$text_output <- renderText({input$text_input})
+}
+```
+
+## Theming
+
+:::: {.columns}
+::: {.column width="40%"}
+- Use **shinythemes**
+
+```{r}
+#| eval: false
+library(shinythemes)
+fluidPage(theme = shinytheme("cerulean"))
+```
+
+- Live theme selector
+
+```{r}
+#| eval: false
+library(shinythemes)
+fluidPage(theme = shinythemes::themeSelector())
+```
+
+[[shinythemes](https://rstudio.github.io/shinythemes/)]{.smaller}
+:::
+::: {.column width="60%"}
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 650
+webr::install("shinythemes")
+
+shinyApp(
+  ui = fluidPage(
+    shinythemes::themeSelector(),
+    sidebarPanel(
+      textInput("txt", "Text input:", "text here"),
+      sliderInput("slider", "Slider input:", 1, 100, 30),
+      actionButton("action", "Button"),
+      actionButton("action2", "Button2", class = "btn-primary")
+    ),
+    mainPanel(
+      tabsetPanel(
+        tabPanel("Tab 1"),
+        tabPanel("Tab 2")
+      )
+    )
+  ),
+  server = function(input, output) {}
+)
+```
+:::
+::::
+
+## Theming
+
+- Use **bslib**
+
+```{r}
+#| eval: false
+library(bslib)
+ui <- page_fluid(
+  theme = bs_theme(version = 5)
+)
+```
+
+. . .
+
+- Live theme selector
+
+```{r}
+#| eval: false
+library(bslib)
+bs_theme_preview()
+```
+
+[[bslib](https://rstudio.github.io/bslib/), [Bootswatch](https://bootswatch.com/)]{.smaller}
+
+## Theming using custom CSS
+
+- Insert in the head
+
+```{r}
+#| eval: false
+ui <- fluidPage(
+  tags$head(
+    tags$style(HTML("
+      @import url('https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap');
+      h2 {
+        font-family: 'Yusei Magic', sans-serif;
+      }"))
+  ))
+```
+
+. . .
+
+- Add styles directly
+
+```{r}
+#| eval: false
+ui <- fluidPage(h2("Old Faithful Geyser Data", style = "font-size: 2em;"))
+```
+
+. . .
+
+- Load custom CSS file placed in `www/`
+
+```{r}
+#| eval: false
+ui <- fluidPage(
+  tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "styles.css"))
+)
+```
+
+[[CSS styling](https://shiny.posit.co/r/articles/build/css/)]{.smaller}
+
 
 ## Deployment
 
-:::: {.fragment}
+- R scripts
+  - GitHub
+  - R Package
 
-* R scripts
-  * GitHub
-  * R Package
-  * Docker container
+. . .
 
-::::
+- Container (Docker ...)
 
-:::: {.fragment}
+. . .
 
-* Webpage
-  * Shinyapps.io
-  * Shiny Server (Free)
-  * Posit Connect
+- Hosting
+  - Shinyapps.io
+  - Shiny Server (Free)
+  - Shiny Server Pro
 
-:::: 
+. . .
 
-:::: {.fragment}
-
-* Automatically deploying to shinyapps.io
-
-::::
+- Automatically deploying to shinyapps.io
 
 ## Shinyapps.io
 
-```{r, eval=FALSE}
+```{r}
+#| eval: false
 library(rsconnect)
 rsconnect::setAccountInfo(name="username", token="HDFGT46YF7TDT6474G47", secret="hdgTDF5FStgdkpJ")
 deployApp(appName="name")
 ```
 
-:::: {.fragment}
+. . .
 
-* [Shiny apps user guide](https://docs.posit.co/shinyapps.io/guide/index.html)
-* [Shiny server guide](https://posit.co/products/open-source/shiny-server/)
+[[Shiny apps user guide](https://docs.rstudio.com/shinyapps.io/index.html), [Shiny server guide](https://docs.rstudio.com/shiny-server/)]{.smaller}
 
-::::
+## Interactive documents • Quarto
 
-## Interactive documents
-
-* Shiny can run in RMarkdown documents. Set YAML `runtime: shiny`.  
-
-:::: {.fragment}
-
-```
+````
+---
+title: "Interactive scatterplot"
+format: html
+server: shiny
 ---
 
+```{{r}}
+library(shiny)
+library(ggplot2)
+
+selectInput("x_var", "X-axis Variable:", choices=names(mtcars), selected = "hp"),
+selectInput("y_var", "Y-axis Variable:", choices=names(mtcars), selected = "mpg"),
+plotOutput("plot")
+```
+
+```{{r}}
+#| context: server
+output$plot <- renderPlot({
+  ggplot(mtcars, aes_string(x = input$x_var, y = input$y_var)) +
+    geom_point() +
+    labs(title = "Interactive mtcars scatterplot", 
+         x = input$x_var, 
+         y = input$y_var)
+})
+```
+````
+
+## Interactive documents • Rmarkdown
+
+- Shiny can run in RMarkdown documents. Set YAML `runtime: shiny`.  
+
+````        
+---
 title: Interactive document
 output: html_document
 runtime: shiny
 ---
+````
 
+- Shiny widgets can be included directly  
+
+````
+```{{r}}
+selectInput('n_breaks',label='Number of bins:',choices=c(10,20,35,50),selected=20)
 ```
-
-:::: 
-
-:::: {.fragment}
-
-* Shiny widgets can be included directly  
-
-```{r,echo=FALSE,comment=""}
-cat(paste0("```{r}\n","selectInput('n_breaks',label='Number of bins:',choices=c(10,20,35,50),selected=20)\n","```\n"))
-```
-
-::::
+````
 
 ## Interactive documents
 
-* Whole shiny apps can be included directly  
+- Whole shiny apps can be included directly  
 
-```{r,echo=FALSE,comment=""}
-cat(paste0("```{r}\n","shinyApp(\n","  ui=fluidPage(),\n","  server=function(input,output) {}\n",")\n","```\n"))
+```{{r}}
+shinyApp(
+  ui=fluidPage(),
+  server=function(input,output) {}
+)
 ```
 
-:::: {.fragment}
+. . .
 
-* Hosted shiny apps can be embedded using `<iframe>`  
+- Hosted shiny apps can be embedded using `<iframe>`  
 
-```
+```         
 <iframe src="https://user.shinyapps.io/app"></iframe>
 ```
 
-::::
+## Other topics
+
+- [Extended task](https://rstudio.github.io/shiny/reference/ExtendedTask.html)
+- [Shiny unit tests](https://shiny.posit.co/r/articles/improve/testing-overview/)
+- [Applications of action buttons](https://shiny.posit.co/r/articles/build/action-buttons/)  
+- [Progress indicators](https://shiny.posit.co/r/articles/build/progress/)  
+- [Shinylive](https://shinylive.io)
+- [ShinyUIEditor](https://rstudio.github.io/shinyuieditor/)
+- ...
 
 ## Extensions
 
-* [Naxstats](https://github.com/nanxstats/awesome-shiny-extensions): Repo collection all shiny extensions
-* [shinythemes](https://github.com/rstudio/shinythemes): Bootswatch themes for shiny
-* shinyurl: using URLs to recreate state of an app
-* shinypod: Reusable modules
-* [shinyjs](https://deanattali.com/shinyjs/): custom javascript functionality
-* [shinyWidgets](https://github.com/dreamRs/shinyWidgets): Bootstrap 3 custom widgets
-* [shinyBS](https://github.com/ebailey78/shinyBS): Bootstrap 3 widgets
+- [Naxstats](https://github.com/nanxstats/awesome-shiny-extensions): Repo collection of shiny extensions
+- [bslib](https://rstudio.github.io/bslib): Bootswatch themes for shiny
+- [shinyurl](https://github.com/aoles/shinyURL): using URLs to recreate state of an app
+- [shinypod](https://github.com/ijlyttle/shinypod): Reusable modules
+- [shinyjs](https://deanattali.com/shinyjs/): Custom javascript functionality
+- [shinyWidgets](https://github.com/dreamRs/shinyWidgets): Bootstrap 3 custom widgets
+- [shinyBS](https://github.com/ebailey78/shinyBS): Bootstrap 3 widgets
+- [shinymanager](https://datastorm-open.github.io/shinymanager/): Authentication for shiny apps
+- ...
 
-## Help
+## Learning & community
 
-* [**Posit Shiny home**](https://shiny.posit.co/) 
-* [**Posit Shiny tutorial**](https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/)
-* [**Posit Shiny articles**](https://shiny.posit.co/r/articles/)
-* [**Shiny using python**](https://shiny.posit.co/py/docs/overview.html)
+:::: {.columns}
+::: {.column width="50%"}
+**Documentation**
 
-### Other topics
+- [Posit Shiny home](https://shiny.posit.co/) 
+- [Posit Shiny articles](https://shiny.posit.co/r/articles/)
 
-* [Applications of action buttons](https://shiny.posit.co/r/articles/build/action-buttons/)  
-* [Progress indicators](https://shiny.posit.co/r/articles/build/progress/)  
-* [Shiny modules](https://shiny.posit.co/r/articles/improve/modules/)
+**Books**
+
+![](assets/mastering-shiny.png){height="250px"} ![](https://engineering-shiny.org/img/engineering-shiny.jpeg){height="250px"}
+
+- [Mastering Shiny Book](https://mastering-shiny.org/index.html)
+- [Engineering Shiny Apps](https://engineering-shiny.org/index.html)
+- [Shiny Interfaces](https://unleash-shiny.rinterface.com/index.html)
+- [Mastering shiny solutions](https://mastering-shiny-solutions.org/)
+:::
+::: {.column width="50%"}
+**Conferences**
+
+- [Appsilon: ShinyConf](https://www.shinyconf.com/)
+- [Jumping Rivers: Shiny in Production](https://shiny-in-production.jumpingrivers.com/)
+
+**Blogs & Podcasts**
+
+- [Posit Shiny Blog](https://shiny.posit.co/blog/)
+- [Shiny Developer Series](https://shinydevseries.com/)
+:::
+::::
 
 
 ## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}

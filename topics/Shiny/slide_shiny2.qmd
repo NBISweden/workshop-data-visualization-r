@@ -33,12 +33,10 @@ library(shiny)
 ## Contents
 
 * [Reactivity](#reactivity)
-* [Isolate reactivity](#isolate-reactivity)
-* [observeEvent()](#observeevent())
+* [Observers](#observers)
 * [Updating Widgets](#updating-widgets)
 * [Error Validation](#error-validation)
-* [Download Button](#download-•-data)
-* [Modularizing reactivity](#modularizing-reactivity)
+* [Download](#download-data)
 
 ## Reactivity
 
@@ -398,9 +396,11 @@ Observers are reactive functions that run when their dependencies change similar
 
 * Widgets can be updated once initialised.
 
-::: {.fragment}
+:::: {.fragment}
 
 * Example of a typical UI
+
+::: {.small}
 
 ```{r, eval=FALSE}
 ui=fluidPage(
@@ -412,11 +412,15 @@ ui=fluidPage(
 
 :::
 
-::: {.fragment}
+::::
+
+:::: {.fragment}
 
 * Add third argument **session** to server function
 * Update functions can be used to update **input widgets**
 * Reactive observer `observe({})` monitors for a conditional change
+
+::: {.small}
 
 ```{r, eval=FALSE}
 server=function(input,output,session) {
@@ -430,7 +434,9 @@ server=function(input,output,session) {
 }
 ```
 
-:::
+::: 
+
+::::
 
 ## Updating widgets
 
@@ -632,7 +638,6 @@ server=function(input, output) {
 ```
 
 * Run in system browser if Rstudio browser doesn't work
-* See usage of download buttons
 
 ## Download • Plots
 
@@ -661,6 +666,7 @@ output$button_download <- downloadHandler(
   })
 })
 ```
+
 
 * Run in system browser if Rstudio browser doesn't work
 * See usage of download buttons

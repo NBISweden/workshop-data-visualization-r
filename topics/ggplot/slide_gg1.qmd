@@ -1,0 +1,591 @@
+---
+title: "Introduction to ggplot"
+author: Lokesh Mano
+institute: NBIS, SciLifeLab
+keywords: bioinformatics, course, workshop, scilifelab, nbis
+format: 
+    revealjs: 
+        slide-number: true
+webr:
+  packages: ['ggplot2', 'dplyr', 'palmerpenguins']
+filters:
+  - webr
+---
+
+## Setup {visibility="hidden"}
+
+```{r}
+#| echo: false
+# load the packages you need
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(ggplot2)
+library(kableExtra)
+```
+
+## Contents
+
+* [Quick checkup](#quick-checkups)
+* [R Basics](#r-basics)
+* [Data Types and Formats](#data-types)
+* [R Tips](#important-tips)
+* [Grammer of Graphics](#grammar-of-graphics)
+  * [Geoms](#geoms)
+  * [Aesthetics](#aesthetics)
+  * [Scales](#scales)
+  * [Facets](#facets)
+
+
+## Quick checkups
+
+![](../../assets/images/inst_check.png){ width="50%" fig-align="center"}
+
+. . .
+
+:::{.small}
+
+* Coffe breaks (Fika in the afternoon)
+* Webpage structure
+* Plots from drop-down
+* Times mentioned in schedule are **super** arbitrary
+
+:::
+
+## R basics
+
+```{r}
+n <- c(2,3,4,2,1,2,4,5,10,11,8,9)
+print(n)
+```
+
+. . .
+
+```{r}
+z <- n +3
+print(z)
+```
+
+. . .
+
+```{r}
+z <- n +3
+mean(z)
+```
+
+. . .
+
+```{r}
+s <- c("I", "love", "Batman")
+print(s)
+```
+
+## Data types
+
+* `int` stands for *integers*
+* `dbl` stands for *doubles* or real numbers
+* `chr` stands for *character* vectors or strings
+* `dttm` stands for *date and time*,
+* `lgl` stands for *logical* with just TRUE or FALSE
+* `fctr` stands for *factors* which R uses to state categorical variables.
+* `date` stands for *dates*
+
+You can find what kind of vectors you have or imported by using the function `class()`
+
+## Data Formats
+
+. . .
+
+- Wide format
+
+```{r}
+#| echo: false
+
+gc <- read.table("../../data/counts_raw.txt", header = T, row.names = 1, sep = "\t")
+kable(gc[c(1:6),c(1:4)]) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F) %>%
+  row_spec(1:6, color = "orange") %>%
+  column_spec(1, color = "red") %>%
+  row_spec(0, bold = T, color = "blue")
+```
+
+. . .
+
+* familiarity
+* conveniency
+* you see more data
+
+## Data Formats
+
+- Long format
+
+. . .
+
+```{r}
+#| echo: false
+
+md <- read.table("../../data/metadata.csv", header = T, sep = ";")
+samples <- colnames(gc[,c(1:4)])
+gc[c(1:6),c(1:4)] %>%
+  rownames_to_column(var = "Gene") %>%
+  gather(Sample_ID, count, -Gene) %>%
+  select(Sample_ID, everything()) %>%   
+  head(6) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F) %>%
+  column_spec(1, color = "blue") %>%
+  column_spec(2, color = "red")%>%
+  column_spec(3, color = "orange")
+```
+
+. . .
+
+
+```{r}
+#| echo: false
+
+md <- read.table("../../data/metadata.csv", header = T, sep = ";")
+samples <- colnames(gc[,c(1:4)])
+gc[c(1:6),c(1:4)] %>%
+  rownames_to_column(var = "Gene") %>%
+  gather(Sample_ID, count, -Gene) %>% 
+  full_join(md[c(1:4),], by = "Sample_ID") %>% 
+  select(Sample_ID, everything()) %>% 
+  select(-c(Gene,count), c(Gene,count)) %>%
+  head(6) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F) %>%
+  column_spec(1:5, color = "blue") %>%
+  column_spec(6, color = "red")%>%
+  column_spec(7, color = "orange")
+```
+
+## Data Formats
+
+- Long format
+
+```{r}
+#| echo: false
+
+md <- read.table("../../data/metadata.csv", header = T, sep = ";")
+samples <- colnames(gc[,c(1:4)])
+gc[c(1:6),c(1:4)] %>%
+  rownames_to_column(var = "Gene") %>%
+  gather(Sample_ID, count, -Gene) %>% 
+  full_join(md[c(1:4),], by = "Sample_ID") %>% 
+  select(Sample_ID, everything()) %>% 
+  select(-c(Gene,count), c(Gene,count)) %>%
+  head(6) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F) %>%
+  column_spec(1:5, color = "blue") %>%
+  column_spec(6, color = "red")%>%
+  column_spec(7, color = "orange")
+```
+
+. . .
+
+* easier to add data to the existing
+* Most databases store and maintain in long-formats due to its efficiency
+* R tools **like ggplot** require data in long format.
+
+## Data Frames
+
+- Let us take a quick look into `data.frame` in `R`:
+
+
+![](../../assets/images/df.png){width="60%" fig-align="center"}
+
+
+* imported files re usually in `data.frame`
+* Structured matrix with `row.names` and `colnames`
+* Probably most used `data.type` in Biology! 
+
+
+## Important tips
+
+- `?` and `??`
+  * `?` help manual for a particular function
+  * `??` searches the entire `R` library for the term
+  * `vignette("ggplot2")`
+
+. . .
+
+- TAB completion
+  * Probably most useful to avoid unnecessary error messages (and/or frustration)!
+
+. . .
+
+- Case sensitive 
+
+```{r}
+#| error: true
+
+print(N)
+```
+
+```{r}
+print(n)
+```
+
+## Reading files
+
+:::: {.columns}
+::: {.column width="47.5%"}
+```{r}
+#| eval: false
+#| filename: iris-head-corrupted.csv
+#| code-line-numbers: "6"
+
+Sepal.Length,Sepal.Width,Petal.Length,Petal.Width,Species
+5.1,3.5,1.4,0.2,setosa
+4.9,3,1.4,0.2,setosa
+4.7,3.2,1.3,0.2,setosa
+4.6,3.1,1.5,0.2,setosa
+5,3.6,#1.4,0.2,setosa
+5.4,3.9,1.7,0.4,setosa
+```
+:::
+::: { .column width="5%"}
+::: 
+::: {.column width="47.5%"}
+```{webr-r}
+url <- "https://raw.githubusercontent.com/NBISweden/workshop-data-visualization-r/main/topics/ggplot/data/iris-head-corrupted.csv"
+download.file(url, "iris-head.csv")
+dir()
+read.table("iris-head.csv", sep = ',')
+```
+::: 
+::::
+
+::: {.fragment}
+
+### Reserved variables
+
+* reserved variables like `T`, `F`, `character` and many others ...
+* How can you check if something is a reserved variable?
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| auto-run: false
+
+T
+F
+```
+
+:::
+
+
+## Grammar of Graphics
+
+:::: {.columns}
+::: {.column width="30%"}
+
+![](../../assets/images/gog.png)
+
+:::
+:::{.column width="5%"}
+:::
+
+:::{.fragment .column width="65%"}
+
+* **Data:** Input data
+* **Geom:** A geometry representing data. Points, Lines etc
+* **Aesthetics:** Visual characteristics of the geometry. Size, Color, Shape etc
+* **Scale:** How visual characteristics are converted to display values
+* **Statistics:** Statistical transformations. Counts, Means etc
+* **Coordinates:** Numeric system to determine position of geometry. Cartesian, Polar etc
+* **Facets:** Split data into subsets
+
+:::
+::::
+
+## Building a graph
+
+![](../../assets/images/gg-syntax.png){ width="60%" height="60%" fig-align="center"}
+
+## Build-Demo
+
+```{webr-r}
+#| message: false
+#| warning: false
+
+library(ggplot2)
+ggplot(iris)
+```
+
+## Build-Demo
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| code-line-numbers: "2"
+
+ggplot(iris,
+  aes(x = Sepal.Length, y = Sepal.Width))
+```
+
+## Build-Demo
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| code-line-numbers: "3"
+
+ggplot(iris,
+  aes(x = Sepal.Length, y = Sepal.Width)) +
+  geom_point()
+```
+
+## Build-Demo
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| code-line-numbers: "2"
+
+ggplot(iris,
+  aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
+  geom_point()
+```
+
+## Geoms
+
+![](../../assets/images/geoms.png){ width="75%" height="75%" fig-align="center"}
+
+## Geoms
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+p <- ggplot(iris)
+# scatterplot
+p+geom_point(aes(x=Sepal.Length,y=Sepal.Width))
+# barplot
+p+geom_bar(aes(x=Sepal.Length))
+# boxplot
+p+geom_boxplot(aes(x=Species,y=Sepal.Width))
+# search
+help.search("^geom_",package="ggplot2")
+```
+
+## Multiple geoms
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width))+
+      geom_point()+
+      geom_line()+
+      geom_smooth()+
+      geom_rug()+
+      geom_step()+
+      geom_text(data=subset(iris,iris$Species=="setosa"),aes(label=Species))
+```
+
+## Aesthetics
+
+* Aesthetic mapping vs aesthetic parameter
+
+## Aesthetics
+
+:::: {.columns}
+::: { .column width="47.5%"}
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+
+ggplot(iris)+
+  geom_point(aes(x=Sepal.Length,
+                 y=Sepal.Width,
+                 size=Petal.Length,
+                 alpha=Petal.Width,
+                 shape=Species,
+                 color=Species))
+```
+:::
+::: {.column width="5%"}
+::: 
+::: {.fragment .column width="47.5%"}
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+ggplot(iris)+
+  geom_point(aes(x=Sepal.Length,
+                 y=Sepal.Width),
+                 size=2,
+                 alpha=0.8,
+                 shape=15,
+                 color="steelblue")
+```
+::: 
+::::
+
+## Scales 
+
+* If you would like to change the default aesthetics
+* scales: position, color, fill, size, shape, alpha, linetype
+* syntax: `scale_<aesthetic>_<type>`
+
+::: {.fragment}
+
+**Discrete Colors:**
+
+
+![](../../assets/images/scales.png){width="60%" height="60%" fig-align="center"}
+
+:::
+
+## Scales • Discrete Colors
+
+:::: {.columns}
+::: {.column width="47.5%"}
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+p <- ggplot(iris) + 
+  geom_point(aes(x=Sepal.Length,
+                 y=Sepal.Width,
+                 color=Species))
+p
+```
+::: 
+::: {.column width="5%"}
+::: 
+::: {.fragment .column width="47.5%"}
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+p + scale_color_manual(
+     name="Manual",
+     values=c("#5BC0EB","#FDE74C","#9BC53D"))
+```
+:::
+::::
+
+## Scales • Continuous Colors
+
+:::: {.columns}
+::: {.column width="47.5%"}
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+p <- ggplot(iris) + 
+  geom_point(aes(x=Sepal.Length,
+                 y=Sepal.Width,
+                 shape=Species,
+                 color=Petal.Length))
+p
+```
+::: 
+::: {.column width="5%"}
+::: 
+::: {.fragment .column width="47.5%"}
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+p + scale_color_gradient(name="Pet Len",
+                         breaks=range(iris$Petal.Length),
+                         labels=c("Min","Max"),
+                         low="black",high="red")
+```
+:::
+::::
+
+## Scales • Shape
+
+* In RStudio, type `scale_`, then press **TAB**
+* Similarly you can use it for shape, axis, fill, etc..
+
+::: {.fragment}
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 6
+#| fig-height: 4
+
+p <- ggplot(iris)+
+      geom_point(aes(x=Sepal.Length,
+                     y=Sepal.Width,
+                     shape=Species,
+                     color=Species))
+p
+p + scale_color_manual(name="New",
+      values=c("blue","green","red")) +
+    scale_shape_manual(name="Bla",values=c(0,1,2))
+```
+:::
+
+## Facets  
+
+* Split to subplots based on variable(s)
+* Facetting in one dimension
+
+## Facets
+
+**`facet_wrap`**
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+p <- ggplot(iris)+
+      geom_point(aes(x=Sepal.Length,
+                     y=Sepal.Width,
+                     color=Species))
+p
+p + facet_wrap(~Species)
+p + facet_wrap(~Species,nrow=3)
+```
+
+## Facets • `facet_grid`
+
+* Facetting in two dimensions
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+p <- penguins %>%
+     ggplot(aes(species,flipper_length_mm))+
+     geom_point()
+p
+p + facet_grid(~species+sex)
+```
+
+## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
+
+::: {.center-xy}
+
+### Thank you. Questions? {style="text-align: center;"}
+
+:::

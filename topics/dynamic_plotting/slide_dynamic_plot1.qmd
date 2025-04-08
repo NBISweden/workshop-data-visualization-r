@@ -175,14 +175,14 @@ library(leaflet)
 df <- data.frame(lng = c(13.20279, 13.20869, 13.21894),
                  lat = c(55.71118, 55.71414, 55.71092))
 
-icons_list <- awesomeIcons(icon = 'drop-in',
-  iconColor = 'black',
+icons_list <- awesomeIcons(icon = 'briefcase',
+  iconColor = 'white',
   library = 'ion', 
   markerColor = "cadetblue")
 
-leaflet() %>%
+leaflet(width = "100%") %>%
   addTiles() %>%
-  setView(lng = 13.20279,lat = 55.71092, zoom = 8) %>%
+  setView(lng = 13.21014,lat = 55.71208, zoom = 12) %>%
   addAwesomeMarkers(data = df, icon = icons_list, popup = c("Forum Medicum Café", "Café Le Mani", "MV Inspira"))
 ```
 ````
@@ -196,14 +196,14 @@ library(leaflet)
 df <- data.frame(lng = c(13.20279, 13.20869, 13.21894),
                  lat = c(55.71118, 55.71414, 55.71092))
 
-icons_list <- awesomeIcons(icon = 'drop-in',
-  iconColor = 'black',
+icons_list <- awesomeIcons(icon = 'briefcase',
+  iconColor = 'white',
   library = 'ion', 
   markerColor = "cadetblue")
 
-leaflet() %>%
+leaflet(width = "100%") %>%
   addTiles() %>%
-  setView(lng = 13.20279,lat = 55.71092, zoom = 8) %>%
+  setView(lng = 13.21014,lat = 55.71208, zoom = 12) %>%
   addAwesomeMarkers(data = df, icon = icons_list, popup = c("Forum Medicum Café", "Café Le Mani", "MV Inspira"))
 ```
 :::

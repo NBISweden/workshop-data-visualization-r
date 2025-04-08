@@ -1,0 +1,132 @@
+---
+title: "Advanced ggplot"
+author: Lokesh Mano
+institute: NBIS, SciLifeLab
+keywords: bioinformatics, course, workshop, scilifelab, nbis
+format: 
+    revealjs: 
+        slide-number: true
+webr:
+    packages: ['ggplot2', 'dplyr', 'palmerpenguins']
+filters:
+    - webr
+---
+
+## Setup {visibility="hidden"}
+
+```{r}
+#| echo: false
+# load the packages you need
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(ggplot2)
+library(kableExtra)
+library(palmerpenguins)
+```
+
+## Contents
+
+* [Axis](#axis)
+* [Theme](#theme)
+* [Legends](#legends)
+* [Combining-plots](#combining-plots)
+* [Saving plots](#saving-plots)
+* [Extensions](#extensions)
+* [Help](#help)
+
+## Axis
+
+* scales: x, y
+* syntax: `scale_<axis>_<type>`
+* arguments: name, limits, breaks, labels
+
+## Axis • Scales
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 6
+#| fig-height: 3
+
+p <- ggplot(iris)+
+      geom_point(aes(x=Sepal.Length,
+                     y=Sepal.Width,
+                     color=Species))
+p
+p + scale_color_manual(name="New",
+        values=c("blue","green","red")) +
+scale_x_continuous(name="Sepal Length",
+        breaks=seq(1,8),limits=c(3,5))
+```
+
+
+## Coordinate Systems
+
+![](../../assets/images/coordinate.png){width="40%" height="40%" fig-align="center"}
+
+* `coord_cartesian(xlim=c(2,8))` for zooming in
+* `coord_map` for controlling limits on maps
+* `coord_polar`
+
+## Coordinate Systems
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 6
+#| fig-height: 4
+
+p <- ggplot(iris,aes(x="",y=Petal.Length,fill=Species)) +
+        geom_bar(stat="identity")
+p
+p + coord_polar("y",start=0)
+```
+
+## Theme
+
+* Modify non-data plot elements/appearance
+* Axis labels, panel colors, legend appearance etc
+* Save a particular appearance for reuse
+* `?theme`
+
+## Theme
+
+:::: {.columns}
+::: {.column width="47.5%"}
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 4
+#| fig-height: 3
+
+ggplot(iris,aes(Petal.Length))+
+  geom_histogram()+
+  facet_wrap(~Species,nrow=2)+
+  theme_grey()
+```
+::: 
+::: {.column width="5%"}
+::: 
+::: {.column width="47.5%"}
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 4
+#| fig-height: 3
+
+ggplot(iris,aes(Petal.Length))+
+  geom_histogram()+
+  facet_wrap(~Species,nrow=2)+
+  theme_bw()
+```
+::: 
+::::
+
+
+## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
+
+::: {.center-xy}
+
+### Thank you. Questions? {style="text-align: center;"}
+
+:::

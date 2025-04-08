@@ -57,8 +57,8 @@ lund_mv:
     - label: Centralstation
       marker_icon: train
       marker_color: purple
-      lat: 55.705311
-      lon: 13.187432
+      lat: 55.70669
+      lon: 13.18695
       popup: "Centralstation; Bangatan 1; 222 21 Lund; Sweden"
     - label: Lunch
       marker_icon: cutlery
@@ -68,10 +68,16 @@ lund_mv:
       popup: "Bryggan Kitchen & Café, IKDC, Formstråket 13, 223 62 Lund"
     - label: Dinner
       marker_icon: glass
-      marker_color: green
+      marker_color: blue
       lat: 55.70847
       lon: 13.19594
       popup: "Valvet Steakhouse, Allhelgona kyrkogata 7, 223 62 Lund"
+    - label: Ideontorget
+      marker_icon: train
+      marker_color: green
+      lat: 55.71571
+      lon: 13.21425
+      popup: "Ideontorget; 223 63 Lund; Sweden"
 umea:
   description: |
     Room UB341  

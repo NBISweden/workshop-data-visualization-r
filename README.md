@@ -35,13 +35,13 @@ Clone the repo if not already done. Make sure you are standing in the repo direc
 To build the complete site,
 
 ```
-docker run --platform linux/amd64 --rm -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-data-visualization-r:latest
+docker run --platform linux/amd64 --rm -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-adv-data-viz:latest
 ```
 
 To build a single file (for example `index.qmd`),
 
 ```
-docker run --platform linux/amd64 --rm -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-data-visualization-r:latest quarto render index.qmd
+docker run --platform linux/amd64 --rm -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-adv-data-viz:latest quarto render index.qmd
 ```
 
 :exclamation: Output files are for local preview only. Do not push any rendered .html files or intermediates.
@@ -58,7 +58,7 @@ You can use `quarto preview` to serve the site, and handle automatic rebuilding 
 
 ```bash
 # serve the site
-docker run --rm -it --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd -p 8800:8800  ghcr.io/nbisweden/workshop-data-visualization-r:latest quarto preview --port 8800 --host 0.0.0.0
+docker run --rm -it --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd -p 8800:8800  ghcr.io/nbisweden/workshop-adv-data-viz:latest quarto preview --port 8800 --host 0.0.0.0
 ```
 
 Go to [http://localhost:8800/](http://localhost:8800/) or [http://0.0.0.0:8800](http://0.0.0.0:8800) in your browser.
@@ -67,15 +67,15 @@ Go to [http://localhost:8800/](http://localhost:8800/) or [http://0.0.0.0:8800](
 
 ```bash
 # build container
-docker build --platform linux/amd64 -t ghcr.io/nbisweden/workshop-data-visualization-r:latest .
+docker build --platform linux/amd64 -t ghcr.io/nbisweden/workshop-adv-data-viz:latest .
 
 # push to ghcr
 # docker login ghcr.io
-docker push ghcr.io/nbisweden/workshop-data-visualization-r:latest
+docker push ghcr.io/nbisweden/workshop-adv-data-viz:latest
 
 # run container in the root of the repo
-docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-data-visualization-r:latest
-docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-data-visualization-r:latest quarto render index.qmd
+docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-adv-data-viz:latest
+docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-adv-data-viz:latest quarto render index.qmd
 ```
 
 ## Repo organisation
