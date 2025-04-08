@@ -346,13 +346,12 @@ Plot.plot({
 ```
 
 ## Sources
-::: {.fragment}
+
 - [htmlwidgets](https://www.htmlwidgets.org/)
 - [Quarto Tips & Tricks](https://www.productive-r-workflow.com/quarto-tricks)
 - [Observable JS](https://quarto.org/docs/interactive/ojs/)
 - [Our World in Data](https://ourworldindata.org/grapher/bcg-immunization-coverage-for-tb-among-1-year-olds?time=2020)
 
-:::
 
 ## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
 
