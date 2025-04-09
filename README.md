@@ -7,7 +7,13 @@ This repo contains the course material for NBIS workshop **Advanced Data Visuali
 To add or update contents of this repo (for collaborators), first clone the repo.
 
 ```
-git clone --depth 1 --single-branch --branch master https://github.com/nbisweden/workshop-data-visualization-r.git
+git clone --depth 1 --single-branch --branch main https://github.com/nbisweden/workshop-data-visualization-r.git
+```
+Then navigate to the repo directory and create new branch.
+
+```
+cd workshop-data-visualization-r
+git checkout -b my-branch
 ```
 
 Make changes/updates as needed. Add the changed files. Commit it. Then push the repo back.
@@ -15,10 +21,13 @@ Make changes/updates as needed. Add the changed files. Commit it. Then push the 
 ```
 git add .
 git commit -m "I did this and that"
-git push origin
+git push origin my-branch
 ```
 
-If you are not added as a collaborator, first fork this repo to your account, then clone it locally, make changes, commit, push to your repo, then submit a pull request to this repo.
+Then create a pull request to the main branch of this repo. You can do this from the GitHub website.
+
+If you are not a collaborator, you can still contribute by creating a pull request. You can do this by forking the repo to your account, making changes, and then creating a pull request from your forked repo to this repo.
+
 
 :exclamation: When updating repo for a new course, change `output-dir: XXXX` in `_quarto.yml` 
 as the first thing, so that old rendered files are not overwritten.
@@ -49,7 +58,7 @@ docker run --platform linux/amd64 --rm -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisw
 ### Convert HTML slides to PDF
 
 ```
-docker run --platform=linux/amd64 -v $PWD:/work astefanutti/decktape https://nbisweden.github.io/workshop-ngsintro/2403/topics/rnaseq/slide_rnaseq.html /work/slide_rnaseq.pdf
+docker run --platform=linux/amd64 -v $PWD:/work astefanutti/decktape https://nbisweden.github.io/workshop-data-visualization-r/2505/topics/ggplot/slide_gg1.html /work/slide_ggplot_intro.pdf
 ```
 
 ### Serving and automatic rendering
@@ -85,14 +94,6 @@ The source material is located on the *main* branch (default). The rendered mate
 :exclamation: Every push rebuilds the whole website using a pre-built docker image.
 
 This repo is loosely based on the quarto template [specky](https://github.com/royfrancis/specky).
-
-## Test scripts
-
-This is regarding the directory **scripts**. This directory contains shell scripts for vc (variant-calling) and rnaseq parts of the workshop. These are intended to be run on UPPMAX. Further instructions on using them are available within the scripts.
-
-The contents of these scripts should use identical steps and tools as the student would use in the lab. The aim of these scripts is to execute them on UPPMAX before the course. This should provide insight into broken links, broken tools, tool incompatibilities, core usage, ram usage and total space used.
-
-*The scripts directory is not used in this repo, tutorial or the website. It's just here as a backup.*
 
 ---
 

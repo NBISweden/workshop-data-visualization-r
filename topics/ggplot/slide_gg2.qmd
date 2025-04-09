@@ -23,17 +23,20 @@ library(tidyverse)
 library(ggplot2)
 library(kableExtra)
 library(palmerpenguins)
+library(gridExtra)
+library(patchwork)
 ```
 
 ## Contents
 
 * [Axis](#axis)
+* [Stats](#stats)
 * [Theme](#theme)
-* [Legends](#legends)
+* [Legends](#legend-theme)
 * [Combining-plots](#combining-plots)
 * [Saving plots](#saving-plots)
 * [Extensions](#extensions)
-* [Help](#help)
+* [Help](#learning-help)
 
 ## Axis
 
@@ -56,9 +59,8 @@ p
 p + scale_color_manual(name="New",
         values=c("blue","green","red")) +
 scale_x_continuous(name="Sepal Length",
-        breaks=seq(1,8),limits=c(3,5))
+        breaks=c(3,3.5,4,4.5,5),limits=c(3,5))
 ```
-
 
 ## Coordinate Systems
 
@@ -80,6 +82,120 @@ p <- ggplot(iris,aes(x="",y=Petal.Length,fill=Species)) +
 p
 p + coord_polar("y",start=0)
 ```
+
+## Stats
+
+- Stats compute new variables from input data.
+
+. . .
+
+- Geoms have default stats.
+
+```{r}
+#| message: false
+#| warning: false
+#| fig-height: 3
+#| fig-width: 8
+x <- ggplot(penguins) + geom_bar(aes(x=flipper_length_mm),stat="bin")
+y <- ggplot(penguins) + geom_bar(aes(x=species),stat="count")
+z <- ggplot(penguins) + geom_bar(aes(x=species,y=flipper_length_mm),stat="identity")
+wrap_plots(x,y,z,nrow=1)
+```
+
+## Stats
+
+- Plots can be built with stats.
+
+```{r}
+#| message: false
+#| warning: false
+#| fig-height: 3
+#| fig-width: 8
+
+x <- ggplot(penguins) + stat_bin(aes(x=flipper_length_mm),geom="bar")
+y <- ggplot(penguins) + stat_count(aes(x=species),geom="bar")
+z <- ggplot(penguins) + stat_identity(aes(x=species,y=flipper_length_mm),geom="bar")
+wrap_plots(x,y,z,nrow=1)
+```
+
+::: {.notes}
+
+- Normally the data is plotted directly from input as it is.
+- Some plots require the data to be computed or transformed. Eg. boxplot, histograms, smoothing, predictions, regression etc.
+
+:::
+
+## Stats
+
+- Stats have default geoms.
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+data.frame("plot"=c("histogram","smooth","boxplot","density","freqpoly"),
+           "stat"=c("bin","smooth","boxplot","density","freqpoly"),
+           "geom"=c("bar","line","boxplot","line","line")) %>%
+  kable(format="html",escape=F,align="l") %>%
+  kable_styling(bootstrap_options=c("striped","hover","responsive","condensed"),
+              position="left",full_width = F)
+```
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+#| eval: false
+stat_bin()
+stat_count()
+stat_density()
+stat_bin_2d()
+stat_bin_hex()
+stat_contour()
+stat_boxplot()
+stat_smooth()
+stat_quantile()
+```
+
+Use `args(geom_bar)` to check arguments.
+
+## Stats
+
+- `stat_compare_means()` from the package `ggpubr`.
+
+. . .
+
+```{r}
+#| message: false
+#| warning: false
+#| fig-height: 4
+#| fig-width: 8
+#| code-line-numbers: "3"
+
+
+ggplot(penguins, aes(x=species,y=flipper_length_mm, fill=species)) + 
+  geom_boxplot() + 
+  ggpubr::stat_compare_means()
+```
+
+## Stats
+
+- `stat_compare_means()` from the package `ggpubr`.
+
+::: {.small}
+```{r}
+#| message: false
+#| warning: false
+#| fig-height: 4
+#| fig-width: 8
+#| code-line-numbers: "1,4"
+
+my_comparisons <- list( c("Adelie", "Chinstrap"), c("Chinstrap", "Gentoo"), c("Adelie", "Gentoo") )
+ggplot(penguins, aes(x=species,y=flipper_length_mm, fill=species)) + 
+  geom_boxplot() + 
+  ggpubr::stat_compare_means(comparisons = my_comparisons, method = "t.test")
+```
+::: 
 
 ## Theme
 
@@ -122,6 +238,288 @@ ggplot(iris,aes(Petal.Length))+
 ::: 
 ::::
 
+## Theme • Text
+
+::: {.small}
+
+```{r,eval=FALSE}
+element_text(family=NULL,face=NULL,color=NULL,size=NULL,hjust=NULL,
+             vjust=NULL, angle=NULL,lineheight=NULL,margin = NULL)
+```
+::: 
+
+. . .
+
+::: {.small}
+
+```{r,echo=FALSE}
+p <- diamonds %>%
+      filter(cut=="Fair"|cut=="Good",color=="D"|color=="E") %>%
+      droplevels() %>%
+      ggplot(aes(carat,price,alpha=color,shape=cut))+
+            geom_point()+
+            labs(title="Title",subtitle="subtitle")+
+            facet_grid(cut~color)
+```
+
+```{r}
+p <- p + theme(
+    axis.title=element_text(color="#e41a1c"),
+    axis.text=element_text(color="#377eb8"),
+    plot.title=element_text(color="#4daf4a"),
+    plot.subtitle=element_text(color="#984ea3"),
+    legend.text=element_text(color="#ff7f00"),
+    legend.title=element_text(color="#ffff33"),
+    strip.text=element_text(color="#a65628")
+)
+```
+::: 
+
+. . .
+
+```{r,fig.height=3.7,fig.width=9,echo=FALSE}
+dfr <- data.frame(value=rep(1,7),label=c("axis.title","axis.text","plot.title","plot.subtitle","legend.text","legend.title","strip.text"),stringsAsFactors=FALSE) %>%
+  mutate(label=factor(label,levels=c("axis.title","axis.text","plot.title","plot.subtitle","legend.text","legend.title","strip.text")))
+q <- ggplot(dfr,aes(x=label,y=value,fill=label))+
+  geom_bar(stat="identity")+
+  labs(x="",y="")+
+  coord_flip()+
+  scale_fill_manual(values=c("#e41a1c","#377eb8","#4daf4a","#984ea3","#ff7f00","#ffff33","#a65628"))+
+  theme_minimal(base_size=20)+
+  theme(
+    legend.position="none",
+    axis.text.x=element_blank(),
+    axis.ticks=element_blank(),
+    panel.grid=element_blank())
+grid.arrange(p,q,nrow=1)
+```
+
+## Theme • Rect
+
+::: {.small}
+
+```{r,eval=FALSE}
+element_rect(fill=NULL,color=NULL,size=NULL,linetype=NULL)
+```
+:::
+
+. . .
+
+::: {.small}
+
+```{r,echo=FALSE}
+p <- diamonds %>%
+      filter(cut=="Fair"|cut=="Good",color=="D"|color=="E") %>%
+      droplevels() %>%
+      ggplot(aes(carat,price,alpha=color,shape=cut))+
+            geom_point()+
+            labs(title="Title",subtitle="subtitle")+
+            facet_grid(cut~color)
+```
+
+```{r}
+p <- p + theme(
+    plot.background=element_rect(fill="#b3e2cd"),
+    panel.background=element_rect(fill="#fdcdac"),
+    panel.border=element_rect(fill=NA,color="#cbd5e8",size=3),
+    legend.background=element_rect(fill="#f4cae4"),
+    legend.box.background=element_rect(fill="#e6f5c9"),
+    strip.background=element_rect(fill="#fff2ae")
+)
+```
+::: 
+
+. . .
+
+```{r,fig.height=3.7,fig.width=9,echo=FALSE}
+dfr <- data.frame(value=rep(1,6),label=c("plot.background","panel.background","panel.border","legend.background","legend.box.background","strip.background"),stringsAsFactors=FALSE) %>%
+  mutate(label=factor(label,levels=c("plot.background","panel.background","panel.border","legend.background","legend.box.background","strip.background")))
+q <- ggplot(dfr,aes(x=label,y=value,fill=label))+
+  geom_bar(stat="identity")+
+  labs(x="",y="")+
+  coord_flip()+
+  scale_fill_manual(values=c("#b3e2cd","#fdcdac","#cbd5e8","#f4cae4","#e6f5c9","#fff2ae"))+
+  theme_minimal(base_size=20)+
+  theme(
+    legend.position="none",
+    axis.text.x=element_blank(),
+    axis.ticks=element_blank(),
+    panel.grid=element_blank())
+grid.arrange(p,q,nrow=1)
+```
+
+## Theme • Reuse
+
+```{r,echo=FALSE}
+p <- diamonds %>%
+      filter(cut=="Fair"|cut=="Good"|cut=="Very Good") %>%
+      droplevels() %>%
+      ggplot(aes(carat,price,color=cut))+
+            geom_point()
+```
+::: {.small}
+```{r,echo=TRUE}
+newtheme <- theme_bw() + theme(
+  axis.ticks=element_blank(),
+  panel.background=element_rect(fill="white"),
+  panel.grid.minor=element_blank(),
+  panel.grid.major.x=element_blank(),
+  panel.grid.major.y=element_line(size=0.3,color="grey90"),
+  panel.border=element_blank(),
+  legend.position="top",
+  legend.justification="right"
+)
+```
+::: 
+
+. . .
+
+:::: {.columns}
+::: {.column width="47.5%"}
+
+```{r}
+#| message: false
+#| warning: false
+#| fig-width: 4
+#| fig-height: 3
+p
+```
+::: 
+::: {.column width="5%"}
+::: 
+::: {.column width="47.5%"}
+```{r}
+#| message: false
+#| warning: false
+#| fig-width: 4
+#| fig-height: 3
+
+p + newtheme
+```
+::: 
+::::
+
+
+## Legend • Theme 
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 6
+#| fig-height: 4
+
+ggplot(iris)+
+geom_point(aes(x=Sepal.Length,
+                y=Sepal.Width,
+                color=Species)) +
+theme(legend.position="top")
+#theme(legend.position="bottom")
+```
+
+## Legend • Geom 
+
+```{webr-r}
+#| message: false
+#| warning: false
+#| fig-width: 6
+#| fig-height: 4
+
+ggplot(data = penguins, aes(x = species, y = flipper_length_mm)) +
+  geom_boxplot(aes(color = species), width = 0.3, show.legend = F) +
+  geom_jitter(aes(color = species), alpha = 0.5) +
+  scale_color_manual(values = c("darkorange","purple","cyan4"))
+```
+
+## Combining Plots
+
+```{r}
+#| fig-height: 5
+#| fig-width: 12
+#| code-line-numbers: "3"
+p <- ggplot(penguins,aes(x=species,y=bill_length_mm,color=island))+geom_point()
+q <- ggplot(penguins,aes(x=species,y=body_mass_g,fill=island))+geom_bar(stat="identity")
+patchwork::wrap_plots(p,q)
+```
+
+
+
+[Refer to [patchwork](https://patchwork.data-imaginist.com/) documentation. Some notable alternatives are [ggpubr](https://rpkgs.datanovia.com/ggpubr/) and [cowplot](https://wilkelab.org/cowplot/articles/plot_grid.html).]{.smaller}
+
+::: {.notes}
+
+Combining two or more `ggplot2` plots is often required and several packages exist to help with this situation. Some functions allow plots to be placed adjacently, also allowing varying heights or widths of each plot. Some functions allow one plot to be plotted on another plot like a subset plot. Here are alternative options.
+
+```{r}
+#| eval: false
+gridExtra::grid.arrange(p,q,ncol=2)
+ggpubr::ggarrange(p,q,ncol=2,widths=c(1.5,1),common.legend=T)
+cowplot::plot_grid()
+```
+
+:::
+
+## Saving plots
+
+```{r}
+#| eval: false
+p <- ggplot(iris,aes(Petal.Length,Sepal.Length,color=Species))+
+  geom_point()
+```
+
+- `ggplot2` plots can be saved just like base plots  
+
+```{r}
+#| eval: false
+png("plot.png",height=5,width=7,units="cm",res=200)
+print(p)
+dev.off()
+```
+
+- `ggplot2` package offers a convenient function  
+
+```{r}
+#| eval: false
+ggsave("plot.png",p,height=5,width=7,units="cm",dpi=200,type="cairo")
+```
+
+- Note that default units in `png` is pixels while in `ggsave` it's inches  
+
+## Extensions
+
+- [**ggrepel**](https://ggrepel.slowkow.com/index.html): Text labels including overlap control 
+- [**ggforce**](https://ggforce.data-imaginist.com/): Circles, splines, hulls, voronoi etc
+- [**ggpmisc**](https://github.com/aphalo/ggpmisc): Miscellaneaous features
+- [**ggthemes**](https://jrnold.github.io/ggthemes/): Set of extra themes  
+- [**ggthemr**](https://github.com/cttobin/ggthemr): More themes  
+- [**ggsci**](https://nanx.me/ggsci/): Color palettes for scales  
+- [**ggmap**](https://github.com/dkahle/ggmap): Dedicated to mapping  
+- [**ggraph**](https://ggraph.data-imaginist.com/): Network graphs  
+- [**ggiraph**](http://davidgohel.github.io/ggiraph/): Converting ggplot2 to interactive graphics  
+
+A collection of ggplot extension packages: [https://exts.ggplot2.tidyverse.org/](https://exts.ggplot2.tidyverse.org/).  
+Curated list of ggplot2 links: [https://github.com/erikgahner/awesome-ggplot2](https://github.com/erikgahner/awesome-ggplot2).  
+
+## Learning & Help
+
+:::: {.columns}
+::: {.column width="30%"}
+
+- [**ggplot2 book**](https://ggplot2-book.org/)  
+![](https://ggplot2-book.org/cover.jpg){height="200px"}  
+- [**The R cookbook**](https://r-graphics.org/)  
+![](https://r-graphics.org/cover.jpg){height="200px"}
+
+:::
+::: {.column width="70%"}
+
+- [**ggplot2 official reference**](http://ggplot2.tidyverse.org/reference/)  
+- [**RStudio cheatsheet**](https://www.rstudio.com/resources/cheatsheets/)  
+- [**r-statistics ggplot2 cheatsheet**](http://r-statistics.co/ggplot2-cheatsheet.html)  
+- [**StackOverflow**](https://stackoverflow.com/)  
+- Blogs, [R-Bloggers](https://www.r-bloggers.com/), [Cedric Scherer](https://www.cedricscherer.com/tags/ggplot2/) etc.  
+
+:::
+::::
 
 ## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
 
