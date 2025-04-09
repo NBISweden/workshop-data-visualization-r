@@ -28,9 +28,9 @@ lund:
     - label: Lunch
       marker_icon: cutlery
       marker_color: cadetblue
-      lat: 55.71505
-      lon: 13.21240
-      popup: "Bryggan Kitchen & Café, IKDC, Formstråket 13, 223 62 Lund"
+      lat: 55.71092
+      lon: 13.21894
+      popup: "Restaurant & Café Inspira, Scheelevägen 4, 223 63 Lund"
     - label: Dinner
       marker_icon: glass
       marker_color: green
