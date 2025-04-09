@@ -21,12 +21,12 @@ format:
 ![](./images/horst_quarto_schematic.png){height="80%" width="80%" fig-align="center"}
 
 ## Installation
-::: {.incremental}
+
 - Install the latest [quarto executable](https://quarto.org/docs/get-started/)
 - R package **quarto** is a wrapper that runs quarto from R
 - If using [RStudio](https://posit.co/download/rstudio-desktop/), you need a version v2022.07.1 or newer
 - [Visual Studio Code](https://code.visualstudio.com/) along with quarto extension is a great option too
-:::
+
 
 ## Quarto notebook{.smaller}
 
@@ -133,10 +133,8 @@ execute:
 ::::
 
 ## Markdown text
-::: {.fragment}
 - Images, tables, text, etc.
 - Freely add and format text using markdown
-:::
 
 ::: {.fragment}
 ````
@@ -154,12 +152,14 @@ distributions of physical dimensions (@fig-penguins).
 :::
 
 ## Code chunks{.smaller}
-::: {.fragment}
+:::: {.fragment}
+::: {style="font-size: 1.6rem"}
 - Code blocks are called code chunks
 - Evaluate code and show its output
 - Specify global and/or local [chunk options](https://quarto.org/docs/computations/execution-options.html) (_e.g._ figure dimensions)
 - Also works with other languages (_e.g._ Python)
 :::
+::::
 
 ::: {.fragment}
 ````
@@ -206,7 +206,7 @@ penguins %>%
 
 ## Output formats
 
-::: {.incremental}
+::: {.fragment}
 - Reports and general documents (HTML, PDF, Jupyter Notebook, Microsoft Word)
 - Presentations (reveal.js, PowerPoint, Beamer)
 - Interactive documents (Observable, R Shiny)
@@ -306,7 +306,7 @@ website:
 
 ## Key advantages of Quarto
 
-::: {.incremental}
+::: {.fragment}
 - Text, code snippets, and visualizations in a single document
 - Supports multiple programming languages (R, Python, Julia, etc.)
 - Various output formats (HTML, PDF, presentations, etc.)
