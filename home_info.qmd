@@ -87,7 +87,7 @@ cat(":::\n")
 
 ### Lunch
 
-The lunches during the course will be provided at **Cafe Bryggan** located at **IKDC Building** which is 5 minutes walk from the course location. The location of the restaurant is [here](https://goo.gl/maps/94UhgmtaEw4396857).
+The lunches during the course will be provided at **Restaurant & Café Inspira** located at **Medicon Village** which is 2 minutes walk from the course location. The location of the restaurant is [here](https://g.co/kgs/9Z4W3ch).
 
 ### Dinner
 
