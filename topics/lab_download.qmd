@@ -1,0 +1,89 @@
+---
+title: "Download data"
+subtitle: "Workshop on Advanced Data Visualization"
+author: "Lokesh Mano"
+format: 
+    html: 
+        code-tools: true
+        font-size: 10
+code-annotations: hover
+---
+```{r,include=FALSE}
+library(dplyr)
+library(ggplot2)
+```
+
+# Main exercises
+
+The following data will be used in the used for the exercises in this course. The data comes from a mock RNA sequencing data with 12 samples that are from cell-lines. As in any normal RNAseq analysis the counts of genes were normalized using different methods such as `VST` and `CPM` after filtering out the genes that were of very low expression. We would use these data for visualizations.
+
+**Download all of these files into your current working directory**
+
+You can download all the files together [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/data.zip).
+Make a directory called `data` and `unzip` in that directory!
+
+If `workshop_on_advanced_data_visualization` is the current working directory, the directory tree should look like this:
+
+* <span style="color:blue">workshop_on_advanced_data_visualization</span>
+  + <span style="color:blue">data</span>
+    + arch_newick.txt
+    + counts_deseq2.txt
+    + counts_filtered.txt
+    + counts_raw.txt
+    + counts_vst.txt
+    + human_biomaRt_annotation.csv
+    + metadata.csv
+    + Time_t24_vs_t0.txt
+    + Time_t2_vs_t0.txt
+    + Time_t6_vs_t0.txt
+    + tree_env.tsv
+    + tree_hmap.tsv
+    + shiny_app_data.csv
+
+You can find the information related to the important files below:
+
+## Counts table
+
+* Table with gene counts after filtering: [Filtered Counts](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/counts_filtered.txt)
+* Table with gene counts normalized with VST: [VST counts](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/counts_vst.txt)
+* Table with gene counts normalized with DESeq2: [DESeq2 counts](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/counts_deseq2.txt)
+
+## Metadata
+
+* Metadata of the samples: [Sample Metadata](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/metadata.csv)
+* Metadata of the genes with their functions: [Gene Annotation](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/human_biomaRt_annotation.csv)
+
+## DE genes
+
+Below are the lists of differentially expressed genes between different time points
+
+* [Time point 6 vs Time point 0](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/Time_t6_vs_t0.txt)
+* [Time point 24 vs Time point 0](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/Time_t24_vs_t0.txt)
+
+# Optional exercises
+
+## Phylogenetic trees
+
+:::{.callout-tip}
+If you are interested in leaning about how to work with phylogeny in ggplot and R. You can follow some tutorial materials [here](https://nbisweden.github.io/workshop-data-visualization-r/2304/home_content.html#51_Phylogenetic_trees)
+:::
+
+The data required for the phylogenetic trees are already part of the main `data.zip` file, as shown in the directory tree before. The files needed for this exercise are described below:
+
+* A phylogentic tree based on a group of archaeal genomes in newick format: [Archaea tree](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/arch_newick.txt)
+* Some metadata info regarding the environments that these archaea could be found: [Environment info](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/tree_env.tsv)
+* An expression matrix to show heatmap and phylogenetic tree together: [for heatmap](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/tree_hmap.tsv)
+
+## Map-data with ggmap
+
+:::{.callout-tip}
+If you are interested in leaning about how to work with maps in ggplot and R. You can follow some tutorial materials [here](https://nbisweden.github.io/workshop-data-visualization-r/2304/lab_ggmap.html)
+:::
+
+The data required for this part of the exercise can be downloaded from [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/ggmap_data/ggmap_data.zip)
+
+* Population statistics of the different countries in [2020](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/ggmap_data/world_population.tsv)
+* A small data frame of points from the [Sisquoc River](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/ggmap_data/sisquoc-points.txt)
+* GPS readings from a personal [run](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/ggmap_data/running.csv)
+
+***
