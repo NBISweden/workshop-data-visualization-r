@@ -14,7 +14,7 @@ library(dplyr)
 library(ggplot2)
 library(reshape2)
 data("iris")
-md <- read.table("data/metadata.csv", header = T, sep = ";")
+md <- read.table("../../data/metadata.csv", header = T, sep = ";")
 rownames(md) <- md$Sample_ID
 
 library(tidyverse)
@@ -25,7 +25,7 @@ library(tidyverse)
 Let us first make a PCA object. For this, we will use the `VST` data, because it makes sense to use the normalized data for building the PCA. To run PCA, we use the R function `prcomp()`. It takes in a matrix where samples are rows and variables are columns. Therefore, we transpose our count matrix using the function `t()`. If we do not transpose, then PCA is run on the genes rather than the samples. 
 
 ```{r, warning=FALSE, message=FALSE}
-gc_vst <- read.table("data/counts_vst.txt", header = T, row.names = 1, sep = "\t")
+gc_vst <- read.table("../../data/counts_vst.txt", header = T, row.names = 1, sep = "\t")
 vst_pca <- prcomp(t(gc_vst))
 ```
 
@@ -35,7 +35,9 @@ After you computer the PCA, if you type the object `vst_pca$` and press `TAB`, y
 * `x:` the coordinates of the samples (observations) on the principal components.
 * `rotation:` the matrix of variable loadings (columns are eigenvectors).
 
-<i class="fas fa-exclamation-circle"></i> Note &nbsp; There are quite a few functions in R from different packages that can run PCA. So, one should look into the structure of the PCA object and import it into `ggplot` accordingly!
+:::{.callout-note}
+There are quite a few functions in R from different packages that can run PCA. So, one should look into the structure of the PCA object and import it into `ggplot` accordingly!
+:::
 
 ## Variance of components (Scree plot)
 
@@ -133,9 +135,17 @@ ggplot(data=vst_pca_all, mapping=aes(x=PC1, y=PC2)) +
 ```
 
 
-<i class="fas fa-exclamation-circle"></i> Note &nbsp; Similarly, let us say, you have environmental variables (continous variables like pH and so on) from the same samples and you would like to see how they would fit this bi-plot. One can use `envfit()` function from the `vegan` package, this function would return both the `p-value` and the `coordinates` of each of the variables in your environmental matrix. Then you could subset the significant variables and plot them in the same way as above. 
+:::{.callout-note}
+Similarly, let us say, you have environmental variables (continous variables like pH and so on) from the same samples and you would like to see how they would fit this bi-plot. One can use `envfit()` function from the `vegan` package, this function would return both the `p-value` and the `coordinates` of each of the variables in your environmental matrix. Then you could subset the significant variables and plot them in the same way as above. 
+:::
 
-# Heatmap
+
+````{comment}
+
+Needs to be updated from here on!! 
+
+
+# Heatmap 
 
 ## pheatmap
 
@@ -149,7 +159,9 @@ pheatmap(vst_cor,border_color=NA,annotation_col=md[,"Time",drop=F],
          annotation_row=md[,"Time",drop=F],annotation_legend=T)
 ```
 
-<i class="fas fa-exclamation-circle"></i> Note &nbsp; If you get a `gpar()` error, this is due to the reason that the metadata table you provide here does not have the sample ids as `rownames`. `pheatmap` maps the meta-data to the count data using `rownames`  
+:::{.callout-note}
+If you get a `gpar()` error, this is due to the reason that the metadata table you provide here does not have the sample ids as `rownames`. `pheatmap` maps the meta-data to the count data using `rownames`  
+:::
 
 Now, this is based on a correlation matrix where you have a very simple square matrix with samples and their correlations to each to each other. Now let us look into how we can make a heatmap from an expression dataset. 
 
@@ -158,7 +170,7 @@ For this we will use the dataset: `Time_t2_vs_t0.txt` here that basically has th
 <i class="fas fa-exclamation-circle"></i> Note &nbsp; The genes are already sorted in the file. First 100 genes with `negative log2FoldChange` and the next 100 with `positive log2FoldChange`
 
 ```{r}
-diff_t2_vs_t0 <- read.table("data/Time_t24_vs_t0.txt", sep = "\t", header = TRUE, row.names = 1)
+diff_t2_vs_t0 <- read.table("../../data/Time_t24_vs_t0.txt", sep = "\t", header = TRUE, row.names = 1)
 hmap_t2_t0 <- subset(gc_vst, rownames(gc_vst) %in% diff_t2_vs_t0$gene)
 
 pheatmap(hmap_t2_t0, border_color=NA, annotation_col=md[,"Time",drop=F], annotation_row=NULL, annotation_legend=T)
@@ -196,8 +208,9 @@ ggplot(hmap_t2_t0_long) +
   theme(axis.text.y = element_blank(), axis.ticks = element_blank()) 
 
 ```
+-->
 
-# Exercise
+# Exercise I
 
 Now, as I have mentioned earlier, building a plot similar to PCA really depends on how the object looks like. Now, let us try to make a `MDS` or `PCoA` plot from the same data as we have used. Here is how you get the MDS object in R.
 
@@ -206,9 +219,10 @@ gc_dist <- dist(t(gc_vst))
 gc_mds <- cmdscale(gc_dist,eig=TRUE, k=2) 
 ```
 
-<i class="fas fa-clipboard-list"></i> Task &nbsp; Now, try to replicate the example `MDS` plot below if you have enough time.
+::::{.callout-important title="Task 1.1"}
+Now, try to replicate the example `MDS` plot below if you have enough time.
 
-```{r, plot.fold=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 Eigenvalues <- gc_mds$eig
 Variance <- Eigenvalues / sum(Eigenvalues) 
 Variance1 <- 100 * signif(Variance[1], 3)
@@ -234,4 +248,9 @@ ggplot(gc_mds_long, aes(x=V1, y=V2, color = Time)) +
         panel.grid.minor = element_blank()) 
 ```
 
-<i class="fas fa-clipboard-list"></i> Hint &nbsp; The mds object `gc_mds` has "eigenvalues". You can calculate the variance by `Variance <- Eigenvalues / sum(Eigenvalues)`
+:::{.callout-tip}
+The mds object `gc_mds` has "eigenvalues". You can calculate the variance by `Variance <- Eigenvalues / sum(Eigenvalues)`
+:::
+::::
+
+````
