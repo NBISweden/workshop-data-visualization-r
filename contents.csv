@@ -1,6 +1,6 @@
 Main,Topic,Lecture,Tutorial
-ggplot,Basic ggplot,topics/ggplot/slide_gg1.html,
-ggplot,Advanced ggplot,topics/ggplot/slide_gg2.html,
+ggplot,Basic ggplot,topics/ggplot/slide_gg1.html,topics/ggplot/lab_gg1.html
+ggplot,Advanced ggplot,topics/ggplot/slide_gg2.html,topics/ggplot/lab_gg2.html
 ggplot,PCA plot,,
 Others Day 1,Vector and Bitmap images,topics/others_day1/Vector_Bitmap_Images.pdf,
 Others Day 1,Single-cell data,,
