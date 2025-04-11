@@ -185,8 +185,8 @@ gc[c(1:6),c(1:4)] %>%
 
 . . .
 
-* easier to add data to the existing
-* Most databases store and maintain in long-formats due to its efficiency
+* easier to add more data to the existing dataset without restructuring
+* Most databases store and maintain data in long-formats due to its efficiency
 * R tools **like ggplot** require data in long format.
 
 ## Data Frames
