@@ -30,7 +30,7 @@ library(kableExtra)
 * [R Basics](#r-basics)
 * [Data Types and Formats](#data-types)
 * [R Tips](#important-tips)
-* [Grammer of Graphics](#grammar-of-graphics)
+* [Grammar of Graphics](#grammar-of-graphics)
   * [Geoms](#geoms)
   * [Aesthetics](#aesthetics)
   * [Scales](#scales)
@@ -45,7 +45,7 @@ library(kableExtra)
 
 :::{.small}
 
-* Coffe breaks (Fika in the afternoon)
+* Coffee breaks (Morning and afternoon fika)
 * Webpage structure
 * Plots from drop-down
 * Times mentioned in schedule are **super** arbitrary
@@ -87,7 +87,7 @@ print(s)
 * `chr` stands for *character* vectors or strings
 * `dttm` stands for *date and time*,
 * `lgl` stands for *logical* with just TRUE or FALSE
-* `fctr` stands for *factors* which R uses to state categorical variables.
+* `fctr` stands for *factors* which R uses to state categorical variables
 * `date` stands for *dates*
 
 You can find what kind of vectors you have or imported by using the function `class()`
@@ -185,9 +185,9 @@ gc[c(1:6),c(1:4)] %>%
 
 . . .
 
-* easier to add more data to the existing dataset without restructuring
+* Easier to add data to the existing dataset without restructuring
 * Most databases store and maintain data in long-formats due to its efficiency
-* R tools **like ggplot** require data in long format.
+* R tools **like ggplot** require data in long format
 
 ## Data Frames
 
@@ -197,7 +197,7 @@ gc[c(1:6),c(1:4)] %>%
 ![](../../assets/images/df.png){width="60%" fig-align="center"}
 
 
-* imported files re usually in `data.frame`
+* Imported files are usually in `data.frame`
 * Structured matrix with `row.names` and `colnames`
 * Probably most used `data.type` in Biology! 
 
@@ -262,7 +262,7 @@ read.table("iris-head.csv", sep = ',')
 
 ### Reserved variables
 
-* reserved variables like `T`, `F`, `character` and many others ...
+* Reserved variables like `T`, `F`, `character` and many others ...
 * How can you check if something is a reserved variable?
 
 ```{webr-r}
@@ -291,11 +291,11 @@ F
 :::{.fragment .column width="65%"}
 
 * **Data:** Input data
-* **Geom:** A geometry representing data. Points, Lines etc
-* **Aesthetics:** Visual characteristics of the geometry. Size, Color, Shape etc
+* **Geom:** A geometry representing data. *Points, Lines etc*
+* **Aesthetics:** Visual characteristics of the geometry. *Size, Color, Shape etc*
 * **Scale:** How visual characteristics are converted to display values
-* **Statistics:** Statistical transformations. Counts, Means etc
-* **Coordinates:** Numeric system to determine position of geometry. Cartesian, Polar etc
+* **Statistics:** Statistical transformations. *Counts, Means etc*
+* **Coordinates:** Numeric system to determine position of geometry. *Cartesian, Polar etc*
 * **Facets:** Split data into subsets
 
 :::
