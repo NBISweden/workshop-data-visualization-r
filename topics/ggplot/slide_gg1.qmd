@@ -280,7 +280,7 @@ F
 ## Grammar of Graphics
 
 :::: {.columns}
-::: {.column width="30%"}
+::: {.column width="40%"}
 
 ![](../../assets/images/gog.png)
 
@@ -288,15 +288,15 @@ F
 :::{.column width="5%"}
 :::
 
-:::{.fragment .column width="65%"}
+:::{.fragment .column width="55%"}
 
-* **Data:** Input data
-* **Geom:** A geometry representing data. *Points, Lines etc*
-* **Aesthetics:** Visual characteristics of the geometry. *Size, Color, Shape etc*
-* **Scale:** How visual characteristics are converted to display values
-* **Statistics:** Statistical transformations. *Counts, Means etc*
-* **Coordinates:** Numeric system to determine position of geometry. *Cartesian, Polar etc*
-* **Facets:** Split data into subsets
+* [**Data:**]{style="color:#95b540;"} Input data
+* [**Geom:**]{style="color:#95b540;"} A geometry representing data. *Points, Lines etc*
+* [**Aesthetics:**]{style="color:#95b540;"} Visual characteristics of the geometry. *Size, Color, Shape etc*
+* [**Scale:**]{style="color:#95b540;"} How visual characteristics are converted to display values
+* [**Statistics:**]{style="color:#95b540;"} Statistical transformations. *Counts, Means etc*
+* [**Coordinates:**]{style="color:#95b540;"} Numeric system to determine position of geometry. *Cartesian, Polar etc*
+* [**Facets:**]{style="color:#95b540;"} Split data into subsets
 
 :::
 ::::
