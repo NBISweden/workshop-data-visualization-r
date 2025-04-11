@@ -57,6 +57,7 @@ You can find the information related to the important files below:
 
 Below are the lists of differentially expressed genes between different time points
 
+* [Time point 2 vs Time point 0](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/Time_t2_vs_t0.txt)
 * [Time point 6 vs Time point 0](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/Time_t6_vs_t0.txt)
 * [Time point 24 vs Time point 0](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/Time_t24_vs_t0.txt)
 
