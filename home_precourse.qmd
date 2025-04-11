@@ -11,6 +11,12 @@ format: html
 
 Detailed instructions on the tools necessary for this course and the means of installation will be updated here closer to the schedule. So, keep an eye on this page until then.
 
+:::{.callout-caution title="Download course files"}
+
+Please download all the necessary files from [here](https://nbisweden.github.io/workshop-data-visualization-r/2505/topics/lab_download.html) and make sure that the directory tree looks similar to the one displayed in that page.
+
+:::
+
 ## Preparations
 
 To prepare for the course, you can follow one of the links below to warm up your skills necessary for the course.

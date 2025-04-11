@@ -87,7 +87,7 @@ cat(":::\n")
 
 ### Lunch
 
-The lunches during the course will be provided at **Restaurant & Café Inspira** located at **Medicon Village** which is 2 minutes walk from the course location. The location of the restaurant is [here](https://g.co/kgs/9Z4W3ch).
+The lunches during the course will be provided at **Restaurant & Café Inspira** located at **Medicon Village** which is 2 minutes walk from the course location. The location of the restaurant is [here](https://maps.app.goo.gl/XzqcXM3mM86XPXXf6).
 
 ### Dinner
 
@@ -97,7 +97,7 @@ The restaurant for the dinner on the 2nd day will be at [Valvet Steakhouse](http
 
 This workshop is run by the **National Bioinformatics Infrastructure Sweden (NBIS)**. NBIS is a platform that is part of **SciLifeLab**.
 
-If you would like to get in touch with us regarding this workshop, please contact us at **edu.plotting.r@nbis.se**.
+If you would like to get in touch with us regarding this workshop, please [contact us](mailto:edu.plotting.r%40nbis.se).
 
 
 If you would like to get in touch with us regarding the course at GitHub, kindly write to us at the [issues](https://github.com/NBISweden/workshop-data-visualization-r/issues) page.
