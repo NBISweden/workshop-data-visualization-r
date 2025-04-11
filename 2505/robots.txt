@@ -1,0 +1,1 @@
+Sitemap: https://nbisweden.github.io/workshop-data-visualization-r/2505/sitemap.xml
