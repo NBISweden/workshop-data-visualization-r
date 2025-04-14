@@ -284,11 +284,13 @@ gc_long %>%
 `geom_line()` is a bit tricky when you use it together with `groups`. It tries to draw lines within the group. In this case, if you would like to draw lines between the groups (like in the above plot, between `t0` through `t2` to `t24`), you initate the ggplot with aesthetics for the line and add `geom_line(aes(group=1))` this way. 
 :::
 
-:::{.callout-tip title="Tip 1"}
+:::{.callout-tip title="Tip 2"}
 This figure has `theme_light()`
 :::
 
 ::::
+
+# Combining plots
 
 we will now focus on making "publication-type" figures, with sub-plots and such using different tools in R. There are many different ways/packages to do this, but we will mainly focus on 2 packages: `cowplot` and `ggpubr`.
 
@@ -355,9 +357,7 @@ p4 <- ggplot(data=iris,mapping=aes(x=Sepal.Length, y = Sepal.Width, color = Spec
 
 The objects `p1`, `p2`, `p3` and `p4` as intuitively represent the plots **A**, **B**, **C** and **D** repectively. 
 
-# Cowplot
-
-## plot_grid
+## Cowplot
 
 One can use the simple `plot_grid()` function from the `cowplot`.
 
@@ -406,9 +406,7 @@ ggdraw() +
   draw_plot_label(label = c("A", "B", "C"), size = 15, x = c(0,0.5,0), y = c(1, 1,0.5))
 ```
 
-# ggpubr
-
-## ggarrange
+## ggpubr
 
 The package `ggpubr` comes with quite a few functions that can be very useful to make comprehensive figures. To start with the simple function, let's start with `ggarrange()` that is used to put plots together.
 

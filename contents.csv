@@ -4,7 +4,7 @@ ggplot,Advanced ggplot,topics/ggplot/slide_gg2.html,topics/ggplot/lab_gg2.html
 ggplot,PCA plot,,topics/ggplot/lab_pca.html
 Others Day 1,Vector and Bitmap images,topics/others_day1/Vector_Bitmap_Images.pdf,
 Others Day 1,Single-cell data,,
-Quarto,Basic Quarto,topics/Quarto/slide_quarto1.html,
+Quarto,Basic Quarto,topics/Quarto/slide_quarto1.html,topics/Quarto/lab_quarto1.html
 Quarto,Advanced Quarto,topics/Quarto/slide_quarto2.html,
 Dynamic Plotting,Intro Dynamic plotting,topics/dynamic_plotting/slide_dynamic_plot1.html,
 Dynamic Plotting,Advanced Dynamic plotting,,
