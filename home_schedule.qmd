@@ -89,8 +89,8 @@ if (all(is.na(s$assistant)) | all(s$assistant == "")) {
     s$assistant <- NULL
     cnames <- c("Time", "Topic", "Instructor")
 } else {
-    s$assistant <- create_tooltip(s$assistant, asst)
-    cnames <- c("Time", "Topic", "Instructor", "Assistant")
+    #s$assistant <- create_tooltip(s$assistant, asst)
+    cnames <- c("Time", "Topic", "Instructor", "Assistants")
 }
 ```
 
@@ -171,6 +171,19 @@ s %>%
 {{< fa brands youtube >}}  Video
 </span>
 </span>
+
+```{r,echo=FALSE,results='asis'}
+# add assistant list if present
+
+if(!is.null(asst)) {
+  cat('<p class="small" style="margin-top:20px;">',
+           '<span style="margin-left:4px; margin-right:4px;"><i class="fas fa-users" style="margin-left:4px; margin-right:4px;"></i></span>',
+           paste(asst,collapse=", "),
+           '</p>')
+}
+```
+
 </p>
+
 
 :::
