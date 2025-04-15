@@ -4,7 +4,6 @@ subtitle: "Workshop on Advanced Data Visualization"
 author: "Lokesh Mano"
 format: 
     html: 
-        code-tools: true
         font-size: 10
 code-annotations: hover
 ---
