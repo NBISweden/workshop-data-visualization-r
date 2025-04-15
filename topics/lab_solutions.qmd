@@ -9,11 +9,12 @@ format:
 code-annotations: hover
 ---
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, eval= FALSE, echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
 library(ggplot2)
 library(reshape2)
 library(tidyverse)
+setwd("./topics")
 ```
 
 
@@ -103,8 +104,6 @@ gc_long %>%
 
 ## Exercise II
 
-### Task 2.1
-
 ```{r, eval=FALSE}
 library(ggpubr)
 p4 <- ggplot(data=iris,mapping=aes(x=Sepal.Length, y = Sepal.Width, color = Species)) +
@@ -167,6 +166,8 @@ ggplot(gc_mds_long, aes(x=V1, y=V2, color = Time)) +
 
 ## Exercise II
 
+### Task 2.1
+
 ```{r, eval=FALSE}
 t2_vs_t0 <- read.table("../data/Time_t2_vs_t0.txt", sep = "\t", header = TRUE, row.names = 1)
 
@@ -180,5 +181,24 @@ t2_vs_t0 %>%
   theme_bw(base_size = 14) 
 ```
 
+### Task 2.2
+
+```{r, eval=FALSE}
+library(ggrepel)
+gene_info <- read.table("../data/human_biomaRt_annotation.csv", sep = ";", header = TRUE, row.names = 1)
+names(gene_info) <- c('gene_id', 'gene_name')
+
+de_w_names <- t2_vs_t0 %>%
+  rownames_to_column('gene_id') %>%
+  left_join(gene_info, by = "gene_id")
+
+ggplot(de_w_names, aes(x = log2FoldChange, y = -log10(padj))) +
+  geom_point(color = "grey70") +
+  geom_text_repel(data=filter(de_w_names, padj < 0.05 & abs(log2FoldChange) > 1.5), aes(x = log2FoldChange, y = -log10(padj), label=gene_name)) +
+  geom_hline(yintercept = 1.3, linetype = 2) +
+  geom_point(data=filter(t2_vs_t0, padj < 0.05), color = "red") +
+  ylab("Adjusted P-values in -log10") +
+  theme_bw(base_size = 14) 
+```
 
 
