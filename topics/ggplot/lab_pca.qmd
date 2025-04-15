@@ -236,6 +236,8 @@ t2_vs_t0 %>%
 
 Try to think about each of the line of code that was used to generate the plot and what it's function is. At the moment, the plot contains all genes that are colored the with same `grey scale`. 
 
+You can read more about MA plot and what it means [here](https://academic.oup.com/bib/article/20/6/2044/5066173#191590952)
+
 ## Exercise II
 
 ::::{.callout-important title="Task 2.1"}
@@ -245,6 +247,57 @@ This plot would be even more informative when you color the significant genes di
 You can `filter` the data that has `adjusted p-value < 0.05` and plot the points with a different color.
 :::
 ::::
+
+## Volcano plot
+
+Similar to MA plot, Volcano plot indicates the relation between the `adjusted p-values` and the `log fold change`. The adjusted p-value is transformed with `-log10` on the y-axis, so that the smallest p-values appears at the top of the plot. The log2FoldCange values are plotted as they are on the x-axis, so that the down-regulated genes are on the left of the x-axis (-ve values) and the up-regulated genes are on the right of the x-axis (+ve values).
+
+
+```{r, warning=FALSE, message=FALSE}
+t2_vs_t0 %>%
+  ggplot(aes(x = log2FoldChange, y = -log10(padj))) +
+  geom_point(color = "grey70") +
+  geom_hline(yintercept = 1.3, linetype = 2) +
+  geom_point(data=filter(t2_vs_t0, padj < 0.05), color = "red") +
+  ylab("Adjusted P-values in -log10") +
+  theme_bw(base_size = 14) 
+```
+
+You can read more about Volcano plot and what it means [here](https://academic.oup.com/bib/article/20/6/2044/5066173#191590952)
+
+## Exercise II
+
+::::{.callout-important title="Task 2.2"}
+Try to code the plot below:
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(ggrepel)
+gene_info <- read.table("../../data/human_biomaRt_annotation.csv", sep = ";", header = TRUE, row.names = 1)
+names(gene_info) <- c('gene_id', 'gene_name')
+
+de_w_names <- t2_vs_t0 %>%
+  rownames_to_column('gene_id') %>%
+  left_join(gene_info, by = "gene_id")
+
+ggplot(de_w_names, aes(x = log2FoldChange, y = -log10(padj))) +
+  geom_point(color = "grey70") +
+  geom_text_repel(data=filter(de_w_names, padj < 0.05 & abs(log2FoldChange) > 1.5), aes(x = log2FoldChange, y = -log10(padj), label=gene_name)) +
+  geom_hline(yintercept = 1.3, linetype = 2) +
+  geom_point(data=filter(t2_vs_t0, padj < 0.05), color = "red") +
+  ylab("Adjusted P-values in -log10") +
+  theme_bw(base_size = 14) 
+```
+
+:::{.callout-note}
+You can find the gene name information in the file `data/human_biomaRt_annotation.csv`. 
+:::
+
+:::{.callout-tip}
+You can `filter` the data that has `adjusted p-value < 0.05` and `log2FoldChange > ±1.5` for the text part and use `geom_text_repel()`. 
+:::
+::::
+
+
 
 
 ````{comment}

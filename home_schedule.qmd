@@ -109,7 +109,6 @@ if (!is.null(schedule_message)) {
 ```{r}
 #| echo: false
 #| eval: true
-#| html-table-processing: none
 
 # grouping vector
 r <- rle(s$date)
@@ -152,6 +151,8 @@ s %>%
     pack_rows(index = packs, escape = FALSE)
 ```
 
+:::
+
 <!-- marker legend -->
 <p class="small" style="margin-top:20px;text-align:center;">
 <span>
@@ -186,4 +187,4 @@ if(!is.null(asst)) {
 </p>
 
 
-:::
+
