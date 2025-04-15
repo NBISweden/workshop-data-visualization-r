@@ -1,6 +1,6 @@
 ---
 title: "Introduction to Quarto"
-subtitle: "Introduction to Quarto - lab"
+subtitle: "How to start with Quarto and how to generate first Quarto notebook?"
 author: "Katja Kozjek"
 institute: "NBIS, SciLifeLab"
 format: 
@@ -124,9 +124,10 @@ Markdown text is useful to introduce your content and explain your code.
 ## Text formatting
 
 This `*italic text*` becomes *italic text*.  
-This `**bold text**` becomes **bold text**.  
+This `**bold text**` becomes **bold text**. 
 Subscript written like this `H~2~O` renders as H~2~O.  
 Superscript written like this `2^10^` renders as 2^10^.
+This ``code`` format becomes `code`.
 
 ## Headings
 
@@ -218,7 +219,7 @@ Similar to figures, you can include two types of tables in a Quarto document. Th
 Code blocks are called **chunks**. Chunks refer to sections in the document where you can write and execute code. These chunks are enclosed by three backticks followed by the name of the language you are using (e.g., `r` for R code). Code chunks can be included in three ways:
 
 1. Keyboard commands: `⌃Ctrl + Alt + I` (Windows) or `Cmd + Option + I` (Mac)
-2. RStudio: Clicking the `Insert` button in the toolbar (top right) in the Visual Editor
+2. RStudio: Clicking the `Insert` button in the toolbar (top right) in the Visual Editor, choose `Executable Cell`
 3. Manually typing the chunk delimiters
 
 Block code formatted as such:
@@ -251,6 +252,7 @@ In this chunk we set `eval: false` which will prevent chunk from being executed,
 ````
 ```{{r}}
 #| eval: false
+
 ggplot(penguins, aes(x = sex, fill = species)) +
   geom_bar(alpha = 0.8) +
   scale_fill_manual(values = c("darkorange","purple","cyan4"), 
@@ -371,7 +373,7 @@ There are two chunk options related to figure sizes: `fig-width` and `fig-height
 
 You can also add captions and their location using the `fig-cap` and `cap-location` code chunk options respectively.
 
-- Add a suitable caption and caption location (optins: top, bottom, margin) to the figure and render. 
+- Add a suitable caption and caption location (options: top, bottom, margin) to the figure and render. 
 
 ### Cross-references
 
@@ -415,13 +417,105 @@ In order for a table to be cross-referenceable, its label must start with the `t
 ````
 ```{{r}}
 #| label: tbl-penguins
-#| tbl-cap: Palmer penguins bill length, width and body mass.
+#| tbl-cap: Palmer penguins bill length, flipper length and body mass.
 #| tbl-cap-location: margin
+
 knitr::kable(
-    penguins[1:10, c("species", "bill_length_mm", "bill_depth_mm", "body_mass_g")],
-    col.names = c("Species", "Bill length (mm)", "Bill depth (mm)", "Body mass (g)")
+    penguins[1:10, c("species", "bill_length_mm", "flipper_length_mm", "body_mass_g")],
+    col.names = c("Species", "Bill length (mm)", "Flipper length (mm)", "Body mass (g)")
 )
 ```
 ````
 
 - Add this code chunk to your document and render it. 
+- Change `tbl-cap-location:` to top, render and observe what happens.
+- Under the chunk where you just generated the table, write some markdown text and refer to the table using cross-referencing.
+
+# Document options
+
+Up to this point, we have mainly focused on chunk-level settings that apply only within the specific chunk they are used in. However, many of these options can also be applied globally affecting the entire document. There are also some options specifically for tailoring the document as a whole, regardless of chunk content.
+
+When we created Quarto notebook we already applied some global options, such as `title`, `author`, `date`, `format`. 
+
+## Table of contents
+
+To make it easier for readers to navigate your document, you can use a table of contents. You just have to specify it using the `toc` in the YAML header. This is how the header would look like:
+
+```{.yaml}
+---
+title: "My first Quarto Document"
+author: "Katja"
+date: last-modified
+date-format: “YYYY-MMM-DD"
+format: html
+toc: true
+---
+```
+
+To specify the number of section levels to include in the table of contents `toc-depth` option can be used. Position of the table of contents can be set-up using the `toc-location`. The HTML format by default floats the table of contents to the `right`. You can alternatively position it at the `left`, or in the `body`. You can also customize the title used for the table of contents using the `toc-title option`, for example: `toc-title: Contents`. 
+
+- Add `toc`, `toc-depth` and `toc-location` to your document and render it.
+
+## Section numbering
+
+This is another feature that can help browsing your document efficiently. It is very straightforward, you just need to specify 
+`number-sections: true` in your YAML header. To specify the deepest level of heading to add numbers to (by default all headings are numbered) use the `number-depth option`. 
+
+## Code folding
+
+`code-fold` is one of the global options that are specified nested inside the format option, like so:
+
+``` markdown
+format:
+  html:
+    code-fold: true
+```
+
+- Add the `code-fold` option to your document and render it.
+
+You will see that `Code` button is generated and if you click on it chunk containing code will open. You can also use the `code-summary` chunk option to specify a different text to show with the folded code instead of the default `Code`, e.g. `code-summary: Show the code`.
+
+``` markdown
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+```
+
+- Add the `code-fold` and `code-summary` options to your document and render it.
+
+You can also add the `code-tools` option, which will add a drop-down menu to toggle visibility of all code as well as the ability to view the source of the document.
+
+- Add the `code-tools: true` to your document and render it.
+
+# Quarto project
+
+So far, the output formats we have discussed and you have worked on have been single documents. We can also have a project composed of multiple documents and document types. In this case, the files are organised in a directory and the configuration is defined in `_quarto.yml`. This will be referred to as the config file. Think of this as a shared YAML metadata file for all of the documents. In addition, an **index.qmd** file defines the home page.
+
+For a website, the minimal config looks like this: 
+
+```
+project:
+  type: website
+```
+
+And for a book:
+
+```
+project:
+  type: book
+```
+
+Then running `quarto render` renders the output into a directory named `_site`. The output can be changed, for example, to **docs** for GitHub Pages.
+
+```
+project:
+  type: website
+  output_dir: docs
+```
+
+The output format by default is HTML. This can be changed or modified by adding `format` to the config file or to individual qmd files. The parameters defined in the config file will be shared by all other qmd files.
+
+To create a project in RStudio, go to **File > New Project **, then select directory and then a project type such as website, blog or book. Try creating one based on what interests you. Website and blog documentation is [here](https://quarto.org/docs/websites/) and books are [here](https://quarto.org/docs/books/).
+
+To read more about project, see [here](https://quarto.org/docs/projects/quarto-projects.html). 
