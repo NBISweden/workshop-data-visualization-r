@@ -1,10 +1,9 @@
 ---
-title: "MDR and Gene Expression"
+title: "PCA and Gene Expression"
 subtitle: "Workshop on Advanced Data Visualization"
 author: "Lokesh Mano"
 format: 
-    html: 
-        code-tools: true
+    html:
         font-size: 10
 code-annotations: hover
 ---
@@ -16,7 +15,6 @@ library(reshape2)
 data("iris")
 md <- read.table("../../data/metadata.csv", header = T, sep = ";")
 rownames(md) <- md$Sample_ID
-
 library(tidyverse)
 ```
 
@@ -297,17 +295,11 @@ You can `filter` the data that has `adjusted p-value < 0.05` and `log2FoldChange
 :::
 ::::
 
-
-
-
-````{comment}
-
-Needs to be updated from here on!! 
-
-
 # Heatmap 
 
 ## pheatmap
+
+### Samples
 
 For heatmap, let us look into `pheatmap` library which is not part of `ggplot`, but it is a well known package for building heatmaps. It contains a lot of internal aesthetics that you can add that are very informative and intuitive. Let us first start with making a correlation matrix and plot it.
 
@@ -325,15 +317,22 @@ If you get a `gpar()` error, this is due to the reason that the metadata table y
 
 Now, this is based on a correlation matrix where you have a very simple square matrix with samples and their correlations to each to each other. Now let us look into how we can make a heatmap from an expression dataset. 
 
-For this we will use the dataset: `Time_t2_vs_t0.txt` here that basically has the list of genes that are differentially expressed in `t2` vs `t0` and we would like to visualize this in an heatmap. To be more precise, these are the top and bottom 200 (2 X 100) genes with `adjusted p-value < 0.01`. We use just these 200, for the  sake of visualization. Let us take the `t24 vs t0` here as these are most different based on our PCA.
+### Genes
 
-<i class="fas fa-exclamation-circle"></i> Note &nbsp; The genes are already sorted in the file. First 100 genes with `negative log2FoldChange` and the next 100 with `positive log2FoldChange`
+For this we will use the dataset: `Time_t24_vs_t0.txt` here that basically has the list of genes that are differentially expressed in `t24` vs `t0` and we would like to visualize this in an heatmap. To be more precise, we take the top 200 genes (based on fold change) with `adjusted p-value < 0.001`. We use just these 200, for the  sake of visualization. Let us take the `t24 vs t0` here as these are most different based on our PCA.
 
 ```{r}
-diff_t2_vs_t0 <- read.table("../../data/Time_t24_vs_t0.txt", sep = "\t", header = TRUE, row.names = 1)
-hmap_t2_t0 <- subset(gc_vst, rownames(gc_vst) %in% diff_t2_vs_t0$gene)
+t24_vs_t0 <- read.table("../../data/Time_t24_vs_t0.txt", sep = "\t", header = TRUE, row.names = 1)
 
-pheatmap(hmap_t2_t0, border_color=NA, annotation_col=md[,"Time",drop=F], annotation_row=NULL, annotation_legend=T)
+diff_t24_vs_t0 <- t24_vs_t0 %>% 
+  rownames_to_column('gene') %>%
+  filter(padj < 0.001) %>%
+  arrange(desc(abs(log2FoldChange))) %>%
+  head(200)
+
+hmap_t24_t0 <- subset(gc_vst, rownames(gc_vst) %in% diff_t24_vs_t0$gene)
+
+pheatmap(hmap_t24_t0, border_color=NA, annotation_col=md[,"Time",drop=F], annotation_row=NULL, annotation_legend=T)
 ```
 
 Further, we can also customize using the `pheatmap` and also use the continous color options we talked about in the earlier sections.
@@ -342,7 +341,7 @@ Further, we can also customize using the `pheatmap` and also use the continous c
 library(wesanderson)
 md$Time <- factor(md$Time, levels = c("t0","t2","t6","t24"))
 
-pheatmap(hmap_t2_t0, color = wes_palette("Moonrise3", 100, type = "continuous"), border_color=NA, annotation_col=md[,"Time",drop=F], annotation_row=NULL, annotation_legend=T, show_rownames = FALSE, fontsize = 14)
+pheatmap(hmap_t24_t0, color = wes_palette("Moonrise3", 100, type = "continuous"), border_color=NA, annotation_col=md[,"Time",drop=F], annotation_row=NULL, annotation_legend=T, show_rownames = FALSE, fontsize = 14)
 ```
 
 ## ggplot
@@ -350,26 +349,25 @@ pheatmap(hmap_t2_t0, color = wes_palette("Moonrise3", 100, type = "continuous"),
 We can use `geom_tile()` from `ggplot` to make heatmaps. The `ggplot` based heatmaps are, as we have seen for other cases, much more easier to customize.
 
 ```{r, warning=FALSE, message=FALSE}
-hmap_t2_t0_long <- hmap_t2_t0 %>%
+hmap_t24_t0_long <- hmap_t24_t0 %>%
   rownames_to_column(var = "Gene") %>%
   gather(Sample_ID, VST, -Gene) %>% 
   full_join(md, by = "Sample_ID")  
 
-hmap_t2_t0_long$Sample_Name <- factor(hmap_t2_t0_long$Sample_Name, levels = 
+hmap_t24_t0_long$Sample_Name <- factor(hmap_t24_t0_long$Sample_Name, levels = 
                                         c("t0_A","t0_B","t0_C","t2_A","t2_B","t2_C","t6_A","t6_B","t6_C","t24_A","t24_B","t24_C"))
-hmap_t2_t0_long$Time <- factor(hmap_t2_t0_long$Time, levels = c("t0","t2","t6","t24"))
-hmap_t2_t0_long$Replicate <- factor(hmap_t2_t0_long$Replicate, levels = c("A","B","C"))
-hmap_t2_t0_long$Gene <- factor(hmap_t2_t0_long$Gene, levels = row.names(hmap_t2_t0))
+hmap_t24_t0_long$Time <- factor(hmap_t24_t0_long$Time, levels = c("t0","t2","t6","t24"))
+hmap_t24_t0_long$Replicate <- factor(hmap_t24_t0_long$Replicate, levels = c("A","B","C"))
+hmap_t24_t0_long$Gene <- factor(hmap_t24_t0_long$Gene, levels = row.names(hmap_t24_t0))
 
-ggplot(hmap_t2_t0_long) +
+ggplot(hmap_t24_t0_long) +
   geom_tile(aes(x = Sample_Name, y = Gene, fill = VST)) +
   scale_fill_gradientn(colours = rainbow(5)) +
   scale_x_discrete(limits = c("t0_A","t0_B","t0_C","t24_A","t24_B","t24_C")) +
   theme(axis.text.y = element_blank(), axis.ticks = element_blank()) 
-
 ```
 
-````
+As you can see and compare that the heatmaps produced by `pheatmap` are way better than `ggplot`. 
 
 
 
