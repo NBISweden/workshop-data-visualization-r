@@ -177,8 +177,8 @@ s %>%
 # add assistant list if present
 
 if(!is.null(asst)) {
-  cat('<p class="small" style="margin-top:20px;">',
-           '<span style="margin-left:4px; margin-right:4px;"><i class="fas fa-users" style="margin-left:4px; margin-right:4px;"></i></span>',
+  cat('<p style="margin-top:20px;">',
+           '<span style="margin-left:4px; margin-right:4px;text-align:center;"><i class="fas fa-users" style="margin-left:4px; margin-right:4px;"></i></span>',
            paste(asst,collapse=", "),
            '</p>')
 }

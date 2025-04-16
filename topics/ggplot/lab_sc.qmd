@@ -1,0 +1,9 @@
+---
+title: "Single-cell Visualizations"
+subtitle: "Workshop on Advanced Data Visualization"
+author: "Lokesh Mano"
+format: 
+    html:
+        font-size: 10
+code-annotations: hover
+---

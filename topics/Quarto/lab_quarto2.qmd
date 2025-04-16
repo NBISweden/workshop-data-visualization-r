@@ -1,0 +1,55 @@
+---
+title: "Quarto Dashboards"
+subtitle: "How to create a Quarto dashboard?"
+author: "Katja Kozjek"
+institute: "NBIS, SciLifeLab"
+format: 
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+---
+
+::: {.callout-note}
+These are exercises to get you started with Quarto Dashboards. Refer to the official [Quarto Dashboards](https://quarto.org/docs/dashboards/) documentation for help.
+
+By the end of this exercise, you will be able to:
+
+- Create a basic Quarto dashboard
+- Become familiar with different components of a dashboard 
+- Customize dashboard layout and appearance
+- Add interactive components to your dashboard
+:::
+
+::: {.callout-warning title="Dataset"}
+For this exercise we will use the [cake data](https://github.com/ImmunTech/CakeClub) from the Immunotechnology Cake Club in Lund.
+:::
+
+# Introduction
+The purpose of a dashboard is to provide a quick view of important things.
+
+Dashboards are compositions of components used to provide navigation and present data. With Quarto dashboards we can create 
+create elegant and production-ready dashboards using a variety of components, including **static graphics** (ggplot2, Matplotlib, Seaborn, etc.), **interactive widgets** (Plotly, Leaflet, Jupyter Widgets, htmlwidgets, etc.), tabular data, value boxes, text annotations, and more.
+
+# Dashboard structure
+- Dashboards are composed of **cards**.
+- Cards are arranged into **rows** and **column**s.
+- **Pages, tabsets**, and **sidebars** allow for more advanced layouts.
+
+**Dashboard layout:**
+
+- Each Level 1 header (#) corresponds to a new page.
+
+- Every Level 2 header (##) introduces a new row.
+
+- Every code chunk introduces a new column.
+
+::: {.callout-note title="Layout"}
+The default layout setting is **by rows**. You can set the orientiation to be **by column** in the YAML. If that is the case, then the Level 2 header would be a column and each code chunk a row in the column.
+
+Quarto automatically divides the area into equally divided charts.
+:::
+
+# Exercise
+
+Your goal is to create the following dashboard.
