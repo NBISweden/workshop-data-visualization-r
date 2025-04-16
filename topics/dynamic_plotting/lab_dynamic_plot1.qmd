@@ -1,0 +1,105 @@
+---
+title: "Dynamic plotting"
+subtitle: "Quarto documents containing dynamic applications"
+author: "Katja Kozjek"
+institute: "NBIS, SciLifeLab"
+format: 
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+---
+
+::: {.callout-note}
+In these exercises you will learn how to embed dynamic components, such as interactive plots and widgets, directly into a Quarto HTML document.
+
+By the end of this exercise, you will be able to: 
+
+- Embed interactive plots into Quarto documents.
+- Use dynamic components to enhance data visualization.
+:::
+
+# Instructions
+
+- Open new Quarto document. 
+- Create first chunk where you will load necessary R libraries. 
+- Copy the following into it: 
+
+````{.r}
+```{{r}}
+#| warning: false
+#| message: false
+library(palmerpenguins)
+library(leaflet)
+library(plotly)
+library(ggiraph)
+library(crosstalk)
+library(DT)
+```
+````
+
+# Dynamic maps with leaflet 
+The `leaflet` package allows creating dynamic and interactive maps using the Leaflet JavaScript library. The main advantage of using leaflet is its flexibility and that using leaflet in R is really easy.
+
+Let's have a look into simple example: 
+
+````{.r}
+```{{r}}
+leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(lng=13.1870, lat=55.7074, popup="Lund")
+```
+````
+- Start with the `leaflet()` function. 
+- New layers are added with the pipe operator (`%>%`). 
+- With `addTiles()` the default basemap is added
+- It is possible to add different types of markers to the maps, `addCircleMarkers()`, `addMarkers()`, `addAwesomeMarkers()`
+- `popup` argument are used to display important information about a point, they appear when you click over a marker
+
+- Copy the code from above to your document and render the document.
+
+## Exercise:
+
+In the `palmerpenguins` data, penguins are found on three islands: Biscoe, Dream and Torgersen. 
+
+``` markdown
+island_coordinates <- data.frame(lng = c(-66.7305, -64.2352, -64.0835),
+                                lat = c(-66.1859, -64.7269, -64.7663))
+```
+
+- Your goal is to generate dynamic map using the leaflet. **Advice:** Start building dynamic map step-by-step, run code after each step and pay attention to what is happening.
+
+- Make a marker for three islands.
+- Add popup information (Biscoe, Dream and Torgersen island).
+- Use `setView()` function to set a center point and a zoom level.
+- Change the marker style to circle markers, and add color.
+- Replace `addTiles()` function with `addProviderTiles(providers$Esri.WorldImagery)`, which allows to visualize the map with real images.
+
+::: {.callout-caution collapse='true' icon="false"}
+## {{< fa tools >}} &nbsp; Solution
+````
+```{{r}}
+#| echo: false
+library(palmerpenguins)
+library(leaflet)
+
+leaflet() %>%
+  addTiles() %>%
+  #addProviderTiles(providers$Esri.WorldImagery) %>%
+  setView(lng = -63.0, lat = -63.0, zoom = 5) %>%
+  addCircleMarkers(data = island_coordinates, popup = c("Biscoe", "Dream", "Torgersen"), color = "green")
+```
+````
+:::
+
+# plotly
+
+We can create a `plotly` plot using the function `plot_ly()`. 
+Typical composition of a plotly plot:
+
+`plot_name <- plot_ly(data = ..., x = ~ ..., y = ~ ...)`
+
+It is also possible to build ggplot object first and then transform it to plotly plot using the `ggplotly()` function.
+
+
+
