@@ -33,14 +33,6 @@ execute:
 
 :::
 
-::: {.large}
-
-[Beginner-level course content](https://nbisweden.github.io/workshop-data-visualization-r/2404/home_content.html#1_Course_objectives)
-
-:::
-
-
-
 ::: small
 Updated: {{< meta current_date >}}  at {{< meta current_time >}} .
 :::
