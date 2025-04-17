@@ -2,7 +2,7 @@
 title: "Precourse"
 subtitle: "These are steps to be completed before the workshop"
 date: ""
-toc: false
+toc: true
 number-sections: false
 sidebar: false
 code-tools: false
