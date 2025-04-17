@@ -28,12 +28,79 @@ download.file("https://lu.box.com/shared/static/nf5eps2uus9qcjx0ml0n313p9a8r1vb7
 
 With data in place, now we can start loading libraries we will use in this tutorial.
 
-```{r, warning=FALSE, message=FALSE}
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
 suppressPackageStartupMessages({
     library(Seurat)
     library(Matrix)
     library(ggplot2)
     library(patchwork)
 })
+seurat_covid_raw <- readRDS("./data/covid/seurat_covid_raw.rds")
 ```
+
+```{r, eval=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+setwd("../topics/ggplot/")
+covid_raw <- readRDS("./data/covid/seurat_covid_raw.rds")
+covid_final <- readRDS("./data/covid/seurat_covid_qc_dr_clst.rds")
+```
+
+All the eight different datasets mentioned above are already merged into a single `Seurat` object. The two files you have downloaded are explained below:
+
+ - `seurat_covid_raw.rds`: Contains all the data in raw format. There was no pre-processing of the data done here.
+ - `seurat_covid_qc_dr_clst.rds`: In this file, the cells and the genes went through a different QC proces, followed by `Dimentionality Reduction` and `Clustering`.
+
+# Raw data
+
+Let us just take a look at the raw-data to satrt with. Here is how to take a look at the count matrix and the metadata for every cell.
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+# rna counts matrix
+covid_raw[["RNA"]]$counts[1:10, 1:4] 
+
+# metadat of the cells
+head(covid_raw@meta.data, 10)
+```
+
+When you look at the metadata you can see the `rownames` are ids of each cell. Each of the column is explained below.
+
+ - **orig.ident**: represents the patient id.
+ - **nCount_RNA**: the total number of molecules detected within a cell
+ - **nFeature_RNA**: the number of genes detected in each cell
+ - **type**: If the sample is `covid` or `control`
+ - **percent_mito**: Mitochondrial gene content in percent
+ - **percent_ribo**: Ribosomal gene content in percent
+ - **percent_hb**: Percentage hemoglobin genes
+ - **percent_plat**: Percentage for some platelet markers
+
+Thee values are pre-calculated to help assist with the visualization. 
+
+## Plot QC
+
+To plot the raw QC of the datset, we will use the function `VlnPlot()`. This is a function from the `Seurat` package and it basically generates a `ggplot2` object from the Seurat object. Violin plots are a different way of looking at `boxplot`. 
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+feats <- c("nFeature_RNA", "nCount_RNA", "percent_mito", "percent_ribo", "percent_hb", "percent_plat")
+VlnPlot(covid_raw, group.by = "orig.ident", split.by = "type", features = feats, pt.size = 0.1, ncol = 3)
+```
+
+```{r, echo=FALSE, eval=FALSE, warning=FALSE, message=FALSE}
+feats <- c("nFeature_RNA", "nCount_RNA", "percent_mito", "percent_ribo", "percent_hb", "percent_plat")
+p <- VlnPlot(covid_raw, group.by = "orig.ident", split.by = "type", features = feats, pt.size = 0.1, ncol = 3)
+ggsave("./images/raw_qc.png", p, width=12, height=8, dpi=500)
+```
+![](./images/raw_qc.png)
+
+
+
+
+
+
+
+
+
+````{comment}
+ - Open Dev container and work on this document from the container.
+ - Save images and visualizations in a directory and then add them as static images.
+ - This is to overcome the need to add the rds files to the repo or gh-action.
+````
 
