@@ -1,0 +1,42 @@
+{
+    "image": "ghcr.io/nbisweden/workshop-adv-data-viz:latest",
+    "customizations": {
+        "vscode": {
+        "extensions": [
+            "streetsidesoftware.code-spell-checker", "quarto.quarto",
+            "formulahendry.code-runner", "oderwat.indent-rainbow",
+            "janisdd.vscode-edit-csv", "peakchen90.open-html-in-browser",
+            "visualstudioexptteam.vscodeintellicode", "ms-toolsai.jupyter",
+            "ritwickdey.liveserver", "yzhang.markdown-all-in-one",
+            "christian-kohler.path-intellisense", "searking.preview-vscode",
+            "ms-python.python", "reditorsupport.r",
+            "mechatroner.rainbow-csv", "ban.spellright",
+            "mikhail-arkhipov.r"
+            ],
+        "settings": {
+            "r.rterm.linux": "/usr/local/bin/R",
+            "quarto.usePipQuarto": false,
+            "quarto.path": "/usr/local/bin/quarto",
+            "quarto.render.renderOnSaveShiny": false,
+            "quarto.render.previewType": "external",
+            "terminal.integrated.inheritEnv": false,
+            "editor.letterSpacing": 1,
+            "terminal.integrated.fontSize": 15,
+            "terminal.integrated.allowChords": false,
+            "editor.wordWrap": "on",
+            "files.associations": {
+                "*.rmd": "markdown",
+                "*.Rmd": "rmd",
+                "*.py": "python",
+                "*.qmd": "quarto",
+                "*.tsv": "plaintext"
+                },
+            "security.workspace.trust.untrustedFiles": "open",
+            "path-intellisense.absolutePathToWorkspace": false,
+            "editor.tabCompletion": "on",
+            "terminal.integrated.localEchoLatencyThreshold": -1
+            }
+        }
+    },
+    "forwardPorts": [3000]
+}
