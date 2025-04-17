@@ -11,12 +11,12 @@ format:
 ---
 
 ::: {.callout-note}
-In these exercises you will learn how to embed dynamic components, such as interactive plots and widgets, directly into a Quarto HTML document.
+In these exercises you will learn how to embed dynamic components, such as interactive plots and widgets, directly into a Quarto HTML document. 
 
 By the end of this exercise, you will be able to: 
 
-- Embed interactive plots into Quarto documents.
-- Use dynamic components to enhance data visualization.
+- Embed dynamic plots directly into Quarto documents.
+- Discover and apply different techniques for creating and improving dynamic visualizations.
 :::
 
 # Instructions
@@ -53,10 +53,17 @@ leaflet() %>%
 - Start with the `leaflet()` function. 
 - New layers are added with the pipe operator (`%>%`). 
 - With `addTiles()` the default basemap is added
-- It is possible to add different types of markers to the maps, `addCircleMarkers()`, `addMarkers()`, `addAwesomeMarkers()`
+- To add different types of markers to the maps `addMarkers()`, `addCircleMarkers()`, `addAwesomeMarkers()` can be used
 - `popup` argument are used to display important information about a point, they appear when you click over a marker
 
-- Copy the code from above to your document and render the document.
+The example above results in: 
+```{r}
+#| echo: false
+library(leaflet)
+leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(lng=13.1870, lat=55.7074, popup="Lund")
+```
 
 ## Exercise:
 
@@ -67,7 +74,8 @@ island_coordinates <- data.frame(lng = c(-66.7305, -64.2352, -64.0835),
                                 lat = c(-66.1859, -64.7269, -64.7663))
 ```
 
-- Your goal is to generate dynamic map using the leaflet. **Advice:** Start building dynamic map step-by-step, run code after each step and pay attention to what is happening.
+- Your goal is to generate dynamic map using the leaflet. 
+**Advice:** Start building dynamic map step-by-step, run code after each step and pay attention to what is happening. To get help with some functions, click [here](https://r-charts.com/spatial/interactive-maps-leaflet/)
 
 - Make a marker for three islands.
 - Add popup information (Biscoe, Dream and Torgersen island).
@@ -99,7 +107,219 @@ Typical composition of a plotly plot:
 
 `plot_name <- plot_ly(data = ..., x = ~ ..., y = ~ ...)`
 
-It is also possible to build ggplot object first and then transform it to plotly plot using the `ggplotly()` function.
+It is also possible to build ggplot object first and then transform it to plotly plot using the `ggplotly()` function. This works fairly well for simple plots, although it is usually a better option to build `plotly` plots from scratch.
 
+For example, penguin mass vs. flipper length, using `ggplotly()` function.
 
+````{.r}
+```{{r}}
+pp1 <-
+    ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+    geom_point(aes(color = species), size = 2) +
+    scale_color_manual(values = c("darkorange","darkorchid","cyan4")) + 
+    theme_minimal()
+
+ggplotly(pp1)
+```
+````
+
+```{r}
+#| echo: false
+#| warning: false
+library(plotly)
+library(palmerpenguins)
+
+pp1 <-
+    ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+    geom_point(aes(color = species), size = 2) +
+    scale_color_manual(values = c("darkorange","darkorchid","cyan4")) + 
+    theme_minimal()
+
+ggplotly(pp1)
+```
+
+<br>
+Now, let's plot using the function `plot_ly()`. 
+
+````{.r}
+```{{r}}
+plot_ly(data = penguins, x = ~flipper_length_mm, y = ~body_mass_g, 
+        color = ~species, colors = c("darkorange","darkorchid","cyan4"), size=2)
+```
+````
+
+```{r}
+#| echo: false
+#| warning: false
+library(plotly)
+library(palmerpenguins)
+
+plot_ly(data = penguins, x = ~flipper_length_mm, y = ~body_mass_g, 
+        color = ~species, colors = c("darkorange","darkorchid","cyan4"), size=2)
+```
+
+<br>
+
+`plot_ly` allows us to plot different plot types, for example, histograms, boxplots, scatterplots... using argument `type = ~ ...`. Example shows how to obtain boxplot and scatterplot and how to combine these two plots together using the `subplot` command.
+
+````{.r}
+```{{r}}
+p1 <- plot_ly(data = penguins, x = ~island, y = ~flipper_length_mm, 
+        color = ~island, type = "box", colors = c("#10a53dFF","#541352FF","#ffcf20FF"), size=2)
+
+p2 <- plot_ly(data = penguins, x = ~flipper_length_mm, y = ~body_mass_g, 
+        color = ~species, colors = c("darkorange","darkorchid","cyan4"), size=2)
+
+fig <- subplot(p1, p2, nrows = 2, margin = 0.1)
+fig %>% 
+    layout(title = "Palmer Penguin Data",
+    xaxis = list(title = "Species"), 
+    yaxis = list(title = "Body mass [g]"),
+    xaxis2 = list(title = "Body mass [g]"), 
+    yaxis2 = list(title = "Flipper length [mm]"))
+```
+````
+
+Note that here:
+
+- We are using the `subplot` command to plot the p1 and p2 plots together.
+- The `nrows = 2` argument tells R to produce these plots in 2 rows.
+- The `margin = 0.1` argument tells R to leave a small margin between the two plots.
+- The subsequent lines (`layout()`) of code are used to add a title to our plot, and add axes labels to the plots - note that we use xaxis to define the x-axis label for the first plot, and xaxis2 to define the x-axis label for the second plot (and similarly for the y-axes).
+
+```{r}
+#| echo: false
+#| warning: false
+
+library(plotly)
+library(palmerpenguins)
+
+p1 <- plot_ly(data = penguins, x = ~island, y = ~flipper_length_mm, 
+        color = ~island, type = "box", colors = c("#10a53dFF","#541352FF","#ffcf20FF"), size=2)
+
+p2 <- plot_ly(data = penguins, x = ~flipper_length_mm, y = ~body_mass_g, 
+        color = ~species, colors = c("darkorange","darkorchid","cyan4"), size=2)
+
+fig <- subplot(p1, p2, nrows = 2, margin = 0.05)
+fig %>% 
+    layout(title = "Palmer Penguin Data",
+    xaxis = list(title = "Species"), 
+    yaxis = list(title = "Body mass [g]"),
+    xaxis2 = list(title = "Body mass [g]"), 
+    yaxis2 = list(title = "Flipper length [mm]"))
+```
+
+## Exercise:
+
+# ggiraph
+
+This package is a htmlwidget and a ggplot2 extension that allows you to create dynamic graphs. It allows you to add tooltips, hover effects and JavaScript actions to the graphics. Any ggplot graphic can be turned into a ggiraph graphic by calling `girafe()` function.
+
+The first step is easy. Create a ggplot just like you normally would.
+
+````{.r}
+```{{r}}
+ggplot(tb_data_filt, aes(x = Year, y = Share_of_newborns, color = Entity)) +
+    geom_line(linewidth = 1.5) +
+    scale_color_manual(values = c("#004488", "#4477AA", "#EE6677", "#228833", "#CCBB44", "#997700", "#CC3311", "#009988", "#66CCEE", "#AA3377", "#BBBBBB", "#6699CC", "#CCDDAA")) +
+    theme_bw() +
+    labs(title = "BCG Immunization Coverage",
+             x = "Year",
+             y = "Share of Newborns Immunized (%)",
+             color = "Country")
+```
+````
+
+```{r}
+#| echo: false
+tb_data <- read.csv("./data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv", sep = ",", header = T)
+tb_data_filt <- tb_data[grep("^B", tb_data$Entity), ]
+
+library(ggiraph)
+library(ggplot2)
+
+ggplot(tb_data_filt, aes(x = Year, y = Share_of_newborns, color = Entity)) +
+    geom_line(linewidth = 1.5) +
+    scale_color_manual(values = c("#004488", "#4477AA", "#EE6677", "#228833", "#CCBB44", "#997700", "#CC3311", "#009988", "#66CCEE", "#AA3377", "#BBBBBB", "#6699CC", "#CCDDAA")) +
+    theme_bw() +
+    labs(title = "BCG Immunization Coverage",
+             x = "Year",
+             y = "Share of Newborns Immunized (%)",
+             color = "Country")
+```
+
+Next, you need to decide what parts become dynamic. Here we want to focus on the lines. Therefore, we need to make `geom_line()` dynamic. We do this by loading `ggiraph` and changing `geom_line()` to `geom_line_interactive()` and adding one of the following aesthetics in each interactive layer: `tooltip`, `data_id` or `onclick`.
+
+- `tooltip`: column of dataset that contains tooltips to be displayed when mouse is over elements.
+- `data_id`: column of dataset that contains id to be associated with elements. This aesthetic is mandatory when you want to use an hover effect or when you want to enable selection of points in shiny applications.
+- `onclick`: column of dataset that contains javascript function to be executed when elements are clicked.
+
+In our case we are going to use `tooltip = Entity`. We save the plot into a variable instead of generating output from the code. Finally, we pass our new variable, **gg** to `girafe()`. You need to call `girafe(ggobj = gg)` and not `girafe(gg)`.
+
+````{.r}
+```{{r}}
+gg <- ggplot(tb_data_filt, aes(x = Year, y = Share_of_newborns, color = Entity)) +
+    geom_line_interactive(aes(tooltip = Entity), linewidth = 1.5) +
+    scale_color_manual(values = c("#004488", "#4477AA", "#EE6677", "#228833", "#CCBB44", "#997700", "#CC3311", "#009988", "#66CCEE", "#AA3377", "#BBBBBB", "#6699CC", "#CCDDAA")) +
+    theme_bw() +
+    labs(title = "BCG Immunization Coverage",
+             x = "Year",
+             y = "Share of Newborns Immunized (%)",
+             color = "Country")
+
+girafe(ggobj = gg)
+```
+````
+
+```{r}
+#| echo: false
+tb_data <- read.csv("./data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv", sep = ",", header = T)
+tb_data_filt <- tb_data[grep("^B", tb_data$Entity), ]
+
+library(ggiraph)
+library(ggplot2)
+
+gg <- ggplot(tb_data_filt, aes(x = Year, y = Share_of_newborns, color = Entity)) +
+    geom_line_interactive(aes(tooltip = Entity), linewidth = 1.5) +
+    scale_color_manual(values = c("#004488", "#4477AA", "#EE6677", "#228833", "#CCBB44", "#997700", "#CC3311", "#009988", "#66CCEE", "#AA3377", "#BBBBBB", "#6699CC", "#CCDDAA")) +
+    theme_bw() +
+    labs(title = "BCG Immunization Coverage",
+             x = "Year",
+             y = "Share of Newborns Immunized (%)",
+             color = "Country")
+
+girafe(ggobj = gg)
+```
+
+With the same logic as described above we can create all kinds of plots. For example, for boxplots the key function is `geom_boxplot_interactive()`. 
+
+## Exercise:
+
+# DataTables (DT)
+
+The DataTables (DT) package provides a quick way to make data tables dynamic. It enables tables to be searchable, sortable, and pageable automatically. The main function in this package is `datatable()`. It creates a htmlwidget to display R data objects with DataTables.
+
+Table below displays the first 10 rows of the `msleep` data as rendered by DT. Note the search box and clickable sorting arrows.
+
+````{.r}
+```{{r}}
+datatable(msleep, options = list(pageLength = 10))
+```
+````
+
+```{r}
+#| echo: false
+library(ggplot2)
+library(DT)
+
+datatable(msleep, options = list(pageLength = 10))
+```
+
+## Exercise:
+
+# crosstalk
+## Exercise:
+
+# ObservableJS
+## Exercise:
 
