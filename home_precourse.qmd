@@ -15,11 +15,11 @@ format: html
 
  Download and install the latest version of R from [r-project.org](https://cloud.r-project.org/).
 
-#### {{< fa solid book-open-reader >}} IDE
+#### {{< fa solid pen-to-square >}} IDE
 
 Install [RStudio](https://posit.co/download/rstudio-desktop/). RStudio provides you with tools like code editor with highlighting, project management, version control, package building, debugger, profiler and more. [Visual Studio code](https://code.visualstudio.com/docs/setup/setup-overview) is another good alternative to Rstudio.
 
-#### {{< fa solid pen-to-square >}} Quarto
+#### {{< fa solid book-open-reader >}} Quarto
 
  Download and install the latest version of Quarto from [quarto.org](https://quarto.org/docs/get-started/).
 
