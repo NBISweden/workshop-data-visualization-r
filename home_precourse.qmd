@@ -2,12 +2,14 @@
 title: "Precourse"
 subtitle: "These are steps to be completed before the workshop"
 date: ""
-toc: false
+toc: true
+number-sections: false
 sidebar: false
+code-tools: false
 format: html
 ---
 
-## Installations
+## {{< fa server >}} Installations
 
 Detailed instructions on the tools necessary for this course and the means of installation will be updated here closer to the schedule. So, keep an eye on this page until then.
 
@@ -17,7 +19,11 @@ Please download all the necessary files from [here](https://nbisweden.github.io/
 
 :::
 
-## Preparations
+## {{< fa brands markdown >}} HackMD
+
+We will use the online note-keeping document from HackMD for our questions. Please click [here](https://hackmd.io/@g4wu57tQRzSqYwnAPalt0Q/HJbAkaTXq) to see the notebook. We would appreciate it a lot if you could write your questions and feedback here, so that all participants can learn from each other.
+
+## {{< fa book >}} Preparations
 
 To prepare for the course, you can follow one of the links below to warm up your skills necessary for the course.
 
@@ -26,4 +32,25 @@ To prepare for the course, you can follow one of the links below to warm up your
  - Advanced-level: [ggplot warm-up](https://nbisweden.github.io/workshop-data-visualization-r/2210/home_content.html#4_Main_lab)
 :::
 
+:::{.callout-tip icon="false" collapse="true"}
+## {{< fa brands docker >}} Docker
 
+If you are more familiar with using `Docker`, all the tools necessary for the course are available as a Docker image. You can pull the image using the following command:
+
+```
+docker pull ghcr.io/nbisweden/workshop-adv-data-viz:latest
+```
+
+If you would like to try to install `Docker` and give it a try, please follow the instructions [here](other/docker.html)
+
+### {{< fa brands microsoft >}} Visual Studio code
+
+The best and most efficient way to work with the Docker image is with `VScode` and the extension `Dev Containers`. Similar to `RStudio` or `Posit`, `VScode` is an IDE maintained by Microsoft and it is quite efficient and robust for all Operating systems. 
+
+ - To install VScode, follow the instructions [here](https://code.visualstudio.com/docs/setup/setup-overview)
+ - After successful installation of VScode and Docker, you can install the `Dev Containers` extension for VScode from [here](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+ - Download the `Dev Container` file from [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/dev-container-file/.devcontainer.json) *Make sure that all the course related files are in the same place as this `.devcontainer.json` hidden file*
+ - Then in `VScode`, press `Ctrl+Shift+P` (`Cmd+Shift+P` for Mac users) followed by  `Dev Containers: Open Folder in Container` to select the folder where you have all the files or `Dev Containers: Reopen in Container`, if you are already on VScode in the same directory.
+ - Now, if everything worked fine, a new window shoudl appear inside the `Advanced Data Visualization` container.
+
+:::

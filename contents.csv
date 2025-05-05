@@ -6,7 +6,7 @@ ggplot,PCA plot,,topics/ggplot/lab_pca.html
 ggplot,Single-cell,,topics/ggplot/lab_sc.html
 Quarto,Basic Quarto,topics/Quarto/slide_quarto1.html,topics/Quarto/lab_quarto1.html
 Quarto,Quarto Dashboard,topics/Quarto/slide_quarto2.html,topics/Quarto/lab_quarto2.html
-Dynamic Plotting,Intro to Dynamic plotting,topics/dynamic_plotting/slide_dynamic_plot1.html,
+Dynamic Plotting,Intro to Dynamic plotting,topics/dynamic_plotting/slide_dynamic_plot1.html,topics/dynamic_plotting/lab_dynamic_plot1.html
 Rshiny,Rshiny Part I,topics/Shiny/slide_shiny1.html,topics/Shiny/lab_shiny1.html
 Rshiny,Rshiny Part II,topics/Shiny/slide_shiny2.html,topics/Shiny/lab_shiny2.html
 Rshiny,Rshiny Part III,topics/Shiny/slide_shiny3.html,topics/Shiny/lab_shiny3.html
