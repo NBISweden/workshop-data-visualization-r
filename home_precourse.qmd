@@ -17,7 +17,7 @@ format: html
 
 #### {{< fa solid pen-to-square >}} IDE
 
-Install [RStudio](https://posit.co/download/rstudio-desktop/). RStudio provides you with tools like code editor with highlighting, project management, version control, package building, debugger, profiler and more. [Visual Studio code](https://code.visualstudio.com/docs/setup/setup-overview) is another good alternative to Rstudio.
+Install [RStudio](https://posit.co/download/rstudio-desktop/). RStudio provides you with tools like code editor with highlighting, project management, version control, package building, debugger, profiler and more. [Visual Studio code](https://code.visualstudio.com/docs/setup/setup-overview) is another good alternative to RStudio.
 
 #### {{< fa solid book-open-reader >}} Quarto
 
@@ -31,14 +31,14 @@ Install all the R packages necessary for this course by opening an `R terminal` 
 
 install.packages(c("cowplot","crosstalk","dplyr","DT","gganimate","ggiraph",
                     "ggplot2","ggpubr","ggrepel","ggthemes","grid","gridExtra",
-                    "kableExtra","leaflet","palmerpenguins","patchwork",
+                    "gt", "kableExtra","leaflet","palmerpenguins","patchwork",
                     "pheatmap","plotly","reshape2","scales","Seurat","shiny",
                     "tidyr","tidyverse","wesanderson"), dependencies = TRUE)
 
 ```
 
 ::: {.callout-tip}
-To make sure that the installations went well, we will try to make a quick plot using the packages you just installed. In this plot, we try to see if there is correlation plot between `BMI` and average `no.of steps` taken by some volunteers per day. The data and the code for plotting is available [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/Installation_check/packages_check.zip). Just `knit` the `qmd` file and you should see correlation the plot, if all the packages are installed properly. 
+To make sure that the installations went well, we will try to make a quick plot using the packages you just installed. In this plot, we try to see if there is correlation plot between `BMI` and average `no.of steps` taken by some volunteers per day. The data and the code for plotting is available [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/Installation_check/packages_check.zip). Just `render` or `preview` the `installation_check.qmd` file in RStudio or VScode. and you should see the correlation plot, if all the packages are installed properly. 
 :::
 
 :::{.callout-caution icon="false"}

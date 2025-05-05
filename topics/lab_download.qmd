@@ -26,6 +26,7 @@ If `workshop_on_advanced_data_visualization` is the current working directory, t
 
 * <span style="color:blue">workshop_on_advanced_data_visualization</span>
   + <span style="color:blue">data</span>
+    + 2024_final_scores.tsv
     + arch_newick.txt
     + counts_deseq2.txt
     + counts_filtered.txt
@@ -33,12 +34,13 @@ If `workshop_on_advanced_data_visualization` is the current working directory, t
     + counts_vst.txt
     + human_biomaRt_annotation.csv
     + metadata.csv
+    + shiny_app_data.csv
     + Time_t24_vs_t0.txt
     + Time_t2_vs_t0.txt
     + Time_t6_vs_t0.txt
     + tree_env.tsv
     + tree_hmap.tsv
-    + shiny_app_data.csv
+
 
 You can find the information related to the important files below:
 

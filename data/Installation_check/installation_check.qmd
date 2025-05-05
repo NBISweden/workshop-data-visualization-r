@@ -7,7 +7,7 @@ format:
 ---
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
-x <- c("cowplot","crosstalk","dplyr","DT","gganimate","ggiraph",
+x <- c("cowplot","crosstalk","dplyr","DT","gganimate","ggiraph", "gt",
                     "ggplot2","ggpubr","ggrepel","ggthemes","grid","gridExtra",
                     "kableExtra","leaflet","palmerpenguins","patchwork",
                     "pheatmap","plotly","reshape2","scales","Seurat","shiny",
