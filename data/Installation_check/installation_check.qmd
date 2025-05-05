@@ -1,25 +1,17 @@
 ---
-title: "Package installation check"
-author: "`r paste0('<b>Lokesh Mano</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
-output: 
-  rmarkdown::html_document:
-    toc: false
-    toc_float: false
-    smart: true
-    number_sections: false
-    highlight: tango
+title: "Packages installation check"
+author: "`r paste0(Sys.info()[['user']], ' ', format(Sys.time(), '%d-%b-%Y'))`"
+format: 
+    html:
+        font-size: 10
 ---
 
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
-x <- c("ggplot2","tidyverse","ggmap","pheatmap","devtools","cowplot",
-       "reshape2", "dplyr", "wesanderson", "scales", "ggthemes", "ggrepel", "grid",
-       "ggpubr", "gridExtra", "ggtree", "treeio", "shiny", "gganimate", "shinythemes",
-       "rsconnect", "colourpicker")
+x <- c("cowplot","crosstalk","dplyr","DT","gganimate","ggiraph",
+                    "ggplot2","ggpubr","ggrepel","ggthemes","grid","gridExtra",
+                    "kableExtra","leaflet","palmerpenguins","patchwork",
+                    "pheatmap","plotly","reshape2","scales","Seurat","shiny",
+                    "tidyr","tidyverse","wesanderson")
 for (i in x){
  library(i, character.only = TRUE)
 }
