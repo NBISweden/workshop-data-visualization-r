@@ -35,6 +35,7 @@ library(plotly)
 library(ggiraph)
 library(crosstalk)
 library(DT)
+library(ggplot2)
 ```
 ````
 
@@ -75,6 +76,7 @@ island_coordinates <- data.frame(lng = c(-66.7305, -64.2352, -64.0835),
 ```
 
 - Your goal is to generate dynamic map using the leaflet. 
+
 **Advice:** Start building dynamic map step-by-step, run code after each step and pay attention to what is happening. To get help with some functions, click [here](https://r-charts.com/spatial/interactive-maps-leaflet/)
 
 - Make a marker for three islands.
@@ -185,7 +187,7 @@ Note that here:
 - We are using the `subplot` command to plot the p1 and p2 plots together.
 - The `nrows = 2` argument tells R to produce these plots in 2 rows.
 - The `margin = 0.1` argument tells R to leave a small margin between the two plots.
-- The subsequent lines (`layout()`) of code are used to add a title to our plot, and add axes labels to the plots - note that we use xaxis to define the x-axis label for the first plot, and xaxis2 to define the x-axis label for the second plot (and similarly for the y-axes).
+- The subsequent lines (`layout()`) of code are used to add a title to our plot, and add axes labels to the plots - note that we use `xaxis` to define the x-axis label for the first plot, and `xaxis2` to define the x-axis label for the second plot (and similarly for the y-axes).
 
 ```{r}
 #| echo: false
@@ -299,11 +301,11 @@ With the same logic as described above we can create all kinds of plots. For exa
 
 The DataTables (DT) package provides a quick way to make data tables dynamic. It enables tables to be searchable, sortable, and pageable automatically. The main function in this package is `datatable()`. It creates a htmlwidget to display R data objects with DataTables.
 
-Table below displays the first 10 rows of the `msleep` data as rendered by DT. Note the search box and clickable sorting arrows.
+Table below displays the first 5 rows of the `msleep` data as rendered by DT. Note the search box and clickable sorting arrows.
 
 ````{.r}
 ```{{r}}
-datatable(msleep, options = list(pageLength = 10))
+datatable(msleep, options = list(pageLength = 5))
 ```
 ````
 
@@ -312,14 +314,341 @@ datatable(msleep, options = list(pageLength = 10))
 library(ggplot2)
 library(DT)
 
-datatable(msleep, options = list(pageLength = 10))
+datatable(msleep, options = list(pageLength = 5))
+```
+
+<br>
+Another helpful tool you can use with DT is the ordering. Using the arrow widgets for each column it is easy to order a selected column in ascending or descending order. We can use the `order` option to specify how we want to order. For example, we sort the table by columns 6 (ascending) and 9 (descending):
+
+````{.r}
+```{{r}}
+datatable(msleep, options = list(
+  order = list(list(6, 'asc'), list(9, 'desc'))))
+```
+````
+
+```{r}
+#| echo: false
+library(ggplot2)
+library(DT)
+
+datatable(msleep, options = list(
+  order = list(list(6, 'asc'), list(9, 'desc'))))
+```
+
+<br>
+To describe what the table displays the `caption` argument is used. Placing a caption directly in the table provides helpful information for the user.
+
+````{.r}
+```{{r}}
+datatable(msleep, caption="Table 1: Mammals sleep dataset")
+```
+````
+
+```{r}
+#| echo: false
+library(ggplot2)
+library(DT)
+
+datatable(msleep, caption = "Table 1: Mammals sleep dataset")
+```
+<br>
+
+We can also apply CSS styles to the table cells in a column according to the values of the cells using the function `formatStyle()`. Here, a few commonly used CSS properties as the arguments of `formatStyle()`, such as `color` and `fontWeight` are used.
+
+````{.r}
+```{{r}}
+datatable(msleep, options = list(pageLength = 5), caption="Table 1: Mammals sleep dataset") %>%
+  formatStyle('genus',  color = 'black', backgroundColor = 'orange', fontWeight = 'bold')
+```
+````
+
+```{r}
+#| echo: false
+library(ggplot2)
+library(DT)
+
+datatable(msleep, options = list(pageLength = 5), caption="Table 1: Mammals sleep dataset") %>%
+  formatStyle('genus',  color = 'black', backgroundColor = 'orange', fontWeight = 'bold')
+```
+
+<br>
+In the example above, all styles are applied to all cells in a column unconditionally: the font color is black, the background color is orange, and the font weight is bold. That may not be useful in practice. DT has provided a few helper functions to apply conditional styles to cells, such as `styleInterval()`, `styleEqual()`, and `styleColorBar()`.
+
+````{.r}
+```{{r}}
+datatable(msleep) %>% 
+  formatStyle('vore', fontWeight = styleInterval('omni', c('normal', 'bold'))) %>%
+  formatStyle('sleep_total', color = styleInterval(c(11, 21), c('white', 'blue', 'green')),
+    backgroundColor = styleInterval(11, c('gray', 'orange'))
+  ) %>% 
+   formatStyle(
+    'sleep_rem',
+    background = styleColorBar(msleep$sleep_rem, 'steelblue'),
+    backgroundSize = '100% 90%',
+    backgroundRepeat = 'no-repeat',
+    backgroundPosition = 'center'
+  ) 
+```
+````
+
+```{r}
+#| echo: false
+library(ggplot2)
+library(DT)
+
+datatable(msleep) %>% 
+  formatStyle('vore', fontWeight = styleInterval('omni', c('normal', 'bold'))) %>%
+  formatStyle('sleep_total', color = styleInterval(c(11, 21), c('white', 'blue', 'green')),
+    backgroundColor = styleInterval(11, c('gray', 'orange'))) %>% 
+   formatStyle(
+    'sleep_rem',
+    background = styleColorBar(msleep$sleep_rem, 'steelblue'),
+    backgroundSize = '100% 90%',
+    backgroundRepeat = 'no-repeat',
+    backgroundPosition = 'center') 
+```
+
+For the column `vore`, the font weight in cells of which the values equal to `omni` will be bold. For `sleep_total`, both foreground and background colors are used: white for values smaller than 11, blue for those between 11 and 21, and green for those greater than 21; gray background for values below 11, and orange for those above 11. For `sleep_rem`, a bar graph is presented as the background. 
+
+## Exercise:
+
+- To test DT package  you will use files `counts_raw.txt` and `metadata.csv`. 
+- Read-in these two files, if not sure how, go back to the material from Day 1. 
+- Displays the first 10 rows of `counts_raw.txt` and `metadata.csv`. Once tables are rendered and displayed play around with the 
+search box and clickable sorting arrows.
+- Add captions to both tables. 
+- In the `metadata.csv` order column `Replicate` by descending order.
+- Finally, in the `counts_raw.txt` for `Sample_1` background use bar graph using `styleColorBar()`. For `Sample_3` use `styleInterval()` and color foreground and background, decide on the interval size yourself.
+
+::: {.callout-caution collapse='true' icon="false"}
+## {{< fa tools >}} &nbsp; Solution
+````
+```{{r}}
+#| echo: false
+library(DT)
+
+gc <- read.table("../../data/counts_raw.txt", header = T, row.names = 1, sep = "\t")
+md <- read.table("../../data/metadata.csv", header = T, sep = ";")
+
+datatable(gc, options = list(pageLength = 10), caption = "Table 1: Raw gene counts") %>% 
+  formatStyle(
+    'Sample_1',
+    background = styleColorBar(msleep$sleep_rem, 'steelblue'),
+    backgroundSize = '100% 90%',
+    backgroundRepeat = 'no-repeat',
+    backgroundPosition = 'center') %>%
+  formatStyle('Sample_3', color = styleInterval(c(8500, 15000), c('white', 'blue', 'green')),
+    backgroundColor = styleInterval(11000, c('gray', 'orange')))
+
+datatable(md, options = list(pageLength = 10, order = list(list(4, 'desc'))), caption = "Table 1: Metadata")
+```
+````
+:::
+
+# crosstalk
+
+The crosstalk package can incorporate additional dynamic functionality in a Quarto document. As the name implies, it allows linking 
+multiple (crosstalk-compatible) `htmlwidgets`. This allows functionality that looks interactive as in a Shiny application, but does not require Shiny Server.
+
+**One dataset, two plots**
+<br>
+
+1. Create a SharedData object
+2. Make htmlwidgets with SharedData input
+    - Here, we do this first by making ggplot objects…
+    - …and then converting them to ggplotly objects
+3. Output results
+
+For step 3, we use the `crosstalk::bscols()` function to put the resulting interactive plots in a row (similar to `grid.arrange`). In the output below, click on a point on one plot and notice that the point related to the same penguin is highlighted in the other plot.
+
+````
+```{{r}}
+library(palmerpenguins)
+library(crosstalk)
+library(ggplot2)
+
+# make SharedData object
+penguins_db <- SharedData$new(penguins)
+
+# make ggplots using SharedData object
+gg_plot1 <- ggplot(data = penguins_db, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point(aes(color = species, 
+                 shape = species),
+             size = 2)  +
+  scale_color_manual(values = c("darkorange","darkorchid","cyan4"))
+
+gg_plot2 <- ggplot(data = penguins_db, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species, 
+                 shape = species),
+             size = 2) +
+  scale_color_manual(values = c("darkorange","darkorchid","cyan4"))
+
+# convert ggplots to ggplotly
+plotly_plot1 <- ggplotly(gg_plot1)
+plotly_plot2 <- ggplotly(gg_plot2)
+
+# compose output
+bscols(plotly_plot1, plotly_plot2)
+```
+````
+
+```{r}
+#| echo: false
+library(palmerpenguins)
+library(crosstalk)
+library(ggplot2)
+
+# make SharedData object
+penguins_db <- SharedData$new(penguins)
+
+# make ggplots using SharedData object
+gg_plot1 <- ggplot(data = penguins_db, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point(aes(color = species, 
+                 shape = species),
+             size = 2)  +
+  scale_color_manual(values = c("darkorange","darkorchid","cyan4"))
+
+gg_plot2 <- ggplot(data = penguins_db, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species, 
+                 shape = species),
+             size = 2) +
+  scale_color_manual(values = c("darkorange","darkorchid","cyan4"))
+
+# convert ggplots to ggplotly
+plotly_plot1 <- ggplotly(gg_plot1)
+plotly_plot2 <- ggplotly(gg_plot2)
+
+# compose output
+bscols(plotly_plot1, plotly_plot2)
+```
+<br>
+
+**One dataset, two widgets**
+<br>
+In the following example, we will now make a plot interact with a table instead of another plot.
+
+1. Create a SharedData object
+2. Make htmlwidgets with SharedData input
+    - Before this was two ggplotly
+    - Now, we have one ggplotly and one datatable
+3. Output results
+
+````
+```{{r}}
+library(palmerpenguins)
+library(crosstalk)
+library(ggplot2)
+library(DT)
+
+# make SharedData object
+penguins_db <- SharedData$new(penguins)
+
+# make ggplots using SharedData object
+gg_plot1 <- ggplot(data = penguins_db, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point(aes(color = species, 
+                 shape = species),
+             size = 2)  +
+  scale_color_manual(values = c("darkorange","darkorchid","cyan4"))
+
+# make htmlwidgets
+plotly_plot1 <- ggplotly(gg_plot1)
+dt_penguins <- datatable(penguins_db)
+
+# compose output
+bscols(plotly_plot1, dt_penguins)
+```
+````
+
+```{r}
+#| echo: false
+library(palmerpenguins)
+library(crosstalk)
+library(ggplot2)
+library(DT)
+
+# make SharedData object
+penguins_db <- SharedData$new(penguins)
+
+# make ggplots using SharedData object
+gg_plot1 <- ggplot(data = penguins_db, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point(aes(color = species, 
+                 shape = species),
+             size = 2)  +
+  scale_color_manual(values = c("darkorange","darkorchid","cyan4"))
+
+# make htmlwidgets
+plotly_plot1 <- ggplotly(gg_plot1)
+dt_penguins <- datatable(penguins_db)
+
+# compose output
+bscols(plotly_plot1, dt_penguins)
+```
+<br>
+
+**Multiple datasets: Two datasets, two widgets**
+<br>
+To link multiple SharedData objects, we can specify a group argument when constructing the SharedData objects. group is a character string that servers as a unique identifier for a set of SharedData objects across whom the key information should be transmitted.
+
+1. Create a SharedData objects
+2. Make htmlwidgets with SharedData input
+3. Output results
+
+````
+```{{r}}
+library(dplyr)
+library(leaflet)
+library(palmerpenguins)
+
+dream_location <- read.csv("./data/dream_location_filt.csv", sep = ",", header = T)
+dream_penguins <- penguins %>% filter(island == "Dream")
+
+# make SharedData object
+penguins_db <- SharedData$new(dream_penguins, group = "location")
+locations_db <- SharedData$new(dream_location, group = "location")
+
+# make htmlwidgets
+dt_penguins <- datatable(penguins_db)
+lf_stations <- leaflet(locations_db) %>% addTiles() %>% addMarkers()
+
+# compose output
+bscols(dt_penguins, lf_stations, widths = c(12, 12))
+```
+````
+
+```{r}
+#| echo: false
+library(dplyr)
+library(leaflet)
+library(palmerpenguins)
+
+dream_location <- read.csv("./data/dream_location_filt.csv", sep = ",", header = T)
+dream_penguins <- penguins %>% filter(island == "Dream")
+
+# make SharedData object
+penguins_db <- SharedData$new(dream_penguins, group = "location")
+locations_db <- SharedData$new(dream_location, group = "location")
+
+# make htmlwidgets
+dt_penguins <- datatable(penguins_db)
+lf_stations <- leaflet(locations_db) %>% addTiles() %>% addMarkers()
+
+# compose output
+bscols(dt_penguins, lf_stations, widths = c(12, 12))
 ```
 
 ## Exercise:
 
-# crosstalk
-## Exercise:
+# ObservableJS (OJS)
 
-# ObservableJS
+ObservableJS is a relatively new approach that also allows dynamic features to be included in a Quarto document. It is an entirely separate language outside of R that uses JavaScript and allows excellent functionality similar what is provided by a Shiny Server.
+
+OJS works in any Quarto document (plain markdown as well as Jupyter and Knitr documents). Just include your code in an `{ojs}` executable code block. 
+
+[Observable Documentation](https://observablehq.com/documentation/)
+
+Let's have a look into a simple example using Palmer Penguins dataset. Here we look at how penguin body mass varies across both sex and species (use the provided inputs to filter the dataset by bill length and island):
+
+
 ## Exercise:
 
