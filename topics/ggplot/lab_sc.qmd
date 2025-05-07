@@ -34,6 +34,8 @@ suppressPackageStartupMessages({
     library(Matrix)
     library(ggplot2)
     library(patchwork)
+    library(dplyr)
+    library(tidyr)
 })
 seurat_covid_raw <- readRDS("./data/covid/seurat_covid_raw.rds")
 ```
@@ -83,12 +85,123 @@ feats <- c("nFeature_RNA", "nCount_RNA", "percent_mito", "percent_ribo", "percen
 VlnPlot(covid_raw, group.by = "orig.ident", split.by = "type", features = feats, pt.size = 0.1, ncol = 3)
 ```
 
-```{r, echo=FALSE, eval=FALSE, warning=FALSE, message=FALSE}
-feats <- c("nFeature_RNA", "nCount_RNA", "percent_mito", "percent_ribo", "percent_hb", "percent_plat")
-p <- VlnPlot(covid_raw, group.by = "orig.ident", split.by = "type", features = feats, pt.size = 0.1, ncol = 3)
-ggsave("./images/raw_qc.png", p, width=12, height=8, dpi=500)
-```
 ![](./images/raw_qc.png)
+
+As you can see, there is quite some difference in quality for these samples, with for instance the covid_15 and covid_16 samples having cells with fewer detected genes and more mitochondrial content. As the ribosomal proteins are highly expressed they will make up a larger proportion of the transcriptional landscape when fewer of the lowly expressed genes are detected. We can also plot the different QC-measures as scatter plots.
+
+```{r, eval=F}
+FeatureScatter(covid_raw, "nCount_RNA", "nFeature_RNA", group.by = "orig.ident", pt.size = .5)
+```
+
+![](./images/raw_qc_scatter.png)
+
+## Plot Genes
+
+Extremely high number of detected genes could indicate doublets. However, depending on the cell type composition in your sample, you may have cells with higher number of genes (and also higher counts) from one cell type. Additionally, we can also see which genes contribute the most to such reads. We can for instance plot the percentage of counts per gene.
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+# Compute the proportion of counts of each gene per cell
+# Use sparse matrix operations, if your dataset is large, doing matrix devisions the regular way will take a very long time.
+
+C <- covid_raw[["RNA"]]$counts
+C@x <- C@x / rep.int(colSums(C), diff(C@p)) * 100
+most_expressed <- order(Matrix::rowSums(C), decreasing = T)[20:1]
+
+most_exp_long <- as.data.frame(t(C[most_expressed, ])) %>%
+    rownames_to_column(var = "Cell") %>%
+    gather(Gene, count, -Cell)
+
+ggplot(most_exp_long) +
+    geom_boxplot(aes(factor(Gene, levels = row.names(C[most_expressed, ])), count, fill = factor(Gene, levels = row.names(C[most_expressed, ])))) +
+    coord_flip() +
+    ylab("Percent counts per cell") +
+    xlab(("")) +
+    theme_classic() +
+    theme(legend.position = "none")
+```
+![](./images/raw_qc_high_gene.png)
+
+
+:::{.callout-note}
+The above plot and the code for the plot is very loaded. It is advised to go through them a bit carefully. 
+:::
+
+As you can see from the plot, the genes like `MALAT1`, the hameglobin gene `HBB` and `HBA2` and the several mitochondrial genes `MT-` are technical artifacts that needs to be removed. 
+
+# Post filteration
+
+There has been multiple filters applied to the above Seurat object containing raw data. Few of those are mentioned below:
+
+ * cells with `nFeature_RNA > 200`
+ * features with `rowSums(covid_raw[["RNA"]]$counts) > 3`
+ * doublet prediction was applied for the cells and the doublets were removed.
+ * `MALAT1`, `HB` and `MT-` genes were removed.
+
+The filtered data is availbale in `covid_final`.
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+feats <- c("nFeature_RNA", "nCount_RNA", "percent_mito", "percent_ribo", "percent_hb", "percent_plat")
+VlnPlot(covid_final, group.by = "orig.ident", split.by = "type", features = feats, pt.size = 0.1, ncol = 3)
+```
+
+![](./images/fil_qc.png)
+
+We could also test the scatter plot to see how the `nCount_RNA` and `nFeature_RNA` are related in this filtered data compared to the raw data.
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+FeatureScatter(covid_final, "nCount_RNA", "nFeature_RNA", group.by = "orig.ident", pt.size = .5)
+```
+![](./images/fil_qc_scatter.png)
+
+## Sample Sex
+
+When working with human or animal samples, you should ideally constrain your experiments to a single sex to avoid including sex bias in the conclusions. However this may not always be possible. By looking at reads from chromosomeY (males) and XIST (X-inactive specific transcript) expression (mainly female) it is quite easy to determine per sample which sex it is. It can also be a good way to detect if there has been any mislabelling in which case, the sample metadata sex does not agree with the computational predictions.
+
+For your convinience, the percentage of `ChrY` genes were calculated in each cell. These are present in the `covid_final` object. We can sanity check our samples by plotting both scatter plota and violon plots.
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+FeatureScatter(covid_final, feature1 = "XIST", feature2 = "pct_chrY", group.by = "orig.ident", pt.size = .5)
+```
+![](./images/fil_sex_scatter.png)
+
+As you can see, the samples are clearly on either side, even if some cells do not have detection of either. Now let us plot this as violons to see which exact patients are Male and Female.
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+VlnPlot(covid_final, group.by = "orig.ident", split.by = "type", features = c("XIST", "pct_chrY"))
+```
+![](./images/fil_sex_vln.png)
+
+You can clearly tell from the above image that the samples `covid_1`, `covid_17` and `ctrl_19` are `Male` and the rest are `Female`.
+## Cell cycle state
+
+The cell cycle state of each was determined using `CellCycleScoring()` function. Cell cycle scoring adds three slots in the metadata, a score for S phase, a score for G2M phase and the predicted cell cycle phase.
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+VlnPlot(covid_final, features = c("S.Score", "G2M.Score"), group.by = "orig.ident", ncol = 2, pt.size = .1)
+```
+![](./images/fil_cc_vln.png)
+
+In this case it looks like we only have a few cycling cells in these datasets. We can also use the scatter plot and the prediction cell cycle phase.
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+FeatureScatter(covid_final, "S.Score", "G2M.Score", group.by = "Phase")
+```
+![](./images/fil_cc_scater.png)
+
+These are all the `QC` checks one usually does on a single-cell analysis. Now, let us also comapre the number of cells present from each patient
+
+```{r, eval=F}
+> table(covid_raw$orig.ident)
+
+ covid_1 covid_15 covid_16 covid_17  ctrl_13  ctrl_14  ctrl_19   ctrl_5 
+    1500     1500     1500     1500     1500     1500     1500     1500 
+
+> table(covid_final$orig.ident)
+
+ covid_1 covid_15 covid_16 covid_17  ctrl_13  ctrl_14  ctrl_19   ctrl_5 
+     875      549      357     1057     1126      996     1141     1033 
+```
+
 
 
 
