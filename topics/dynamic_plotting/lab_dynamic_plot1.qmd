@@ -53,9 +53,9 @@ leaflet() %>%
 ````
 - Start with the `leaflet()` function. 
 - New layers are added with the pipe operator (`%>%`). 
-- With `addTiles()` the default basemap is added
-- To add different types of markers to the maps `addMarkers()`, `addCircleMarkers()`, `addAwesomeMarkers()` can be used
-- `popup` argument are used to display important information about a point, they appear when you click over a marker
+- With `addTiles()` the default basemap is added.
+- To add different types of markers to the maps `addMarkers()`, `addCircleMarkers()`, `addAwesomeMarkers()` can be used.
+- `popup` argument are used to display important information about a point, they appear when you click over a marker.
 
 The example above results in: 
 ```{r}
@@ -77,7 +77,7 @@ island_coordinates <- data.frame(lng = c(-66.7305, -64.2352, -64.0835),
 
 - Your goal is to generate dynamic map using the leaflet. 
 
-**Advice:** Start building dynamic map step-by-step, run code after each step and pay attention to what is happening. To get help with some functions, click [here](https://r-charts.com/spatial/interactive-maps-leaflet/)
+**Advice:** Start building dynamic map step-by-step, run code after each step and pay attention to what is happening. To get help with some functions, click [here](https://r-charts.com/spatial/interactive-maps-leaflet/). 
 
 - Make a marker for three islands.
 - Add popup information (Biscoe, Dream and Torgersen island).
@@ -111,7 +111,7 @@ Typical composition of a plotly plot:
 
 It is also possible to build ggplot object first and then transform it to plotly plot using the `ggplotly()` function. This works fairly well for simple plots, although it is usually a better option to build `plotly` plots from scratch.
 
-For example, penguin mass vs. flipper length, using `ggplotly()` function.
+For example, penguin body mass vs. flipper length, using `ggplot()` and transformation to plotly plot using `ggplotly()` function.
 
 ````{.r}
 ```{{r}}
@@ -160,9 +160,26 @@ plot_ly(data = penguins, x = ~flipper_length_mm, y = ~body_mass_g,
         color = ~species, colors = c("darkorange","darkorchid","cyan4"), size=2)
 ```
 
-<br>
+When running this R command may see some red `Warning messages` appear in the R Console. Often you do not have to worry about these, but if you would like to minimise them, you can add the following arguments to your `plot_ly` function.
 
-`plot_ly` allows us to plot different plot types, for example, histograms, boxplots, scatterplots... using argument `type = ~ ...`. Example shows how to obtain boxplot and scatterplot and how to combine these two plots together using the `subplot` command.
+````{.r}
+```{{r}}
+plot_ly(data = penguins, x = ~flipper_length_mm, y = ~body_mass_g, 
+        color = ~species, colors = c("darkorange","darkorchid","cyan4"), size=2, 
+        type = "scatter", mode = "markers")
+```
+````
+
+We have included the additional arguments `type = ...` and `mode = ....`
+
+- We set `type = "scatter"` to ensure our data is plotted as a scatter plot.
+- We set `mode = "markers"` to ensure that each of our data points is plotted individually.
+
+These additional arguments are often helpful, as sometimes we like to have a little more control over how our data is presented.
+You will notice however that if these commands are omitted from your function, R will just work out what it thinks is the optimal presentation format (hence the warning messages informing us which options R has selected, since some details have not been user-specified).
+
+
+`plot_ly` allows us to plot different plot types, for example, histograms, boxplots, scatterplots... using argument `type = ~ ...`. Example below shows how to obtain boxplot and scatterplot and how to combine these two plots together using the `subplot` command.
 
 ````{.r}
 ```{{r}}
@@ -213,9 +230,55 @@ fig %>%
 
 ## Exercise:
 
+- In this exercise you will use [msleep](https://ggplot2.tidyverse.org/reference/msleep.html) dataset that is part of `ggplot2()` package. 
+- First check the dataset and familiarise yourself with data structure.
+- Explore the relationship between REM sleep and total sleep across different dietary categories of mammals. To visualise this, use a scatter plot within `plot_ly` and test different `mode` arguments.
+
+- Next, plot the number of mammalian in each diet (vore variable) group using the `plot_ly()` and `add_histogram()` functions.
+- Then, generate boxplot using the `plot_ly()` function where you show total amount of sleep and diet. Add color to each boxplot.
+- Combine both plots using the `subplot` function. Polish the combined figure, i.e. label axis, adjust box color, adjust legend... 
+
+::: {.callout-caution collapse='true' icon="false"}
+## {{< fa tools >}} &nbsp; Solution
+````
+```{{r}}
+#| echo: false
+library(ggplot2)
+library(plotly)
+
+plot_ly(msleep, x = ~sleep_rem, y = ~sleep_total, 
+    color = ~vore, colors = "Set1", size=2, type = "scatter", mode = "markers")
+
+plot_ly(msleep, x = ~sleep_rem, y = ~sleep_total, 
+    color = ~vore, colors = "Set1", size=2, type = "scatter", mode = "lines", line = list(width = 4))
+```
+
+```{{r}}
+#| echo: false
+library(ggplot2)
+library(plotly)
+
+p1 <- plot_ly(msleep, x = ~vore, color = ~vore, colors = c("#88CCEE", "#CC6677", "#DDCC77", "#117733")) %>%
+  add_histogram()
+
+p2 <- plot_ly(msleep,  x = ~vore, y = ~sleep_total, color = ~vore, type = "box", size=2, colors = c("#88CCEE", "#CC6677", "#DDCC77", "#117733"), showlegend = F)
+
+fig <- subplot(p1, p2)
+
+fig %>% 
+    layout(title = "Mammals Sleep Data",
+    xaxis = list(title = "Diet"), 
+    yaxis = list(title = "Number of mammals"),
+    xaxis2 = list(title = "Diet"), 
+    yaxis2 = list(title = "Total sleep (hours)"), 
+    legend=list(title=list(text="Diet")))
+```
+````
+:::
+
 # ggiraph
 
-This package is a htmlwidget and a ggplot2 extension that allows you to create dynamic graphs. It allows you to add tooltips, hover effects and JavaScript actions to the graphics. Any ggplot graphic can be turned into a ggiraph graphic by calling `girafe()` function.
+This package is a htmlwidget and a ggplot2 extension that allows you to create dynamic graphs. Any ggplot graphic can be turned into a ggiraph graphic by calling `girafe()` function.
 
 The first step is easy. Create a ggplot just like you normally would.
 
@@ -296,6 +359,27 @@ girafe(ggobj = gg)
 With the same logic as described above we can create all kinds of plots. For example, for boxplots the key function is `geom_boxplot_interactive()`. 
 
 ## Exercise:
+
+- You will now try to use `geom_boxplot_interactive()` function using the `msleep` dataset you already worked with.
+- Create a boxplot to visualize the total amount of total sleep across different diets, similar to the plotly example above. Enhance the plot's appearance by applying techniques and options covered in the ggplot tutorial, such as custom color palettes, axis labels, and themes.
+
+::: {.callout-caution collapse='true' icon="false"}
+## {{< fa tools >}} &nbsp; Solution
+````
+```{{r}}
+#| echo: false
+library(ggiraph)
+
+PlotData <- ggplot(msleep,aes(x = vore, y = sleep_total, color = vore, tooltip = vore)) +
+    geom_boxplot_interactive() +
+    theme_minimal() +
+    scale_color_manual(values = c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#999999")) + 
+    labs(title = "Mammals Sleep Data", x = "Diet", y = "Total Sleep (hours)", color = "Diet")
+  
+girafe(ggobj = PlotData)
+```
+````
+:::
 
 # DataTables (DT)
 
@@ -379,7 +463,7 @@ In the example above, all styles are applied to all cells in a column unconditio
 ```{{r}}
 datatable(msleep) %>% 
   formatStyle('vore', fontWeight = styleInterval('omni', c('normal', 'bold'))) %>%
-  formatStyle('sleep_total', color = styleInterval(c(11, 21), c('white', 'blue', 'green')),
+  formatStyle('sleep_total', color = styleInterval(c(11, 18), c('white', 'blue', 'green')),
     backgroundColor = styleInterval(11, c('gray', 'orange'))
   ) %>% 
    formatStyle(
@@ -399,7 +483,7 @@ library(DT)
 
 datatable(msleep) %>% 
   formatStyle('vore', fontWeight = styleInterval('omni', c('normal', 'bold'))) %>%
-  formatStyle('sleep_total', color = styleInterval(c(11, 21), c('white', 'blue', 'green')),
+  formatStyle('sleep_total', color = styleInterval(c(11, 18), c('white', 'blue', 'green')),
     backgroundColor = styleInterval(11, c('gray', 'orange'))) %>% 
    formatStyle(
     'sleep_rem',
@@ -409,7 +493,7 @@ datatable(msleep) %>%
     backgroundPosition = 'center') 
 ```
 
-For the column `vore`, the font weight in cells of which the values equal to `omni` will be bold. For `sleep_total`, both foreground and background colors are used: white for values smaller than 11, blue for those between 11 and 21, and green for those greater than 21; gray background for values below 11, and orange for those above 11. For `sleep_rem`, a bar graph is presented as the background. 
+For the column `vore`, the font weight in cells of which the values equal to `omni` will be bold. For `sleep_total`, both foreground and background colors are used: white for values smaller than 11, blue for those between 11 and 18, and green for those greater than 18; gray background for values below 11, and orange for those above 11. For `sleep_rem`, a bar graph is presented as the background. 
 
 ## Exercise:
 
@@ -450,6 +534,8 @@ datatable(md, options = list(pageLength = 10, order = list(list(4, 'desc'))), ca
 
 The crosstalk package can incorporate additional dynamic functionality in a Quarto document. As the name implies, it allows linking 
 multiple (crosstalk-compatible) `htmlwidgets`. This allows functionality that looks interactive as in a Shiny application, but does not require Shiny Server.
+
+
 
 **One dataset, two plots**
 <br>
@@ -639,16 +725,208 @@ bscols(dt_penguins, lf_stations, widths = c(12, 12))
 
 ## Exercise:
 
+- Start by creating a SharedData object using the `SharedData$new()` function from the `crosstalk` package. Use the `msleep` dataset as input.
+- Create a scatter plot using `ggplot2` with the SharedData object. Map `sleep_rem` to the x-axis, `sleep_total` to the y-axis, and `vore` to the color aesthetic.
+- Convert the ggplot object to obtain plotly plot.
+- Use `crosstalk` filters to add dynamic applications. Add a checkbox filter for the `vore` variable, a slider filter for `sleep_total`, and a select filter for `conservation`.
+- Combine the filters and the plotly plot into a single layout using the `bscols()` function. Specify the widths for the filters and the plot.
+
+::: {.callout-caution collapse='true' icon="false"}
+## {{< fa tools >}} &nbsp; Solution
+````
+```{{r}}
+library(plotly)
+library(ggplot2)
+
+shared_msleep <- SharedData$new(msleep)
+
+gg_plot1 <- ggplot(data = shared_msleep, aes(x = sleep_rem, y = sleep_total, color = vore)) +
+  geom_point() + theme_bw()
+
+plotly_plot1 <- ggplotly(gg_plot1)
+
+bscols(widths = c(3, NA),
+    list(
+        filter_checkbox("vore", "Diet", shared_msleep, ~vore, inline = TRUE),
+        filter_slider("sleep_total", "Total Sleep (hours)", shared_msleep, ~sleep_total, width = "100%"),
+        filter_select("conservation", "Conservation Status", shared_msleep, ~conservation)
+    ),
+    plotly_plot1)
+```
+````
+:::
+
 # ObservableJS (OJS)
 
 ObservableJS is a relatively new approach that also allows dynamic features to be included in a Quarto document. It is an entirely separate language outside of R that uses JavaScript and allows excellent functionality similar what is provided by a Shiny Server.
 
-OJS works in any Quarto document (plain markdown as well as Jupyter and Knitr documents). Just include your code in an `{ojs}` executable code block. 
+OJS works in any Quarto document (plain markdown as well as Jupyter and Knitr documents). Just include your code in an `{ojs}` executable code block. Similar to what you learned in Quarto lab, there are many options available to customize the behavior of `{ojs}` [code cells](https://quarto.org/docs/reference/cells/cells-ojs.html), including showing, hiding, and collapsing code as well as controlling the visibility and layout of outputs. Cell options are specified with `//|`. 
 
-[Observable Documentation](https://observablehq.com/documentation/)
+The most important cell option to be aware of is the `echo` option, which controls whether source code is displayed. In the code below `echo: false`, meaning source code is not diplayed in the final rendered report.
 
-Let's have a look into a simple example using Palmer Penguins dataset. Here we look at how penguin body mass varies across both sex and species (use the provided inputs to filter the dataset by bill length and island):
+````
+```{{ojs}}
+//| echo: false
+data = FileAttachment("./data/palmer-penguins.csv").csv({ typed: true })
+```
+````
 
+Let's have a look into a simple example using Palmer Penguins dataset. Here we look at how penguin body mass varies across both sex and species. 
+
+```{ojs}
+//| echo: false
+data = FileAttachment("./data/palmer-penguins.csv").csv({ typed: true })
+
+viewof bill_length_min = Inputs.range(
+  [32, 50], 
+  {value: 35, step: 1, label: "Bill length (min):"}
+)
+viewof islands = Inputs.checkbox(
+  ["Torgersen", "Biscoe", "Dream"], 
+  { value: ["Torgersen", "Biscoe"], 
+    label: "Islands:"
+  }
+)
+
+filtered = data.filter(function(penguin) {
+  return bill_length_min < penguin.bill_length_mm &&
+         islands.includes(penguin.island);
+})
+
+Plot.rectY(filtered, 
+  Plot.binX(
+    {y: "count"}, 
+    {x: "body_mass_g", fill: "species", thresholds: 20}
+  ))
+  .plot({
+    facet: {
+      data: filtered,
+      x: "sex",
+      y: "species",
+      marginRight: 80
+    },
+    marks: [
+      Plot.frame(),
+    ]
+  }
+)
+```
+
+To begin, we create an `{ojs}` cell to load data from a CSV file (e.g., palmer-penguins.csv) using a [FileAttachment](https://observablehq.com/documentation/data/files/file-attachments). File attachments support various formats such as CSV, TSV, and JSON, making them a convenient way to load pre-prepared datasets for analysis.
+
+````
+```{{ojs}}
+data = FileAttachment("./data/palmer-penguins.csv").csv({ typed: true })
+```
+````
+
+Now we loaded the external CSV file into the Observable environment.
+<br>
+
+**CSV files:**
+<br>
+
+- The `.csv()` method parses the CSV file into a JavaScript array of objects, where each row in the CSV becomes an object, and the column headers become the keys.
+- The `{ typed: true }` option ensures that the data types of the columns are automatically inferred. For example:
+  - Numeric columns are converted to numbers.
+  - Text columns remain as strings.
+  - Dates are parsed into JavaScript `Date` objects (if applicable).
+
+::: {.callout-note title="Data Sources - R"}
+The data you want to use with OJS might not always be available in raw form. Often you will need to read and preprocess the raw data using R. You can perform this preprocessing during document render (in an `{r}` code cell) and then make it available to `{ojs}` cells via the `ojs_define()` function.
+
+Here is an example. Read the data into R, do some grouping and summarization, then make it available to OJS using `ojs_define`:
+
+````
+```{{r}}
+library(readr)
+library(dplyr)
+
+penguins_filt = read_csv("palmer-penguins.csv") %>%
+  group_by(species) %>%
+  summarise(mean_body_mass = mean(body_mass_g, na.rm = TRUE))
+
+ojs_define(penguinsdata = penguins_filt)
+```
+````
+
+Once JS object is created, it needs to be transposed using the `transpose()` function. This function will convert column-oriented datasets (like the ones used in R) into the row-oriented datasets used by many JavaScript plotting libraries.
+
+````
+```{{ojs}}
+ojsdata <- transpose(penguinsdata)
+```
+````
+:::
+
+The example plotted (Palmer Penguins dataset) above does not display the entire dataset but instead a filtered subset. To create this filter, we need inputs and the ability to use their values in our filtering function. This is achieved using the `viewof` keyword along with standard [Inputs](https://observablehq.com/documentation/inputs/overview).
+
+````
+```{{ojs}}
+viewof bill_length_min = Inputs.range(
+  [32, 50], 
+  {value: 35, step: 1, label: "Bill length (min):"}
+)
+viewof islands = Inputs.checkbox(
+  ["Torgersen", "Biscoe", "Dream"], 
+  { value: ["Torgersen", "Biscoe"], 
+    label: "Islands:"
+  }
+)
+```
+````
+
+The range input above (created with `Inputs.range()`) specifies the total range of values a user can choose from (32 to 50), along with options for:
+
+- `value`: the default starting value or option of an input (here, 35)
+- `step`: the increments along the range (here, change by increments of 1)
+- `label`: a label informing or prompting the user (here, Bill length (min))
+
+The checkbox input above (created with `Inputs.checkbox()`) allows the user to choose any of a given set of values, in this case three islands where penguins are found. 
+
+- `value`: the default starting values or options of an input (here, Torgersen, Biscoe)
+- `label`: a label informing or prompting the user (here, Islands)
+
+The input values (here bill_length_min and islands) are generated and can be referenced in any cell, and the cell will run whenever the input changes.
+
+Next step is to write the filtering function that will transform the data read from the CSV using the values of `bill_length_mm` and `island`.
+
+````
+```{{ojs}}
+filtered = data.filter(function(penguin) {
+  return bill_length_min < penguin.bill_length_mm &&
+         islands.includes(penguin.island);
+})
+```
+````
+
+The `filtered` variable should contains an array of penguin objects that meet both conditions: `bill_length_mm` is greather than `bill_length_min` and `island` is one of the values in the `islands`. 
+
+Finally, let's plot the filtered data using [Observable Plot](https://observablehq.com/plot/) (an open-source JavaScript library for quick visualization of tabular data).
+
+````
+```{{ojs}}
+Plot.rectY(filtered, 
+  Plot.binX(
+    {y: "count"}, 
+    {x: "body_mass_g", fill: "species", thresholds: 20}
+  ))
+  .plot({
+    facet: {
+      data: filtered,
+      x: "sex",
+      y: "species",
+      marginRight: 80
+    },
+    marks: [
+      Plot.frame(),
+    ]
+  }
+)
+```
+````
+
+Observe that the `filtered` variable is referenced directly in the plotting code without any special syntax. This ensures that the plot is automatically updated whenever the `filtered` variable changes, which in turn is triggered by any updates to the input (bill_length_min, islands) values.
 
 ## Exercise:
 
