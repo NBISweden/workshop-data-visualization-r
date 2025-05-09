@@ -35,7 +35,7 @@ suppressPackageStartupMessages({
     library(ggplot2)
     library(patchwork)
     library(dplyr)
-    library(tidyr)
+    library(tidyverse)
 })
 seurat_covid_raw <- readRDS("./data/covid/seurat_covid_raw.rds")
 ```
@@ -309,6 +309,70 @@ FeaturePlot(covid_final, reduction = "umap", dims = 1:2, features = myfeatures, 
 ![](./images/feat2.png)
 
 # Clustering
+
+The object `covid_final` contains objects that the cells were clustered with `louvain` (algorithm 1) which is a graph based clustering with a few different resolutions. 
+
+```{r, eval=F}
+wrap_plots(
+    DimPlot(covid_final, reduction = "umap", group.by = "RNA_snn_res.0.1", label=T) + ggtitle("louvain_0.1"),
+    DimPlot(covid_final, reduction = "umap", group.by = "RNA_snn_res.0.25", label=T) + ggtitle("louvain_0.25"),
+    DimPlot(covid_final, reduction = "umap", group.by = "RNA_snn_res.0.5", label=T) + ggtitle("louvain_0.5"),
+    DimPlot(covid_final, reduction = "umap", group.by = "RNA_snn_res.1", label=T) + ggtitle("louvain_1"),
+    DimPlot(covid_final, reduction = "umap", group.by = "RNA_snn_res.2", label=T) + ggtitle("louvain_2"),
+    ncol = 3
+)
+```
+![](./images/clstr_umap.png)
+
+We can select one of our clustering methods and compare the proportion of samples across the clusters. Select the RNA_snn_res.0.5 and plot proportion of samples per cluster and also proportion covid vs ctrl.
+
+```{r, eval=F}
+p1 <- ggplot(covid_final@meta.data, aes(x = RNA_snn_res.0.5, fill = orig.ident)) +
+    geom_bar(position = "fill")
+p2 <- ggplot(covid_final@meta.data, aes(x = RNA_snn_res.0.5, fill = type)) +
+    geom_bar(position = "fill")
+
+p1 + p2
+```
+![](./images/clstr_bar.png)
+
+As you could see there are clearly biases with more cells from one sample in some clusters and also more covid/control cells in some of the clusters. Have look at clusters `3`, `5`, `8`, `9` and `10`. 
+
+:::{.callout-warning}
+This is an example of badly clustered data and it needs tobe further pre-processes before down-stream analysis. Here we just focus on visualizing and also to show what kind of visualizations are important to keep track of the quality of the single-cell data. We will not discuss about how to pre-process, but you can checkout the [workshop on single-cell analysis](https://nbisweden.github.io/workshop-scRNAseq/home_contents.html) where we discuss the QC and downstream analysis in detail. 
+:::
+
+We can also plot the above plot in the other direction, the proportion of each cluster per sample.
+
+```{r, eval=F}
+ggplot(covid_final@meta.data, aes(x = orig.ident, fill = RNA_snn_res.0.5)) +
+    geom_bar(position = "fill")
+```
+![](./images/clstr_bar2.png)
+
+It is also good to check the distribution of other potential confounders that might affect the further analysis and their distribution among the clusters. For example:
+
+```{r, eval=F}
+VlnPlot(covid_final, group.by = "RNA_snn_res.0.5", features = c("nFeature_RNA", "percent_mito"))
+```
+![](./images/clstr_vln.png)
+
+Once again, you can clearly see that there are biases in these clusters.
+
+It is also good to check where your clusters are on a UMAP and how the marher gene expressions are correlting to the clusters. For example, lets find out where T-cell and NK-cell clusters are. We know that T-cells express `CD3E`, and the main subtypes are `CD4` and `CD8`, while NK-cells express `GNLY`. 
+
+```{r, eval=F}
+# check with the lowest resolution
+p1 = DimPlot(alldata, reduction = "umap_cca", group.by = "RNA_snn_res.0.1", label = T) + ggtitle("louvain_0.1")
+p2 = FeaturePlot(alldata, features = "CD3E", reduction = "umap_cca", order = T) 
+p3 = FeaturePlot(alldata, features = "CD4", reduction = "umap_cca", order = T) 
+p4 = FeaturePlot(alldata, features = "CD8A", reduction = "umap_cca", order = T) 
+p5 = FeaturePlot(alldata, features = "GNLY", reduction = "umap_cca", order = T) 
+
+
+wrap_plots(p1,p2,p3,p4,p5, ncol=3) + plot_layout(guides = "collect")
+```
+![](./images/clstr_feat.png)
 
 # Differential Expression
 
