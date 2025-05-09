@@ -376,9 +376,155 @@ wrap_plots(p1,p2,p3,p4,p5, ncol=3) + plot_layout(guides = "collect")
 
 # Differential Expression
 
+Now let us run some differential expression and see how we can visualize them. 
+
+## Across clusters
+
+We will start with running a differential expression analysis between the different clusters. We will use the `RNA_snn_res.0.5` clusters as an example for this.
+
+```{r, eval=F}
+sel.clust <- "RNA_snn_res.0.5"
+
+covid_final <- SetIdent(covid_final, value = sel.clust)
+table(covid_final@active.ident)
+```
+
+```
+   0    1    2    3    4    5    6    7    8    9   10 
+1283 1028 1012  926  858  511  353  343  339  333  148 
+```
+
+We have `11` clusters in total and we will run the DGE analysis with the function `FindAllMarkers` from seurat that will run each of the clusters vs the rest. As you can see, there are some filtering criteria to remove genes that do not have certain `log2FC` or `percent expressed`. Here we only test for upregulated genes, so the `only.pos` parameter is set to `TRUE`. 
+
+```{r, eval=F}
+markers_genes <- FindAllMarkers(
+    covid_final,
+    logfc.threshold = 0.2,
+    test.use = "wilcox",
+    min.pct = 0.1,
+    min.diff.pct = 0.2,
+    only.pos = TRUE,
+    max.cells.per.ident = 50,
+    assay = "RNA"
+)
+```
+
+We can now select the top 25 overexpressed genes for plotting.
+
+```{r, eval=F}
+top25 <- markers_genes %>%
+    group_by(cluster) %>%
+    top_n(-25, p_val_adj) %>% 
+    # In case of tied p-values, further select the top 25 genes by fold-change
+    top_n(25, avg_log2FC)
+
+head(top25)
+```
+
+```
+# A tibble: 6 × 7
+# Groups:   cluster [1]
+     p_val avg_log2FC pct.1 pct.2 p_val_adj cluster gene 
+     <dbl>      <dbl> <dbl> <dbl>     <dbl> <fct>   <chr>
+1 7.33e-16       3.83 0.979 0.169  1.38e-11 0       GZMB 
+2 9.57e-16       3.47 0.942 0.142  1.80e-11 0       KLRD1
+3 2.32e-15       3.00 0.994 0.297  4.37e-11 0       CST7 
+4 3.58e-15       3.05 1     0.397  6.75e-11 0       NKG7 
+5 5.54e-15       3.65 0.95  0.22   1.04e-10 0       GNLY 
+6 7.96e-15       3.22 0.956 0.251  1.50e-10 0       CD247
+```
+
+:::{.callout-warning}
+The plot below is not a ggplot but a basic plot. This is an example how to sometimes utilize a base plot to make elegant plots
+:::
+
+```{r, eval=F}
+par(mfrow = c(2, 6), mar = c(4, 6, 3, 1))
+for (i in unique(top25$cluster)) {
+    barplot(sort(setNames(top25$avg_log2FC, top25$gene)[top25$cluster == i], F),
+        horiz = T, las = 1, main = paste0(i, " vs. rest"), border = "white", yaxs = "i"
+    )
+    abline(v = c(0, 0.25), lty = c(1, 2))
+}
+```
+![](./images/diff_exp.png)
+
+We can visualize them as a heatmap. Here we are selecting the top 5.
+
+```{r, eval=F}
+markers_genes %>%
+    group_by(cluster) %>%
+    slice_min(p_val_adj, n = 5, with_ties = FALSE) -> top5
+# create a scale.data slot for the selected genes
+covid_final <- ScaleData(covid_final, features = as.character(unique(top5$gene)), assay = "RNA")
+DoHeatmap(covid_final, features = as.character(unique(top5$gene)), group.by = sel.clust, assay = "RNA")
+```
+![](./images/diff_exp_hmap.png)
+
+Another way is by representing the overall group expression and detection rates in a dot-plot.
+
+```{r, eval=F}
+DotPlot(covid_final, features = rev(as.character(unique(top5$gene))), group.by = sel.clust, assay = "RNA") + coord_flip()
+```
+![](./images/diff_exp_dot.png)
+
+We can also plot a violin plot for each gene.
+
+```{r, eval=F}
+# take top 3 genes per cluster/
+top5 %>%
+    group_by(cluster) %>%
+    top_n(-3, p_val) -> top3
+
+# set pt.size to zero if you do not want all the points to hide the violin shapes, or to a small value like 0.1
+VlnPlot(covid_final, features = as.character(unique(top3$gene)), ncol = 5, group.by = sel.clust, assay = "RNA", pt.size = 0)
+```
+![](./images/diff_exp_vln.png)
+
+## Covid vs Ctrl
+
+Now, let us assume that you are interested in finding the differentially expressed genes between the patients with `Covid` vs the `Control`. We will take here the `cluster 2` as it has a good representation of the patients from both conditions. So, we could specifically run the DGE within that cluster like below:
+
+```{r, eval=F}
+# select all cells in cluster 2
+cell_selection <- subset(covid_final, cells = colnames(covid_final)[covid_final@meta.data[, sel.clust] == 2])
+cell_selection <- SetIdent(cell_selection, value = "type")
+# Compute differentiall expression
+DGE_cell_selection <- FindAllMarkers(cell_selection,
+    logfc.threshold = 0.2,
+    test.use = "wilcox",
+    min.pct = 0.1,
+    min.diff.pct = 0.2,
+    only.pos = TRUE,
+    max.cells.per.ident = 50,
+    assay = "RNA"
+)
+```
+
+We can now plot the expression across the type
+
+```{r, eval=F}
+DGE_cell_selection %>%
+    group_by(cluster) %>%
+    top_n(-5, p_val) -> top5_cell_selection
+VlnPlot(cell_selection, features = as.character(unique(top5_cell_selection$gene)), ncol = 5, group.by = "type", assay = "RNA", pt.size = .1)
+```
+![](./images/diff_exp_vln2.png)
+
+We can also plot these genes across all clusters, but split by type, to check if the genes are also over/under expressed in other celltypes/clusters.
+
+```{r, eval=F}
+VlnPlot(covid_final,
+    features = as.character(unique(top5_cell_selection$gene)),
+    ncol = 4, split.by = "type", assay = "RNA", pt.size = 0, split.plot = TRUE
+)
+```
+![](./images/diff_exp_vln3.png)
 
 
+# Acknowledgements
 
+All the material in this section were based on a 5-day workshop given by our NBIS colleagues on the single-cell analysis. We only scratch the surface here to think about the important visualizations one does in relation to single-cell data anaysis. There is much more to the actual analysis and the QC steps in relation to the down stream analysis of any single-cell data. If you have more questions, please go through the material available as part of that [workshop](https://nbisweden.github.io/workshop-scRNAseq/home_schedule.html)
 
 
 
