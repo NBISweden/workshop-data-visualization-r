@@ -532,18 +532,20 @@ datatable(md, options = list(pageLength = 10, order = list(list(4, 'desc'))), ca
 
 # crosstalk
 
-The crosstalk package can incorporate additional dynamic functionality in a Quarto document. As the name implies, it allows linking 
+The `crosstalk` package can incorporate additional dynamic functionality in a Quarto document. As the name implies, it allows linking 
 multiple (crosstalk-compatible) `htmlwidgets`. This allows functionality that looks interactive as in a Shiny application, but does not require Shiny Server.
 
+The `crosstalk `package is powerful because it lets you create a `SharedData` object. The primary use for `SharedData` is to be passed to crosstalk-compatible widgets in place of a data frame. Each `SharedData$new(...)` call makes a new "group" of widgets that link to each other, but not to widgets in other groups.
 
+The SharedData constructor has two optional parameters. The first is `key` and the second is `group`. Detailed explanation is found [here](https://rstudio.github.io/crosstalk/using.html).
 
 **One dataset, two plots**
 <br>
 
-1. Create a SharedData object
-2. Make htmlwidgets with SharedData input
-    - Here, we do this first by making ggplot objects…
-    - …and then converting them to ggplotly objects
+1. Create a `SharedData` object
+2. Make htmlwidgets with `SharedData` input
+    - Here, we do this first by making `ggplot` objects…
+    - …and then converting them to `ggplotly` objects
 3. Output results
 
 For step 3, we use the `crosstalk::bscols()` function to put the resulting interactive plots in a row (similar to `grid.arrange`). In the output below, click on a point on one plot and notice that the point related to the same penguin is highlighted in the other plot.
@@ -612,12 +614,15 @@ bscols(plotly_plot1, plotly_plot2)
 
 **One dataset, two widgets**
 <br>
-In the following example, we will now make a plot interact with a table instead of another plot.
 
-1. Create a SharedData object
-2. Make htmlwidgets with SharedData input
-    - Before this was two ggplotly
-    - Now, we have one ggplotly and one datatable
+Crosstalk is not limited to plots; it works with other `htmlwidgets`, such as DT tables and leaflet maps. To use it, simply pass a `SharedData` object into the functions of these packages in the same way you would a standard dataframe.
+
+In the following example, we will now make a plot interact with a table instead of another plot. 
+
+1. Create a `SharedData` object
+2. Make `htmlwidgets` with `SharedData` input
+    - Before this was two `ggplotly`
+    - Now, we have one `ggplotly` and one `datatable`
 3. Output results
 
 ````
@@ -674,10 +679,10 @@ bscols(plotly_plot1, dt_penguins)
 
 **Multiple datasets: Two datasets, two widgets**
 <br>
-To link multiple SharedData objects, we can specify a group argument when constructing the SharedData objects. group is a character string that servers as a unique identifier for a set of SharedData objects across whom the key information should be transmitted.
+To link multiple `SharedData` objects, we can specify a group argument when constructing the `SharedData` objects. Group is a character string that servers as a unique identifier for a set of `SharedData` objects across whom the key information should be transmitted.
 
-1. Create a SharedData objects
-2. Make htmlwidgets with SharedData input
+1. Create a `SharedData` objects
+2. Make `htmlwidgets` with `SharedData` input
 3. Output results
 
 ````
@@ -771,7 +776,7 @@ data = FileAttachment("./data/palmer-penguins.csv").csv({ typed: true })
 ```
 ````
 
-Let's have a look into a simple example using Palmer Penguins dataset. Here we look at how penguin body mass varies across both sex and species. 
+Let's have a look into a simple example using Palmer Penguins dataset. Here we look at how penguin body mass varies across both sex and species (the provided inputs to filter the dataset by bill length and island are used).
 
 ```{ojs}
 //| echo: false
@@ -930,3 +935,71 @@ Observe that the `filtered` variable is referenced directly in the plotting code
 
 ## Exercise:
 
+For this exercise is recommended to create a new Quarto (`.qmd`) notebook. You will work with `msleep` dataset, and your goal is to 
+generate a scatter plot that shows the relationship between mammalian REM and total sleep where diet (`vore` variable) is used as the input to filter the dataset.
+
+
+- Prepare data in R and pass it to OJS using `ojs_define`. Transpose JS object.
+- Display the raw dataset in a table using `Inputs.table` for better data exploration.
+- Create input using the `Inputs.checkbox` for `vore` variable, to allow dynamic filtering of the dataset.
+- Filter the dataset based on user input using JavaScript's `filter` function.
+- Visualize the filtered data using Observable Plot. Use `Plot.dot()` to create scatterplot.
+
+::: {.callout-caution collapse='true' icon="false"}
+## {{< fa tools >}} &nbsp; Solution
+
+````
+---
+title: "OJS example"
+author: "Katja"
+date: last-modified
+date-format: "YYYY-MMM-DD"
+format: html
+---
+
+```{{r}}
+library(ggplot2)
+```
+
+```{{r}}
+dt_sleep <- msleep
+ojs_define(ojsd = dt_sleep)
+```
+
+```{{ojs}}
+ojsdata = transpose(ojsd)
+```
+
+```{{ojs}}
+viewof raw_table = Inputs.table(ojsdata)
+```
+
+```{{ojs}}
+viewof diets = Inputs.checkbox(
+  ["herbi", "carni", "omni", "insecti"], 
+  { value: ["herbi", "carni"], 
+    label: "Diet:"
+  }
+)
+```
+
+```{{ojs}}
+filtered = ojsdata.filter(function(mammal) {
+    return diets.includes(mammal.vore);
+})
+```
+
+```{{ojs}}
+Plot.plot({
+  marks: [
+    Plot.dot(filtered, {
+      x:"sleep_rem",
+      y: "sleep_total",
+      fill: "vore"
+    })
+  ],
+  grid: true
+})
+```
+````
+:::
