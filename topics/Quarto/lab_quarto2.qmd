@@ -18,22 +18,22 @@ By the end of this exercise, you will be able to:
 - Create a basic Quarto dashboard
 - Become familiar with different components of a dashboard 
 - Customize dashboard layout and appearance
-- Add interactive components to your dashboard
+- Add dynamic components to your dashboard
 :::
 
 ::: {.callout-warning title="Dataset"}
-For this exercise we will use the [cake data](https://github.com/ImmunTech/CakeClub) from the Immunotechnology Cake Club in Lund.
+For this exercise we will use the [cake data](https://github.com/ImmunTech/CakeClub) from the Immunotechnology Cake Club in Lund. In the GitHub repository you will also find picture of all cakes.
 :::
 
 # Introduction
 The purpose of a dashboard is to provide a quick view of important things.
 
 Dashboards are compositions of components used to provide navigation and present data. With Quarto dashboards we can create 
-create elegant and production-ready dashboards using a variety of components, including **static graphics** (ggplot2, Matplotlib, Seaborn, etc.), **interactive widgets** (Plotly, Leaflet, Jupyter Widgets, htmlwidgets, etc.), tabular data, value boxes, text annotations, and more.
+create elegant and production-ready dashboards using a variety of components, including **static graphics** (ggplot2, Matplotlib, Seaborn, etc.), **dynamic widgets** (plotly, leaflet, htmlwidgets, etc.), tabular data, value boxes, text annotations, and more.
 
 # Dashboard structure
 - Dashboards are composed of **cards**.
-- Cards are arranged into **rows** and **column**s.
+- Cards are arranged into **rows** and **columns**.
 - **Pages, tabsets**, and **sidebars** allow for more advanced layouts.
 
 **Dashboard layout:**
@@ -50,6 +50,152 @@ The default layout setting is **by rows**. You can set the orientiation to be **
 Quarto automatically divides the area into equally divided charts.
 :::
 
+**Pages**
+
+To introduce multiple pages, use Level 1 headings above the Level 2 headings used to define rows and columns. The text of the Level 1 headings will be used to link to the pages in the navigation bar. For example, here is a dashboard that splits content across two pages. 
+
+::: {.chart-example .grid}
+::: g-col-5
+````
+---
+title: "Cake club"
+format: dashboard
+---
+    
+# Cake 1 
+
+```{{r}}
+```
+
+# Cake 2
+
+## Column
+
+```{{r}}
+```
+
+```{{r}}
+```
+
+## Column 
+
+```{{r}}
+```
+````
+:::
+
+::: g-col-7
+![](./images/page.png)
+:::
+:::
+
+**Tabsets**
+
+Use tabsets to include multiple views of data or to include content of secondary importance without having it crowd the main display. Tabsets are created by adding the `.tabset` class to a row or column. For example, this layout displays the bottom row as a set of two tabs.
+
+::: {.chart-example .grid}
+::: g-col-5
+````
+---
+title: "Cake club"
+format: dashboard
+---
+    
+## Row
+
+```{{r}}
+```
+
+## Row {.tabset}
+
+```{{r}}
+#| title: Chart 2
+```
+
+```{{r}}
+#| title: Chart 3
+```
+````
+:::
+
+::: g-col-7
+![](./images/chart-tabset-row.png)
+:::
+:::
+
+## Other features
+
+**Value boxes**
+
+Value boxes are a great way to prominently display simple values within a dashboard. For example, here is a dashboard row with three value boxes. 
+
+![](./images/value-box.png)
+
+````
+## Row
+
+```{{r}}
+#| content: valuebox
+#| title: "Sunny days"
+list(
+  icon = "brightness-high-fill",
+  color = "warning",
+  value = 14
+)
+```
+
+```{{r}}
+#| content: valuebox
+#| title: "Snowy days"
+list(
+  icon = "snow2",
+  color = "info",
+  value = 5
+)
+```
+
+```{{r}}
+#| content: valuebox
+#| title: "Rainy days"
+list(
+  icon = "cloud-rain-heavy",
+  color = "secondary",
+  value = 12
+)
+```
+````
+
+The `icon` used in value boxes can be any of the 2,000 available [bootstrap icons](https://icons.getbootstrap.com/).
+
+The `color` can be any CSS color value, however there are some color aliases that are tuned specifically for dashboards that you might consider using by default:
+
+| Color Alias | Default Theme Color(s) |
+|--------------|---------------|
+| `primary`   | Blue |
+| `secondary` | Gray |
+| `success`   | Green |
+| `info`      | Bright Blue |
+| `warning`   | Yellow/Orange |
+| `danger`    | Red |
+| `light`     | Light Gray |
+| `dark`      | Black |
+
+The `value` can be a variable created previously within the document, or randomly assigned value as here.
+
+**Dashboard Theming**
+
+Quarto Dashboards use same Bootstrap 5 based theming system as regular HTML documents (so themes you have built for HTML websites can also be used with dashboards). Use the theme option to choose a `theme`. Themes options are available [here](https://quarto.org/docs/dashboards/theming.html).
+
+```{.yaml}
+format:
+  dashboard:
+    theme: solar
+```
+
 # Exercise
 
-Your goal is to create the following dashboard.
+Your task is to build a dashboard using the provided `cake data`. Start by creating a simple dashboard with one row and one column. Use this dashboard as a foundation to understand the structure. Once comfortable, expand your dashboard by adding pages, tabsets, or additional rows and columns for a more advanced layout. Optionally, enhance your dashboard with dynamic components like `plotly`. 
+
+![Dashboard - Page 1](./images/dashboard1.png){.lightbox}
+![Dashboard - Page 2](./images/dashboard2.png){.lightbox}
+![Dashboard - Page 3](./images/dashboard3.png){.lightbox}
