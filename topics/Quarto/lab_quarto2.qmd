@@ -15,14 +15,14 @@ These are exercises to get you started with Quarto Dashboards. Refer to the offi
 
 By the end of this exercise, you will be able to:
 
-- Create a basic Quarto dashboard
-- Become familiar with different components of a dashboard 
-- Customize dashboard layout and appearance
-- Add dynamic components to your dashboard
+- Create a basic Quarto dashboard.
+- Become familiar with different components of a dashboard.
+- Customize dashboard layout and appearance.
+- Add dynamic components to your dashboard.
 :::
 
 ::: {.callout-warning title="Dataset"}
-For this exercise we will use the [cake data](https://github.com/ImmunTech/CakeClub) from the Immunotechnology Cake Club in Lund. In the GitHub repository you will also find picture of all cakes.
+For this exercise, we will use the [cake data](https://github.com/ImmunTech/CakeClub) provided by the Immunotechnology Cake Club in Lund. The GitHub repository also includes pictures of all the cakes.
 :::
 
 # Introduction
@@ -36,23 +36,74 @@ create elegant and production-ready dashboards using a variety of components, in
 - Cards are arranged into **rows** and **columns**.
 - **Pages, tabsets**, and **sidebars** allow for more advanced layouts.
 
-**Dashboard layout:**
+## Dashboard layout
 
-- Each Level 1 header (#) corresponds to a new page.
+**Navigation**
+
+All dashboards include a top-level navigation bar that provide a title and (optionally) a logo and author. Dashboards with multiple pages also contain a link to each page on the navigation bar. The `title` and `author` are specified as they are with normal documents. You can also include a `logo`. 
+
+
+```{.yaml}
+---
+title: "Cake Club"
+author: "NBIS"
+format: 
+  dashboard: 
+    logo: ./Downloads/cake-emoji.png
+---
+```
+
+![](./images/navigation.png)
+
+**Layout - rows and columns**
+
+Rows and columns are defined using markdown headings (with optional attributes to control height, width, etc.).
 
 - Every Level 2 header (##) introduces a new row.
 
 - Every code chunk introduces a new column.
 
-::: {.callout-note title="Layout"}
-The default layout setting is **by rows**. You can set the orientiation to be **by column** in the YAML. If that is the case, then the Level 2 header would be a column and each code chunk a row in the column.
+This example shows simple layout with two rows, where the second row is split into two columns. Moreover, Level 2 markdown headings (e.g. `## Row {height=70%}`) define the contents of rows as well as their relative height. The `{r}` code cells in turn automatically create cards that are laid out in columns within the row.
+
+::: {.chart-example .grid}
+::: g-col-5
+````
+---
+title: "Cake club"
+format: dashboard
+---
+    
+## Row {height=70%}
+
+```{r}
+```
+
+## Row {height=30%}
+
+```{r}
+```
+
+```{r}
+```
+````
+:::
+
+::: g-col-7
+![](./images/chart-focal-top.png)
+:::
+:::
+
+::: {.callout-note title="Orientation"}
+The default orientation setting is **by rows**. You can set the orientiation to be **by column** in the YAML specifying the `orientation: columns`. If that is the case, then the Level 2 header would be a column and each code chunk a row in the column.
 
 Quarto automatically divides the area into equally divided charts.
 :::
 
 **Pages**
 
-To introduce multiple pages, use Level 1 headings above the Level 2 headings used to define rows and columns. The text of the Level 1 headings will be used to link to the pages in the navigation bar. For example, here is a dashboard that splits content across two pages. 
+To introduce multiple pages, use Level 1 headings above the Level 2 headings used to define rows and columns. The text of the Level 1 headings will be used to link to the pages in the navigation bar. 
+
+For example, here is a dashboard that splits content across two pages. 
 
 ::: {.chart-example .grid}
 ::: g-col-5
@@ -91,7 +142,9 @@ format: dashboard
 
 **Tabsets**
 
-Use tabsets to include multiple views of data or to include content of secondary importance without having it crowd the main display. Tabsets are created by adding the `.tabset` class to a row or column. For example, this layout displays the bottom row as a set of two tabs.
+Use tabsets to include multiple views of data or to include content of secondary importance without having it crowd the main display. Tabsets are created by adding the `.tabset` class to a row or column. 
+
+For example, this layout displays the bottom row as a set of two tabs.
 
 ::: {.chart-example .grid}
 ::: g-col-5
@@ -122,6 +175,47 @@ format: dashboard
 ![](./images/chart-tabset-row.png)
 :::
 :::
+
+**Cards**
+
+Cards are the fundamental unit of display within dashboards. They are created automatically for each code chunk or explicitly using the `card` option.
+
+Here each of the r cells become card. 
+
+```` {.yaml}
+## Column {width=40%}
+
+```{{r}}
+```
+
+```{{r}}
+```
+````
+
+Here `.card` option is used.
+
+```` {.yaml}
+## Column {width=40%}
+
+```{{r}}
+```
+
+::: {.card}
+This text will be displayed within a card
+:::
+
+```{{r}}
+```
+````
+
+To provide a title for a markdown card use the `title` attribute. 
+
+For example: 
+```` {.yaml}
+::: {.card title="Mt Title"}
+This text will be displayed within a card
+:::
+````
 
 ## Other features
 
@@ -182,7 +276,41 @@ The `color` can be any CSS color value, however there are some color aliases tha
 
 The `value` can be a variable created previously within the document, or randomly assigned value as here.
 
-**Dashboard Theming**
+**Sidebars**
+
+Sidebars are a great place to group inputs for dashboards. By adding a new Level 2 headline with a `.sidebar` class, you can really easily add a collapsible sidebar.
+
+::: {.chart-example .grid}
+::: g-col-5
+````
+---
+title: "Cake club"
+format: dashboard
+---
+    
+# Page 1
+
+## {.sidebar}
+
+```{{r}}
+```
+
+## Column 
+
+```{{r}}
+```
+
+```{{r}}
+```
+````
+:::
+
+::: g-col-7
+![](./images/chart-input-sidebar.png)
+:::
+:::
+
+**Dashboard theming**
 
 Quarto Dashboards use same Bootstrap 5 based theming system as regular HTML documents (so themes you have built for HTML websites can also be used with dashboards). Use the theme option to choose a `theme`. Themes options are available [here](https://quarto.org/docs/dashboards/theming.html).
 
@@ -197,5 +325,7 @@ format:
 Your task is to build a dashboard using the provided `cake data`. Start by creating a simple dashboard with one row and one column. Use this dashboard as a foundation to understand the structure. Once comfortable, expand your dashboard by adding pages, tabsets, or additional rows and columns for a more advanced layout. Optionally, enhance your dashboard with dynamic components like `plotly`. 
 
 ![Dashboard - Page 1](./images/dashboard1.png){.lightbox}
+
 ![Dashboard - Page 2](./images/dashboard2.png){.lightbox}
+
 ![Dashboard - Page 3](./images/dashboard3.png){.lightbox}
