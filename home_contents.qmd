@@ -55,5 +55,5 @@ s %>%
 :::{.callout-tip icon="false" collapse="true"}
 ## {{< fa tools >}} &nbsp; Solutions to Lab Exercises
 
-I have compiled all the solutions for the different exercises in each of the sections [here](topics/lab_solutions.html)
+We have compiled all the solutions for the different exercises in each of the sections [here](topics/lab_solutions.html)
 :::

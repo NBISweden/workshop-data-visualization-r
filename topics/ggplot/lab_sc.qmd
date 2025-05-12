@@ -8,7 +8,7 @@ format:
 code-annotations: hover
 ---
 
-The visualization tutorila here is inspired from the [**NBIS workshop on Single-cell RNA-seq Analysis**](https://nbisweden.github.io/workshop-scRNAseq/). The visualization tutorial her eare part of the single-cell workshop as well.
+The visualization tutorial here is inspired from the [**NBIS workshop on Single-cell RNA-seq Analysis**](https://nbisweden.github.io/workshop-scRNAseq/). The visualization tutorial here are part of the single-cell workshop as well.
 
 # Get data
 
@@ -49,7 +49,7 @@ covid_final <- readRDS("./data/covid/seurat_covid_qc_dr_clst.rds")
 All the eight different datasets mentioned above are already merged into a single `Seurat` object. The two files you have downloaded are explained below:
 
  - `seurat_covid_raw.rds`: Contains all the data in raw format. There was no pre-processing of the data done here.
- - `seurat_covid_qc_dr_clst.rds`: In this file, the cells and the genes went through a different QC proces, followed by `Dimentionality Reduction` and `Clustering`.
+ - `seurat_covid_qc_dr_clst.rds`: In this file, the cells and the genes went through a different QC process, followed by `Dimentionality Reduction` and `Clustering`.
 
 # Raw data
 
@@ -59,7 +59,7 @@ Let us just take a look at the raw-data to start with. Here is how to take a loo
 # rna counts matrix
 covid_raw[["RNA"]]$counts[1:10, 1:4] 
 
-# metadat of the cells
+# metadata of the cells
 head(covid_raw@meta.data, 10)
 ```
 
@@ -71,14 +71,14 @@ When you look at the metadata you can see the `rownames` are ids of each cell. E
  - **type**: If the sample is `covid` or `control`
  - **percent_mito**: Mitochondrial gene content in percent
  - **percent_ribo**: Ribosomal gene content in percent
- - **percent_hb**: Percentage hemoglobin genes
+ - **percent_hb**: Percentage haemoglobin genes
  - **percent_plat**: Percentage for some platelet markers
 
 Thee values are pre-calculated to help assist with the visualization. 
 
 ## Plot QC
 
-To plot the raw QC of the datset, we will use the function `VlnPlot()`. This is a function from the `Seurat` package and it basically generates a `ggplot2` object from the Seurat object. Violin plots are a different way of looking at `boxplot`. 
+To plot the raw QC of the dataset, we will use the function `VlnPlot()`. This is a function from the `Seurat` package and it basically generates a `ggplot2` object from the Seurat object. Violin plots are a different way of looking at `boxplot`. 
 
 ```{r, eval=FALSE, warning=FALSE, message=FALSE}
 feats <- c("nFeature_RNA", "nCount_RNA", "percent_mito", "percent_ribo", "percent_hb", "percent_plat")
@@ -101,7 +101,7 @@ Extremely high number of detected genes could indicate doublets. However, depend
 
 ```{r, eval=FALSE, warning=FALSE, message=FALSE}
 # Compute the proportion of counts of each gene per cell
-# Use sparse matrix operations, if your dataset is large, doing matrix devisions the regular way will take a very long time.
+# Use sparse matrix operations, if your dataset is large, doing matrix divisions the regular way will take a very long time.
 
 C <- covid_raw[["RNA"]]$counts
 C@x <- C@x / rep.int(colSums(C), diff(C@p)) * 100
@@ -126,9 +126,9 @@ ggplot(most_exp_long) +
 The above plot and the code for the plot is very loaded. It is advised to go through them a bit carefully. 
 :::
 
-As you can see from the plot, the genes like `MALAT1`, the hameglobin gene `HBB` and `HBA2` and the several mitochondrial genes `MT-` are technical artifacts that needs to be removed. 
+As you can see from the plot, the genes like `MALAT1`, the haemoglobin gene `HBB` and `HBA2` and the several mitochondrial genes `MT-` are technical artifacts that needs to be removed. 
 
-# Post filteration
+# Post filtration
 
 There has been multiple filters applied to the above Seurat object containing raw data. Few of those are mentioned below:
 
@@ -137,7 +137,7 @@ There has been multiple filters applied to the above Seurat object containing ra
  * doublet prediction was applied for the cells and the doublets were removed.
  * `MALAT1`, `HB` and `MT-` genes were removed.
 
-The filtered data is availbale in `covid_final`.
+The filtered data is available in `covid_final`.
 
 ```{r, eval=FALSE, warning=FALSE, message=FALSE}
 feats <- c("nFeature_RNA", "nCount_RNA", "percent_mito", "percent_ribo", "percent_hb", "percent_plat")
@@ -157,14 +157,14 @@ FeatureScatter(covid_final, "nCount_RNA", "nFeature_RNA", group.by = "orig.ident
 
 When working with human or animal samples, you should ideally constrain your experiments to a single sex to avoid including sex bias in the conclusions. However this may not always be possible. By looking at reads from chromosomeY (males) and XIST (X-inactive specific transcript) expression (mainly female) it is quite easy to determine per sample which sex it is. It can also be a good way to detect if there has been any mislabelling in which case, the sample metadata sex does not agree with the computational predictions.
 
-For your convinience, the percentage of `ChrY` genes were calculated in each cell. These are present in the `covid_final` object. We can sanity check our samples by plotting both scatter plota and violon plots.
+For your convenience, the percentage of `ChrY` genes were calculated in each cell. These are present in the `covid_final` object. We can sanity check our samples by plotting both scatter plots and violin plots.
 
 ```{r, eval=FALSE, warning=FALSE, message=FALSE}
 FeatureScatter(covid_final, feature1 = "XIST", feature2 = "pct_chrY", group.by = "orig.ident", pt.size = .5)
 ```
 ![](./images/fil_sex_scatter.png)
 
-As you can see, the samples are clearly on either side, even if some cells do not have detection of either. Now let us plot this as violons to see which exact patients are Male and Female.
+As you can see, the samples are clearly on either side, even if some cells do not have detection of either. Now let us plot this as violins to see which exact patients are Male and Female.
 
 ```{r, eval=FALSE, warning=FALSE, message=FALSE}
 VlnPlot(covid_final, group.by = "orig.ident", split.by = "type", features = c("XIST", "pct_chrY"))
@@ -188,7 +188,7 @@ FeatureScatter(covid_final, "S.Score", "G2M.Score", group.by = "Phase")
 ```
 ![](./images/fil_cc_scater.png)
 
-These are all the `QC` checks one usually does on a single-cell analysis. Now, let us also comapre the number of cells present from each patient
+These are all the `QC` checks one usually does on a single-cell analysis. Now, let us also compare the number of cells present from each patient
 
 ```{r, eval=F}
 > table(covid_raw$orig.ident)
@@ -204,7 +204,7 @@ These are all the `QC` checks one usually does on a single-cell analysis. Now, l
 
 # Dimentionality Reduction
 
-Usually with single-cell data, one needs to define which features/genes are important in the dataset to distinguish cell types. For this purpose, one needs to find genes that are highly variable across cells, which in turn will also provide a good separation of the cell clusters. We can usually visualiza this by following:
+Usually with single-cell data, one needs to define which features/genes are important in the dataset to distinguish cell types. For this purpose, one needs to find genes that are highly variable across cells, which in turn will also provide a good separation of the cell clusters. We can usually visualize this by following:
 
 ```{r, eval=F}
 suppressWarnings(suppressMessages(covid_final <- FindVariableFeatures(covid_final, selection.method = "vst", nfeatures = 2000, verbose = FALSE, assay = "RNA")))
@@ -238,7 +238,7 @@ VizDimLoadings(covid_final, dims = 1:5, reduction = "pca", ncol = 5, balanced = 
 With the `scater` package we can check how different metadata variables contribute to each PCs. This can be important to look at to understand different biases you may have in your data.
 
 :::{.callout-warning}
-Unfortunately we dont have this package included in the list of R packages to be installed for this course. But, if you would really like to try, you can try to install it and run the following command. The example plot from the code is shown below.
+Unfortunately we don't have this package included in the list of R packages to be installed for this course. But, if you would really like to try, you can try to install it and run the following command. The example plot from the code is shown below.
 
 ```{r, eval = F}
 scater::plotExplanatoryPCs(as.SingleCellExperiment(covid_final), nvars_to_plot = 15, npcs_to_plot = 20)
@@ -339,7 +339,7 @@ p1 + p2
 As you could see there are clearly biases with more cells from one sample in some clusters and also more covid/control cells in some of the clusters. Have look at clusters `3`, `5`, `8`, `9` and `10`. 
 
 :::{.callout-warning}
-This is an example of badly clustered data and it needs tobe further pre-processes before down-stream analysis. Here we just focus on visualizing and also to show what kind of visualizations are important to keep track of the quality of the single-cell data. We will not discuss about how to pre-process, but you can checkout the [workshop on single-cell analysis](https://nbisweden.github.io/workshop-scRNAseq/home_contents.html) where we discuss the QC and downstream analysis in detail. 
+This is an example of badly clustered data and it needs to be further pre-processes before down-stream analysis. Here we just focus on visualizing and also to show what kind of visualizations are important to keep track of the quality of the single-cell data. We will not discuss about how to pre-process, but you can checkout the [workshop on single-cell analysis](https://nbisweden.github.io/workshop-scRNAseq/home_contents.html) where we discuss the QC and downstream analysis in detail. 
 :::
 
 We can also plot the above plot in the other direction, the proportion of each cluster per sample.
@@ -350,7 +350,7 @@ ggplot(covid_final@meta.data, aes(x = orig.ident, fill = RNA_snn_res.0.5)) +
 ```
 ![](./images/clstr_bar2.png)
 
-It is also good to check the distribution of other potential confounders that might affect the further analysis and their distribution among the clusters. For example:
+It is also good to check the distribution of other potential confounded variables that might affect the further analysis and their distribution among the clusters. For example:
 
 ```{r, eval=F}
 VlnPlot(covid_final, group.by = "RNA_snn_res.0.5", features = c("nFeature_RNA", "percent_mito"))
@@ -359,7 +359,7 @@ VlnPlot(covid_final, group.by = "RNA_snn_res.0.5", features = c("nFeature_RNA", 
 
 Once again, you can clearly see that there are biases in these clusters.
 
-It is also good to check where your clusters are on a UMAP and how the marher gene expressions are correlting to the clusters. For example, lets find out where T-cell and NK-cell clusters are. We know that T-cells express `CD3E`, and the main subtypes are `CD4` and `CD8`, while NK-cells express `GNLY`. 
+It is also good to check where your clusters are on a UMAP and how the marker gene expressions are correlating to the clusters. For example, lets find out where T-cell and NK-cell clusters are. We know that T-cells express `CD3E`, and the main subtypes are `CD4` and `CD8`, while NK-cells express `GNLY`. 
 
 ```{r, eval=F}
 # check with the lowest resolution
