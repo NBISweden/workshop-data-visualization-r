@@ -417,7 +417,7 @@ ggplot(data = gc_long) +
 ```
 
 ::: {.callout-note} 
-You can notice that the ggplot sorts the `factors` or `vaiables` alpha-numerically, like in the case above with `Sample_Name`. 
+You can notice that the ggplot sorts the `factors` or `variables` alpha-numerically, like in the case above with `Sample_Name`. 
 :::
 
 ::: {.callout-tip}  
@@ -798,7 +798,7 @@ gc_long %>%
 
 # Exercise III
 
-Now let us try to make the following plots as exercise before we go further to some `adavanced ggplot` session.
+Now let us try to make the following plots as exercise before we go further to some `advanced ggplot` session.
 
 ::::{.callout-important title="Task 3.1"}
 

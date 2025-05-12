@@ -85,23 +85,6 @@ island_coordinates <- data.frame(lng = c(-66.7305, -64.2352, -64.0835),
 - Change the marker style to circle markers, and add color.
 - Replace `addTiles()` function with `addProviderTiles(providers$Esri.WorldImagery)`, which allows to visualize the map with real images.
 
-::: {.callout-caution collapse='true' icon="false"}
-## {{< fa tools >}} &nbsp; Solution
-````
-```{{r}}
-#| echo: false
-library(palmerpenguins)
-library(leaflet)
-
-leaflet() %>%
-  addTiles() %>%
-  #addProviderTiles(providers$Esri.WorldImagery) %>%
-  setView(lng = -63.0, lat = -63.0, zoom = 5) %>%
-  addCircleMarkers(data = island_coordinates, popup = c("Biscoe", "Dream", "Torgersen"), color = "green")
-```
-````
-:::
-
 # plotly
 
 We can create a `plotly` plot using the function `plot_ly()`. 
@@ -238,44 +221,6 @@ fig %>%
 - Then, generate boxplot using the `plot_ly()` function where you show total amount of sleep and diet. Add color to each boxplot.
 - Combine both plots using the `subplot` function. Polish the combined figure, i.e. label axis, adjust box color, adjust legend... 
 
-::: {.callout-caution collapse='true' icon="false"}
-## {{< fa tools >}} &nbsp; Solution
-````
-```{{r}}
-#| echo: false
-library(ggplot2)
-library(plotly)
-
-plot_ly(msleep, x = ~sleep_rem, y = ~sleep_total, 
-    color = ~vore, colors = "Set1", size=2, type = "scatter", mode = "markers")
-
-plot_ly(msleep, x = ~sleep_rem, y = ~sleep_total, 
-    color = ~vore, colors = "Set1", size=2, type = "scatter", mode = "lines", line = list(width = 4))
-```
-
-```{{r}}
-#| echo: false
-library(ggplot2)
-library(plotly)
-
-p1 <- plot_ly(msleep, x = ~vore, color = ~vore, colors = c("#88CCEE", "#CC6677", "#DDCC77", "#117733")) %>%
-  add_histogram()
-
-p2 <- plot_ly(msleep,  x = ~vore, y = ~sleep_total, color = ~vore, type = "box", size=2, colors = c("#88CCEE", "#CC6677", "#DDCC77", "#117733"), showlegend = F)
-
-fig <- subplot(p1, p2)
-
-fig %>% 
-    layout(title = "Mammals Sleep Data",
-    xaxis = list(title = "Diet"), 
-    yaxis = list(title = "Number of mammals"),
-    xaxis2 = list(title = "Diet"), 
-    yaxis2 = list(title = "Total sleep (hours)"), 
-    legend=list(title=list(text="Diet")))
-```
-````
-:::
-
 # ggiraph
 
 This package is a htmlwidget and a ggplot2 extension that allows you to create dynamic graphs. Any ggplot graphic can be turned into a ggiraph graphic by calling `girafe()` function.
@@ -362,24 +307,6 @@ With the same logic as described above we can create all kinds of plots. For exa
 
 - You will now try to use `geom_boxplot_interactive()` function using the `msleep` dataset you already worked with.
 - Create a boxplot to visualize the total amount of total sleep across different diets, similar to the plotly example above. Enhance the plot's appearance by applying techniques and options covered in the ggplot tutorial, such as custom color palettes, axis labels, and themes.
-
-::: {.callout-caution collapse='true' icon="false"}
-## {{< fa tools >}} &nbsp; Solution
-````
-```{{r}}
-#| echo: false
-library(ggiraph)
-
-PlotData <- ggplot(msleep,aes(x = vore, y = sleep_total, color = vore, tooltip = vore)) +
-    geom_boxplot_interactive() +
-    theme_minimal() +
-    scale_color_manual(values = c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#999999")) + 
-    labs(title = "Mammals Sleep Data", x = "Diet", y = "Total Sleep (hours)", color = "Diet")
-  
-girafe(ggobj = PlotData)
-```
-````
-:::
 
 # DataTables (DT)
 
@@ -504,31 +431,6 @@ search box and clickable sorting arrows.
 - Add captions to both tables. 
 - In the `metadata.csv` order column `Replicate` by descending order.
 - Finally, in the `counts_raw.txt` for `Sample_1` background use bar graph using `styleColorBar()`. For `Sample_3` use `styleInterval()` and color foreground and background, decide on the interval size yourself.
-
-::: {.callout-caution collapse='true' icon="false"}
-## {{< fa tools >}} &nbsp; Solution
-````
-```{{r}}
-#| echo: false
-library(DT)
-
-gc <- read.table("../../data/counts_raw.txt", header = T, row.names = 1, sep = "\t")
-md <- read.table("../../data/metadata.csv", header = T, sep = ";")
-
-datatable(gc, options = list(pageLength = 10), caption = "Table 1: Raw gene counts") %>% 
-  formatStyle(
-    'Sample_1',
-    background = styleColorBar(msleep$sleep_rem, 'steelblue'),
-    backgroundSize = '100% 90%',
-    backgroundRepeat = 'no-repeat',
-    backgroundPosition = 'center') %>%
-  formatStyle('Sample_3', color = styleInterval(c(8500, 15000), c('white', 'blue', 'green')),
-    backgroundColor = styleInterval(11000, c('gray', 'orange')))
-
-datatable(md, options = list(pageLength = 10, order = list(list(4, 'desc'))), caption = "Table 1: Metadata")
-```
-````
-:::
 
 # crosstalk
 
@@ -736,31 +638,6 @@ bscols(dt_penguins, lf_stations, widths = c(12, 12))
 - Use `crosstalk` filters to add dynamic applications. Add a checkbox filter for the `vore` variable, a slider filter for `sleep_total`, and a select filter for `conservation`.
 - Combine the filters and the plotly plot into a single layout using the `bscols()` function. Specify the widths for the filters and the plot.
 
-::: {.callout-caution collapse='true' icon="false"}
-## {{< fa tools >}} &nbsp; Solution
-````
-```{{r}}
-library(plotly)
-library(ggplot2)
-
-shared_msleep <- SharedData$new(msleep)
-
-gg_plot1 <- ggplot(data = shared_msleep, aes(x = sleep_rem, y = sleep_total, color = vore)) +
-  geom_point() + theme_bw()
-
-plotly_plot1 <- ggplotly(gg_plot1)
-
-bscols(widths = c(3, NA),
-    list(
-        filter_checkbox("vore", "Diet", shared_msleep, ~vore, inline = TRUE),
-        filter_slider("sleep_total", "Total Sleep (hours)", shared_msleep, ~sleep_total, width = "100%"),
-        filter_select("conservation", "Conservation Status", shared_msleep, ~conservation)
-    ),
-    plotly_plot1)
-```
-````
-:::
-
 # ObservableJS (OJS)
 
 ObservableJS is a relatively new approach that also allows dynamic features to be included in a Quarto document. It is an entirely separate language outside of R that uses JavaScript and allows excellent functionality similar what is provided by a Shiny Server.
@@ -944,62 +821,3 @@ generate a scatter plot that shows the relationship between mammalian REM and to
 - Create input using the `Inputs.checkbox` for `vore` variable, to allow dynamic filtering of the dataset.
 - Filter the dataset based on user input using JavaScript's `filter` function.
 - Visualize the filtered data using Observable Plot. Use `Plot.dot()` to create scatterplot.
-
-::: {.callout-caution collapse='true' icon="false"}
-## {{< fa tools >}} &nbsp; Solution
-
-````
----
-title: "OJS example"
-author: "Katja"
-date: last-modified
-date-format: "YYYY-MMM-DD"
-format: html
----
-
-```{{r}}
-library(ggplot2)
-```
-
-```{{r}}
-dt_sleep <- msleep
-ojs_define(ojsd = dt_sleep)
-```
-
-```{{ojs}}
-ojsdata = transpose(ojsd)
-```
-
-```{{ojs}}
-viewof raw_table = Inputs.table(ojsdata)
-```
-
-```{{ojs}}
-viewof diets = Inputs.checkbox(
-  ["herbi", "carni", "omni", "insecti"], 
-  { value: ["herbi", "carni"], 
-    label: "Diet:"
-  }
-)
-```
-
-```{{ojs}}
-filtered = ojsdata.filter(function(mammal) {
-    return diets.includes(mammal.vore);
-})
-```
-
-```{{ojs}}
-Plot.plot({
-  marks: [
-    Plot.dot(filtered, {
-      x:"sleep_rem",
-      y: "sleep_total",
-      fill: "vore"
-    })
-  ],
-  grid: true
-})
-```
-````
-:::

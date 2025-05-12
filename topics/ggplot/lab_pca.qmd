@@ -23,7 +23,7 @@ library(tidyverse)
 Let us first make a PCA object. For this, we will use the `VST` data, because it makes sense to use the normalized data for building the PCA. To run PCA, we use the R function `prcomp()`. It takes in a matrix where samples are rows and variables are columns. Therefore, we transpose our count matrix using the function `t()`. If we do not transpose, then PCA is run on the genes rather than the samples. 
 
 :::{.callout-note}
-In this section, we will talk about `PCA` and how to plot a PCA object using `ggplot`. But the idea of plottig the results of any multi-dimwntionality reduction methods like `MDS/PCoA`, `NMDS`, `tSNE`, `UMAP` and many others would in theory be the same as `PCA`. 
+In this section, we will talk about `PCA` and how to plot a PCA object using `ggplot`. But the idea of plotting the results of any multi-dimensionality reduction methods like `MDS/PCoA`, `NMDS`, `tSNE`, `UMAP` and many others would in theory be the same as `PCA`. 
 :::
 
 ```{r, warning=FALSE, message=FALSE}
@@ -31,7 +31,7 @@ gc_vst <- read.table("../../data/counts_vst.txt", header = T, row.names = 1, sep
 vst_pca <- prcomp(t(gc_vst))
 ```
 
-After you computer the PCA, if you type the object `vst_pca$` and press `TAB`, you will notice that this R object has multiple vecors and data.frames within it. Some of the important ones are
+After you computer the PCA, if you type the object `vst_pca$` and press `TAB`, you will notice that this R object has multiple vectors and data.frames within it. Some of the important ones are
 
 * `sdev:` the standard deviations of the principal components
 * `x:` the coordinates of the samples (observations) on the principal components.
@@ -138,7 +138,7 @@ ggplot(data=vst_pca_all, mapping=aes(x=PC1, y=PC2)) +
 
 
 :::{.callout-note}
-Similarly, let us say, you have environmental variables (continous variables like pH and so on) from the same samples and you would like to see how they would fit this bi-plot. One can use `envfit()` function from the `vegan` package, this function would return both the `p-value` and the `coordinates` of each of the variables in your environmental matrix. Then you could subset the significant variables and plot them in the same way as above. 
+Similarly, let us say, you have environmental variables (continuos variables like pH and so on) from the same samples and you would like to see how they would fit this bi-plot. One can use `envfit()` function from the `vegan` package, this function would return both the `p-value` and the `coordinates` of each of the variables in your environmental matrix. Then you could subset the significant variables and plot them in the same way as above. 
 :::
 
 # Exercise I
@@ -186,7 +186,7 @@ The mds object `gc_mds` has "eigenvalues". You can calculate the variance by `Va
 
 # Differential Expression
 
-This topic might be of interest to people who work with transcriptomics data specifically, but it is a fun dataset to explore even if you dont work with this kind of data. There are 3 files similar to `Time_t2_vs_t0.txt` that basically has the list of genes that are differentially expressed in time-point`t2` vs `t0`. The other 2 files `Time_t6_vs_t0.txt` and `Time_t24_vs_t0.txt` represents the comparisons `t6 vs t0` and `t24 vs t0` respectively. Let us take a quick look at one of these files:
+This topic might be of interest to people who work with transcriptomics data specifically, but it is a fun dataset to explore even if you don't work with this kind of data. There are 3 files similar to `Time_t2_vs_t0.txt` that basically has the list of genes that are differentially expressed in time-point`t2` vs `t0`. The other 2 files `Time_t6_vs_t0.txt` and `Time_t24_vs_t0.txt` represents the comparisons `t6 vs t0` and `t24 vs t0` respectively. Let us take a quick look at one of these files:
 
 ```{r, warning=FALSE, message=FALSE}
 t2_vs_t0 <- read.table("../../data/Time_t2_vs_t0.txt", sep = "\t", header = TRUE, row.names = 1)
@@ -212,7 +212,7 @@ t2_vs_t0 %>%
   ggtitle("P-value Distribution")
 ```
 
-The distribution looks what is expected of an anlysis like differential gene-expression.
+The distribution looks what is expected of an analysis like differential gene-expression.
 
 :::{.callout-tip}
 If you are interested more in understanding the distribution of p-values, you can read about the possible different outcomes and their reasoning [here](http://varianceexplained.org/statistics/interpreting-pvalue-histogram/).
@@ -248,7 +248,7 @@ You can `filter` the data that has `adjusted p-value < 0.05` and plot the points
 
 ## Volcano plot
 
-Similar to MA plot, Volcano plot indicates the relation between the `adjusted p-values` and the `log fold change`. The adjusted p-value is transformed with `-log10` on the y-axis, so that the smallest p-values appears at the top of the plot. The log2FoldCange values are plotted as they are on the x-axis, so that the down-regulated genes are on the left of the x-axis (-ve values) and the up-regulated genes are on the right of the x-axis (+ve values).
+Similar to MA plot, Volcano plot indicates the relation between the `adjusted p-values` and the `log fold change`. The adjusted p-value is transformed with `-log10` on the y-axis, so that the smallest p-values appears at the top of the plot. The log2FoldChange values are plotted as they are on the x-axis, so that the down-regulated genes are on the left of the x-axis (-ve values) and the up-regulated genes are on the right of the x-axis (+ve values).
 
 
 ```{r, warning=FALSE, message=FALSE}
@@ -335,7 +335,7 @@ hmap_t24_t0 <- subset(gc_vst, rownames(gc_vst) %in% diff_t24_vs_t0$gene)
 pheatmap(hmap_t24_t0, border_color=NA, annotation_col=md[,"Time",drop=F], annotation_row=NULL, annotation_legend=T)
 ```
 
-Further, we can also customize using the `pheatmap` and also use the continous color options we talked about in the earlier sections.
+Further, we can also customize using the `pheatmap` and also use the continuos color options we talked about in the earlier sections.
 
 ```{r}
 library(wesanderson)

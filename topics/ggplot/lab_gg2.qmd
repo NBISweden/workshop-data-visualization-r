@@ -132,7 +132,7 @@ ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
 
 ## Editing legends
 
-The legends can be edited by `scale_<aesthetic>_<discrete or continous>` function that we have been using. Take the below figure for example, we have the `Sepal.Width` and the `Species` with the `size` and `color` aestheitcs respectively.
+The legends can be edited by `scale_<aesthetic>_<discrete or continous>` function that we have been using. Take the below figure for example, we have the `Sepal.Width` and the `Species` with the `size` and `color` aesthetics respectively.
 
 ```{r, warning=FALSE, message=FALSE}
 ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
@@ -280,7 +280,7 @@ gc_long %>%
 ```
 
 :::{.callout-tip title="Tip 1"}
-`geom_line()` is a bit tricky when you use it together with `groups`. It tries to draw lines within the group. In this case, if you would like to draw lines between the groups (like in the above plot, between `t0` through `t2` to `t24`), you initate the ggplot with aesthetics for the line and add `geom_line(aes(group=1))` this way. 
+`geom_line()` is a bit tricky when you use it together with `groups`. It tries to draw lines within the group. In this case, if you would like to draw lines between the groups (like in the above plot, between `t0` through `t2` to `t24`), you initiate the ggplot with aesthetics for the line and add `geom_line(aes(group=1))` this way. 
 :::
 
 :::{.callout-tip title="Tip 2"}
@@ -354,7 +354,7 @@ p4 <- ggplot(data=iris,mapping=aes(x=Sepal.Length, y = Sepal.Width, color = Spec
   theme_light(base_size = 10)
 ```
 
-The objects `p1`, `p2`, `p3` and `p4` as intuitively represent the plots **A**, **B**, **C** and **D** repectively. 
+The objects `p1`, `p2`, `p3` and `p4` as intuitively represent the plots **A**, **B**, **C** and **D** respectively. 
 
 ## Cowplot
 
@@ -373,9 +373,9 @@ plot_grid(p1, p2, nrow = 2, labels = c("A", "B"))
 
 ## ggdraw and draw_plot
 
-In `cowplot`, you can also customize the dimentions of the plots in a much more controlled fashion. For this one starts with `ggdraw()` which initiates the drawing "canvas" followed by `draw_plot()` that you use to draw the different plots on to the canvas. 
+In `cowplot`, you can also customize the dimensions of the plots in a much more controlled fashion. For this one starts with `ggdraw()` which initiates the drawing "canvas" followed by `draw_plot()` that you use to draw the different plots on to the canvas. 
 
-Here is how the dimentions of the empty canvas looks like:
+Here is how the dimensions of the empty canvas looks like:
 ![](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/assets/images/canva.png)
 
 From here, you can draw your plots in the way you want using these dimensions. AN example is shown below, where we plot **C** and **D** similar to the plot above: 
