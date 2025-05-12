@@ -314,11 +314,10 @@ bscols(widths = c(3, NA),
 
 ## Exercise 7.1
 
-```{r}
-#| eval: false
+````
 ---
 title: "OJS example"
-author: "Katja"
+author: "John Doe"
 date: last-modified
 date-format: "YYYY-MMM-DD"
 format: html
