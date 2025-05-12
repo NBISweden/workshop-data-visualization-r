@@ -902,6 +902,18 @@ cake_data %>%
 :::
 ::::
 
+## Dashboard deployment
+
+Dashboards are typically just static HTML pages so they can be deployed to any web server or web host.
+
+<br>
+
+**Deployment options:**
+
+- **GitHub Pages**: Push your `.qmd` and rendered files to a GitHub repository and enable GitHub Pages.
+- [Posit Connect Cloud](https://connect.posit.cloud/): Easy publish and share data applications and documents in a cloud environment.
+- **Other web servers**: Upload the rendered HTML files to any web server of your choice.
+
 ## Interactive dashboards
 - Quarto dashboards can include interactive Shiny components (e.g. a plot with sliders that control its inputs)
 - [Quarto dashboard with Shiny](https://quarto.org/docs/dashboards/interactivity/shiny-r)
