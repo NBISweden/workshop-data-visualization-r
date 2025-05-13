@@ -700,6 +700,8 @@ Plot.rectY(filtered,
 
 To begin, we create an `{ojs}` cell to load data from a CSV file (e.g., palmer-penguins.csv) using a [FileAttachment](https://observablehq.com/documentation/data/files/file-attachments). File attachments support various formats such as CSV, TSV, and JSON, making them a convenient way to load pre-prepared datasets for analysis.
 
+To get pre-prepared dataset `palmer-penguins.csv` load `palmerpenguins` library, save `penguins` data as `.csv` file and then load this data as described above. 
+
 ````
 ```{{ojs}}
 data = FileAttachment("./data/palmer-penguins.csv").csv({ typed: true })

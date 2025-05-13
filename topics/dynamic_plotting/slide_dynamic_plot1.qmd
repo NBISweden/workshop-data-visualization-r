@@ -45,6 +45,8 @@ penguins %>%
     add_markers()
 ```
 ````
+
+`add_markers():` This adds markers (points) to the plot. Each row in the dataset will be represented as a marker at the corresponding (x, y) coordinates.
 :::
 
 ::: {.column width="45%"}
@@ -236,7 +238,7 @@ datatable(tb_data, filter = "top", class = 'cell-border stripe')
 :::
 ::::
 
-## Quarto using `crosstalk` {.smaller}
+## Quarto using [crosstalk](https://rstudio.github.io/crosstalk/index.html) {.smaller}
 
 ````{.yaml style="overflow-y: hidden" code-line-numbers="|8,10-14"}
 ```{{r}}
@@ -275,9 +277,13 @@ bscols(
 
 ## ObservableJS {.smaller}
 ::: {style="font-size: 1.6rem"}
-- Quarto supports [OJS](https://quarto.org/docs/interactive/ojs/) for interactive visualizations in the browser
+- ObservableJS [OJS](https://quarto.org/docs/interactive/ojs/) is a relatively new approach that also allows dynamic features to be included in a Quarto document.
+- It is an entirely separate language outside of R that uses JavaScript and allows excellent functionality similar to what is provided by a Shiny Server.
+<br>
+
 - `{ojs}` executable code block
 :::
+
 ````
 ```{{ojs}}
 // Load the dataset from a CSV file
@@ -310,8 +316,10 @@ Plot.plot({
 ````
 ## ObservableJS {.smaller}
 ::: {style="font-size: 1.6rem"}
-- Quarto supports [OJS](https://quarto.org/docs/interactive/ojs/) for interactive visualizations in the browser
-- `{ojs}` executable code block
+- Dynamic behavior
+    - **range slider** to select a year and the **checkbox** to select specific countries
+    - The bar plot updates dynamically based on the filtered data, reflecting the selected year and entities.
+
 :::
 
 ```{ojs}
