@@ -35,7 +35,7 @@ Then, we will dive into building interactive applications with Shiny, focusing o
 ## [plotly](https://plotly.com/r/)
 :::: {.columns}
 ::: {.column width="55%"}
-````
+````{.yaml style="overflow-y: hidden" code-line-numbers="|5-7"}
 ```{{r}}
 library(plotly)
 library(palmerpenguins)
@@ -69,7 +69,7 @@ penguins %>%
 - It can connect 2 or more charts together
 :::
 
-````
+````{.yaml style="overflow-y: hidden" code-line-numbers="|13,27,38"}
 ```{{r}}
 #| fig-width: 14
 #| fig-height: 10
@@ -168,7 +168,7 @@ Data used: https://ourworldindata.org/grapher/bcg-immunization-coverage-for-tb-a
 :::::{.fragment}
 ::::{.columns}
 :::{.column}
-````
+````{.yaml style="overflow-y: hidden" code-line-numbers="|7-15"}
 ```{{r}}
 library(leaflet)
 
@@ -213,7 +213,7 @@ leaflet(width = "100%") %>%
 ## [DT](https://www.htmlwidgets.org/showcase_datatables.html) {.smaller}
 :::: {.columns}
 ::: {.column width="30%"}
-````
+````{.yaml style="overflow-y: hidden" code-line-numbers="|6"}
 ```{{r}}
 library(DT)
 
@@ -238,7 +238,7 @@ datatable(tb_data, filter = "top", class = 'cell-border stripe')
 
 ## Quarto using `crosstalk` {.smaller}
 
-````
+````{.yaml style="overflow-y: hidden" code-line-numbers="|8,10-14"}
 ```{{r}}
 library(crosstalk)
 library(DT)
