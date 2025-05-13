@@ -389,7 +389,7 @@ In the example above, all styles are applied to all cells in a column unconditio
 ````{.r}
 ```{{r}}
 datatable(msleep) %>% 
-  formatStyle('vore', fontWeight = styleInterval('omni', c('normal', 'bold'))) %>%
+  formatStyle('vore', fontWeight = styleEqual('omni', c('bold'))) %>%
   formatStyle('sleep_total', color = styleInterval(c(11, 18), c('white', 'blue', 'green')),
     backgroundColor = styleInterval(11, c('gray', 'orange'))
   ) %>% 
@@ -409,7 +409,7 @@ library(ggplot2)
 library(DT)
 
 datatable(msleep) %>% 
-  formatStyle('vore', fontWeight = styleInterval('omni', c('normal', 'bold'))) %>%
+  formatStyle('vore', fontWeight = styleEqual('omni', c('bold'))) %>%
   formatStyle('sleep_total', color = styleInterval(c(11, 18), c('white', 'blue', 'green')),
     backgroundColor = styleInterval(11, c('gray', 'orange'))) %>% 
    formatStyle(
