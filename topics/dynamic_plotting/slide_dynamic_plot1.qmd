@@ -23,7 +23,7 @@ Then, we will dive into building interactive applications with Shiny, focusing o
 ## Quarto using `htmlwidgets`
 
 ::: {.fragment}
-- HTML widgets work just like R plots except they produce interactive web visualizations
+- HTML widgets work just like R plots except they produce dynamic/interactive web visualizations
 - Do not require any knowledge of JavaScript, nor use of a Shiny Server
 - There are [many widgets](https://gallery.htmlwidgets.org/) to choose from, most known are: 
     - [plotly](https://plotly.com/r/)
