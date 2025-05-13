@@ -279,7 +279,7 @@ md <- read.table("../../data/metadata.csv", header = T, sep = ";")
 datatable(gc, options = list(pageLength = 10), caption = "Table 1: Raw gene counts") %>% 
   formatStyle(
     'Sample_1',
-    background = styleColorBar(msleep$sleep_rem, 'steelblue'),
+    background = styleColorBar(gc$Sample_1, 'steelblue'),
     backgroundSize = '100% 90%',
     backgroundRepeat = 'no-repeat',
     backgroundPosition = 'center') %>%
