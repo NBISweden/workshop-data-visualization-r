@@ -588,7 +588,7 @@ To link multiple `SharedData` objects, we can specify a group argument when cons
 3. Output results
 
 :::{.callout-important}
-To run the following example, you need to download the data `dream_location_filt.csv`. Unfortunately, this was not part of the `data.zip` you recieved in the beginning of the course. You can download this file [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/dream_location_filt.csv) 
+To run the following example, you need to download the data `dream_location_filt.csv`. Unfortunately, this was not part of the `data.zip` you recieved in the beginning of the course. You can download this file [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/topics/dynamic_plotting/data/dream_location_filt.csv) 
 :::
 
 ````
