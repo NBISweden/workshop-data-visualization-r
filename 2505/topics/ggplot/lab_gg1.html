@@ -1,0 +1,2458 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Lokesh Mano">
+
+<title>Basics in ggplot</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<style>
+
+      .quarto-title-block .quarto-title-banner {
+        background-image: url(../../assets/images/banner.webp);
+background-size: cover;
+      }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Mono&amp;family=Nunito:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&amp;display=swap" rel="stylesheet">
+<script src="../../site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<meta property="og:title" content="Basics in ggplot">
+<meta property="og:description" content="Workshop on Advanced Data Visualization">
+<meta property="og:image" content="https://nbisweden.github.io/workshop-data-visualization-r/2505/assets/images/featured.webp">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/logos/nbis-scilifelab.png" alt="logo" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_contents.html"> 
+<span class="menu-text">Contents</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_precourse.html"> 
+<span class="menu-text">Precourse</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_info.html"> 
+<span class="menu-text">Info</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/NBISweden/workshop-data-visualization-r/"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Basics in ggplot</h1>
+            <p class="subtitle lead">Workshop on Advanced Data Visualization</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Lokesh Mano </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">13-May-2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#data-formats" id="toc-data-formats" class="nav-link active" data-scroll-target="#data-formats"><span class="header-section-number">1</span> Data formats</a>
+  <ul>
+  <li><a href="#wide-format" id="toc-wide-format" class="nav-link" data-scroll-target="#wide-format"><span class="header-section-number">1.1</span> Wide format</a></li>
+  <li><a href="#long-format" id="toc-long-format" class="nav-link" data-scroll-target="#long-format"><span class="header-section-number">1.2</span> Long format</a></li>
+  <li><a href="#which-is-better" id="toc-which-is-better" class="nav-link" data-scroll-target="#which-is-better"><span class="header-section-number">1.3</span> Which is better?</a></li>
+  </ul></li>
+  <li><a href="#conversion-between-formats" id="toc-conversion-between-formats" class="nav-link" data-scroll-target="#conversion-between-formats"><span class="header-section-number">2</span> Conversion between formats</a>
+  <ul>
+  <li><a href="#using-reshape2" id="toc-using-reshape2" class="nav-link" data-scroll-target="#using-reshape2"><span class="header-section-number">2.1</span> Using reshape2</a></li>
+  <li><a href="#using-tidyr" id="toc-using-tidyr" class="nav-link" data-scroll-target="#using-tidyr"><span class="header-section-number">2.2</span> Using tidyr</a></li>
+  </ul></li>
+  <li><a href="#exercise-i" id="toc-exercise-i" class="nav-link" data-scroll-target="#exercise-i"><span class="header-section-number">3</span> Exercise I</a></li>
+  <li><a href="#base-vs-grid-graphics" id="toc-base-vs-grid-graphics" class="nav-link" data-scroll-target="#base-vs-grid-graphics"><span class="header-section-number">4</span> Base vs grid graphics</a>
+  <ul>
+  <li><a href="#base" id="toc-base" class="nav-link" data-scroll-target="#base"><span class="header-section-number">4.1</span> Base</a></li>
+  <li><a href="#grid" id="toc-grid" class="nav-link" data-scroll-target="#grid"><span class="header-section-number">4.2</span> Grid</a></li>
+  <li><a href="#saving-images" id="toc-saving-images" class="nav-link" data-scroll-target="#saving-images"><span class="header-section-number">4.3</span> Saving images</a>
+  <ul class="collapse">
+  <li><a href="#base-graphics" id="toc-base-graphics" class="nav-link" data-scroll-target="#base-graphics"><span class="header-section-number">4.3.1</span> Base graphics</a></li>
+  <li><a href="#ggplot2" id="toc-ggplot2" class="nav-link" data-scroll-target="#ggplot2"><span class="header-section-number">4.3.2</span> ggplot2</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#ggplot-basics" id="toc-ggplot-basics" class="nav-link" data-scroll-target="#ggplot-basics"><span class="header-section-number">5</span> ggplot basics</a>
+  <ul>
+  <li><a href="#geoms" id="toc-geoms" class="nav-link" data-scroll-target="#geoms"><span class="header-section-number">5.1</span> Geoms</a>
+  <ul class="collapse">
+  <li><a href="#multiple-geoms" id="toc-multiple-geoms" class="nav-link" data-scroll-target="#multiple-geoms"><span class="header-section-number">5.1.1</span> Multiple geoms</a></li>
+  <li><a href="#gene-counts-data" id="toc-gene-counts-data" class="nav-link" data-scroll-target="#gene-counts-data"><span class="header-section-number">5.1.2</span> Gene counts data</a></li>
+  </ul></li>
+  <li><a href="#colors" id="toc-colors" class="nav-link" data-scroll-target="#colors"><span class="header-section-number">5.2</span> Colors</a>
+  <ul class="collapse">
+  <li><a href="#iris-data" id="toc-iris-data" class="nav-link" data-scroll-target="#iris-data"><span class="header-section-number">5.2.1</span> Iris data</a></li>
+  <li><a href="#gc-data" id="toc-gc-data" class="nav-link" data-scroll-target="#gc-data"><span class="header-section-number">5.2.2</span> GC data</a></li>
+  <li><a href="#discrete-colors" id="toc-discrete-colors" class="nav-link" data-scroll-target="#discrete-colors"><span class="header-section-number">5.2.3</span> Discrete colors</a></li>
+  <li><a href="#continuous-colors" id="toc-continuous-colors" class="nav-link" data-scroll-target="#continuous-colors"><span class="header-section-number">5.2.4</span> Continuous colors</a></li>
+  </ul></li>
+  <li><a href="#aesthetics" id="toc-aesthetics" class="nav-link" data-scroll-target="#aesthetics"><span class="header-section-number">5.3</span> Aesthetics</a>
+  <ul class="collapse">
+  <li><a href="#aesthetic-parameter" id="toc-aesthetic-parameter" class="nav-link" data-scroll-target="#aesthetic-parameter"><span class="header-section-number">5.3.1</span> Aesthetic parameter</a></li>
+  <li><a href="#aesthetic-mapping" id="toc-aesthetic-mapping" class="nav-link" data-scroll-target="#aesthetic-mapping"><span class="header-section-number">5.3.2</span> Aesthetic mapping</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#histogram" id="toc-histogram" class="nav-link" data-scroll-target="#histogram"><span class="header-section-number">6</span> Histogram</a>
+  <ul>
+  <li><a href="#density" id="toc-density" class="nav-link" data-scroll-target="#density"><span class="header-section-number">6.1</span> Density</a></li>
+  </ul></li>
+  <li><a href="#exercise-ii" id="toc-exercise-ii" class="nav-link" data-scroll-target="#exercise-ii"><span class="header-section-number">7</span> Exercise II</a></li>
+  <li><a href="#faceting" id="toc-faceting" class="nav-link" data-scroll-target="#faceting"><span class="header-section-number">8</span> Faceting</a>
+  <ul>
+  <li><a href="#with-wrap" id="toc-with-wrap" class="nav-link" data-scroll-target="#with-wrap"><span class="header-section-number">8.1</span> With wrap</a></li>
+  <li><a href="#with-grid" id="toc-with-grid" class="nav-link" data-scroll-target="#with-grid"><span class="header-section-number">8.2</span> With grid</a></li>
+  </ul></li>
+  <li><a href="#labeling-and-annotations" id="toc-labeling-and-annotations" class="nav-link" data-scroll-target="#labeling-and-annotations"><span class="header-section-number">9</span> Labeling and annotations</a>
+  <ul>
+  <li><a href="#labels" id="toc-labels" class="nav-link" data-scroll-target="#labels"><span class="header-section-number">9.1</span> Labels</a></li>
+  <li><a href="#annotations" id="toc-annotations" class="nav-link" data-scroll-target="#annotations"><span class="header-section-number">9.2</span> Annotations</a></li>
+  </ul></li>
+  <li><a href="#bar-charts" id="toc-bar-charts" class="nav-link" data-scroll-target="#bar-charts"><span class="header-section-number">10</span> Bar charts</a>
+  <ul>
+  <li><a href="#flip-coordinates" id="toc-flip-coordinates" class="nav-link" data-scroll-target="#flip-coordinates"><span class="header-section-number">10.1</span> Flip coordinates</a></li>
+  </ul></li>
+  <li><a href="#error-bars" id="toc-error-bars" class="nav-link" data-scroll-target="#error-bars"><span class="header-section-number">11</span> Error bars</a></li>
+  <li><a href="#stacked-bars" id="toc-stacked-bars" class="nav-link" data-scroll-target="#stacked-bars"><span class="header-section-number">12</span> Stacked bars</a></li>
+  <li><a href="#exercise-iii" id="toc-exercise-iii" class="nav-link" data-scroll-target="#exercise-iii"><span class="header-section-number">13</span> Exercise III</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>We will use R in this course for generating plots from different biological data that are of higher quality and standard for publications. To do this, you will brush-up your memory on some important aspects of R that are important for this course below:</p>
+<div class="callout callout-style-default callout-caution callout-titled" title="Download course files">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Download course files
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before starting with the lab sessions of the entire course, you must have downloaded all the necessary files from <a href="https://nbisweden.github.io/workshop-data-visualization-r/2505/topics/lab_download.html">here</a> and make sure that the directory tree looks similar to the one displayed in that page</p>
+<p>In that case, you can proceed with the exercise now and remember to have fun 😊</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Throughout all the materials in the course the files are read in R with location like in the example below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"../../data/counts_raw.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is due to how the GitHub repo for this course is designed to be able to render these webpages. For you, depending on where your current working location on the R terminal is, you might have to change the relative location of the <code>data</code> directory accordingly. For example, if <code>data</code> directory is present when you run <code>dir()</code> in the R terminal, you can just read-in the files to R like following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"data/counts_raw.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Otherwise, you can set the current working directory to the place where you will have all the course-related materials in your computer. You only have to do this once per R session. An example is shown below how this looks in my computer:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">'/home/lokesh/workshop_on_advanced_data_visualization/'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"data/counts_raw.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<section id="data-formats" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Data formats</h1>
+<p>In terms of the R (and other similar programming languages), the data can be viewed or stored in two main formats! They are called <code>wide</code> and <code>long</code> formats. Below you will see what exactly they stand for and why is it important for plotting in ggplot.</p>
+<section id="wide-format" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="wide-format"><span class="header-section-number">1.1</span> Wide format</h2>
+<p>A quick preview:</p>
+<p><strong>Counts Table</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-striped caption-top table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Sample_1</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Sample_2</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Sample_3</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Sample_4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ENSG00000000003</td>
+<td style="text-align: right;">321</td>
+<td style="text-align: right;">303</td>
+<td style="text-align: right;">204</td>
+<td style="text-align: right;">492</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENSG00000000005</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENSG00000000419</td>
+<td style="text-align: right;">696</td>
+<td style="text-align: right;">660</td>
+<td style="text-align: right;">472</td>
+<td style="text-align: right;">951</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENSG00000000457</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">109</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENSG00000000460</td>
+<td style="text-align: right;">399</td>
+<td style="text-align: right;">405</td>
+<td style="text-align: right;">236</td>
+<td style="text-align: right;">445</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENSG00000000938</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>And we usually have our metadata related to the samples in another table like below:</p>
+<p><strong>Metadata Table</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-striped caption-top table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sample_ID</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sample_Name</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Time</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Replicate</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Cell</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Sample_1</td>
+<td style="text-align: left;">t0_A</td>
+<td style="text-align: left;">t0</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">A431</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sample_2</td>
+<td style="text-align: left;">t0_B</td>
+<td style="text-align: left;">t0</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">A431</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sample_3</td>
+<td style="text-align: left;">t0_C</td>
+<td style="text-align: left;">t0</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">A431</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sample_4</td>
+<td style="text-align: left;">t2_A</td>
+<td style="text-align: left;">t2</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">A431</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<ul>
+<li>Wide format data is called “wide” because it typically has a lot of columns which stretch widely across the page or your computer screen.</li>
+<li>Most of us are familiar with looking at wide format data
+<ul>
+<li>It is convenient and we are more used to looking at data this way in our Excel sheets.</li>
+<li>It often lets you see more of the data, at one time, on your screen</li>
+</ul></li>
+</ul>
+</section>
+<section id="long-format" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="long-format"><span class="header-section-number">1.2</span> Long format</h2>
+<p>Below is glimpse how the long format of the same data look like:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-striped caption-top table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Gene</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Samples</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ENSG00000000003</td>
+<td style="text-align: left;">Sample_1</td>
+<td style="text-align: right;">321</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENSG00000000005</td>
+<td style="text-align: left;">Sample_1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENSG00000000419</td>
+<td style="text-align: left;">Sample_1</td>
+<td style="text-align: right;">696</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENSG00000000457</td>
+<td style="text-align: left;">Sample_1</td>
+<td style="text-align: right;">59</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENSG00000000460</td>
+<td style="text-align: left;">Sample_1</td>
+<td style="text-align: right;">399</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENSG00000000938</td>
+<td style="text-align: left;">Sample_1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENSG00000000003</td>
+<td style="text-align: left;">Sample_2</td>
+<td style="text-align: right;">303</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENSG00000000005</td>
+<td style="text-align: left;">Sample_2</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENSG00000000419</td>
+<td style="text-align: left;">Sample_2</td>
+<td style="text-align: right;">660</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENSG00000000457</td>
+<td style="text-align: left;">Sample_2</td>
+<td style="text-align: right;">54</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Or to be even more complete and precise:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-striped caption-top table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sample_ID</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sample_Name</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Time</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Replicate</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Cell</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Gene</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Sample_1</td>
+<td style="text-align: left;">t0_A</td>
+<td style="text-align: left;">t0</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">A431</td>
+<td style="text-align: left;">ENSG00000000003</td>
+<td style="text-align: right;">321</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sample_1</td>
+<td style="text-align: left;">t0_A</td>
+<td style="text-align: left;">t0</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">A431</td>
+<td style="text-align: left;">ENSG00000000005</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sample_1</td>
+<td style="text-align: left;">t0_A</td>
+<td style="text-align: left;">t0</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">A431</td>
+<td style="text-align: left;">ENSG00000000419</td>
+<td style="text-align: right;">696</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sample_1</td>
+<td style="text-align: left;">t0_A</td>
+<td style="text-align: left;">t0</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">A431</td>
+<td style="text-align: left;">ENSG00000000457</td>
+<td style="text-align: right;">59</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sample_1</td>
+<td style="text-align: left;">t0_A</td>
+<td style="text-align: left;">t0</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">A431</td>
+<td style="text-align: left;">ENSG00000000460</td>
+<td style="text-align: right;">399</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sample_1</td>
+<td style="text-align: left;">t0_A</td>
+<td style="text-align: left;">t0</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">A431</td>
+<td style="text-align: left;">ENSG00000000938</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sample_2</td>
+<td style="text-align: left;">t0_B</td>
+<td style="text-align: left;">t0</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">A431</td>
+<td style="text-align: left;">ENSG00000000003</td>
+<td style="text-align: right;">303</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sample_2</td>
+<td style="text-align: left;">t0_B</td>
+<td style="text-align: left;">t0</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">A431</td>
+<td style="text-align: left;">ENSG00000000005</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sample_2</td>
+<td style="text-align: left;">t0_B</td>
+<td style="text-align: left;">t0</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">A431</td>
+<td style="text-align: left;">ENSG00000000419</td>
+<td style="text-align: right;">660</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sample_2</td>
+<td style="text-align: left;">t0_B</td>
+<td style="text-align: left;">t0</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">A431</td>
+<td style="text-align: left;">ENSG00000000457</td>
+<td style="text-align: right;">54</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<ul>
+<li>Long format data is typically less familiar to most humans
+<ul>
+<li>It seems awfully hard to get a good look at all (or most) of it</li>
+<li>It seems like it would require more storage on your hard disk</li>
+<li>It seems like it would be harder to enter data in a long format</li>
+</ul></li>
+</ul>
+</section>
+<section id="which-is-better" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="which-is-better"><span class="header-section-number">1.3</span> Which is better?</h2>
+<ul>
+<li>Well, there are some contexts where putting things in wide format is computationally efficient because you can treat data in a matrix format and to efficient matrix calculations on it.</li>
+<li>However, adding data to wide format data sets is very hard:
+<ol type="1">
+<li>It is very difficult to conceive of analytic schemes that apply generally across all wide-format data sets.</li>
+<li>Many tools in R want data in long format <strong>like ggplot</strong></li>
+<li>The long format for data corresponds to the relational model for storing data, which is the model used in most modern data bases like the SQL family of data base systems.</li>
+</ol></li>
+<li>A more technical treatment of wide versus long data requires some terminology:
+<ul>
+<li><span style="color:blue">Identifier variables</span> are often categorical things that cross-classify observations into categories.</li>
+<li><span style="color:red">Measured variables</span> are the names given to properties or characteristics that you can go out and measure.</li>
+<li><span style="color:orange">Values</span> are the values that you measure are record for any particular measured variable.</li>
+</ul></li>
+<li>In any particular data set, what you might want to call an <span style="color:blue">Identifier variables</span> versus a <span style="color:red">Measured variables</span> can not always be entirely clear.
+<ul>
+<li>Other people might choose to define things differently.</li>
+</ul></li>
+<li>However, to my mind, it is less important to be able to precisely recognize these three entities in every possible situation (where there might be some fuzziness about which is which)</li>
+<li>And it is more important to understand how <span style="color:blue">Identifier variables</span>, <span style="color:red">Measured variables</span>, and <span style="color:orange">Values</span> interact and behave when we are transforming data between wide and long formats.</li>
+</ul>
+</section>
+</section>
+<section id="conversion-between-formats" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Conversion between formats</h1>
+<p>As for the biological data analysis, to be able to use tools such as <strong>ggplot</strong>, in simple terms we should learn to convert our data:</p>
+<p>As per our previous examples: We should learn to convert</p>
+<p><strong>From this format</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-striped caption-top table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; color: blue !important;"></th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; color: blue !important;">Sample_1</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; color: blue !important;">Sample_2</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; color: blue !important;">Sample_3</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; color: blue !important;">Sample_4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; color: orange !important; color: red !important;">ENSG00000000003</td>
+<td style="text-align: right; color: orange !important;">321</td>
+<td style="text-align: right; color: orange !important;">303</td>
+<td style="text-align: right; color: orange !important;">204</td>
+<td style="text-align: right; color: orange !important;">492</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: orange !important; color: red !important;">ENSG00000000005</td>
+<td style="text-align: right; color: orange !important;">0</td>
+<td style="text-align: right; color: orange !important;">0</td>
+<td style="text-align: right; color: orange !important;">0</td>
+<td style="text-align: right; color: orange !important;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: orange !important; color: red !important;">ENSG00000000419</td>
+<td style="text-align: right; color: orange !important;">696</td>
+<td style="text-align: right; color: orange !important;">660</td>
+<td style="text-align: right; color: orange !important;">472</td>
+<td style="text-align: right; color: orange !important;">951</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: orange !important; color: red !important;">ENSG00000000457</td>
+<td style="text-align: right; color: orange !important;">59</td>
+<td style="text-align: right; color: orange !important;">54</td>
+<td style="text-align: right; color: orange !important;">44</td>
+<td style="text-align: right; color: orange !important;">109</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: orange !important; color: red !important;">ENSG00000000460</td>
+<td style="text-align: right; color: orange !important;">399</td>
+<td style="text-align: right; color: orange !important;">405</td>
+<td style="text-align: right; color: orange !important;">236</td>
+<td style="text-align: right; color: orange !important;">445</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: orange !important; color: red !important;">ENSG00000000938</td>
+<td style="text-align: right; color: orange !important;">0</td>
+<td style="text-align: right; color: orange !important;">0</td>
+<td style="text-align: right; color: orange !important;">0</td>
+<td style="text-align: right; color: orange !important;">0</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p><strong>To this format</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-striped caption-top table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sample_ID</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sample_Name</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Time</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Replicate</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Cell</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Gene</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; color: blue !important;">Sample_1</td>
+<td style="text-align: left; color: blue !important;">t0_A</td>
+<td style="text-align: left; color: blue !important;">t0</td>
+<td style="text-align: left; color: blue !important;">A</td>
+<td style="text-align: left; color: blue !important;">A431</td>
+<td style="text-align: left; color: red !important;">ENSG00000000003</td>
+<td style="text-align: right; color: orange !important;">321</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: blue !important;">Sample_1</td>
+<td style="text-align: left; color: blue !important;">t0_A</td>
+<td style="text-align: left; color: blue !important;">t0</td>
+<td style="text-align: left; color: blue !important;">A</td>
+<td style="text-align: left; color: blue !important;">A431</td>
+<td style="text-align: left; color: red !important;">ENSG00000000005</td>
+<td style="text-align: right; color: orange !important;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: blue !important;">Sample_1</td>
+<td style="text-align: left; color: blue !important;">t0_A</td>
+<td style="text-align: left; color: blue !important;">t0</td>
+<td style="text-align: left; color: blue !important;">A</td>
+<td style="text-align: left; color: blue !important;">A431</td>
+<td style="text-align: left; color: red !important;">ENSG00000000419</td>
+<td style="text-align: right; color: orange !important;">696</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: blue !important;">Sample_1</td>
+<td style="text-align: left; color: blue !important;">t0_A</td>
+<td style="text-align: left; color: blue !important;">t0</td>
+<td style="text-align: left; color: blue !important;">A</td>
+<td style="text-align: left; color: blue !important;">A431</td>
+<td style="text-align: left; color: red !important;">ENSG00000000457</td>
+<td style="text-align: right; color: orange !important;">59</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: blue !important;">Sample_1</td>
+<td style="text-align: left; color: blue !important;">t0_A</td>
+<td style="text-align: left; color: blue !important;">t0</td>
+<td style="text-align: left; color: blue !important;">A</td>
+<td style="text-align: left; color: blue !important;">A431</td>
+<td style="text-align: left; color: red !important;">ENSG00000000460</td>
+<td style="text-align: right; color: orange !important;">399</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: blue !important;">Sample_1</td>
+<td style="text-align: left; color: blue !important;">t0_A</td>
+<td style="text-align: left; color: blue !important;">t0</td>
+<td style="text-align: left; color: blue !important;">A</td>
+<td style="text-align: left; color: blue !important;">A431</td>
+<td style="text-align: left; color: red !important;">ENSG00000000938</td>
+<td style="text-align: right; color: orange !important;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: blue !important;">Sample_2</td>
+<td style="text-align: left; color: blue !important;">t0_B</td>
+<td style="text-align: left; color: blue !important;">t0</td>
+<td style="text-align: left; color: blue !important;">B</td>
+<td style="text-align: left; color: blue !important;">A431</td>
+<td style="text-align: left; color: red !important;">ENSG00000000003</td>
+<td style="text-align: right; color: orange !important;">303</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: blue !important;">Sample_2</td>
+<td style="text-align: left; color: blue !important;">t0_B</td>
+<td style="text-align: left; color: blue !important;">t0</td>
+<td style="text-align: left; color: blue !important;">B</td>
+<td style="text-align: left; color: blue !important;">A431</td>
+<td style="text-align: left; color: red !important;">ENSG00000000005</td>
+<td style="text-align: right; color: orange !important;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: blue !important;">Sample_2</td>
+<td style="text-align: left; color: blue !important;">t0_B</td>
+<td style="text-align: left; color: blue !important;">t0</td>
+<td style="text-align: left; color: blue !important;">B</td>
+<td style="text-align: left; color: blue !important;">A431</td>
+<td style="text-align: left; color: red !important;">ENSG00000000419</td>
+<td style="text-align: right; color: orange !important;">660</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: blue !important;">Sample_2</td>
+<td style="text-align: left; color: blue !important;">t0_B</td>
+<td style="text-align: left; color: blue !important;">t0</td>
+<td style="text-align: left; color: blue !important;">B</td>
+<td style="text-align: left; color: blue !important;">A431</td>
+<td style="text-align: left; color: red !important;">ENSG00000000457</td>
+<td style="text-align: right; color: orange !important;">54</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Here we will only cover the conversion from <code>wide</code> to <code>long</code>, as this is more relevant to us. For the other way around, one can look into <code>spread()</code> from the <code>tidyr</code> package.</p>
+<section id="using-reshape2" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="using-reshape2"><span class="header-section-number">2.1</span> Using reshape2</h2>
+<p>By using the <code>melt()</code> function from the <strong>reshape2</strong> package we can convert the wide-formatted data into long-formatted data! Here, to combine the metadata table to the gene counts table, we will also use the <code>merge()</code> function like we did before!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>gc <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"../../data/counts_raw.txt"</span>, <span class="at">header =</span> T, <span class="at">row.names =</span> <span class="dv">1</span>, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>md <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"../../data/metadata.csv"</span>, <span class="at">header =</span> T, <span class="at">sep =</span> <span class="st">";"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(md) <span class="ot">&lt;-</span> md<span class="sc">$</span>Sample_ID</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#merging gene counts table with metadata</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>merged_data_wide <span class="ot">&lt;-</span> <span class="fu">merge</span>(md, <span class="fu">t</span>(gc), <span class="at">by =</span> <span class="dv">0</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#removing redundant columns</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>merged_data_wide<span class="sc">$</span>Row.names <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>merged_data_long <span class="ot">&lt;-</span> <span class="fu">melt</span>(merged_data_wide, <span class="at">id.vars =</span> <span class="fu">c</span>(<span class="st">"Sample_ID"</span>,<span class="st">"Sample_Name"</span>,<span class="st">"Time"</span>,<span class="st">"Replicate"</span>,<span class="st">"Cell"</span>), <span class="at">variable.name =</span> <span class="st">"Gene"</span>, <span class="at">value.name =</span> <span class="st">"count"</span>)  </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(merged_data_long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Sample_ID"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Sample_Name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Time"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Replicate"],"name":[4],"type":["chr"],"align":["left"]},{"label":["Cell"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Gene"],"name":[6],"type":["fct"],"align":["left"]},{"label":["count"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"Sample_1","2":"t0_A","3":"t0","4":"A","5":"A431","6":"ENSG00000000003","7":"321","_rn_":"1"},{"1":"Sample_10","2":"t24_A","3":"t24","4":"A","5":"A431","6":"ENSG00000000003","7":"950","_rn_":"2"},{"1":"Sample_11","2":"t24_B","3":"t24","4":"B","5":"A431","6":"ENSG00000000003","7":"760","_rn_":"3"},{"1":"Sample_12","2":"t24_C","3":"t24","4":"C","5":"A431","6":"ENSG00000000003","7":"1436","_rn_":"4"},{"1":"Sample_2","2":"t0_B","3":"t0","4":"B","5":"A431","6":"ENSG00000000003","7":"303","_rn_":"5"},{"1":"Sample_3","2":"t0_C","3":"t0","4":"C","5":"A431","6":"ENSG00000000003","7":"204","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="using-tidyr" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="using-tidyr"><span class="header-section-number">2.2</span> Using tidyr</h2>
+<p>If you are more familiar with using <code>tidyverse</code> or <code>tidyr</code> packages, you can combine tables by <code>join()</code> and then use <code>gather()</code> to make long formatted data in the same command. This is a powerful and more cleaner way of dealing with data in R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>gc_long <span class="ot">&lt;-</span> gc <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">"Gene"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(Sample_ID, count, <span class="sc">-</span>Gene) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(md, <span class="at">by =</span> <span class="st">"Sample_ID"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Sample_ID, <span class="fu">everything</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(Gene,count), <span class="fu">c</span>(Gene,count)) </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>gc_long <span class="sc">%&gt;%</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Sample_ID"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Sample_Name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Time"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Replicate"],"name":[4],"type":["chr"],"align":["left"]},{"label":["Cell"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Gene"],"name":[6],"type":["chr"],"align":["left"]},{"label":["count"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"Sample_1","2":"t0_A","3":"t0","4":"A","5":"A431","6":"ENSG00000000003","7":"321","_rn_":"1"},{"1":"Sample_1","2":"t0_A","3":"t0","4":"A","5":"A431","6":"ENSG00000000005","7":"0","_rn_":"2"},{"1":"Sample_1","2":"t0_A","3":"t0","4":"A","5":"A431","6":"ENSG00000000419","7":"696","_rn_":"3"},{"1":"Sample_1","2":"t0_A","3":"t0","4":"A","5":"A431","6":"ENSG00000000457","7":"59","_rn_":"4"},{"1":"Sample_1","2":"t0_A","3":"t0","4":"A","5":"A431","6":"ENSG00000000460","7":"399","_rn_":"5"},{"1":"Sample_1","2":"t0_A","3":"t0","4":"A","5":"A431","6":"ENSG00000000938","7":"0","_rn_":"6"},{"1":"Sample_1","2":"t0_A","3":"t0","4":"A","5":"A431","6":"ENSG00000000971","7":"0","_rn_":"7"},{"1":"Sample_1","2":"t0_A","3":"t0","4":"A","5":"A431","6":"ENSG00000001036","7":"844","_rn_":"8"},{"1":"Sample_1","2":"t0_A","3":"t0","4":"A","5":"A431","6":"ENSG00000001084","7":"535","_rn_":"9"},{"1":"Sample_1","2":"t0_A","3":"t0","4":"A","5":"A431","6":"ENSG00000001167","7":"493","_rn_":"10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="exercise-i" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Exercise I</h1>
+<div class="callout callout-style-default callout-important callout-titled" title="Task 1.1">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Task 1.1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Here in this exercise we have used the <code>counts_raw.txt</code> file, you can try to make similar R objects for each of the other three counts (<code>counts_filtered.txt</code>, <code>counts_vst.txt</code> and <code>counts_deseq2.txt</code>) in <code>long format</code>. So for example you would have <code>gc_filt</code>, <code>gc_vst</code> and <code>gc_deseq2</code> R objects in the end.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Remember to take a look at how these files are formatted, before you import!</p>
+</div>
+</div>
+</section>
+<section id="base-vs-grid-graphics" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Base vs grid graphics</h1>
+<section id="base" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="base"><span class="header-section-number">4.1</span> Base</h2>
+<p>R is an excellent tool for creating graphs and plots. The graphic capabilities and functions provided by the base R installation is called the base R graphics. Numerous packages exist to extend the functionality of base graphics.</p>
+<p>We can try out plotting a few of the common plot types. Let’s start with a scatterplot. First we create a <code>data.frame</code> as this is the most commonly used data object.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dfr <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a=</span><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,<span class="dv">10</span>),<span class="at">b=</span><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,<span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we have a dataframe with two continuous variables that can be plotted against each other.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dfr<span class="sc">$</span>a,dfr<span class="sc">$</span>b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-14-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="lab_gg1_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This is probably the simplest and most basic plots. We can modify the x and y axis labels.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dfr<span class="sc">$</span>a,dfr<span class="sc">$</span>b,<span class="at">xlab=</span><span class="st">"Variable a"</span>,<span class="at">ylab=</span><span class="st">"Variable b"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-15-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="lab_gg1_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can change the point to a line.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dfr<span class="sc">$</span>a,dfr<span class="sc">$</span>b,<span class="at">xlab=</span><span class="st">"Variable a"</span>,<span class="at">ylab=</span><span class="st">"Variable b"</span>,<span class="at">type=</span><span class="st">"b"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-16-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="lab_gg1_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Let’s add a categorical column to our dataframe.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dfr<span class="sc">$</span>cat <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"C1"</span>,<span class="st">"C2"</span>),<span class="at">each=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And then colour the points by category.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subset data</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>dfr_c1 <span class="ot">&lt;-</span> <span class="fu">subset</span>(dfr,dfr<span class="sc">$</span>cat <span class="sc">==</span> <span class="st">"C1"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>dfr_c2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(dfr,dfr<span class="sc">$</span>cat <span class="sc">==</span> <span class="st">"C2"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dfr_c1<span class="sc">$</span>a,dfr_c1<span class="sc">$</span>b,<span class="at">xlab=</span><span class="st">"Variable a"</span>,<span class="at">ylab=</span><span class="st">"Variable b"</span>,<span class="at">col=</span><span class="st">"red"</span>,<span class="at">pch=</span><span class="dv">1</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(dfr_c2<span class="sc">$</span>a,dfr_c2<span class="sc">$</span>b,<span class="at">col=</span><span class="st">"blue"</span>,<span class="at">pch=</span><span class="dv">2</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x=</span><span class="st">"topright"</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">"C1"</span>,<span class="st">"C2"</span>),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"blue"</span>),<span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-18-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="lab_gg1_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Let’s create a barplot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ldr <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a=</span>letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>],<span class="at">b=</span><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="dv">10</span>))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(ldr<span class="sc">$</span>b,<span class="at">names.arg=</span>ldr<span class="sc">$</span>a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-19-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="lab_gg1_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="grid" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="grid"><span class="header-section-number">4.2</span> Grid</h2>
+<p>Grid graphics have a completely different underlying framework compared to base graphics. Generally, base graphics and grid graphics cannot be plotted together. The most popular grid-graphics based plotting library is <strong>ggplot2</strong>.</p>
+<p>Let’s create the same plot as before using <strong>ggplot2</strong>. Make sure you have the package installed.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dfr)<span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span>a,<span class="at">y=</span>b,<span class="at">colour=</span>cat))<span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Variable a"</span>,<span class="at">y=</span><span class="st">"Variable b"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-20-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="lab_gg1_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It is generally easier and more consistent to create plots using the ggplot2 package compared to the base graphics.</p>
+<p>Let’s create a barplot as well.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ldr,<span class="fu">aes</span>(<span class="at">x=</span>a,<span class="at">y=</span>b))<span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-21-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="lab_gg1_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="saving-images" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="saving-images"><span class="header-section-number">4.3</span> Saving images</h2>
+<p>Let’s take a look at saving plots.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This part is just to give you a quick look into how you can save images from R terminal quickly. The different format of images will be explained in a lecture later.</p>
+</div>
+</div>
+<section id="base-graphics" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="base-graphics"><span class="header-section-number">4.3.1</span> Base graphics</h3>
+<p>The general idea for saving plots is open a graphics device, create the plot and then close the device. We will use <strong>png</strong> here. Check out <code>?png</code> for the arguments and other devices.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>dfr <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a=</span><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,<span class="dv">10</span>),<span class="at">b=</span><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,<span class="dv">10</span>))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(<span class="at">filename=</span><span class="st">"plot-base.png"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dfr<span class="sc">$</span>a,dfr<span class="sc">$</span>b)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ggplot2" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="ggplot2"><span class="header-section-number">4.3.2</span> ggplot2</h3>
+<p>The same idea can be applied to ggplot2, but in a slightly different way. First save the file to a variable, and then export the plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dfr,<span class="fu">aes</span>(a,b)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(<span class="at">filename=</span><span class="st">"plot-ggplot-1.png"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>ggplot2</strong> also has another easier helper function to export images.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename=</span><span class="st">"plot-ggplot-2.png"</span>,<span class="at">plot=</span>p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="ggplot-basics" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> ggplot basics</h1>
+<p>Make sure the library is loaded in your environment.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="geoms" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="geoms"><span class="header-section-number">5.1</span> Geoms</h2>
+<p>In the previous section we saw very quickly how to use <code>ggplot</code>. Let’s take a look at it again a bit more carefully. For this let’s first look into a simple data that is available in R. We use the <code>iris</code> data for this to start with.</p>
+<p>This dataset has four continuous variables and one categorical variable. It is important to remember about the data type when plotting graphs</p>
+<div class="cell" data-fold.output="false">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"iris"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Sepal.Length"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Sepal.Width"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Petal.Length"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Petal.Width"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Species"],"name":[5],"type":["fct"],"align":["left"]}],"data":[{"1":"5.1","2":"3.5","3":"1.4","4":"0.2","5":"setosa","_rn_":"1"},{"1":"4.9","2":"3.0","3":"1.4","4":"0.2","5":"setosa","_rn_":"2"},{"1":"4.7","2":"3.2","3":"1.3","4":"0.2","5":"setosa","_rn_":"3"},{"1":"4.6","2":"3.1","3":"1.5","4":"0.2","5":"setosa","_rn_":"4"},{"1":"5.0","2":"3.6","3":"1.4","4":"0.2","5":"setosa","_rn_":"5"},{"1":"5.4","2":"3.9","3":"1.7","4":"0.4","5":"setosa","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>When we initiate the ggplot object using the data, it just creates a blank plot!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-27-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="lab_gg1_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now we can specify what we want on the x and y axes using aesthetic mapping. And we specify the geometric using <code>geoms</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>that the variable names do not have double quotes <code>""</code> like in base plots.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris)<span class="sc">+</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-28-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="lab_gg1_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="multiple-geoms" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="multiple-geoms"><span class="header-section-number">5.1.1</span> Multiple geoms</h3>
+<p>Further geoms can be added. For example let’s add a regression line. When multiple geoms with the same aesthetics are used, they can be specified as a common mapping.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>that the order in which geoms are plotted depends on the order in which the geoms are supplied in the code. In the code below, the points are plotted first and then the regression line.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-29-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="lab_gg1_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>There are many other <code>geoms</code> and you can find most of them here in this <a href="../../assets/data-visualization-1.pdf">cheatsheet</a></p>
+</section>
+<section id="gene-counts-data" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="gene-counts-data"><span class="header-section-number">5.1.2</span> Gene counts data</h3>
+<p>Let’s also try to use <code>ggplot</code> for a “more common” gene counts dataset. Let’s use the <code>merged_data_long</code> or the <code>gc_long</code> object we created in the earlier session.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gc_long) <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Sample_Name, <span class="at">y =</span> <span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-31-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="lab_gg1_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can notice that the ggplot sorts the <code>factors</code> or <code>variables</code> alpha-numerically, like in the case above with <code>Sample_Name</code>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There is a trick that you can use to give the order of variables manually. The example is shown below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>gc_long<span class="sc">$</span>Sample_Name <span class="ot">&lt;-</span> <span class="fu">factor</span>(gc_long<span class="sc">$</span>Sample_Name, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"t0_A"</span>,<span class="st">"t0_B"</span>,<span class="st">"t0_C"</span>,<span class="st">"t2_A"</span>,<span class="st">"t2_B"</span>,<span class="st">"t2_C"</span>,<span class="st">"t6_A"</span>,<span class="st">"t6_B"</span>,<span class="st">"t6_C"</span>,<span class="st">"t24_A"</span>,<span class="st">"t24_B"</span>,<span class="st">"t24_C"</span>))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gc_long) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Sample_Name, <span class="at">y =</span> <span class="fu">log10</span>(count <span class="sc">+</span> <span class="dv">1</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-32-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="lab_gg1_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="colors" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="colors"><span class="header-section-number">5.2</span> Colors</h2>
+<section id="iris-data" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="iris-data"><span class="header-section-number">5.2.1</span> Iris data</h3>
+<p>First, if we look at the <code>iris</code> data, we can use the categorical column <code>Species</code> to color the points. The color aesthetic is used by geom_point and geom_smooth. Three different regression lines are now drawn. Notice that a legend is automatically created</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width,<span class="at">color=</span>Species))<span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-33-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="lab_gg1_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If we wanted to keep a common regression line while keeping the colors for the points, we could specify color aesthetic only for <code>geom_point</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species))<span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-34-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="lab_gg1_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="gc-data" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="gc-data"><span class="header-section-number">5.2.2</span> GC data</h3>
+<p>Similarly, we can do the same with the gene counts data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gc_long) <span class="sc">+</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Sample_Name, <span class="at">y =</span> <span class="fu">log10</span>(count <span class="sc">+</span> <span class="dv">1</span>), <span class="at">color =</span> Time))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-35-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="lab_gg1_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We can also use the <code>fill</code> aesthetic to give it a better look.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gc_long) <span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Sample_Name, <span class="at">y =</span> <span class="fu">log10</span>(count <span class="sc">+</span> <span class="dv">1</span>), <span class="at">fill =</span> Time))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-36-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="lab_gg1_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="discrete-colors" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="discrete-colors"><span class="header-section-number">5.2.3</span> Discrete colors</h3>
+<p>We can change the default colors by specifying new values inside a scale.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species))<span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)<span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"blue"</span>,<span class="st">"green"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-37-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="lab_gg1_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To specify manual colors, you could specify by their <code>names</code> or their <code>hexadecimal codes</code>. For example, you can choose the colors based on <code>names</code> from an online source like in this <a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf">cheatsheet</a> or you can use the <code>hexadecimal code</code> and choose it from a source like <a href="https://htmlcolorcodes.com/">here</a>. I personally prefer the <code>hexa</code> based options for manual colors.</p>
+</div>
+</div>
+</section>
+<section id="continuous-colors" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="continuous-colors"><span class="header-section-number">5.2.4</span> Continuous colors</h3>
+<p>We can also map the colors to a continuous variable. This creates a color bar legend item.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Sepal.Width))<span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-38-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="lab_gg1_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Here, you can also choose different <code>palettes</code> for choosing the right continuous palette. There are some common packages of palettes that are used very often. <a href="https://www.r-graph-gallery.com/38-rcolorbrewers-palettes.html">RColorBrewer</a> and <a href="https://github.com/karthik/wesanderson">wesanderson</a>, if you are a fan of his choice of colors. 😉</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wesanderson)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Sepal.Width))<span class="sc">+</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_gradientn</span>(<span class="at">colours =</span> <span class="fu">wes_palette</span>(<span class="st">"Moonrise3"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-39-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="lab_gg1_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can also use simple R base color palettes like <code>rainbow()</code> or <code>terrain.colors()</code>. Use <code>?</code> and look at these functions to see, how to use them.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="aesthetics" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="aesthetics"><span class="header-section-number">5.3</span> Aesthetics</h2>
+<section id="aesthetic-parameter" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="aesthetic-parameter"><span class="header-section-number">5.3.1</span> Aesthetic parameter</h3>
+<p>We can change the size of all points by a fixed amount by specifying size outside the aesthetic parameter.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species),<span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-40-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-20"><img src="lab_gg1_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="aesthetic-mapping" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="aesthetic-mapping"><span class="header-section-number">5.3.2</span> Aesthetic mapping</h3>
+<p>We can map another variable as size of the points. This is done by specifying size inside the aesthetic mapping. Now the size of the points denote <code>Sepal.Width</code>. A new legend group is created to show this new aesthetic.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species,<span class="at">size=</span>Sepal.Width))<span class="sc">+</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-41-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-21"><img src="lab_gg1_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="histogram" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Histogram</h1>
+<p>Here, as a quick example, we will try to make use of the different combinations of <code>geoms</code>, <code>aes</code> and <code>color</code> in simple plots.</p>
+<p>Let’s take a quick look at some of widely used functions like histograms and density plots in <code>ggplot</code>. Intuitively, these can be drawn with <code>geom_histogram()</code> and <code>geom_density()</code>. Using <code>bins</code> and <code>binwidth</code> in <code>geom_histogram()</code>, one can customize the histogram.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Sepal.Length))<span class="sc">+</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-42-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-22"><img src="lab_gg1_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="density" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="density"><span class="header-section-number">6.1</span> Density</h2>
+<p>Let’s look at the sample plot in density.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Sepal.Length))<span class="sc">+</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-43-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-23"><img src="lab_gg1_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The above plot is not very informative, let’s see how the different species contribute:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Sepal.Length))<span class="sc">+</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">fill =</span> Species), <span class="at">alpha =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-44-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24"><img src="lab_gg1_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>alpha</code> option inside <code>geom_density</code> controls the transparency of the plot.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="exercise-ii" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Exercise II</h1>
+<div class="callout callout-style-default callout-important callout-titled" title="Task 2.1">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Task 2.1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Make <code>boxplots</code> similar to the one we did here in this exercise for the other three counts (<code>counts_filtered.txt</code>, <code>counts_vst.txt</code> and <code>counts_deseq2.txt</code>).</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can save the plots themselves as R objects. You will get the plot by just calling those objects. You can then add layers to those objects. Examples are shown below:</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>plot_obj_1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Sepal.Width))<span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>) </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>plot_obj_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-45-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-25"><img src="lab_gg1_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>plot_obj_2 <span class="ot">&lt;-</span> plot_obj_1 <span class="sc">+</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_gradientn</span>(<span class="at">colours =</span> <span class="fu">wes_palette</span>(<span class="st">"Moonrise3"</span>))</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>plot_obj_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-46-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-26"><img src="lab_gg1_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This way, you can create different plot objects for the different counts, we will use them in the later exercises.</p>
+</section>
+<section id="faceting" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Faceting</h1>
+<section id="with-wrap" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="with-wrap"><span class="header-section-number">8.1</span> With wrap</h2>
+<p>We can create subplots using the faceting functionality.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Sepal.Width))<span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>) <span class="sc">+</span> </span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Species)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-47-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-27"><img src="lab_gg1_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If we try the same with the gene counts data faceted by time.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gc_long) <span class="sc">+</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Sample_Name, <span class="at">y =</span> <span class="fu">log10</span>(count <span class="sc">+</span> <span class="dv">1</span>), <span class="at">color =</span> Time)) <span class="sc">+</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-48-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-28"><img src="lab_gg1_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="with-grid" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="with-grid"><span class="header-section-number">8.2</span> With grid</h2>
+<p>Here in the above plot, you see some empty samples in each facet. In this case, you could use <code>facet_grid</code> together with <code>space</code> and <code>scales</code> options to make it look neat and intuitive. You can use <code>?facet_grid</code> and <code>?facet_wrap</code> to figure out the exact difference between the two.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gc_long) <span class="sc">+</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Sample_Name, <span class="at">y =</span> <span class="fu">log10</span>(count <span class="sc">+</span> <span class="dv">1</span>), <span class="at">color =</span> Time)) <span class="sc">+</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>Time , <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">space =</span> <span class="st">"free"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-49-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-29"><img src="lab_gg1_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can also make grid with different variables one might have using <code>vars()</code> function together with <code>rows</code> and <code>cols</code> options!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gc_long) <span class="sc">+</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Sample_Name, <span class="at">y =</span> <span class="fu">log10</span>(count <span class="sc">+</span> <span class="dv">1</span>), <span class="at">color =</span> Time)) <span class="sc">+</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(Time), <span class="at">cols =</span> <span class="fu">vars</span>(Replicate), <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">space =</span> <span class="st">"free"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-50-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-30"><img src="lab_gg1_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="labeling-and-annotations" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Labeling and annotations</h1>
+<section id="labels" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="labels"><span class="header-section-number">9.1</span> Labels</h2>
+<p>Here, we will quickly mention, how one can add labels to the plots. Items on the plot can be labelled using the <code>geom_text</code> or <code>geom_label</code> geoms.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species))<span class="sc">+</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>Species,<span class="at">hjust=</span><span class="dv">0</span>),<span class="at">nudge_x=</span><span class="fl">0.5</span>,<span class="at">size=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-51-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-31"><img src="lab_gg1_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species))<span class="sc">+</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">label=</span>Species,<span class="at">hjust=</span><span class="dv">0</span>),<span class="at">nudge_x=</span><span class="fl">0.5</span>,<span class="at">size=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-52-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-32"><img src="lab_gg1_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The R package ggrepel allows for non-overlapping labels.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species))<span class="sc">+</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label=</span>Species),<span class="at">size=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-53-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-33"><img src="lab_gg1_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="annotations" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="annotations"><span class="header-section-number">9.2</span> Annotations</h2>
+<p>Custom annotations of any geom can be added arbitrarily anywhere on the plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species))<span class="sc">+</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>,<span class="at">x=</span><span class="fl">2.5</span>,<span class="at">y=</span><span class="fl">2.1</span>,<span class="at">label=</span><span class="st">"There is a random line here"</span>)<span class="sc">+</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"segment"</span>,<span class="at">x=</span><span class="dv">2</span>,<span class="at">xend=</span><span class="dv">4</span>,<span class="at">y=</span><span class="fl">1.5</span>,<span class="at">yend=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-54-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-34"><img src="lab_gg1_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="bar-charts" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Bar charts</h1>
+<p>Let’s now make some bar charts with the data we have. We can start with the simple <code>iris</code> data first.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Species,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-55-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-35"><img src="lab_gg1_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There are two types of bar charts: <code>geom_bar()</code> and <code>geom_col()</code>. <code>geom_bar()</code> makes the height of the bar proportional to the number of cases in each group (or if the <code>weight</code> aesthetic is supplied, the sum of the weights). If you want the heights of the bars to represent values in the data, use <code>geom_col()</code> instead. <code>geom_bar()</code> uses <code>stat_count()</code> by default: it counts the number of cases at each x position. <code>geom_col()</code> uses <code>stat_identity()</code> and it leaves the data as is.</p>
+</div>
+</div>
+<p>Similarly, we can use the <code>gene counts</code> data to make a barplot as well. But first, let’s make the data into the right format so as to make the bar plots. This is where knowledge on <code>tidyverse</code> would be super useful.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sqrt</span>(<span class="fu">var</span>(x)<span class="sc">/</span><span class="fu">length</span>(x))</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>gc_long <span class="sc">%&gt;%</span> </span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Time) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>)),<span class="at">se=</span><span class="fu">se</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Time"],"name":[1],"type":["chr"],"align":["left"]},{"label":["mean"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["se"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"t0","2":"0.5603686","3":"0.002368524"},{"1":"t2","2":"0.6051946","3":"0.002484114"},{"1":"t24","2":"0.6749773","3":"0.002619240"},{"1":"t6","2":"0.6058144","3":"0.002465404"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There are a couple of things to note here. In the above example, we use the pipe <code>%&gt;%</code> symbol that redirects the output of one command as the input to another. Then we group the data by the variable <code>Time</code>, followed by summarizing the <code>count</code> with <code>mean()</code> and <code>sd()</code> functions to get the mean and standard deviation of their respective counts. The <code>head()</code> function just prints the first few lines.</p>
+</div>
+</div>
+<p>Now that we have summarized the data to be bale to plot the bar graph that we want, we can just input the data to ggplot as well using the <code>%&gt;%</code> sign.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>gc_long <span class="sc">%&gt;%</span> </span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Time) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>)),<span class="at">se=</span><span class="fu">se</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Time, <span class="at">y=</span>mean)) <span class="sc">+</span> </span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-57-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-36"><img src="lab_gg1_files/figure-html/unnamed-chunk-57-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice that the <code>%&gt;%</code> sign is used in the <code>tidyverse</code> based commands and <code>+</code> is used for all the <code>ggplot</code> based commands.</p>
+</div>
+</div>
+<section id="flip-coordinates" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="flip-coordinates"><span class="header-section-number">10.1</span> Flip coordinates</h2>
+<p>One can also easily just flip the <code>x</code> and <code>y</code> axis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>gc_long <span class="sc">%&gt;%</span> </span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Time) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>)),<span class="at">se=</span><span class="fu">se</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Time, <span class="at">y=</span>mean)) <span class="sc">+</span> </span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-58-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-37"><img src="lab_gg1_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="error-bars" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Error bars</h1>
+<p>Now that we have the bar plots, we can also add error bars to them using the <code>sd</code> values we calculated in the previous step.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>gc_long <span class="sc">%&gt;%</span> </span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Time) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>)),<span class="at">se=</span><span class="fu">se</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Time, <span class="at">y=</span>mean, <span class="at">fill =</span> Time)) <span class="sc">+</span> </span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymax=</span>mean<span class="sc">+</span>se,<span class="at">ymin=</span>mean<span class="sc">-</span>se),<span class="at">width=</span><span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-59-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-38"><img src="lab_gg1_files/figure-html/unnamed-chunk-59-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="stacked-bars" class="level1" data-number="12">
+<h1 data-number="12"><span class="header-section-number">12</span> Stacked bars</h1>
+<p>Let’s now try to make stacked bars. For this let’s try to make the data more usable for stacked bars. For this let’s use the <code>group_by</code> function to make the groups based on both <code>Time</code> and <code>Replicate</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sqrt</span>(<span class="fu">var</span>(x)<span class="sc">/</span><span class="fu">length</span>(x))</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>gc_long <span class="sc">%&gt;%</span> </span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Time, Replicate) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>)),<span class="at">se=</span><span class="fu">se</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Time"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Replicate"],"name":[2],"type":["chr"],"align":["left"]},{"label":["mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["se"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"t0","2":"A","3":"0.5871948","4":"0.004241544"},{"1":"t0","2":"B","3":"0.5790586","4":"0.004193895"},{"1":"t0","2":"C","3":"0.5148525","4":"0.003854549"},{"1":"t2","2":"A","3":"0.6215287","4":"0.004382644"},{"1":"t2","2":"B","3":"0.6172007","4":"0.004359561"},{"1":"t2","2":"C","3":"0.5768546","4":"0.004159846"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Let’s build the stacked bars!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>gc_long <span class="sc">%&gt;%</span> </span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Time, Replicate) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>)),<span class="at">se=</span><span class="fu">se</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Time, <span class="at">y=</span>mean, <span class="at">fill =</span> Replicate)) <span class="sc">+</span> </span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"stack"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-61-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-39"><img src="lab_gg1_files/figure-html/unnamed-chunk-61-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>One can also have <code>dodge</code> bars.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>gc_long <span class="sc">%&gt;%</span> </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Time, Replicate) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>)),<span class="at">se=</span><span class="fu">se</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Time, <span class="at">y=</span>mean, <span class="at">fill =</span> Replicate)) <span class="sc">+</span> </span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-62-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-40"><img src="lab_gg1_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can try now to plot error bars on them. The errorbars would look weird and complicated if one forgets to add <code>position = dodge</code> to the <code>geom_errorbar()</code> as well.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>gc_long <span class="sc">%&gt;%</span> </span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Time, Replicate) <span class="sc">%&gt;%</span> </span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>)),<span class="at">se=</span><span class="fu">se</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span> Time, <span class="at">y=</span> mean, <span class="at">fill =</span> Replicate)) <span class="sc">+</span> </span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>mean<span class="sc">-</span>se, <span class="at">ymax=</span>mean<span class="sc">+</span>se), <span class="at">position =</span> <span class="st">"dodge"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-63-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-41"><img src="lab_gg1_files/figure-html/unnamed-chunk-63-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is important that you keep tract of what kind of aesthetics you give when you initialize <code>ggplot()</code> and what you add in the <code>geoms()</code> later.</p>
+</div>
+</div>
+<p>You can also make these error bars look nicer by playing around with some of the parameters available, like example below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>gc_long <span class="sc">%&gt;%</span> </span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Time, Replicate) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>)),<span class="at">se=</span><span class="fu">se</span>(<span class="fu">log10</span>(count <span class="sc">+</span><span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span> Time, <span class="at">y=</span> mean, <span class="at">fill =</span> Replicate)) <span class="sc">+</span> </span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="fu">position_dodge2</span>()) <span class="sc">+</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>mean<span class="sc">-</span>se, <span class="at">ymax=</span>mean<span class="sc">+</span>se), <span class="at">position =</span> <span class="fu">position_dodge2</span>(.<span class="dv">9</span>, <span class="at">padding =</span> .<span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-64-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-42"><img src="lab_gg1_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-iii" class="level1" data-number="13">
+<h1 data-number="13"><span class="header-section-number">13</span> Exercise III</h1>
+<p>Now let us try to make the following plots as exercise before we go further to some <code>advanced ggplot</code> session.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Task 3.1">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Task 3.1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-65-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-43"><img src="lab_gg1_files/figure-html/unnamed-chunk-65-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is more of a <code>tidyverse</code> exercise than <code>ggplot</code>. Because to get these plots, you need get the data in the right format.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Task 3.2">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Task 3.2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell" data-fold.plot="false">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="lab_gg1_files/figure-html/unnamed-chunk-66-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-44"><img src="lab_gg1_files/figure-html/unnamed-chunk-66-1.png" class="img-fluid figure-img" width="960"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/nbisweden\.github\.io\/workshop-data-visualization-r\/2505\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
+          }
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>2025 <a href="https://nbis.se">NBIS</a> | <a href="https://choosealicense.com/licenses/gpl-3.0/">GPL-3 License</a></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Published with <a href="https://quarto.org/">Quarto</a> v1.5.57
+</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","loop":false});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
