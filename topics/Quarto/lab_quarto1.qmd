@@ -20,8 +20,8 @@ By the end of this exercise, you will be able to:
 - Add and format text using Markdown.
 - Include and customize code chunks.
 - Generate and embed visualizations.
-- Render Quarto documents to different formats, such as HTML and PDF reports
-- Set-up Quarto project
+- Render Quarto documents to different formats, such as HTML and PDF reports.
+- Set-up Quarto project.
 :::
 
 ::: {.callout-warning title="Dataset"}
@@ -488,6 +488,18 @@ You can also add the `code-tools` option, which will add a drop-down menu to tog
 
 - Add the `code-tools: true` to your document and render it.
 
+## Themes
+
+Quarto has a lot of themes available for it.
+
+- Add `theme: minty` under the HTML format option and render.
+
+If you want to get real advanced you can play around with lots of details regarding the themes and adjust as you see fit, or even just create your own theme. You can read more about it in the official documentation.
+
+## Embedding HTML resources
+
+When rendering HTML documents you get any figures and other resources in a `<document-name>_files/` directory, which is not always desirable. It is easier to move the HTML around if all figures etc. are embedded directly in the HTML itself, which can be done by specifying `embed-resources: true` in the HTML format options. This option is false by default, meaning that you will also have to include the previously mentioned directory if you want to share the HTML with anybody.
+
 # Quarto project
 
 So far, the output formats we have discussed and you have worked on have been single documents. We can also have a project composed of multiple documents and document types. In this case, the files are organised in a directory and the configuration is defined in `_quarto.yml`. This will be referred to as the config file. Think of this as a shared YAML metadata file for all of the documents. In addition, an **index.qmd** file defines the home page.
@@ -518,4 +530,134 @@ The output format by default is HTML. This can be changed or modified by adding 
 
 To create a project in RStudio, go to **File > New Project **, then select directory and then a project type such as website, blog or book. Try creating one based on what interests you. Website and blog documentation is [here](https://quarto.org/docs/websites/) and books are [here](https://quarto.org/docs/books/).
 
-To read more about project, see [here](https://quarto.org/docs/projects/quarto-projects.html). 
+To read more about project, see [here](https://quarto.org/docs/projects/quarto-projects.html).
+
+# Presentations
+
+Quarto also supports creating presentations using formats like: 
+
+- `revealjs` — [reveal.js](https://quarto.org/docs/presentations/revealjs/) (HTML)
+- `pptx` — [PowerPoint](https://quarto.org/docs/presentations/powerpoint.html) (MS Office)
+- `beamer` — [Beamer](https://quarto.org/docs/presentations/beamer.html) (LaTeX/PDF)
+
+Presentations are created by specifying the desired format in the YAML header of your `.qmd` file.
+
+The most powerful format by far is `revealjs`, so it is highly recommended unless you have specific Office or LaTeX output requirements. Note that `revealjs` presentations can be presented as HTML slides or can be printed to PDF for easier distribution.
+
+Let's check the basic syntax for presentations that applies to all formats. 
+
+## Creating slides
+
+In markdown, slides are delineated using headings. For example, here is a simple slide show with two slides (each defined with a Level 2 heading (`##`)).
+
+```{.yaml}
+---
+title: "Shopping list"
+author: "NBIS"
+format: revealjs
+---
+
+## Fruits
+
+- Banana
+- Apples
+- Oranges
+
+## Dairy Products
+
+- Milk
+- Cheese
+- Yogurt
+```
+
+You can also divide slide shows into sections with title slides using a Level 1 heading (`#`).
+
+```{.yaml}
+---
+title: "Shopping list"
+author: "NBIS"
+format: revealjs
+---
+
+# Groceries
+
+## Fruits
+
+- Banana
+- Apples
+- Oranges
+
+## Dairy Products
+
+- Milk
+- Cheese
+- Yogurt
+
+# Clothes
+
+## Adults clothing
+
+- Shirts
+- Pants
+- Jackets
+
+## Kids clothing
+
+- T-shirts
+- Shorts
+- Dresses
+```
+
+## Incremental lists
+
+By default number and bullet lists within slides are displayed all at once. You can override this globally using the `incremental` option.
+
+```{.yaml}
+title: "Shopping list"
+author: "NBIS"
+format: 
+  revealjs:
+    incremental: true
+```
+
+You can also explicitly make any list incremental or non-incremental by surrounding it in a div with an explicit class that determines the mode. 
+
+To make a list incremental do this:
+
+```{.yaml}
+::: {.incremental}
+
+- Buy fruits
+- Buy vegetables
+
+:::
+```
+
+To make a list non-incremental do this:
+
+```{.yaml}
+::: {.nonincremental}
+
+- Buy fruits
+- Buy vegetables
+
+:::
+```
+
+## Multiple columns
+
+To put material in side by side columns, you can use a native div container with class `.columns`, containing two or more div containers with class `.column` and a `width` attribute.
+
+```{.yaml}
+:::: {.columns}
+
+::: {.column width="40%"}
+contents...
+:::
+
+::: {.column width="60%"}
+contents...
+:::
+
+::::
+```
