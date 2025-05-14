@@ -8,12 +8,8 @@ format:
 ---
 
 ## [Quarto dashboards](https://quarto.org/docs/dashboards/)
-- A new output format for creating dashboards from notebooks/ `.qmd` files
 - Dashboards are a great way to share results from analyses with others
-<br>
-
-- **Main goal:** To make it simple to build compelling interactive dashboards using R, Python, Julia, and Observable
-
+- A new output format for creating dashboards from notebooks/ `.qmd` files
 <br>
 
 - [Dashboards examples](https://quarto.org/docs/gallery/#dashboards)
