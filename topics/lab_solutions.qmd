@@ -6,6 +6,7 @@ format:
     html: 
         code-tools: true
         font-size: 10
+        number-sections: false
 code-annotations: hover
 ---
 
@@ -295,6 +296,7 @@ datatable(md, options = list(pageLength = 10, order = list(list(4, 'desc'))), ca
 #| eval: false
 library(plotly)
 library(ggplot2)
+library(crosstalk)
 
 shared_msleep <- SharedData$new(msleep)
 

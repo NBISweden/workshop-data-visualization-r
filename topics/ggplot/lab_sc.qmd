@@ -37,7 +37,8 @@ suppressPackageStartupMessages({
     library(dplyr)
     library(tidyverse)
 })
-seurat_covid_raw <- readRDS("./data/covid/seurat_covid_raw.rds")
+covid_raw <- readRDS("./data/covid/seurat_covid_raw.rds")
+covid_final <- readRDS("./data/covid/seurat_covid_qc_dr_clst.rds")
 ```
 
 ```{r, eval=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
