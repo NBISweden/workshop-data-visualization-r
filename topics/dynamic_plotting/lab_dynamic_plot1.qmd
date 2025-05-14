@@ -596,6 +596,7 @@ To run the following example, you need to download the data `dream_location_filt
 library(dplyr)
 library(leaflet)
 library(palmerpenguins)
+library(crosstalk)
 
 dream_location <- read.csv("./data/dream_location_filt.csv", sep = ",", header = T)
 dream_penguins <- penguins %>% filter(island == "Dream")
@@ -618,6 +619,7 @@ bscols(dt_penguins, lf_stations, widths = c(12, 12))
 library(dplyr)
 library(leaflet)
 library(palmerpenguins)
+library(crosstalk)
 
 dream_location <- read.csv("./data/dream_location_filt.csv", sep = ",", header = T)
 dream_penguins <- penguins %>% filter(island == "Dream")
