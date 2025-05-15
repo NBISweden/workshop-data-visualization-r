@@ -71,8 +71,8 @@ leaflet() %>%
 In the `palmerpenguins` data, penguins are found on three islands: Biscoe, Dream and Torgersen. 
 
 ``` markdown
-island_coordinates <- data.frame(lng = c(-66.7305, -64.2352, -64.0835),
-                                lat = c(-66.1859, -64.7269, -64.7663))
+island_coordinates <- data.frame(lng = c(-66.671, -64.225, -64.074100),
+                                lat = c(-66.174, -64.725, -64.772694))
 ```
 
 - Your goal is to generate dynamic map using the leaflet. 
@@ -602,6 +602,7 @@ To run the following example, you need to download the data `dream_location_filt
 library(dplyr)
 library(leaflet)
 library(palmerpenguins)
+library(crosstalk)
 
 dream_location <- read.csv("./data/dream_location_filt.csv", sep = ",", header = T)
 dream_penguins <- penguins %>% filter(island == "Dream")
@@ -624,6 +625,7 @@ bscols(dt_penguins, lf_stations, widths = c(12, 12))
 library(dplyr)
 library(leaflet)
 library(palmerpenguins)
+library(crosstalk)
 
 dream_location <- read.csv("./data/dream_location_filt.csv", sep = ",", header = T)
 dream_penguins <- penguins %>% filter(island == "Dream")
