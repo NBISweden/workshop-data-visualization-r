@@ -227,8 +227,15 @@ This package is a htmlwidget and a ggplot2 extension that allows you to create d
 
 The first step is easy. Create a ggplot just like you normally would.
 
+:::{.callout-note}
+To run the following example, you need to download the data `dream_location_filt.csv`. Unfortunately, this was not part of the `data.zip` you recieved in the beginning of the course. You can download this file [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/topics/dynamic_plotting/data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv) 
+:::
+
 ````{.r}
 ```{{r}}
+tb_data <- read.csv("./data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv", sep = ",", header = T)
+tb_data_filt <- tb_data[grep("^B", tb_data$Entity), ]
+
 ggplot(tb_data_filt, aes(x = Year, y = Share_of_newborns, color = Entity)) +
     geom_line(linewidth = 1.5) +
     scale_color_manual(values = c("#004488", "#4477AA", "#EE6677", "#228833", "#CCBB44", "#997700", "#CC3311", "#009988", "#66CCEE", "#AA3377", "#BBBBBB", "#6699CC", "#CCDDAA")) +
@@ -241,7 +248,6 @@ ggplot(tb_data_filt, aes(x = Year, y = Share_of_newborns, color = Entity)) +
 ````
 
 ```{r}
-#| echo: false
 tb_data <- read.csv("./data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv", sep = ",", header = T)
 tb_data_filt <- tb_data[grep("^B", tb_data$Entity), ]
 
