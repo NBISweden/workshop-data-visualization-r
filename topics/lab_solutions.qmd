@@ -214,7 +214,7 @@ library(leaflet)
 leaflet() %>%
   addTiles() %>%
   #addProviderTiles(providers$Esri.WorldImagery) %>%
-  setView(lng = -63.0, lat = -63.0, zoom = 5) %>%
+  setView(lng = -65.5, lat = -65.5, zoom = 6) %>%
   addCircleMarkers(data = island_coordinates, popup = c("Biscoe", "Dream", "Torgersen"), color = "green")
 ```
 
@@ -258,6 +258,7 @@ fig %>%
 ```{r}
 #| eval: false
 library(ggiraph)
+library(ggplot)
 
 PlotData <- ggplot(msleep,aes(x = vore, y = sleep_total, color = vore, tooltip = vore)) +
     geom_boxplot_interactive() +
