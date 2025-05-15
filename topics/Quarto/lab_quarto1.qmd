@@ -500,9 +500,68 @@ If you want to get real advanced you can play around with lots of details regard
 
 When rendering HTML documents you get any figures and other resources in a `<document-name>_files/` directory, which is not always desirable. It is easier to move the HTML around if all figures etc. are embedded directly in the HTML itself, which can be done by specifying `embed-resources: true` in the HTML format options. This option is false by default, meaning that you will also have to include the previously mentioned directory if you want to share the HTML with anybody.
 
-# Quarto project
+# Additional Quarto
 
-So far, the output formats we have discussed and you have worked on have been single documents. We can also have a project composed of multiple documents and document types. In this case, the files are organised in a directory and the configuration is defined in `_quarto.yml`. This will be referred to as the config file. Think of this as a shared YAML metadata file for all of the documents. In addition, an **index.qmd** file defines the home page.
+## Quarto project
+
+So far, the output formats we have discussed and you have worked on have been single `.qmd` documents. We can also have a Quarto project: a way to organize collections of multiple Quarto documents. 
+
+From a technical perspective, a Quarto project is simply a folder that contains the file `_quarto.yml`. From a practical perspective, using a Quarto project has two benefits:
+
+- You can easily render all the Quarto documents in the project folder.
+- You can set options common to the documents in a single place.
+
+The folder `ds-project`, a simple example of a data science project, that contains some Quarto documents.
+
+```{.yaml}
+temp-dirs/ds-project
+├── 01-import.qmd
+├── 02-visualize.qmd
+├── README.md
+└── data
+    └── records.csv
+```
+
+To turn this folder into a Quarto project, add the file _quarto.yml, as shown: 
+
+```{.yaml}
+temp-dirs/ds-project
+├── 01-import.qmd
+├── 02-visualize.qmd
+├── README.md
+├── _quarto.yml
+└── data
+    └── records.csv
+```
+
+The presence of `_quarto.yml`, even if empty, signals to Quarto this is a project, and allows you to render without specifying a file: `quarto render` 
+
+Quarto will then render all Quarto documents in the project. In this example, the files, `01-import.html` and `02-visualize.html`, and their supporting folders, `01-import_files/` and `02-visualize_files/` are created. 
+
+```{.yaml}
+temp-dirs/ds-project
+├── 01-import.html
+├── 01-import.qmd
+├── 01-import_files
+│   └── libs
+├── 02-visualize.html
+├── 02-visualize.qmd
+├── 02-visualize_files
+│   └── libs
+├── README.md
+├── _quarto.yml
+└── data
+    └── records.csv
+```
+
+Beyond indicating that the folder is a Quarto project, the file `_quarto.yml` also stores Quarto YAML options. These can be project-level options or document-level options common to the documents in the project. Project-level options are set under project, one of which is `type`. If the file `_quarto.yml` is empty, or if type is unspecified, the type is assumed to be default. That is, it’s equivalent to: 
+
+```
+project:
+  type: default
+```
+
+Other project types include `manuscript`, `website`, and `book`.
 
 For a website, the minimal config looks like this: 
 
@@ -518,21 +577,11 @@ project:
   type: book
 ```
 
-Then running `quarto render` renders the output into a directory named `_site`. The output can be changed, for example, to **docs** for GitHub Pages.
-
-```
-project:
-  type: website
-  output_dir: docs
-```
-
-The output format by default is HTML. This can be changed or modified by adding `format` to the config file or to individual qmd files. The parameters defined in the config file will be shared by all other qmd files.
-
 To create a project in RStudio, go to **File > New Project **, then select directory and then a project type such as website, blog or book. Try creating one based on what interests you. Website and blog documentation is [here](https://quarto.org/docs/websites/) and books are [here](https://quarto.org/docs/books/).
 
 To read more about project, see [here](https://quarto.org/docs/projects/quarto-projects.html).
 
-# Presentations
+## Presentations
 
 Quarto also supports creating presentations using formats like: 
 
@@ -546,7 +595,7 @@ The most powerful format by far is `revealjs`, so it is highly recommended unles
 
 Let's check the basic syntax for presentations that applies to all formats. 
 
-## Creating slides
+### Creating slides
 
 In markdown, slides are delineated using headings. For example, here is a simple slide show with two slides (each defined with a Level 2 heading (`##`)).
 
@@ -608,7 +657,7 @@ format: revealjs
 - Dresses
 ```
 
-## Incremental lists
+### Incremental lists
 
 By default number and bullet lists within slides are displayed all at once. You can override this globally using the `incremental` option.
 
@@ -644,7 +693,7 @@ To make a list non-incremental do this:
 :::
 ```
 
-## Multiple columns
+### Multiple columns
 
 To put material in side by side columns, you can use a native div container with class `.columns`, containing two or more div containers with class `.column` and a `width` attribute.
 
