@@ -269,6 +269,7 @@ ui <- fluidPage(
   - Shinyapps.io
   - Shiny Server (Free)
   - Shiny Server Pro
+  - [SciLifeLab Serve](https://serve.scilifelab.se/apps/)
 
 . . .
 
@@ -355,6 +356,16 @@ shinyApp(
 ```         
 <iframe src="https://user.shinyapps.io/app"></iframe>
 ```
+
+## SciLifeLab Serve and RShiny NBIS
+
+:::{.column width="50%"}
+![](../../assets/images/scilifelab_serve.png)
+:::
+
+:::{.column width="50%"}
+![](../../assets/images/nbis_rshiny.png)
+:::
 
 ## Other topics
 
