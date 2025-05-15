@@ -228,7 +228,7 @@ This package is a htmlwidget and a ggplot2 extension that allows you to create d
 The first step is easy. Create a ggplot just like you normally would.
 
 :::{.callout-note}
-To run the following example, you need to download the data `dream_location_filt.csv`. Unfortunately, this was not part of the `data.zip` you recieved in the beginning of the course. You can download this file [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/topics/dynamic_plotting/data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv) 
+To run the following example, you need to download the data `bcg-immunization-coverage-for-tb-among-1-year-olds.csv`. Unfortunately, this was not part of the `data.zip` you recieved in the beginning of the course. You can download this file [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/topics/dynamic_plotting/data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv) 
 :::
 
 ````{.r}
