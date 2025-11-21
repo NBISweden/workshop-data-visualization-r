@@ -1,0 +1,31 @@
+date	room	start_time	end_time	topic	instructor	assistant	link_slide	link_lab	link_youtube	link_room
+05/05/2026	Room E11073; Forum Medicum BMC	09:00	09:15	Welcome	Markus Ringner					https://link.mazemap.com/HDRT38tV
+		09:15	10:15	ggplot basics	Lokesh Mano	KK, MR, LV	topics/ggplot/slide_gg1.html	topics/ggplot/lab_gg1.html		
+		10:15	10:30	Break						
+		10:30	12:00	Advanced ggplot	Lokesh Mano	KK, MR, LV	topics/ggplot/slide_gg2.html	topics/ggplot/lab_gg2.html		
+		12:00	13:00	Lunch						
+		13:00	13:30	Vector and bitmap	Markus Ringner		topics/others_day1/Vector_Bitmap_Images.pdf			
+		13:30	15:00	PCA plots	Markus Ringner	LM, KK, LV		topics/ggplot/lab_pca.html		
+		15:00	15:30	Fika						
+		15:30	16:30	Single-cell	Lokesh Mano	KK, MR, LV		topics/ggplot/lab_sc.html		
+		16:30	17:00	Wrap-up day I	Lokesh Mano					
+06/05/2026	Room E11073; Forum Medicum BMC	09:00	10:15	Quarto	Katja Kozjek	LM, MR, LV	topics/Quarto/slide_quarto1.html	topics/Quarto/lab_quarto1.html		https://link.mazemap.com/HDRT38tV
+		10:15	10:30	Break						
+		10:30	11:00	Quarto (continuation)	Katja Kozjek	LM, MR, LV				
+		11:00	12:00	Dynamic plots	Katja Kozjek	LM, MR, LV	topics/dynamic_plotting/slide_dynamic_plot1.html	topics/dynamic_plotting/lab_dynamic_plot1.html		
+		12:00	13:00	Lunch						
+		13:00	14:00	Dynamic plots (continuation)	Katja Kozjek	LM, MR, LV				
+		14:00	15:00	Dashboards	Katja Kozjek	LM, MR, LV	topics/Quarto/slide_quarto2.html	topics/Quarto/lab_quarto2.html		
+		13:30	15:30	Fika						
+		15:30	16:30	Dashboards (continuation)	Katja Kozjek	LM, MR, LV				
+		16:30	17:00	Wrap-up day II	Lokesh Mano					
+	Restaurang Valvet	18:30	22:00	Dinner						https://link.mazemap.com/hl6TQ2jq
+07/05/2026	Room E11073; Forum Medicum BMC	09:00	10:15	Intro to R-Shiny	Lokesh Mano	KK, MR, LV	topics/Shiny/slide_shiny1.html	topics/Shiny/lab_shiny1.html		https://link.mazemap.com/HDRT38tV
+		10:15	10:30	Break						
+		10:30	12:00	R-Shiny part-II	Lokesh Mano	KK, MR, LV	topics/Shiny/slide_shiny2.html	topics/Shiny/lab_shiny2.html		
+		12:00	13:00	Lunch						
+		13:00	15:00	R-Shiny part-III	Lokesh Mano	KK, MR, LV	topics/Shiny/slide_shiny3.html	topics/Shiny/lab_shiny3.html		
+		15:00	15:30	Fika						
+		15:30	16:30	Own shiny app						
+		16:30	16:45	Wrap-up day III	Lokesh Mano					
+		16:45	17:00	Closing and feedback sessions	Lokesh Mano					

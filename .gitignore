@@ -23,11 +23,12 @@ labs/**/*_files
 _freeze
 docs
 
-# Release directories 
+# Release directories
 2204/
 2210/
 2304/
 2505/
+2605/
 old_rmd_files/
 specky/
 test_files/
@@ -36,3 +37,4 @@ gh-pages-branch/
 
 # Admin for particular release
 #2109_Admin/
+**/*.quarto_ipynb
