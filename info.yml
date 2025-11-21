@@ -37,6 +37,40 @@ lund:
       lat: 55.70847
       lon: 13.19594
       popup: "Valvet Steakhouse, Allhelgona kyrkogata 7, 223 62 Lund"
+lund_fm:
+  description: |
+    Room E11073  
+    Forum Medicum BMC
+    Sölvegatan 19
+    223 62 Lund  
+    Sweden  
+
+    For Lund city buses, tram, regional buses and regional trains, use [skanetrafiken.se](https://www.skanetrafiken.se/). You can buy a ticket at the central station in Lund or at the regional bus (card only). You can also use the app [Skånetrafiken](https://www.skanetrafiken.se/biljetter/app2/) From the Lund C the easiest is to take the tram from **Clemenstorget** towards **ESS** and get off at  **Lund LTH**. The trip take about 4 minutes and a tram leaves about four times an hour.
+  map:
+    - label: Venue
+      marker_icon: briefcase
+      marker_color: red
+      lat: 55.711086
+      lon: 13.202617
+      popup: "Room E11073; Forum Medicum BMC; Sölvegatan 19; 223 62 Lund, Sweden"
+    - label: Centralstation
+      marker_icon: train
+      marker_color: purple
+      lat: 55.71505
+      lon: 13.21240
+      popup: "Centralstation; Bangatan 1; 222 21 Lund; Sweden"
+    - label: Lunch
+      marker_icon: cutlery
+      marker_color: cadetblue
+      lat: 55.71092
+      lon: 13.21894
+      popup: "Bryggan Kitchen & Café, IKDC, Formstråket 13, 223 62 Lund"
+    - label: Dinner
+      marker_icon: glass
+      marker_color: green
+      lat: 55.70847
+      lon: 13.19594
+      popup: "Valvet Steakhouse, Allhelgona kyrkogata 7, 223 62 Lund"
 lund_mv:
   description: |
     Room E24  
