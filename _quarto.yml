@@ -1,7 +1,7 @@
 project:
   type: website
   # output directory used on gh-pages branch. format: YYMM
-  output-dir: "2505"
+  output-dir: "2605"
   render: 
     - "!README.md"
     - "!LICENSE"
