@@ -62,14 +62,14 @@ lund_fm:
     - label: Centralstation
       marker_icon: train
       marker_color: purple
-      lat: 55.71505
-      lon: 13.21240
+      lat: 55.70669
+      lon: 13.18695
       popup: "Centralstation; Bangatan 1; 222 21 Lund; Sweden"
     - label: Lunch
       marker_icon: cutlery
       marker_color: cadetblue
-      lat: 55.71092
-      lon: 13.21894
+      lat: 55.71123
+      lon: 13.20325
       popup: "Bryggan Kitchen & Café, IKDC, Formstråket 13, 223 62 Lund"
     - label: Dinner
       marker_icon: glass
