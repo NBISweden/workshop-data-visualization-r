@@ -39,7 +39,7 @@ lund:
       popup: "Valvet Steakhouse, Allhelgona kyrkogata 7, 223 62 Lund"
 lund_fm:
   description: |
-    Room E11073  
+    Room E11073 - Rådslaget  
     Forum Medicum BMC
     Sölvegatan 19
     223 62 Lund  
@@ -70,13 +70,37 @@ lund_fm:
       marker_color: cadetblue
       lat: 55.71123
       lon: 13.20325
-      popup: "Bryggan Kitchen & Café, IKDC, Formstråket 13, 223 62 Lund"
+      popup: "Stamstället, Forum Medicum BMC; Sölvegatan 19; 223 62 Lund, Sweden"
     - label: Dinner
       marker_icon: glass
       marker_color: green
       lat: 55.70847
       lon: 13.19594
       popup: "Valvet Steakhouse, Allhelgona kyrkogata 7, 223 62 Lund"
+    - label: Hotel Lundia
+      marker_icon: bed
+      marker_color: blue
+      lat: 55.71157
+      lon: 13.20215
+      popup: "Hotel Lundia; Bantorget 1; 223 50 Lund; Sweden"
+    - label: Elite Hotel Ideon
+      marker_icon: bed
+      marker_color: blue
+      lat: 55.71387
+      lon: 13.21221
+      popup: "Elite Hotel Ideon; Scheelevägen 27; 223 70 Lund; Sweden"
+    - label: Grand Hotel Lund
+      marker_icon: bed
+      marker_color: blue
+      lat: 55.70894
+      lon: 13.19956
+      popup: "Grand Hotel Lund; Bantorget 1; 223 50 Lund; Sweden"
+    - label: Motel L
+      marker_icon: bed
+      marker_color: blue
+      lat: 55.70477
+      lon: 13.19149
+      popup: "Motel L; Västergatan 2; 222 22 Lund; Sweden"
 lund_mv:
   description: |
     Room E24  
@@ -85,6 +109,15 @@ lund_mv:
     Scheelevägen 2  
     223 63 Lund  
     Sweden  
+
+    Few selected hotels are listed below ranked by distance from the venue.
+
+    - [Elite Hotel Ideon](https://www.elite.se/hotell/lund/elite-hotel-ideon-lund/) (1.1 km, 15 min walk)
+    - [Hotel Lundia](https://www.hotellundia.se/) (1.3 km, 16 min walk)
+    - [Grand Hotel Lund](https://www.grandlund.se/) (1.4 km, 18 min walk)
+    - [Motel L](https://ligula.se/motel-l/motel-l-lund/) (2.2 km, 30 min walk)
+
+    The venue and hotels are also marked on the map.
 
     For Lund city buses, tram, regional buses and regional trains, use [skanetrafiken.se](https://www.skanetrafiken.se/). You can buy a ticket at the central station in Lund or at the regional bus (card only). You can also use the app [Skånetrafiken](https://www.skanetrafiken.se/appen/#/) From the Lund C the easiest is to take the tram from **Clemens torget** towards **ESS** and get off at  **Lund Ideontorget**. The trip take about 5 minutes and a tram leaves about four times an hour.
   map:
