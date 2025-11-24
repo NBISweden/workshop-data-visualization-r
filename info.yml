@@ -53,6 +53,12 @@ lund_fm:
       lat: 55.711086
       lon: 13.202617
       popup: "Room E11073; Forum Medicum BMC; Sölvegatan 19; 223 62 Lund, Sweden"
+    - label: Lund LTH Tram stop
+      marker_icon: bus
+      marker_color: purple
+      lat: 55.71249
+      lon: 13.20807
+      popup: "LTH Bus/Tram stop; 223 62 Lund; Sweden"
     - label: Centralstation
       marker_icon: train
       marker_color: purple

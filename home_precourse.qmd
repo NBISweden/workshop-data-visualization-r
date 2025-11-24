@@ -79,7 +79,7 @@ The best and most efficient way to work with the Docker image is with `VScode` a
  - To install VScode, follow the instructions [here](https://code.visualstudio.com/docs/setup/setup-overview)
  - After successful installation of VScode and Docker, you can install the `Dev Containers` extension for VScode from [here](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
  - Download the `Dev Container` file from [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/dev-container-file/.devcontainer.json) *Make sure that all the course related files are in the same place as this `.devcontainer.json` hidden file*
- - Then in `VScode`, press `Ctrl+Shift+P` (`Cmd+Shift+P` for Mac users) followed by  `Dev Containers: Open Folder in Container` to select the folder where you have all the files or `Dev Containers: Reopen in Container`, if you are already on VScode in the same directory.
- - Now, if everything worked fine, a new window shoudl appear inside the `Advanced Data Visualization` container.
+ - Then in `VScode`, press `Ctrl+Shift+P` (`Cmd+Shift+P` for Mac users) followed by entering `Dev Containers: Open Folder in Container` in the prompt to select the folder where you have all the files or `Dev Containers: Reopen in Container`, if you are already on VScode in the same directory.
+ - Now, if everything worked fine, a new window should appear inside the `Advanced Data Visualization` container.
 
 :::
