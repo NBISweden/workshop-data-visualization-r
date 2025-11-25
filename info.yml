@@ -45,6 +45,15 @@ lund_fm:
     223 62 Lund  
     Sweden  
 
+    Few selected hotels are listed below ranked by distance from the venue.
+
+    - [Elite Hotel Ideon](https://www.elite.se/hotell/lund/elite-hotel-ideon-lund/) (1.1 km, 15 min walk)
+    - [Hotel Lundia](https://www.hotellundia.se/) (1.3 km, 16 min walk)
+    - [Grand Hotel Lund](https://www.grandlund.se/) (1.4 km, 18 min walk)
+    - [Motel L](https://ligula.se/motel-l/motel-l-lund/) (2.2 km, 30 min walk)
+
+    The venue and hotels are also marked on the map.
+
     For Lund city buses, tram, regional buses and regional trains, use [skanetrafiken.se](https://www.skanetrafiken.se/). You can buy a ticket at the central station in Lund or at the regional bus (card only). You can also use the app [Skånetrafiken](https://www.skanetrafiken.se/biljetter/app2/) From the Lund C the easiest is to take the tram from **Clemenstorget** towards **ESS** and get off at  **Lund LTH**. The trip take about 4 minutes and a tram leaves about four times an hour.
   map:
     - label: Venue
@@ -80,26 +89,26 @@ lund_fm:
     - label: Hotel Lundia
       marker_icon: bed
       marker_color: blue
-      lat: 55.71157
-      lon: 13.20215
+      lat: 55.70549
+      lon: 13.18925
       popup: "Hotel Lundia; Bantorget 1; 223 50 Lund; Sweden"
     - label: Elite Hotel Ideon
       marker_icon: bed
       marker_color: blue
-      lat: 55.71387
-      lon: 13.21221
+      lat: 55.71784
+      lon: 13.21398
       popup: "Elite Hotel Ideon; Scheelevägen 27; 223 70 Lund; Sweden"
     - label: Grand Hotel Lund
       marker_icon: bed
       marker_color: blue
-      lat: 55.70894
-      lon: 13.19956
+      lat: 55.70398
+      lon: 13.18895
       popup: "Grand Hotel Lund; Bantorget 1; 223 50 Lund; Sweden"
     - label: Motel L
       marker_icon: bed
       marker_color: blue
-      lat: 55.70477
-      lon: 13.19149
+      lat: 55.71749
+      lon: 13.22943
       popup: "Motel L; Västergatan 2; 222 22 Lund; Sweden"
 lund_mv:
   description: |
