@@ -61,8 +61,9 @@ To prepare for the course, you can follow one of the links below to warm up your
  - Advanced-level: [ggplot warm-up](https://nbisweden.github.io/workshop-data-visualization-r/2210/home_content.html#4_Main_lab)
 :::
 
-:::{.callout-tip icon="false" collapse="true"}
-## {{< fa brands docker >}} Docker
+## {{< fa solid toolbox >}} Alternative installations with containers
+
+### {{< fa brands docker >}} Docker
 
 If you are more familiar with using `Docker`, all the tools necessary for the course are available as a Docker image. You can pull the image using the following command:
 
@@ -72,14 +73,32 @@ docker pull ghcr.io/nbisweden/workshop-adv-data-viz:latest
 
 If you would like to try to install `Docker` and give it a try, please follow the instructions [here](other/docker.html)
 
-### {{< fa brands microsoft >}} Visual Studio code
+#### {{< fa brands microsoft >}} Visual Studio code
 
 The best and most efficient way to work with the Docker image is with `VScode` and the extension `Dev Containers`. Similar to `RStudio` or `Posit`, `VScode` is an IDE maintained by Microsoft and it is quite efficient and robust for all Operating systems. 
 
  - To install VScode, follow the instructions [here](https://code.visualstudio.com/docs/setup/setup-overview)
  - After successful installation of VScode and Docker, you can install the `Dev Containers` extension for VScode from [here](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
- - Download the `Dev Container` file from [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/dev-container-file/.devcontainer.json) *Make sure that all the course related files are in the same place as this `.devcontainer.json` hidden file*
+ - Download the `Dev Container` file from [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/container-files/.devcontainer.json) *Make sure that all the course related files are in the same place as this `.devcontainer.json` hidden file*
  - Then in `VScode`, press `Ctrl+Shift+P` (`Cmd+Shift+P` for Mac users) followed by entering `Dev Containers: Open Folder in Container` in the prompt to select the folder where you have all the files or `Dev Containers: Reopen in Container`, if you are already on VScode in the same directory.
  - Now, if everything worked fine, a new window should appear inside the `Advanced Data Visualization` container.
 
-:::
+### {{< fa brands app-store >}} Apptainer
+
+If for some reason, the installations doesn't work on your computer and you happened to have access to any of the Swedish HPCs (non-sensitive) like in [NAISS](https://supr.naiss.se/login/). You can follow the instructions below:
+
+In might have to load the apptainer module first in your HPC. The example below explains how one could do it in [Dardel](https://www.pdc.kth.se/hpc-services/computing-systems/dardel-hpc-system).
+
+```
+module load PDC apptainer
+```
+
+Followed by:
+
+```
+apptainer pull workshop.sif ghcr.io/nbisweden/workshop-adv-data-viz:latest
+apptainer exec workshop.sif code tunnel
+```
+
+Then follow the on-screen instructions to login with your `GitHub` account (for example). By following these steps you should have access to all the tools. You can also download all the course files into your HPC and you should be able to access it in the apptainer.
+ 
