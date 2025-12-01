@@ -77,8 +77,8 @@ lund_fm:
     - label: Lunch
       marker_icon: cutlery
       marker_color: cadetblue
-      lat: 55.71092
-      lon: 13.21894
+      lat: 55.71508
+      lon: 13.21241
       popup: "Bryggan Kitchen & Café, IKDC, Formstråket 13, 223 62 Lund"
     - label: Dinner
       marker_icon: glass
