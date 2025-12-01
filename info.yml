@@ -77,9 +77,9 @@ lund_fm:
     - label: Lunch
       marker_icon: cutlery
       marker_color: cadetblue
-      lat: 55.71123
-      lon: 13.20325
-      popup: "Stamstället, Forum Medicum BMC; Sölvegatan 19; 223 62 Lund, Sweden"
+      lat: 55.71092
+      lon: 13.21894
+      popup: "Bryggan Kitchen & Café, IKDC, Formstråket 13, 223 62 Lund"
     - label: Dinner
       marker_icon: glass
       marker_color: green
