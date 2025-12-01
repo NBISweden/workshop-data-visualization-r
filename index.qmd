@@ -40,7 +40,7 @@ Updated: {{< meta current_date >}}  at {{< meta current_time >}} .
 :::
 :::{.home-grid-child-right}
 
-![](assets/images/hero.webp){.nolightbox}
+![](assets/images/precourse/hero.png){.nolightbox}
 
 :::
 :::
