@@ -13,11 +13,21 @@ format:
     anchor-sections: false
 execute:
   freeze: false
+filters:
+  - particles
 ---
 
 ::: {.home-container}
 ::: {.home-grid-parent}
 ::: {.home-grid-child-left}
+
+{{< particles
+  id="quarto-particlejs"
+  particles.color.value="#BDD775"
+  particles.line_linked.color="#BDD775"
+  interactivity.events.onhover.enable=true
+  interactivity.events.onhover.mode=repulse
+>}}
 
 ### NBIS Workshop
 ## Advanced Data Visualization
@@ -33,6 +43,8 @@ execute:
 
 :::
 
+[Apply Now »](https://forms.gle/7ktutjZ48DfSLfoW6){.btn .btn-primary}
+
 ::: small
 Updated: {{< meta current_date >}}  at {{< meta current_time >}} .
 :::
@@ -45,3 +57,5 @@ Updated: {{< meta current_date >}}  at {{< meta current_time >}} .
 :::
 :::
 :::
+
+

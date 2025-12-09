@@ -17,7 +17,7 @@ format: html
 
 #### {{< fa solid pen-to-square >}} IDE
 
-Install [RStudio](https://posit.co/download/rstudio-desktop/). RStudio provides you with tools like code editor with highlighting, project management, version control, package building, debugger, profiler and more. [Visual Studio code](https://code.visualstudio.com/docs/setup/setup-overview) is another good alternative to RStudio.
+Install [RStudio](https://posit.co/download/rstudio-desktop/) or [Positron](https://posit.co/products/ide/positron/). RStudio/Positron provides you with tools like code editor with highlighting, project management, version control, package building, debugger, profiler and more. [Visual Studio code](https://code.visualstudio.com/docs/setup/setup-overview) is another good alternative to RStudio/Positron.
 
 #### {{< fa solid book-open-reader >}} Quarto
 
@@ -87,7 +87,7 @@ The best and most efficient way to work with the Docker image is with `VScode` a
 
 If for some reason, the installations doesn't work on your computer and you happened to have access to any of the Swedish HPCs (non-sensitive) like in [NAISS](https://supr.naiss.se/login/). You can follow the instructions below:
 
-In might have to load the apptainer module first in your HPC. The example below explains how one could do it in [Dardel](https://www.pdc.kth.se/hpc-services/computing-systems/dardel-hpc-system).
+In some cases in `Dardel` HPC from KTH, you might have to load the apptainer module first. The example below explains how one could do it in [Dardel](https://www.pdc.kth.se/hpc-services/computing-systems/dardel-hpc-system).
 
 ```
 module load PDC apptainer
@@ -100,5 +100,4 @@ apptainer pull workshop.sif ghcr.io/nbisweden/workshop-adv-data-viz:latest
 apptainer exec workshop.sif code tunnel
 ```
 
-Then follow the on-screen instructions to login with your `GitHub` account (for example). By following these steps you should have access to all the tools. You can also download all the course files into your HPC and you should be able to access it in the apptainer.
- 
+Then follow the on-screen instructions to login with your `GitHub` account (for example). By following these steps you should have access to all the tools. You can also download all the course files into your HPC at the same location as the `workshop.sif` file and you should be able to access it in the apptainer. Alternatively, you can also open specific folder in HPC where you have all the workshop related materials from the `VS code` graphical interface `(File --> Open Folder)`. 
