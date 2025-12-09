@@ -79,3 +79,15 @@ body {
 .home-grid-child-left h2 {
     margin-top: 0.5em;
 }
+
+/* particles */
+#quarto-particlejs{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  overflow: hidden;
+  aspect-ratio: 1684/842;
+}
