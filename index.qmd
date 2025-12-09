@@ -55,6 +55,7 @@ Updated: {{< meta current_date >}}  at {{< meta current_time >}} .
 {{< particles
   id="quarto-particlejs"
   particles.color.value="#BDD775"
+  particles.number.value=150
   particles.line_linked.color="#BDD775"
   interactivity.events.onhover.enable=true
   interactivity.events.onhover.mode=repulse
