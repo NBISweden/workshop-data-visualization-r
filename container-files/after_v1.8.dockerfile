@@ -17,9 +17,18 @@ RUN apt-get update -y \
 
 # Install VS Code
 ARG DEBIAN_FRONTEND=noninteractive
-RUN wget https://go.microsoft.com/fwlink/?LinkID=760868 -O vscode.deb \
+RUN apt-get install -y gnupg \
+    && wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg \
+    && install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg \
+    && rm packages.microsoft.gpg \
+    && wget https://go.microsoft.com/fwlink/?LinkID=760868 -O vscode.deb \
     && apt install -y ./vscode.deb \
     && rm vscode.deb
+
+RUN apt update && apt upgrade -y 
+RUN apt-get install -y python3 python3-pip python3-venv \
+      && apt-get clean
+RUN pip install --break-system-packages polars seaborn plotly altair
 
 USER rstudio
 
