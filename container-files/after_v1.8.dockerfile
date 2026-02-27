@@ -1,4 +1,4 @@
-# DOCKER FILE FOR WORKSHOP-ADVANCED-DATA-VISULAIZATION
+# DOCKER FILE FOR WORKSHOP-ADVANCED-DATA-VISUALIZATION
 # 2025 Lokesh Mano
 
 FROM ghcr.io/nbisweden/workshop-adv-data-viz:1.8.0
@@ -28,7 +28,11 @@ RUN apt-get install -y gnupg \
 RUN apt update && apt upgrade -y 
 RUN apt-get install -y python3 python3-pip python3-venv \
       && apt-get clean
-RUN pip install --break-system-packages polars seaborn plotly altair
+RUN pip install --break-system-packages polars seaborn plotly altair jupyter
+RUN pip install --break-system-packages palmerpenguins
+RUN pip install --break-system-packages pyarrow
+
+RUN install2.r --error --skipinstalled tidytuesdayR dygraphs reactable reactablefmtr
 
 USER rstudio
 
