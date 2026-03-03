@@ -138,6 +138,17 @@ options=list(height=700))
 
 In this example, we have a text input box which takes user text and outputs it in three different variations. The first output is html output `htmlOutput()`. Since the default text is html content, the output is red coloured text. A normal non-html text would just look like normal text. The second output is normal text output `textOutput()`. The third variation is `verbatimTextOutput()` which displays text in monospaced code style. This example further shows table output and plot output.
 
+To understand the concepts of `input`, `output`, `ui` and `server` variables, look at the image below. 
+
+![](assets/shiny_anatomy.png){width="80%" fig-align="center"}
+
+ * `ui` - defines the user interface of the app. It is a collection of widgets that are displayed on the webpage. It is defined using shiny functions like `sliderInput()`, `plotOutput()`, etc. Here, you see that the usewr-interface has both `input` and `output` widgets.
+ * `server` - defines the server logic of the app where all the calculations are performed. It is a collection of instructions that are executed when the app is run. It is defined using R code and uses `input` and `output` variables to access the values of input widgets and write content to output widgets respectively with functions like `renderPlot()`, `renderText()`, etc.
+ * `input` - These are the variables recieved from the client and the values are sent to the server for processing. 
+ * `output` - These are the variables sent from the server to the client and the values are displayed on the `UI` part of webpage.
+
+You can think of `ui` as the front-end of the app and `server` as the back-end of the app. The `ui` and `server` are connected together using `shinyApp()` function which launches the app.
+
 # Dynamic UI
 
 Sometimes we want to add, remove or change currently loaded UI widgets conditionally based on dynamic changes in code execution or user input. Conditional UI can be defined using `conditionalPanel()`, `uiOutput()`/`renderUI()`, `insertUI()` or `removeUI`. In this example, we will use `uiOutput()`/`renderUI()`.

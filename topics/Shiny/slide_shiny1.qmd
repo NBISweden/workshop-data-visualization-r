@@ -165,6 +165,10 @@ server <- function(input,output) {}
 
 :::
 
+## Anatomy of a shiny app
+
+![](assets/shiny_anatomy.png){width="80%" fig-align="center"}
+
 ## App execution
 
 - Run `shiny::runApp("path/to/folder")`
