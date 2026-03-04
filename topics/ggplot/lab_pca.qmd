@@ -263,6 +263,30 @@ t2_vs_t0 %>%
 
 You can read more about Volcano plot and what it means [here](https://academic.oup.com/bib/article/20/6/2044/5066173#191590952)
 
+:::{.callout-tip icon="false" collapse="true"}
+## {{< fa lightbulb >}} &nbsp; Volcano-plot vs MA-plot vs PCA
+
+ * **Volcano Plot**:
+    - *Axes*: Fold Change (X) vs. Statistical Significance (p-value) (Y).
+    - *Purpose*: Identify Top Hits (significant, strongly changed genes/proteins).
+    - *Usage*: Selecting candidate genes for downstream analysis.
+ * **MA Plot** (Bland-Altman plot):
+    - *Axes*: Average Intensity (A) (X) vs. Log Fold Change (M) (Y).
+    - *Purpose*: Quality Control (QC), checking normalization, and identifying biases.
+    - *Usage*: Verifying that most genes are not differentially expressed (centered around M = 0).
+ * **PCA Plot** (Principal Component Analysis):
+    - *Axes*: Principal Components (e.g., PC1 vs. PC2) representing the most variance.
+    - *Purpose*: Sample Exploration (clustering, outliers, batch effects).
+    - *Usage*: Verifying that replicates cluster together and that experimental groups are distinct. 
+
+**When to Use Which?**
+
+1. **Start with PCA** to ensure your samples look good and cluster as expected.
+2. **Use an MA plot** to verify that your data normalization was effective and to see if fold changes depend on expression levels.
+3. **Use a Volcano plot** to identify and visualize the most statistically significant differentially expressed genes
+
+:::
+
 ## Exercise II
 
 ::::{.callout-important title="Task 2.2"}
