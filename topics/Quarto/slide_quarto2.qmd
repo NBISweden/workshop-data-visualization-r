@@ -8,8 +8,12 @@ format:
 ---
 
 ## [Quarto dashboards](https://quarto.org/docs/dashboards/)
-- Dashboards are a great way to share results from analyses with others
-- A new output format for creating dashboards from notebooks/ `.qmd` files
+- A tool for creating interactive, visually appealing dashboard to share insights from data analyses
+- Simple and user-friendly
+- Support plenty of components: static graphics, interactive widgets, tabular data, value boxes, text annotations
+- Easy to share and deploy
+- Deployed as static web pages (no special server required) or have Shiny Server integrated
+
 <br>
 
 - [Dashboards examples](https://quarto.org/docs/gallery/#dashboards)
