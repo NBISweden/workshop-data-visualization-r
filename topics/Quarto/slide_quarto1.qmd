@@ -7,134 +7,111 @@ format:
     slide-number: true
 ---
 
-## [Quarto](https://quarto.org/)
+## What do you currently use? 
+::: {.fragment}
+What tools, softwares do you use to perform analysis? What do you use for calculations and visualizations?
 
-**An open-source scientific and technical publishing system**
+- Excel?
+- R? 
+- Python?
+:::
 
-- Quarto is a **command line tool**, not an R package
-- Quarto combine codes, comments, and other features to tell a story about your data
-- Quarto support numerous output formats
-- Quarto documents are fully reproducible
+::: {.fragment}
+How do you write reports, journal articles, presentations?
+
+- Word?
+- PowerPoint?
+- LaTeX?
+- R Markdown?
+:::
+
+## What is [Quarto](https://quarto.org/)?
+
+Quarto is an **open-source scientific and technical publishing system**.
+<br>
+
+::: {.incremental}
+- Quarto allows you to combine text, images, code, plots, and tables in a fully-reproducible document. 
+- It supports multiple programming languages (R, Python, Julia, etc.). 
+- It works with various output formats (HTML, PDF, presentations, websites, etc.) 
+- It is compatible with multiple editors (RStudio, VS Code, Jupyter Lab, etc.).
+:::
 
 <br>
 
+::: {.fragment}
 ![](./images/horst_quarto_schematic.png){height="80%" width="80%" fig-align="center"}
+:::
+
+## Why use Quarto?
+- More journals require code submission to promote reproducibility and transparency. 
+- Copying and pasting is tedious and a great source of accidental errors.
+- If you fix an error in code or data, the results and figures in the paper update automatically.
+- Easy collaboration and sharing. 
+- Open source so anyone can use it.
 
 ## Installation
 
-- Install the latest [quarto executable](https://quarto.org/docs/get-started/)
-- R package **quarto** is a wrapper that runs quarto from R
+- Install the latest [Quarto CLI](https://quarto.org/docs/get-started/)
+- Choose preferred tool: [Positron](https://quarto.org/docs/get-started/hello/positron.html), [RStudio](https://quarto.org/docs/get-started/hello/rstudio.html), [Visual Studio Code](https://quarto.org/docs/get-started/hello/vscode.html), [Jupyter Lab](https://quarto.org/docs/get-started/hello/jupyter.html)
+
+<br>
+
 - If using [RStudio](https://posit.co/download/rstudio-desktop/), you need a version v2022.07.1 or newer
-- [Visual Studio Code](https://code.visualstudio.com/) along with quarto extension is a great option too
+- R package **quarto** is a wrapper around the Quarto CLI, it provides an R interface to common Quarto operations for users who prefer to work in the R console rather than a terminal
+- [Visual Studio Code](https://code.visualstudio.com/) along with Quarto VS Code extension is a great option
 
-
-## Quarto notebook{.smaller}
-
+## Quarto document anatomy{.smaller}
 Quarto file – a plain text file that has the extension **.qmd**
 
-:::: {.columns}
-::: {.column}
-````
----
-title: "Palmer penguins"
-author: "Katja"
-date: today
-format: 
-  html: 
-    code-fold: true
-    code-tools: true
-    toc: true
-    number-sections: true
-execute:
-  warning: false
----
-
-# Meet the penguins
-The `palmerpenguins` data contains size measurements for three penguin species 
-observed on three islands in the Palmer Archipelago, Antarctica.
-
-![](./images/lter_penguins.png)
-
-The three species of penguins have quite distinct 
-distributions of physical dimensions (@fig-penguins).
-
-```{{r packages}}
-#| label: load packages and data
-#| warning: false
-#| output: false
-library(ggplot2)
-library(palmerpenguins)
-library(dplyr)
-data(penguins, package = "palmerpenguins")
-```
-
-## Bill dimensions
-```{{r bill dimensions}}
-#| label: fig-penguins
-#| warning: false
-#| fig-cap: "Bill dimensions of penguins across three species."
-#| fig-width: 10
-#| fig-height: 5
-
-penguins %>%
-  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +
-  geom_point(aes(color = species, 
-                 shape = species),
-             size = 2) + 
-  geom_smooth(method = "lm", se = FALSE, aes(color = species)) +
-  scale_color_manual(values = c("darkorange","darkorchid","cyan4")) + 
-  labs(color = "Species", shape = "Species") + 
-  xlab("Bill length (mm)") + ylab("Bill depth (mm)") + 
-  theme_bw()
-```
-````
-:::
-
-::: {.column}
-::: {.fragment}
-![](images/example-report.png){width=65%}
-:::
-:::
-::::
-
-## Quarto document anatomy
-
 ![](./images/doc-anatomy.png)
+
+## Rendering Quarto document
+::: {.fragment}
+- **Preview** (while writing to see changes instantly)
+    - From R console using the quarto R package: `quarto::quarto_preview("report.qmd")`
+    - From terminal: `quarto preview report.qmd`
+:::
+
+::: {.fragment}
+- **Render** (to create the final version of the document)
+    - Using the **Render** button in RStudio
+    - From R console using the quarto R package: `quarto::quarto_render("report.qmd")`
+    - From terminal: `quarto render report.qmd`
+:::
+
+## How rendering works?
+
+<br>
+<br>
+![](./images/rendering.png)
+
+::: {.notes}
+When you render a Quarto document, first knitr executes all of the code chunks and creates a new markdown (.md) document, which includes the code and its output. The markdown file generated is then processed by pandoc, which creates the finished format. The Render button encapsulates these actions and executes them in the right order for you.
+:::
 
 ## YAML metadata
 :::: {.columns}
 ::: {.column width="50%"}
 ````
 ---
-title: "Palmer penguins"
-subtitle: "Intro to Quarto Exercise"
-author: "Katja"
-date: today
-format: 
-  html: 
-    code-fold: true
-    code-tools: true
-    toc: true
-    number-sections: true
-execute:
-  warning: false
+title: "Intro to Quarto"
+format: html
 ---
 ````
 :::
 
 ::: {.column}
-::: {.fragment}
 - Bracketed by `---`
 - Defines document-wide options
 - Specifies the output format
 - Can include [several parameters](https://quarto.org/docs/reference/)
 :::
-:::
 ::::
 
-## Markdown text
-- Images, tables, text, etc.
-- Freely add and format text using markdown
+## Document content (Markdown text)
+- Images, tables, text, videos, equations, etc.
+- Freely add and format text using Markdown syntax
 
 ::: {.fragment}
 ````
@@ -152,21 +129,18 @@ distributions of physical dimensions (@fig-penguins).
 :::
 
 ## Code chunks{.smaller}
-:::: {.fragment}
 ::: {style="font-size: 1.6rem"}
-- Code blocks are called code chunks
-- Evaluate code and show its output
+- Code blocks are the main way of including executable R code in a document.
+- They are defined by three backticks followed by the language name, and closed by three backticks.
 - Specify global and/or local [chunk options](https://quarto.org/docs/computations/execution-options.html) (_e.g._ figure dimensions)
 - Also works with other languages (_e.g._ Python)
 :::
-::::
 
 ::: {.fragment}
 ````
 ## Bill dimensions
-```{{r bill dimensions}}
+```{{r}}
 #| label: fig-penguins
-#| warning: false
 #| fig-cap: "Bill dimensions of penguins across three species."
 #| fig-width: 10
 #| fig-height: 5
@@ -174,8 +148,8 @@ distributions of physical dimensions (@fig-penguins).
 penguins %>%
   ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +
   geom_point(aes(color = species, 
-                 shape = species),
-             size = 2) + 
+                shape = species),
+                size = 2) + 
   geom_smooth(method = "lm", se = FALSE, aes(color = species)) +
   scale_color_manual(values = c("darkorange","darkorchid","cyan4")) + 
   labs(color = "Species", shape = "Species") + 
@@ -185,35 +159,12 @@ penguins %>%
 ````
 :::
 
-## Rendering Quarto document
-::: {.fragment}
-- Live preview
-    - From R console: `quarto::quarto_preview("report.qmd")`
-    - From terminal: `quarto preview report.qmd`
-:::
-::: {.fragment}
-- Render
-    - Interactively using the **Render** button
-    - From R console: `quarto::quarto_render("report.qmd")`
-    - From terminal: `quarto render report.qmd`
-:::
-
-## How rendering works?
-
-<br>
-<br>
-![](./images/rendering.png)
-
 ## Output formats
-
-::: {.fragment}
-- Reports and general documents (HTML, PDF, Jupyter Notebook, Microsoft Word)
-- Presentations (reveal.js, PowerPoint, Beamer)
-- Interactive documents (Observable, R Shiny)
-- Books, blogs and websites
-- Journal articles
-:::
-
+- Reports and general documents: HTML, PDF, MS Word
+- Presentations: Revealjs, PowerPoint, Beamer
+- Interactive documents: Observable, R Shiny
+- Books
+- Websites
 
 ## Moving between output formats is straightforward
 
@@ -304,27 +255,13 @@ website:
 :::
 :::
 
-## Key advantages of Quarto
-
-::: {.fragment}
-- Text, code snippets, and visualizations in a single document
-- Supports multiple programming languages (R, Python, Julia, etc.)
-- Various output formats (HTML, PDF, presentations, etc.)
-- Compatible with multiple editors (RStudio, VS Code, Jupyter Lab, etc.)
-- Interactive elements (Shiny apps, HTML widgets, or JavaScript visualizations) can be incorporated directly into documents
-- Reproducible and transparent workflows
-- Easy collaboration and sharing
-:::
-
 ## Sources
-::: {.fragment}
 - [R for Data Science book](https://r4ds.hadley.nz/quarto.html)
 - [Hello Quarto](https://mine.quarto.pub/hello-quarto/#/hello-quarto-title)
 - [Guides](https://quarto.org/docs/guide/)
 - [RaukR 2024](https://nbisweden.github.io/raukr-2024/slides/quarto/#/title-slide) (Quarto by Roy Francis)
 - [Getting started with Quarto](https://rstudio-conf-2022.github.io/get-started-quarto/)
 - [Quarto cheatsheet](https://rstudio.github.io/cheatsheets/quarto.pdf)
-:::
 
 ## {background-image="../../assets/images/precourse/data_viz_adv_2.jpeg"}
 
