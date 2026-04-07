@@ -8,12 +8,19 @@ format:
 ---
 
 ## [Quarto dashboards](https://quarto.org/docs/dashboards/)
-- A tool for creating interactive, visually appealing dashboard to share insights from data analyses
-- Simple and user-friendly
-- Support plenty of components: static graphics, interactive widgets, tabular data, value boxes, text annotations
-- Easy to share and deploy
-- Deployed as static web pages (no special server required) or have Shiny Server integrated
+- Dashboards are a great way to present data in a visually appealing format
+- A new output format for creating dashboards from notebooks/ `.qmd` files
+<br>
 
+**Key Quarto dashboard features:**
+<br>
+
+- **Component flexibility:** static graphics, interactive widgets, tabular data, value boxes, text annotations...
+- **Markdown syntax:** authoring with any text editor
+- **Compatibility with other languages:** R, Python, Julia
+- **Costumization options:** themes, logos, colors...
+- **Resizing:** optimal display on devices of all sizes
+<br>
 <br>
 
 - [Dashboards examples](https://quarto.org/docs/gallery/#dashboards)
