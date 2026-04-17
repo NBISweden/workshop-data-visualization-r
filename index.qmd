@@ -37,7 +37,9 @@ filters:
 
 :::
 
+<!-- Add this for next round of the course with the new link
 [Apply Now »](https://forms.gle/7ktutjZ48DfSLfoW6){.btn .btn-primary}
+-->
 
 ::: small
 Updated: {{< meta current_date >}}  at {{< meta current_time >}} .
