@@ -7,7 +7,7 @@ format:
     slide-number: true
 ---
 
-## Static vs. dynamic plotting 
+## Static vs Dynamic plotting 
 
 :::: {.columns}
 ::: {.column width="50%"}

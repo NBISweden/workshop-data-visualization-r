@@ -34,7 +34,7 @@ Quarto is an **open-source scientific and technical publishing system**.
 - Quarto allows you to combine text, images, code, plots, and tables in a fully-reproducible document. 
 - It supports multiple programming languages (R, Python, Julia, etc.). 
 - It works with various output formats (HTML, PDF, presentations, websites, etc.) 
-- It is compatible with multiple editors (RStudio, VS Code, Jupyter Lab, etc.).
+- It is compatible with multiple editors (RStudio, Positron, VS Code, Jupyter Lab, etc.).
 :::
 
 <br>
@@ -59,7 +59,6 @@ Quarto is an **open-source scientific and technical publishing system**.
 
 - If using [RStudio](https://posit.co/download/rstudio-desktop/), you need a version v2022.07.1 or newer
 - R package **quarto** is a wrapper around the Quarto CLI, it provides an R interface to common Quarto operations for users who prefer to work in the R console rather than a terminal
-- [Visual Studio Code](https://code.visualstudio.com/) along with Quarto VS Code extension is a great option
 
 ## Quarto document anatomy{.smaller}
 Quarto file – a plain text file that has the extension **.qmd**
