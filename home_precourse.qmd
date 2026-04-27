@@ -25,7 +25,7 @@ Install [RStudio](https://posit.co/download/rstudio-desktop/) or [Positron](http
 
 #### {{< fa solid cube >}} R packages
 
-Install all the R packages necessary for this course by opening an `R terminal` either in Rstudio or VScode and pasting the following command:
+Install all the R packages necessary for this course by opening an `R terminal` either in RStudio or VScode and pasting the following command:
 
 ```{r,eval=FALSE,block.title=TRUE}
 
@@ -33,12 +33,12 @@ install.packages(c("cowplot","crosstalk","dplyr","DT","gganimate","ggiraph",
                     "ggplot2","ggpubr","ggrepel","ggthemes","grid","gridExtra",
                     "gt", "kableExtra","leaflet","palmerpenguins","patchwork",
                     "pheatmap","plotly","reshape2","scales","Seurat","shiny",
-                    "tidyr","tidyverse","wesanderson"), dependencies = TRUE)
+                    "tidyr","tidyverse","wesanderson", "dygraphs", "reactable", "reactablefmtr"), dependencies = TRUE)
 
 ```
 
 ::: {.callout-tip}
-To make sure that the installations went well, we will try to make a quick plot using the packages you just installed. In this plot, we try to see if there is correlation plot between `BMI` and average `no.of steps` taken by some volunteers per day. The data and the code for plotting is available [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/Installation_check/packages_check.zip). Just `render` or `preview` the `installation_check.qmd` file in RStudio or VScode. and you should see the correlation plot, if all the packages are installed properly. 
+To make sure that the installations went well, we will try to make a quick plot using the packages you just installed. In this plot, we try to see if there is correlation between `BMI` and average `nr. of steps` taken by some volunteers per day. The data and the code for plotting is available [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/data/Installation_check/packages_check.zip). Just `render` or `preview` the `installation_check.qmd` file in RStudio or VScode. You should see the correlation plot, if all the packages are installed properly. 
 :::
 
 :::{.callout-caution icon="false"}
@@ -71,15 +71,15 @@ If you are more familiar with using `Docker`, all the tools necessary for the co
 docker pull ghcr.io/nbisweden/workshop-adv-data-viz:latest
 ```
 
-If you would like to try to install `Docker` and give it a try, please follow the instructions [here](other/docker.html)
+If you would like to try to install `Docker` and give it a try, please follow the instructions [here](other/docker.html).
 
-#### {{< fa brands microsoft >}} Visual Studio code
+#### {{< fa brands microsoft >}} Visual Studio Code
 
 The best and most efficient way to work with the Docker image is with `VScode` and the extension `Dev Containers`. Similar to `RStudio` or `Posit`, `VScode` is an IDE maintained by Microsoft and it is quite efficient and robust for all Operating systems. 
 
- - To install VScode, follow the instructions [here](https://code.visualstudio.com/docs/setup/setup-overview)
- - After successful installation of VScode and Docker, you can install the `Dev Containers` extension for VScode from [here](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
- - Download the `Dev Container` file from [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/container-files/.devcontainer.json) *Make sure that all the course related files are in the same place as this `.devcontainer.json` hidden file*
+ - To install VScode, follow the instructions [here](https://code.visualstudio.com/docs/setup/setup-overview).
+ - After successful installation of VScode and Docker, you can install the `Dev Containers` extension for VScode from [here](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
+ - Download the `Dev Container` file from [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/container-files/.devcontainer.json). *Make sure that all the course related files are in the same place as this `.devcontainer.json` is hidden file*
  - Then in `VScode`, press `Ctrl+Shift+P` (`Cmd+Shift+P` for Mac users) followed by entering `Dev Containers: Open Folder in Container` in the prompt to select the folder where you have all the files or `Dev Containers: Reopen in Container`, if you are already on VScode in the same directory.
  - Now, if everything worked fine, a new window should appear inside the `Advanced Data Visualization` container.
 
@@ -87,7 +87,7 @@ The best and most efficient way to work with the Docker image is with `VScode` a
 
 If for some reason, the installations doesn't work on your computer and you happened to have access to any of the Swedish HPCs (non-sensitive) like in [NAISS](https://supr.naiss.se/login/). You can follow the instructions below:
 
-In some cases in `Dardel` HPC from KTH, you might have to load the apptainer module first. The example below explains how one could do it in [Dardel](https://www.pdc.kth.se/hpc-services/computing-systems/dardel-hpc-system).
+In some cases in `Dardel` (HPC from KTH), you might have to load the apptainer module first. The example below explains how one could do it in [Dardel](https://www.pdc.kth.se/hpc-services/computing-systems/dardel-hpc-system).
 
 ```
 module load PDC apptainer
@@ -100,4 +100,4 @@ apptainer pull workshop.sif ghcr.io/nbisweden/workshop-adv-data-viz:latest
 apptainer exec workshop.sif code tunnel
 ```
 
-Then follow the on-screen instructions to login with your `GitHub` account (for example). By following these steps you should have access to all the tools. You can also download all the course files into your HPC at the same location as the `workshop.sif` file and you should be able to access it in the apptainer. Alternatively, you can also open specific folder in HPC where you have all the workshop related materials from the `VS code` graphical interface `(File --> Open Folder)`. 
+Then follow the on-screen instructions to login with your `GitHub` account (for example). By following these steps you should have access to all the tools. You can also download all the course files into your HPC at the same location as the `workshop.sif` file and you should be able to access it in the apptainer. Alternatively, you can also open specific folder in HPC where you have all the workshop related materials from the `VScode` graphical interface `(File --> Open Folder)`. 
