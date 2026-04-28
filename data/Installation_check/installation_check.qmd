@@ -11,7 +11,8 @@ x <- c("cowplot","crosstalk","dplyr","DT","gganimate","ggiraph", "gt",
                     "ggplot2","ggpubr","ggrepel","ggthemes","grid","gridExtra",
                     "kableExtra","leaflet","palmerpenguins","patchwork",
                     "pheatmap","plotly","reshape2","scales","Seurat","shiny",
-                    "tidyr","tidyverse","wesanderson")
+                    "tidyr","tidyverse","wesanderson","dygraphs", "reactable",
+                    "reactablefmtr")
 for (i in x){
  library(i, character.only = TRUE)
 }
