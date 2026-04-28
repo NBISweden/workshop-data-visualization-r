@@ -22,14 +22,13 @@ By the end of this exercise, you will be able to:
 :::
 
 ::: {.callout-warning title="Dataset"}
-For this exercise, we will use the [cake data](https://github.com/ImmunTech/CakeClub) provided by the Immunotechnology Cake Club in Lund. The GitHub repository also includes pictures of all the cakes.
+For this exercise, we will use the [cake data](https://github.com/ImmunTech/CakeClub) (year 2024) provided by the Immunotechnology Cake Club in Lund. The GitHub repository also includes pictures of all the cakes.
 :::
 
 # Introduction
-The purpose of a dashboard is to provide a quick view of important things.
+Dashboards are a powerful way to communicate data and insights in a visually appealing manner. With Quarto dashboards we can create elegant and production-ready dashboards using a variety of components such as **static graphics** (ggplot2, Matplotlib, Seaborn, etc.), **dynamic widgets** (plotly, leaflet, htmlwidgets, etc.), charts, tables, value boxes, and text annotations that are arranged in a structured layout.
 
-Dashboards are compositions of components used to provide navigation and present data. With Quarto dashboards we can create 
-create elegant and production-ready dashboards using a variety of components, including **static graphics** (ggplot2, Matplotlib, Seaborn, etc.), **dynamic widgets** (plotly, leaflet, htmlwidgets, etc.), tabular data, value boxes, text annotations, and more.
+The dashboard building process begins with a basic Quarto document. This document is then transformed into a dashboard by changing the document format to `dashboard`. 
 
 # Dashboard structure
 - Dashboards are composed of **cards**.
@@ -40,7 +39,7 @@ create elegant and production-ready dashboards using a variety of components, in
 
 **Navigation**
 
-All dashboards include a top-level navigation bar that provide a title and (optionally) a logo and author. Dashboards with multiple pages also contain a link to each page on the navigation bar. The `title` and `author` are specified as they are with normal documents. You can also include a `logo`. 
+All dashboards include a top-level navigation bar that provide a title and (optionally) a logo and author. Dashboards with multiple pages also contain a link to each page on the navigation bar. The `title` and `author` are specified as they are in normal Quarto documents. You can also include a `logo`. 
 
 
 ```{.yaml}
@@ -63,7 +62,7 @@ Rows and columns are defined using markdown headings (with optional attributes t
 
 - Every code chunk introduces a new column.
 
-This example shows simple layout with two rows, where the second row is split into two columns. Moreover, Level 2 markdown headings (e.g. `## Row {height=70%}`) define the contents of rows as well as their relative height. The `{r}` code cells in turn automatically create cards that are laid out in columns within the row.
+This example shows simple layout with two rows, where the second row is split into two columns. Moreover, Level 2 markdown headings (e.g. `## Row {height=70%}`) define the contents of rows as well as their relative height. The `{}` code cells in turn automatically create cards that are laid out in columns within the row.
 
 ::: {.chart-example .grid}
 ::: g-col-5
@@ -212,7 +211,7 @@ To provide a title for a markdown card use the `title` attribute.
 
 For example: 
 ```` {.yaml}
-::: {.card title="Mt Title"}
+::: {.card title="My Title"}
 This text will be displayed within a card
 :::
 ````
@@ -261,7 +260,7 @@ list(
 
 The `icon` used in value boxes can be any of the 2,000 available [bootstrap icons](https://icons.getbootstrap.com/).
 
-The `color` can be any CSS color value, however there are some color aliases that are tuned specifically for dashboards that you might consider using by default:
+The `color` can be any [CSS color value](https://www.w3schools.com/cssref/css_colors_legal.php), however there are some color aliases that are tuned specifically for dashboards that you might consider using by default:
 
 | Color Alias | Default Theme Color(s) |
 |--------------|---------------|
@@ -278,7 +277,7 @@ The `value` can be a variable created previously within the document, or randoml
 
 **Sidebars**
 
-Sidebars are a great place to group inputs for dashboards. By adding a new Level 2 headline with a `.sidebar` class, you can really easily add a collapsible sidebar.
+Sidebars are a great place to group inputs for dashboards. By adding a new Level 2 headline with a `.sidebar` class, you can easily add a collapsible sidebar.
 
 ::: {.chart-example .grid}
 ::: g-col-5
@@ -312,17 +311,37 @@ format: dashboard
 
 **Dashboard theming**
 
-Quarto Dashboards use same Bootstrap 5 based theming system as regular HTML documents (so themes you have built for HTML websites can also be used with dashboards). Use the theme option to choose a `theme`. Themes options are available [here](https://quarto.org/docs/dashboards/theming.html).
+Quarto Dashboards use same Bootstrap 5 based theming system as regular HTML documents (so themes you have built for HTML websites can also be used with dashboards). Use any of the 25 [themes](https://bootswatch.com/) from the Bootswatch project via the `theme` option.
 
 ```{.yaml}
-format:
+title: "Quartz theme"
+format: 
   dashboard:
-    theme: solar
+    theme: quartz
 ```
+![](./images/quartz_theme.png)
+
+You can provide a light and dark theme and Quarto will automatically place a light or dark toggle on the navbar.
+
+```{.yaml}
+format: 
+  dashboard:
+    theme:
+      light: flatly
+      dark: darkly
+```
+
+You can create your own custom theme and apply it to your dashboard or you can modify existing Bootswatch themes, by following the instructions in the [Quarto theming documentation](https://quarto.org/docs/dashboards/theming.html).
+
+# Dashboard deployment
+
+There are several options to [deploy](https://quarto.org/docs/dashboards/deployment.html) your Quarto dashboard. If you are deploying a static dashboard (i.e. not using Shiny for interactivity), you can simply publish it to any web server. Among them the most common options include [Posit Connect Could](https://quarto.org/docs/publishing/posit-connect-cloud.html) and [GitHub Pages](https://quarto.org/docs/publishing/github-pages.html).
+
+Dashboards that use Shiny for interactivity require a server for deployment. Deployment options include [shinyapps.io](https://www.shinyapps.io/), [Shiny Server](https://posit.co/download/shiny-server) and [Posit Connect](https://posit.co/products/enterprise/connect). 
 
 # Exercise
 
-Your task is to build a dashboard using the provided `cake data`. Start by creating a simple dashboard with one row and one column. Use this dashboard as a foundation to understand the structure. Once comfortable, expand your dashboard by adding pages, tabsets, or additional rows and columns for a more advanced layout. Optionally, enhance your dashboard with dynamic components like `plotly`. 
+Your task is to build your own dashboard using the provided `cake data`. Start by creating a simple dashboard with one row and one column. Use the dashboard example below as a foundation to understand the structure. Once comfortable, expand your dashboard by adding pages, tabsets, or additional rows and columns for a more advanced layout. Explore different themes. To add logo or other images check the [GitHub repository](https://github.com/ImmunTech/CakeClub/tree/main/assets). Optionally, enhance your dashboard with dynamic components like `plotly`. 
 
 ![Dashboard - Page 1](./images/dashboard1.png){.lightbox}
 
