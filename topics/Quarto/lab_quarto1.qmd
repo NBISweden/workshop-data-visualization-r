@@ -15,13 +15,12 @@ These are exercises to get you started with Quarto. Refer to the official [Quart
 
 By the end of this exercise, you will be able to:
 
-- Create and render a Quarto document in RStudio.
+- Create and render a Quarto document.
 - Understand the structure of a Quarto document, including the YAML header.
 - Add and format text using Markdown.
 - Include and customize code chunks.
 - Generate and embed visualizations.
 - Render Quarto documents to different formats, such as HTML and PDF reports.
-- Set-up Quarto project.
 :::
 
 ::: {.callout-warning title="Dataset"}
@@ -30,26 +29,33 @@ For this exercise we will use the penguins dataset from the [palmerpenguins](htt
 
 # Introduction
 
-Let’s start with creating your first Quarto document.
-<br>
+The Quarto format (`.qmd`) is a multi-functional format for scientific coding and reporting. It combines Markdown text and code chunks in one document, letting you run code and include both code and results in outputs such as reports, presentations, and websites.
 
-A Quarto file is a plain text file with the extension `.qmd`. It contains three sections: **YAML header**, **the markdown text** and **code in code chunks**.
+To get started, open RStudio and create a Quarto Document. 
+![](./images/quarto_rstudio1.jpg)
 
-To create your own `.qmd` file, go to `File` > `New File` > `Quarto Document`. 
+In the **Title** field, give a title to your document, in that case let's name it *Untitled Quarto Document*. Add your name to the **Author** field. Next, you will select the output format for your document. By default, RStudio suggests using HTML as the output, let’s leave that default for now.
 
-In the **Title** field, give a title for your document, in that case let's name it Untitled Quarto Document and add your name to the **Author** field. Next, you will select the output format for your document. By default, RStudio suggests using HTML as the output, let’s leave that default for now.
+This step will create a file with temporary content to help get you started.
+![](./images/quarto_rstudio2.jpg)
 
-![](./images/quarto_rstudio.png)
+The **script editor** is where you write and edit the document content. You can set the display mode to **Source** (raw syntax) or **Visual** (text formatting is shown) editor. Clicking **Render** button will generate the formatted document. You can also highlight code and click **Run** to execute specific lines of code.
 
-This document that you are going to work with is a Quarto notebook or R notebook. Once `.qmd` document is created you can set the display mode to **Source** or **Visual** (where text formatting is shown) editor.
+The **console** is where you see the output of any code. The **environment panel** displays information about the variables and objects in your current R session, while the **files panel** allows you to navigate your computer’s file system. 
+
+::: {.callout-note title="Other IDEs"}
+Description above is specific to RStudio, but you can also use other IDEs to create and edit Quarto documents, such as Positron, Visual Studio Code, JupyterLab, etc. The workflow will be similar, but the interface and some of the features may differ.
+:::
+
+Quarto documents are composed of three main components: **YAML header**, **Markdown text**, and **Code in code chunks**.
 
 # YAML header
-A new document is created with the following YAML.
+A new document is created with the following YAML header.
 
 ```{.yaml}
 ---
 title: "Untitled Quarto Document"
-author: "Katja"
+author: "NBIS"
 format: html
 ---
 ```
@@ -162,12 +168,14 @@ This ``code`` format becomes `code`.
 1.  Numbered list item 1
 
 2.  Item 2.
+
     The numbers are incremented automatically in the output.
 ```
 
 1.  Numbered list item 1
 
 2.  Item 2.
+
     The numbers are incremented automatically in the output.
 
 ## Links
@@ -196,8 +204,7 @@ Replace existing markdown text under the first header with some text related to 
 To existing markdown text add link to Quarto webpage. Save the document. 
 
 - Create another header (level 1), `Palmer penguins`. Find some information about palmerpenguins dataset, and add markdown text under the second header. 
-Add link to the palmerpenguins R package. Finally, download image of the three penguins and insert image to the document. 
-Save the document and render.
+Add link to the palmerpenguins R package. Finally, download image of the three penguins, insert image and add image caption to the document. Save the document and render.
 
 ## Tables
 
@@ -488,17 +495,54 @@ You can also add the `code-tools` option, which will add a drop-down menu to tog
 
 - Add the `code-tools: true` to your document and render it.
 
+## Callouts
+
+[Callouts](https://quarto.org/docs/authoring/callouts.html) are a way to highlight important information or draw attention to specific sections of your document.
+
+``` markdown
+:::{.callout-note}
+## Types of callout
+
+Note that there are five types of callouts, including: `note`, `tip`, `warning`, `caution`, and `important`.
+:::
+```
+
+:::{.callout-note}
+## Types of callout
+
+Note that there are five types of callouts, including: `note`, `tip`, `warning`, `caution`, and `important`.
+:::
+
+``` markdown
+:::{.callout-warning}
+## Warning
+
+Callouts provide a simple way to attract attention, for example, to this warning.
+:::
+```
+
+:::{.callout-warning}
+## Warning
+
+Callouts provide a simple way to attract attention, for example, to this warning.
+:::
+
 ## Themes
 
-Quarto has a lot of themes available for it.
+Quarto has a lot of [themes](https://bootswatch.com/) available for it.
 
-- Add `theme: minty` under the HTML format option and render.
+- Add `theme: minty` under the HTML `format` option and render.
 
-If you want to get real advanced you can play around with lots of details regarding the themes and adjust as you see fit, or even just create your own theme. You can read more about it in the official documentation.
+If you want to make your document look more advanced you can play around with lots of details regarding the themes or even just create your own theme. You can read more about it in the [official documentation](https://quarto.org/docs/output-formats/html-themes.html).
 
 ## Embedding HTML resources
 
 When rendering HTML documents you get any figures and other resources in a `<document-name>_files/` directory, which is not always desirable. It is easier to move the HTML around if all figures etc. are embedded directly in the HTML itself, which can be done by specifying `embed-resources: true` in the HTML format options. This option is false by default, meaning that you will also have to include the previously mentioned directory if you want to share the HTML with anybody.
+
+- Remove the `<document-name>_files/` directory, refresh the rendered document and see what happens.
+- Add `embed-resources: true` to your document and render it again.
+
+First, your figures should disappear when you delete the resources directory. After enabling embedded resources and rendering again, this directory should not be re-created, leaving you with a more portable, stand-alone HTML file.
 
 # Additional Quarto
 
@@ -619,7 +663,7 @@ format: revealjs
 - Yogurt
 ```
 
-You can also divide slide shows into sections with title slides using a Level 1 heading (`#`).
+You can also divide slide show into sections with title slides using a Level 1 heading (`#`).
 
 ```{.yaml}
 ---
@@ -710,3 +754,11 @@ contents...
 
 ::::
 ```
+
+## Quarto resources
+
+If you’re interested in learning more about Quarto and exploring more of its features, here are some resources to check out:
+
+- [A gallery of Quarto examples](https://quarto.org/docs/gallery/)
+- [An awesome list of Quarto content](https://github.com/mcanouil/awesome-quarto)
+- [Quarto extensions](https://m.canouil.dev/quarto-extensions/)
