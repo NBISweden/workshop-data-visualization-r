@@ -33,7 +33,8 @@ install.packages(c("cowplot","crosstalk","dplyr","DT","gganimate","ggiraph",
                     "ggplot2","ggpubr","ggrepel","ggthemes","grid","gridExtra",
                     "gt", "kableExtra","leaflet","palmerpenguins","patchwork",
                     "pheatmap","plotly","reshape2","scales","Seurat","shiny",
-                    "tidyr","tidyverse","wesanderson", "dygraphs", "reactable", "reactablefmtr"), dependencies = TRUE)
+                    "tidyr","tidyverse","wesanderson", "dygraphs", "reactable",
+                    "reactablefmtr"), dependencies = TRUE)
 
 ```
 
@@ -47,10 +48,6 @@ To make sure that the installations went well, we will try to make a quick plot 
 Please download all the necessary files from [here](https://nbisweden.github.io/workshop-data-visualization-r/2505/topics/lab_download.html) and make sure that the directory tree looks similar to the one displayed in that page.
 
 :::
-
-## {{< fa brands markdown >}} HackMD
-
-We will use the online note-keeping document from HackMD for our questions. Please click [here](https://hackmd.io/@g4wu57tQRzSqYwnAPalt0Q/HJbAkaTXq) to see the notebook. We would appreciate it a lot if you could write your questions and feedback here, so that all participants can learn from each other.
 
 ## {{< fa book >}} Preparations
 

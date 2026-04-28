@@ -10,8 +10,7 @@ format: html
 
 ::: {.callout-note} 
 
-The contents of this course are currently being generated. It will be updated here regularly until the course. 
-Please check the [**Schedule**](https://nbisweden.github.io/workshop-data-visualization-r/2505/home_schedule.html) for the proposed topics and updated materials.
+The contents of this course are currently being generated. It will be updated here regularly until the course is completed. 
 
 :::
 
