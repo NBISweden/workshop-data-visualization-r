@@ -11,7 +11,7 @@ format:
 ---
 
 ::: {.callout-note}
-In these exercises you will learn how to embed dynamic components, such as interactive plots and widgets, directly into a Quarto HTML document. 
+In these exercises you will learn how to embed dynamic components, such as interactive plots and widgets, directly into a Quarto document. 
 
 By the end of this exercise, you will be able to: 
 
@@ -30,12 +30,14 @@ By the end of this exercise, you will be able to:
 #| warning: false
 #| message: false
 library(palmerpenguins)
+library(dygraphs)
 library(leaflet)
 library(plotly)
 library(ggiraph)
 library(crosstalk)
 library(DT)
 library(ggplot2)
+library(reactable)
 ```
 ````
 
@@ -80,10 +82,16 @@ island_coordinates <- data.frame(lng = c(-66.671, -64.225, -64.074100),
 **Advice:** Start building dynamic map step-by-step, run code after each step and pay attention to what is happening. To get help with some functions, click [here](https://r-charts.com/spatial/interactive-maps-leaflet/). 
 
 - Make a marker for three islands.
-- Add popup information (Biscoe, Dream and Torgersen island).
+- Add popup information with the island names.
 - Use `setView()` function to set a center point and a zoom level.
 - Change the marker style to circle markers, and add color.
 - Replace `addTiles()` function with `addProviderTiles(providers$Esri.WorldImagery)`, which allows to visualize the map with real images.
+- Add legend to the map to label the three islands.
+
+::: {.callout-tip}
+## Extras
+In addition to main `leaflet` package there is also `leaflet.extras` package that provides additional functionality to the leaflet maps. This package is not part of this workshop, but if you want to explore it, you can find more information about it [here](https://cran.r-project.org/web/packages/leaflet.extras/index.html).
+:::
 
 # plotly
 
@@ -129,7 +137,8 @@ Now, let's plot using the function `plot_ly()`.
 ````{.r}
 ```{{r}}
 plot_ly(data = penguins, x = ~flipper_length_mm, y = ~body_mass_g, 
-        color = ~species, colors = c("darkorange","darkorchid","cyan4"), size=2)
+        color = ~species, 
+        colors = c("darkorange","darkorchid","cyan4"), size=2)
 ```
 ````
 
@@ -140,7 +149,8 @@ library(plotly)
 library(palmerpenguins)
 
 plot_ly(data = penguins, x = ~flipper_length_mm, y = ~body_mass_g, 
-        color = ~species, colors = c("darkorange","darkorchid","cyan4"), size=2)
+        color = ~species, 
+        colors = c("darkorange","darkorchid","cyan4"), size=2)
 ```
 
 When running this R command may see some red `Warning messages` appear in the R Console. Often you do not have to worry about these, but if you would like to minimise them, you can add the following arguments to your `plot_ly` function.
@@ -148,8 +158,8 @@ When running this R command may see some red `Warning messages` appear in the R 
 ````{.r}
 ```{{r}}
 plot_ly(data = penguins, x = ~flipper_length_mm, y = ~body_mass_g, 
-        color = ~species, colors = c("darkorange","darkorchid","cyan4"), size=2, 
-        type = "scatter", mode = "markers")
+        color = ~species, 
+        colors = c("darkorange","darkorchid","cyan4"), size=2, type = "scatter", mode = "markers")
 ```
 ````
 
@@ -162,17 +172,20 @@ These additional arguments are often helpful, as sometimes we like to have a lit
 You will notice however that if these commands are omitted from your function, R will just work out what it thinks is the optimal presentation format (hence the warning messages informing us which options R has selected, since some details have not been user-specified).
 
 
-`plot_ly` allows us to plot different plot types, for example, histograms, boxplots, scatterplots... using argument `type = ~ ...`. Example below shows how to obtain boxplot and scatterplot and how to combine these two plots together using the `subplot` command.
+`plot_ly` allows us to plot different plot types, for example, histograms, boxplots, scatterplots... using argument `type = ~ ...`. Example below shows how to plot boxplot and scatterplot and how to combine these two plots together using the `subplot` command.
 
 ````{.r}
 ```{{r}}
 p1 <- plot_ly(data = penguins, x = ~island, y = ~flipper_length_mm, 
-        color = ~island, type = "box", colors = c("#10a53dFF","#541352FF","#ffcf20FF"), size=2)
+        color = ~island, type = "box", 
+        colors = c("#10a53dFF","#541352FF","#ffcf20FF"), size=2)
 
 p2 <- plot_ly(data = penguins, x = ~flipper_length_mm, y = ~body_mass_g, 
-        color = ~species, colors = c("darkorange","darkorchid","cyan4"), size=2)
+        color = ~species, 
+        colors = c("darkorange","darkorchid","cyan4"), size=2)
 
 fig <- subplot(p1, p2, nrows = 2, margin = 0.1)
+
 fig %>% 
     layout(title = "Palmer Penguin Data",
     xaxis = list(title = "Species"), 
@@ -211,34 +224,43 @@ fig %>%
     yaxis2 = list(title = "Flipper length [mm]"))
 ```
 
-## Exercise:
+## Exercise 1:
 
 - In this exercise you will use [msleep](https://ggplot2.tidyverse.org/reference/msleep.html) dataset that is part of `ggplot2()` package. 
 - First check the dataset and familiarise yourself with data structure.
-- Explore the relationship between REM sleep and total sleep across different dietary categories of mammals. To visualise this, use a scatter plot within `plot_ly` and test different `mode` arguments.
-
+- Explore the relationship between REM sleep and total sleep across different dietary categories of mammals.
 - Next, plot the number of mammalian in each diet (vore variable) group using the `plot_ly()` and `add_histogram()` functions.
 - Then, generate boxplot using the `plot_ly()` function where you show total amount of sleep and diet. Add color to each boxplot.
 - Combine both plots using the `subplot` function. Polish the combined figure, i.e. label axis, adjust box color, adjust legend... 
+
+## Exercise 2:
+
+With `plotly` package you can also build heatmaps, which are commonly used to visualize gene expression data. You can build heatmaps specifying `type = "heatmap"` in the `plot_ly()` function. As the input for the heatmap you need to provide a square matrix. 
+
+- Generate a random matrix with 10 rows (as genes) and 10 columns (as samples) using `matrix()` function.
+- Use `plot_ly()` function to generate a heatmap.
+- Customize the heatmap by adding a title, adjusting the color scale, and adding axis labels.
 
 # ggiraph
 
 This package is a htmlwidget and a ggplot2 extension that allows you to create dynamic graphs. Any ggplot graphic can be turned into a ggiraph graphic by calling `girafe()` function.
 
-The first step is easy. Create a ggplot just like you normally would.
+Let's show how to create a dynamic plot using the BCG immunization coverage dataset. This dataset contains information about the share of newborns immunized against tuberculosis (TB) in different countries over time. We want to focus on countries that start with the letter "B".
 
-:::{.callout-note}
-To run the following example, you need to download the data `bcg-immunization-coverage-for-tb-among-1-year-olds.csv`. Unfortunately, this was not part of the `data.zip` you received in the beginning of the course. You can download this file [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/topics/dynamic_plotting/data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv) 
-:::
+The first step is easy. Create a ggplot just like you normally would.
 
 ````{.r}
 ```{{r}}
 tb_data <- read.csv("./data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv", sep = ",", header = T)
+
 tb_data_filt <- tb_data[grep("^B", tb_data$Entity), ]
 
 ggplot(tb_data_filt, aes(x = Year, y = Share_of_newborns, color = Entity)) +
     geom_line(linewidth = 1.5) +
-    scale_color_manual(values = c("#004488", "#4477AA", "#EE6677", "#228833", "#CCBB44", "#997700", "#CC3311", "#009988", "#66CCEE", "#AA3377", "#BBBBBB", "#6699CC", "#CCDDAA")) +
+    scale_color_manual(values = c("#004488", "#4477AA", 
+    "#EE6677", "#228833", "#CCBB44", "#997700", 
+    "#CC3311", "#009988", "#66CCEE", "#AA3377", 
+    "#BBBBBB", "#6699CC", "#CCDDAA")) +
     theme_bw() +
     labs(title = "BCG Immunization Coverage",
              x = "Year",
@@ -248,6 +270,8 @@ ggplot(tb_data_filt, aes(x = Year, y = Share_of_newborns, color = Entity)) +
 ````
 
 ```{r}
+#| echo: false
+#| warning: false
 tb_data <- read.csv("./data/bcg-immunization-coverage-for-tb-among-1-year-olds.csv", sep = ",", header = T)
 tb_data_filt <- tb_data[grep("^B", tb_data$Entity), ]
 
@@ -264,7 +288,7 @@ ggplot(tb_data_filt, aes(x = Year, y = Share_of_newborns, color = Entity)) +
              color = "Country")
 ```
 
-Next, you need to decide what parts become dynamic. Here we want to focus on the lines. Therefore, we need to make `geom_line()` dynamic. We do this by loading `ggiraph` and changing `geom_line()` to `geom_line_interactive()` and adding one of the following aesthetics in each interactive layer: `tooltip`, `data_id` or `onclick`.
+Next, you need to decide which parts of the plot become dynamic. Here we want to focus on the lines. Therefore, we need to make `geom_line()` dynamic. We do this by loading `ggiraph` and changing `geom_line()` to `geom_line_interactive()` and adding one of the following aesthetics in each interactive layer: `tooltip`, `data_id` or `onclick`.
 
 - `tooltip`: column of dataset that contains tooltips to be displayed when mouse is over elements.
 - `data_id`: column of dataset that contains id to be associated with elements. This aesthetic is mandatory when you want to use an hover effect or when you want to enable selection of points in shiny applications.
@@ -309,10 +333,47 @@ girafe(ggobj = gg)
 
 With the same logic as described above we can create all kinds of plots. For example, for boxplots the key function is `geom_boxplot_interactive()`. 
 
-## Exercise:
+`ggiraph` becomes very powerful when multiple plots are combined together. [Here](https://r-graph-gallery.com/414-map-multiple-charts-in-ggiraph.html) you can check how to combine different plot types together. 
+
+## Exercise 1:
 
 - You will now try to use `geom_boxplot_interactive()` function using the `msleep` dataset you already worked with.
 - Create a boxplot to visualize the total amount of total sleep across different diets, similar to the plotly example above. Enhance the plot's appearance by applying techniques and options covered in the ggplot tutorial, such as custom color palettes, axis labels, and themes.
+
+## Exercise 2:
+
+- Now try to combine two different plot types together.
+- Create a boxplot to visualize the total amount of total sleep across different diets and a scatterplot to visualize the relationship between REM sleep and total sleep across different dietary categories of mammals. Combine these two plots together using `patchwork` package. 
+- Try out different tooltip options for both plots, for example, for boxplot you can use `tooltip = vore` and for scatterplot `tooltip = name`.
+- Add hover effect to both plots, so that when you hover over a point in one plot, the corresponding point in the other plot is highlighted.
+
+# Time series with dygraphs
+
+The `dygraphs` package provides a rich set of tools for creating dynamic time series visualizations. The main function is `dygraph()`, which takes a time series object as input and produces a dynamic plot.
+
+The example below shows a basic dygraph built from a multiple time series object. The graph is fully dynamic: moving the mouse over the lines reveals individual values, and you can zoom in by selecting a region of the plot (double-click to zoom out).
+
+````{.r}
+```{{r}}
+library(dygraphs)
+lungDeaths <- cbind(mdeaths, fdeaths)
+dygraph(lungDeaths)
+```
+````
+
+```{r}
+#| echo: false
+library(dygraphs)
+lungDeaths <- cbind(mdeaths, fdeaths)
+dygraph(lungDeaths)
+```
+
+## Exercise 1:
+
+- In this exercise you will use [US economic time series](https://ggplot2.tidyverse.org/reference/economics.html) dataset that is part of `ggplot2()` package.
+- First check the dataset and familiarise yourself with data structure.
+- Start exploring the dataset and plot different time series using `dygraph()`. For example, you can plot the number of unemployed people over time.
+- Try different options to customize the plot, for example [series options](https://rstudio.github.io/dygraphs/gallery-series-options.html), [range selector](https://rstudio.github.io/dygraphs/gallery-range-selector.html), [axis options](https://rstudio.github.io/dygraphs/gallery-axis-options.html) and more. 
 
 # DataTables (DT)
 
@@ -375,8 +436,9 @@ We can also apply CSS styles to the table cells in a column according to the val
 
 ````{.r}
 ```{{r}}
-datatable(msleep, options = list(pageLength = 5), caption="Table 1: Mammals sleep dataset") %>%
-  formatStyle('genus',  color = 'black', backgroundColor = 'orange', fontWeight = 'bold')
+datatable(msleep, options = list(pageLength = 5), 
+    caption="Table 1: Mammals sleep dataset") %>%
+    formatStyle('genus',  color = 'black', backgroundColor = 'orange', fontWeight = 'bold')
 ```
 ````
 
@@ -385,8 +447,9 @@ datatable(msleep, options = list(pageLength = 5), caption="Table 1: Mammals slee
 library(ggplot2)
 library(DT)
 
-datatable(msleep, options = list(pageLength = 5), caption="Table 1: Mammals sleep dataset") %>%
-  formatStyle('genus',  color = 'black', backgroundColor = 'orange', fontWeight = 'bold')
+datatable(msleep, options = list(pageLength = 5), 
+    caption="Table 1: Mammals sleep dataset") %>%
+    formatStyle('genus',  color = 'black', backgroundColor = 'orange', fontWeight = 'bold')
 ```
 
 <br>
@@ -395,17 +458,15 @@ In the example above, all styles are applied to all cells in a column unconditio
 ````{.r}
 ```{{r}}
 datatable(msleep) %>% 
-  formatStyle('vore', fontWeight = styleEqual('omni', c('bold'))) %>%
-  formatStyle('sleep_total', color = styleInterval(c(11, 18), c('white', 'blue', 'green')),
-    backgroundColor = styleInterval(11, c('gray', 'orange'))
-  ) %>% 
-   formatStyle(
-    'sleep_rem',
-    background = styleColorBar(msleep$sleep_rem, 'steelblue'),
-    backgroundSize = '100% 90%',
-    backgroundRepeat = 'no-repeat',
-    backgroundPosition = 'center'
-  ) 
+    formatStyle('vore', fontWeight = styleEqual('omni', c('bold'))) %>%
+    formatStyle('sleep_total', color = styleInterval(c(11, 18), c('white', 'blue', 'green')),
+        backgroundColor = styleInterval(11, c('gray', 'orange'))) %>% 
+    formatStyle('sleep_rem',
+        background = styleColorBar(msleep$sleep_rem, 'steelblue'),
+        backgroundSize = '100% 90%',
+        backgroundRepeat = 'no-repeat',
+        backgroundPosition = 'center'
+    ) 
 ```
 ````
 
@@ -415,15 +476,15 @@ library(ggplot2)
 library(DT)
 
 datatable(msleep) %>% 
-  formatStyle('vore', fontWeight = styleEqual('omni', c('bold'))) %>%
-  formatStyle('sleep_total', color = styleInterval(c(11, 18), c('white', 'blue', 'green')),
-    backgroundColor = styleInterval(11, c('gray', 'orange'))) %>% 
-   formatStyle(
-    'sleep_rem',
-    background = styleColorBar(msleep$sleep_rem, 'steelblue'),
-    backgroundSize = '100% 90%',
-    backgroundRepeat = 'no-repeat',
-    backgroundPosition = 'center') 
+    formatStyle('vore', fontWeight = styleEqual('omni', c('bold'))) %>%
+    formatStyle('sleep_total', color = styleInterval(c(11, 18), c('white', 'blue', 'green')),
+        backgroundColor = styleInterval(11, c('gray', 'orange'))) %>% 
+    formatStyle('sleep_rem',
+        background = styleColorBar(msleep$sleep_rem, 'steelblue'),
+        backgroundSize = '100% 90%',
+        backgroundRepeat = 'no-repeat',
+        backgroundPosition = 'center'
+    ) 
 ```
 
 For the column `vore`, the font weight in cells of which the values equal to `omni` will be bold. For `sleep_total`, both foreground and background colors are used: white for values smaller than 11, blue for those between 11 and 18, and green for those greater than 18; gray background for values below 11, and orange for those above 11. For `sleep_rem`, a bar graph is presented as the background. 
@@ -432,11 +493,19 @@ For the column `vore`, the font weight in cells of which the values equal to `om
 
 - To test DT package  you will use files `counts_raw.txt` and `metadata.csv`. 
 - Read-in these two files, if not sure how, go back to the material from Day 1. 
-- Displays the first 10 rows of `counts_raw.txt` and `metadata.csv`. Once tables are rendered and displayed play around with the 
+- Display the first 10 rows of `counts_raw.txt` and `metadata.csv`. Once tables are rendered and displayed play around with the 
 search box and clickable sorting arrows.
 - Add captions to both tables. 
 - In the `metadata.csv` order column `Replicate` by descending order.
 - Finally, in the `counts_raw.txt` for `Sample_1` background use bar graph using `styleColorBar()`. For `Sample_3` use `styleInterval()` and color foreground and background, decide on the interval size yourself.
+
+# reactable
+
+The `reactable` package is another powerful tool for creating dynamic data tables in R. It provides a flexible and customizable way to display tabular data with features like sorting, filtering, pagination, and more. The main function in this package is `reactable()`.
+
+## Exercise:
+- Use the same files as in the previous exercise, `counts_raw.txt` and `metadata.csv`.
+- Similar to the task in previous exercise, now explore creating tables using `reactable()`.
 
 # crosstalk
 
@@ -500,16 +569,12 @@ penguins_db <- SharedData$new(penguins)
 
 # make ggplots using SharedData object
 gg_plot1 <- ggplot(data = penguins_db, aes(x = bill_length_mm, y = bill_depth_mm)) +
-  geom_point(aes(color = species, 
-                 shape = species),
-             size = 2)  +
-  scale_color_manual(values = c("darkorange","darkorchid","cyan4"))
+    geom_point(aes(color = species, shape = species), size = 2)  +
+    scale_color_manual(values = c("darkorange","darkorchid","cyan4"))
 
 gg_plot2 <- ggplot(data = penguins_db, aes(x = flipper_length_mm, y = body_mass_g)) +
-  geom_point(aes(color = species, 
-                 shape = species),
-             size = 2) +
-  scale_color_manual(values = c("darkorange","darkorchid","cyan4"))
+    geom_point(aes(color = species, shape = species), size = 2) +
+    scale_color_manual(values = c("darkorange","darkorchid","cyan4"))
 
 # convert ggplots to ggplotly
 plotly_plot1 <- ggplotly(gg_plot1)
@@ -529,8 +594,8 @@ In the following example, we will now make a plot interact with a table instead 
 
 1. Create a `SharedData` object
 2. Make `htmlwidgets` with `SharedData` input
-    - Before this was two `ggplotly`
-    - Now, we have one `ggplotly` and one `datatable`
+    - Before these were two `ggplotly` objects
+    - Now, we will make one `ggplotly` and one `datatable`
 3. Output results
 
 ````
@@ -545,10 +610,8 @@ penguins_db <- SharedData$new(penguins)
 
 # make ggplots using SharedData object
 gg_plot1 <- ggplot(data = penguins_db, aes(x = bill_length_mm, y = bill_depth_mm)) +
-  geom_point(aes(color = species, 
-                 shape = species),
-             size = 2)  +
-  scale_color_manual(values = c("darkorange","darkorchid","cyan4"))
+    geom_point(aes(color = species, shape = species), size = 2)  +
+    scale_color_manual(values = c("darkorange","darkorchid","cyan4"))
 
 # make htmlwidgets
 plotly_plot1 <- ggplotly(gg_plot1)
@@ -586,16 +649,12 @@ bscols(plotly_plot1, dt_penguins)
 <br>
 
 **Multiple datasets: Two datasets, two widgets**
-<br>
+
 To link multiple `SharedData` objects, we can specify a group argument when constructing the `SharedData` objects. Group is a character string that servers as a unique identifier for a set of `SharedData` objects across whom the key information should be transmitted.
 
 1. Create a `SharedData` objects
 2. Make `htmlwidgets` with `SharedData` input
 3. Output results
-
-:::{.callout-important}
-To run the following example, you need to download the data `dream_location_filt.csv`. Unfortunately, this was not part of the `data.zip` you recieved in the beginning of the course. You can download this file [here](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/topics/dynamic_plotting/data/dream_location_filt.csv) 
-:::
 
 ````
 ```{{r}}
@@ -616,7 +675,7 @@ dt_penguins <- datatable(penguins_db)
 lf_stations <- leaflet(locations_db) %>% addTiles() %>% addMarkers()
 
 # compose output
-bscols(dt_penguins, lf_stations, widths = c(12, 12))
+bscols(dt_penguins, lf_stations, widths = c(6, 6))
 ```
 ````
 
@@ -639,7 +698,7 @@ dt_penguins <- datatable(penguins_db)
 lf_stations <- leaflet(locations_db) %>% addTiles() %>% addMarkers()
 
 # compose output
-bscols(dt_penguins, lf_stations, widths = c(12, 12))
+bscols(dt_penguins, lf_stations, widths = c(6, 6))
 ```
 
 ## Exercise:
@@ -652,7 +711,7 @@ bscols(dt_penguins, lf_stations, widths = c(12, 12))
 
 # ObservableJS (OJS)
 
-ObservableJS is a relatively new approach that also allows dynamic features to be included in a Quarto document. It is an entirely separate language outside of R that uses JavaScript and allows excellent functionality similar what is provided by a Shiny Server.
+ObservableJS is an approach that allows dynamic features to be included in a Quarto document. It is an entirely separate language outside of R that uses JavaScript and allows excellent functionality similar to what is provided by a Shiny Server.
 
 OJS works in any Quarto document (plain markdown as well as Jupyter and Knitr documents). Just include your code in an `{ojs}` executable code block. Similar to what you learned in Quarto lab, there are many options available to customize the behavior of `{ojs}` [code cells](https://quarto.org/docs/reference/cells/cells-ojs.html), including showing, hiding, and collapsing code as well as controlling the visibility and layout of outputs. Cell options are specified with `//|`. 
 
@@ -716,7 +775,7 @@ data = FileAttachment("./data/palmer-penguins.csv").csv({ typed: true })
 ```
 ````
 
-Now we loaded the external CSV file into the Observable environment.
+Now we have loaded the external CSV file into the Observable environment.
 <br>
 
 **CSV files:**
