@@ -28,7 +28,7 @@ For this exercise, we will use the [cake data](https://github.com/ImmunTech/Cake
 # Introduction
 Dashboards are a powerful way to communicate data and insights in a visually appealing manner. With Quarto dashboards we can create elegant and production-ready dashboards using a variety of components such as **static graphics** (ggplot2, Matplotlib, Seaborn, etc.), **dynamic widgets** (plotly, leaflet, htmlwidgets, etc.), charts, tables, value boxes, and text annotations that are arranged in a structured layout.
 
-The dashboard building process begins with a basic Quarto document. This document is then transformed into a dashboard by changing the document format to `dashboard`. 
+The dashboard building process begins with a basic Quarto document. This document is then transformed into a dashboard by changing the format to `dashboard`. 
 
 # Dashboard structure
 - Dashboards are composed of **cards**.

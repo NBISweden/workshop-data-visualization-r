@@ -211,11 +211,14 @@ ggplot(de_w_names, aes(x = log2FoldChange, y = -log10(padj))) +
 library(palmerpenguins)
 library(leaflet)
 
+island_colors <- c("darkorange","purple","green")
+
 leaflet() %>%
   addTiles() %>%
   #addProviderTiles(providers$Esri.WorldImagery) %>%
   setView(lng = -65.5, lat = -65.5, zoom = 6) %>%
-  addCircleMarkers(data = island_coordinates, popup = c("Biscoe", "Dream", "Torgersen"), color = "green")
+  addCircleMarkers(data = island_coordinates, popup = c("Biscoe", "Dream", "Torgersen"), color = island_colors) %>%
+  addLegend(position = "bottomright", colors = island_colors, labels = c("Biscoe", "Dream", "Torgersen"), title = "Islands")
 ```
 
 ## Exercise 3.1
@@ -227,9 +230,6 @@ library(plotly)
 
 plot_ly(msleep, x = ~sleep_rem, y = ~sleep_total, 
     color = ~vore, colors = "Set1", size=2, type = "scatter", mode = "markers")
-
-plot_ly(msleep, x = ~sleep_rem, y = ~sleep_total, 
-    color = ~vore, colors = "Set1", size=2, type = "scatter", mode = "lines", line = list(width = 4))
 ```
 
 ```{r}
@@ -253,6 +253,32 @@ fig %>%
     legend=list(title=list(text="Diet")))
 ```
 
+## Exercise 3.2
+
+```{r}
+#| eval: false
+library(ggplot2)
+library(plotly)
+
+# Generate a random matrix with 10 rows and 10 columns using `matrix()` function
+data <- matrix(rnorm(100), nrow = 10, ncol = 10,
+               dimnames = list(paste0("Gene", 1:10), paste0("Sample", 1:10)))
+
+plot_ly(
+  x = colnames(data),
+  y = rownames(data),
+  z = data,
+  type = "heatmap",
+  colorscale = "Viridis"
+) %>%
+  layout(
+    title = "Random plotly heatmap",
+    xaxis = list(title = "Samples"),
+    yaxis = list(title = "Genes")
+  )
+
+```
+
 ## Exercise 4.1
 
 ```{r}
@@ -267,6 +293,33 @@ PlotData <- ggplot(msleep,aes(x = vore, y = sleep_total, color = vore, tooltip =
     labs(title = "Mammals Sleep Data", x = "Diet", y = "Total Sleep (hours)", color = "Diet")
   
 girafe(ggobj = PlotData)
+```
+
+## Exercise 4.2
+
+```{r}
+#| eval: false
+library(patchwork)
+
+ggiraph1 <- ggplot(msleep,aes(x = vore, y = sleep_total, color = vore)) +
+    geom_boxplot_interactive(aes(tooltip = vore, data_id = vore)) +
+    theme_minimal() +
+    scale_color_manual(values = c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#999999")) + 
+    labs(title = "Mammals Sleep Data", x = "Diet", y = "Total Sleep (hours)", color = "Diet")
+
+
+ggiraph2 <- ggplot(msleep, aes(x = sleep_rem, y = sleep_total, color = vore)) +
+    geom_point_interactive(aes(tooltip = name, data_id = vore)) +
+    theme_minimal() +
+    scale_color_manual(values = c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#999999")) + 
+    labs(title = "Mammals Sleep Data", x = "REM Sleep (hours)", y = "Total Sleep (hours)", color = "Diet")
+
+girafe(ggobj = ggiraph1)
+girafe(ggobj = ggiraph2)
+
+girafe(ggobj = ggiraph1 + ggiraph2, options = list(
+    opts_hover(css = "fill:black;stroke:black;r:3pt;"),
+    opts_hover_inv(css = "opacity:0.2;")))
 ```
 
 ## Exercise 5.1
@@ -320,7 +373,7 @@ bscols(widths = c(3, NA),
 ````
 ---
 title: "OJS example"
-author: "John Doe"
+author: "NBIS"
 date: last-modified
 date-format: "YYYY-MMM-DD"
 format: html
@@ -370,4 +423,4 @@ Plot.plot({
   grid: true
 })
 
-````
+```
