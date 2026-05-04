@@ -56,3 +56,9 @@ s %>%
 
 We have compiled all the solutions for the different exercises in each of the sections [here](topics/lab_solutions.html)
 :::
+
+:::{.callout-tip icon="false" collapse="true"}
+## {{< fa brands python >}} &nbsp; Python and data visualization with Polars
+
+If you are using Python as your main language of preference, we have here tried to reproduce some of the examples from the R course with `Polars` in combination with other python libraries. You can take a look at the examples [here](topics/python_polars.html)
+:::
