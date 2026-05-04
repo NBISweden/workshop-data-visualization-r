@@ -54,7 +54,7 @@ jobs:
           echo "Rendering qmd files ..."
           echo "PWD: ${PWD}"
           ls -l .
-          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }}
+          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd -e XDG_DATA_HOME=/tmp/quarto-data -e XDG_CACHE_HOME=/tmp/quarto-cache -e XDG_RUNTIME_DIR=/tmp/quarto-runtime ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }}
 
           # List folder contents
           echo "Folder contents at $(pwd):"
