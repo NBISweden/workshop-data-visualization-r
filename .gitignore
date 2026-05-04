@@ -5,6 +5,8 @@
 .~*
 .vscode/
 *rds
+.devcontainer.json
+test/
 
 # From specky
 
