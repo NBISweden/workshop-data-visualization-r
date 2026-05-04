@@ -36,7 +36,7 @@ penguins.head()
 ## From a file
 
 ```{python}
-gc_raw = pl.read_csv("./data/counts_raw.txt", has_header=True, separator="\t")
+gc_raw = pl.read_csv("../data/counts_raw.txt", has_header=True, separator="\t")
 gc_raw.head()
 ```
 
@@ -50,7 +50,7 @@ gc_raw_long.head()
 ## Joining metadata
 
 ```{python}
-md = pl.read_csv("./data/metadata.csv", has_header=True, separator=";")
+md = pl.read_csv("../data/metadata.csv", has_header=True, separator=";")
 md.head()
 ```
 
