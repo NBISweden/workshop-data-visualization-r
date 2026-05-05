@@ -4,7 +4,7 @@ date	room	start_time	end_time	topic	instructor	assistant	link_slide	link_lab	lin
 		10:15	10:30	Break						
 		10:30	12:00	Advanced ggplot	Lokesh Mano	MR, MV	topics/ggplot/slide_gg2.html	topics/ggplot/lab_gg2.html		
 		12:00	13:00	Lunch						
-		13:00	13:30	Vector and bitmap	Markus Ringner		topics/others_day1/Vector_Bitmap_Images.pdf			
+		13:00	13:30	Vector and bitmap	Markus Ringner		topics/others_day1/Vector_Bitmap_Images.pptx			
 		13:30	15:00	PCA plots	Markus Ringner	LM, MV		topics/ggplot/lab_pca.html		
 		15:00	15:30	Fika						
 		15:30	16:30	Single-cell	Lokesh Mano	MR, MV		topics/ggplot/lab_sc.html		
