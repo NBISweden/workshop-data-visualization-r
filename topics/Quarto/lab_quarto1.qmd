@@ -90,7 +90,7 @@ Date can also be set as **last-modified** which means it is automatically update
 title: "My first Quarto Document"
 author: "Katja"
 date: last-modified
-date-format: “YYYY-MMM-DD"
+date-format: "YYYY-MMM-DD"
 format: html
 ---
 ```
