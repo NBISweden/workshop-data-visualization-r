@@ -357,15 +357,11 @@ shinyApp(
 <iframe src="https://user.shinyapps.io/app"></iframe>
 ```
 
-## SciLifeLab Serve and RShiny NBIS
+## SciLifeLab Serve
 
-:::{.column width="50%"}
-![](../../assets/images/scilifelab_serve.png)
-:::
+![](../../assets/images/scilifelab_serve.png){fig-align="center"}
 
-:::{.column width="50%"}
-![](../../assets/images/nbis_rshiny.png)
-:::
+[SciLifeLab Serve Help Materials](https://serve.scilifelab.se/docs/application-hosting/shiny/){style="display: block; text-align: center;"}
 
 ## Other topics
 
