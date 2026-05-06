@@ -698,7 +698,7 @@ dt_penguins <- datatable(penguins_db)
 lf_stations <- leaflet(locations_db) %>% addTiles() %>% addMarkers()
 
 # compose output
-bscols(dt_penguins, lf_stations, widths = c(6, 6))
+bscols(dt_penguins, lf_stations, widths = c(12, 12))
 ```
 
 ## Exercise:
