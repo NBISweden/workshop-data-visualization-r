@@ -21,7 +21,11 @@ library(ggplot2)
 
 We will here first look into the example of what the automatic reactivity of Rshiny looks like. The reactive functions like `renderPlot()` and `renderPrint()` are always looking for any changes in the input values and are updated quickly! Although this is super handy for any app, sometimes this can lead to unwanted confusion. Like, take the R function `rnorm()`, this function basically spits out random numbers. If you use this function in an app, everytime this function is called, it will output different random number sets. This can cause problems like in the example below:
 
-<i class="fas fa-clipboard-list"></i> Task &nbsp;  Try to change the slider input values and check if the `summary` and `hist` match with each other?
+::: {.callout--important title="Task"}  
+
+Try to change the slider input values and check if the `summary` and `hist` match with each other?
+
+:::
 
 ```{shinylive-r}
 #| standalone: true
@@ -76,7 +80,11 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server)
 ```
 
-<i class="fas fa-exclamation-circle"></i> Note &nbsp; As the `data` variable we have in the example above is a reactive function, you have to remember to use `()` whenever you call that particular variable.
+::: {.callout-note} 
+
+As the `data` variable we have in the example above is a reactive function, you have to remember to use `()` whenever you call that particular variable.
+
+:::
 
 # Isolating reactivity
 
@@ -392,9 +400,36 @@ shinyApp(
 
 # Shiny in Interactive documents 
 
-## Rmarkdown
+## Quarto
 
-Shiny interactive widgets can be embedded into Rmarkdown documents. These documents need to be live and can handle interactivity. The important addition is the line `runtime: shiny` to the YAML matter. Here is an example:
+Shiny interactive widgets can be embedded into `quarto`. The important addition is the line `server: shiny` to the YAML matter. Here is an example:
+
+```{r,echo=FALSE,out.class="md",comment=""}
+cat("---\nformat: html\nserver: shiny\n---\n\n")
+cat("```{r}\nlibrary(shiny)\n```\n\n")
+cat("This is a standard Quarto document. Here is some code:\n\n")
+cat("```{r}\nhead(iris)\n```\n\n")
+cat("```{r}\nplot(iris$Sepal.Length,iris$Petal.Width)\n```\n\n")
+cat("But, here is an interactive shiny widget.\n\n")
+cat('```{r}\nsliderInput("in_breaks",label="Breaks:",min=5,max=50,value=5,step=5)\n```\n\n')
+cat('```{r}\n#| context: server\nrenderPlot({\nhist(iris$Sepal.Length,breaks=input$in_breaks)\n})\n```\n')
+```
+
+Also under the `server` part of the code-chunk, add `#| context: server`
+
+This could be saved as **shiny.qmd** and could be rendered in the `bash` terminal by `quarto render shiny.qmd` 
+
+More information about using shiny and quarto together is [here](https://quarto.org/docs/interactive/shiny/)
+
+## Rmarkdown (legacy)
+
+::: {.callout--important title="Note"}
+
+Rmarkdown is an older R based notebook format that is not supported any longer by the R community.
+
+:::
+
+In the past, Rmarkdown documents can also be written with `shiny`.   The important addition is the line `runtime: shiny` to the YAML matter. Here is an example:
 
 ```{r,echo=FALSE,out.class="md",comment=""}
 cat("---\nruntime: shiny\noutput: html_document\n---\n\n")
@@ -407,21 +442,7 @@ cat('```{r}\nsliderInput("in_breaks",label="Breaks:",min=5,max=50,value=5,step=5
 cat('```{r}\nrenderPlot({\nhist(iris$Sepal.Length,breaks=input$in_breaks)\n})\n```\n')
 ```
 
-This code can be copied to a new file in RStudio and saved as, for example, **shiny.Rmd**. Then click `Knit`. Alternatively, you can run `rmarkdown::run("shiny.Rmd")`.
-
-## Quarto
-
-Simialrly, you can do the same in `quarto`. Just change the `yaml` header of the previous code with the following:
-
-```{r,echo=FALSE,out.class="md",comment=""}
-cat("---\nformat: html\nserver: shiny\n---\n\n")
-```
-
-Also under the `server` part of the code-chunk, add `#| context: server`
-
-This could be saved as **shiny.qmd** and could be rendered in the `bash` terminal by `quarto render shiny.qmd` 
-
-More information about using shiny and quarto together is [here](https://quarto.org/docs/interactive/shiny/)
+This code can be copied to a new file in RStudio and saved as, for example, **shiny.Rmd**. Then click `Knit` or  you can run `rmarkdown::run("shiny.Rmd")`.
 
 # Session info
 

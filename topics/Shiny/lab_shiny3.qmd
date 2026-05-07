@@ -33,12 +33,12 @@ There is one part of the shiny app that could also be argued as the important pa
 
 [1]:https://vimeo.com/rstudioinc/review/131218530/212d8a5a7a/#t=1h32m41s
 [2]:https://nbisweden.github.io/RaukR-2021/shiny/lab/shiny_lab.html#12_Calendar_app
-[3]:https://nbisweden.github.io/RaukR-2024/
+[3]:https://nbisweden.github.io/raukr-2024/
 [4]:https://rstudio.github.io/shinythemes/
 
 # Covid App
 
-In the following steps, we will try to make an app that is basically on the data available on the current pandemic and the vaccinations from [Our world in Data][5]. Here, we basically want to choose the data available from 6 different countries that are: `France`, `Germany`, `India`, `Sweden`, `UK` and `USA`. We would also like to give the option to choose which date range that one would like to visualize between `2020-02-15` to `2021-07-25`. 
+In the following steps, we will try to make an app that is basically on the data available on the recent pandemic and the vaccinations from [Our world in Data][5]. Here, we basically want to choose the data available from 6 different countries that are: `France`, `Germany`, `India`, `Sweden`, `UK` and `USA`. We would also like to give the option to choose which date range that one would like to visualize between `2020-02-15` to `2021-07-25`. 
 
 **Topics covered**
 

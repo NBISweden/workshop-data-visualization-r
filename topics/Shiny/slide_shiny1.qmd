@@ -195,7 +195,7 @@ R -e "shiny::runApp('~/shinyapp')"
 
 . . .
 
-- From Rmd/Qmd file using `rmarkdown::run()`
+- From Qmd file using `quarto render app.qmd`
 
 
 ## {.center}
