@@ -101,7 +101,7 @@ ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
   scale_y_continuous(name = "Width", breaks = seq(0,3,0.5))
 ```
 
-with `labels` in combination with the `scales` package, one can change or make the unit of the axis look more comprehensible, when needed. Like using `percentage` option or `scientific` option.
+With `labels` in combination with the `scales` package, one can change or make the unit of the axis look more comprehensible, when needed. Like using `percentage` option or `scientific` option.
 
 ```{r, warning=FALSE, message=FALSE}
 library(scales)
@@ -291,7 +291,7 @@ This figure has `theme_light()`
 
 # Combining plots
 
-we will now focus on making "publication-type" figures, with sub-plots and such using different tools in R. There are many different ways/packages to do this, but we will mainly focus on 2 packages: `cowplot` and `ggpubr`.
+We will now focus on making "publication-type" figures, with sub-plots and such using different tools in R. There are many different ways/packages to do this, but we will mainly focus on 2 packages: `cowplot` and `ggpubr`.
 
 Now let us consider some of the plots we have made so far in the previous exercises. From the picture below, **A** and **B** are the figures that was made from the `gene counts` dataset and the figures **C** and **D** are using the `Sepal.Length` and `Sepal.Width` from the `iris` data. Now let us look into how we can combine each of the figures like it is shown here. 
 
@@ -378,7 +378,7 @@ In `cowplot`, you can also customize the dimensions of the plots in a much more 
 Here is how the dimensions of the empty canvas looks like:
 ![](https://github.com/NBISweden/workshop-data-visualization-r/raw/main/assets/images/canva.png)
 
-From here, you can draw your plots in the way you want using these dimensions. AN example is shown below, where we plot **C** and **D** similar to the plot above: 
+From here, you can draw your plots in the way you want using these dimensions. An example is shown below, where we plot **C** and **D** similar to the plot above: 
 
 ```{r, warning=FALSE, message=FALSE}
 ggdraw() +
@@ -460,7 +460,9 @@ multi.page <- ggarrange(p1, p2, p3, p4,
 ggexport(multi.page, filename = "multi.page.ggplot2.pdf")
 ```
 
-<i class="fas fa-exclamation-circle"></i> Note &nbsp; From this `multi.page` R object (which is of class list) , you can get the indivdual plots by `multi.page[[1]]`, `multi.page[[2]]` and so on.
+:::{.callout-note}
+From this `multi.page` R object (which is of class list) , you can get the indivdual plots by `multi.page[[1]]`, `multi.page[[2]]` and so on.
+:::
 
 # Adding images to plots
 

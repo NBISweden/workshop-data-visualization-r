@@ -19,7 +19,7 @@ library(tidyverse)
 We will use R in this course for generating plots from different biological data that are of higher quality and standard for publications. To do this, you will brush-up your memory on some important aspects of R that are important for this course below:
 
 :::{.callout-caution title="Download course files"}
-Before starting with the lab sessions of the entire course, you must have downloaded all the necessary files from [here](https://nbisweden.github.io/workshop-data-visualization-r/2505/topics/lab_download.html) and make sure that the directory tree looks similar to the one displayed in that page
+Before starting with the lab sessions of the entire course, you must have downloaded all the necessary files from [here](https://nbisweden.github.io/workshop-data-visualization-r/2505/topics/lab_download.html) and make sure that the directory tree looks similar to the one displayed in that page.
 
 In that case, you can proceed with the exercise now and remember to have fun 😊
 :::
@@ -75,7 +75,7 @@ kable(md[c(1:4),]) %>%
 * Wide format data is called “wide” because it typically has a lot of columns which stretch widely across the page or your computer screen.
 * Most of us are familiar with looking at wide format data
   + It is convenient and we are more used to looking at data this way in our Excel sheets. 
-  + It often lets you see more of the data, at one time, on your screen
+  + It often lets you see more of the data, at one time, on your screen.
 
 ## Long format
 
@@ -116,7 +116,7 @@ gc[c(1:6),c(1:4)] %>%
 * Well, there are some contexts where putting things in wide format is computationally efficient because you can treat data in a matrix format and to efficient matrix calculations on it.
 * However, adding data to wide format data sets is very hard:
   1. It is very difficult to conceive of analytic schemes that apply generally across all wide-format data sets.
-  2. Many tools in R want data in long format **like ggplot**
+  2. Many tools in R want data in long format **like ggplot**.
   3. The long format for data corresponds to the relational model for storing data, which is the model used in most modern data bases like the SQL family of data base systems.
   
 * A more technical treatment of wide versus long data requires some terminology:
@@ -126,7 +126,7 @@ gc[c(1:6),c(1:4)] %>%
 
 * In any particular data set, what you might want to call an <span style="color:blue">Identifier variables</span> versus a <span style="color:red">Measured variables</span> can not always be entirely clear.
   - Other people might choose to define things differently.
-* However, to my mind, it is less important to be able to precisely recognize these three entities in every possible situation (where there might be some fuzziness about which is which)
+* However, to my mind, it is less important to be able to precisely recognize these three entities in every possible situation (where there might be some fuzziness about which is which).
 * And it is more important to understand how <span style="color:blue">Identifier variables</span>, <span style="color:red">Measured variables</span>, and <span style="color:orange">Values</span> interact and behave when we are transforming data between wide and long formats.
 
 
@@ -385,7 +385,7 @@ ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
   geom_smooth(method="lm")
 ```
 
-There are many other `geoms` and you can find most of them here in this [cheatsheet](../../assets/data-visualization-1.pdf)
+There are many other `geoms` and you can find most of them here in this [cheatsheet](../../assets/data-visualization-1.pdf).
 
 ### Gene counts data
 
@@ -434,7 +434,7 @@ ggplot(data = gc_long) +
 
 ### Iris data
 
-First, if we look at the `iris` data, we can use the categorical column `Species` to color the points. The color aesthetic is used by geom_point and geom_smooth. Three different regression lines are now drawn. Notice that a legend is automatically created
+First, if we look at the `iris` data, we can use the categorical column `Species` to color the points. The color aesthetic is used by `geom_point` and `geom_smooth`. Three different regression lines are now drawn. Notice that a legend is automatically created
 
 ```{r}
 ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width,color=Species))+
@@ -482,7 +482,7 @@ ggplot(data=iris,mapping=aes(x=Petal.Length,y=Petal.Width))+
 ```
 
 :::{.callout-tip}
-To specify manual colors, you could specify by their `names` or their `hexadecimal codes`. For example, you can choose the colors based on `names` from an online source like in this [cheatsheet](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) or you can use the `hexadecimal code` and choose it from a source like [here](https://htmlcolorcodes.com/). I personally prefer the `hexa` based options for manual colors.
+To specify manual colors, you could specify by their `names` or their `hexadecimal codes`. For example, you can choose the colors based on `names` from an online source like in this [cheatsheet](https://r-charts.com/colors/) or you can use the `hexadecimal code` and choose it from a source like [here](https://htmlcolorcodes.com/). I personally prefer the `hexa` based options for manual colors.
 :::
 
 ### Continuous colors
@@ -697,7 +697,7 @@ gc_long %>%
 There are a couple of things to note here. In the above example, we use the pipe `%>%` symbol that redirects the output of one command as the input to another. Then we group the data by the variable `Time`, followed by summarizing the `count`  with `mean()` and `sd()` functions to get the mean and standard deviation of their respective counts. The `head()` function just prints the first few lines.
 :::
 
-Now that we have summarized the data to be bale to plot the bar graph that we want, we can just input the data to ggplot as well using the `%>%` sign. 
+Now that we have summarized the data to be able to plot the bar graph that we want, we can just input the data to ggplot as well using the `%>%` sign. 
 
 ```{r}
 gc_long %>% 
@@ -782,7 +782,7 @@ gc_long %>%
 ```
 
 :::{.callout-note}
-It is important that you keep tract of what kind of aesthetics you give when you initialize `ggplot()` and what you add in the `geoms()` later. 
+It is important that you keep track of what kind of aesthetics you give when you initialize `ggplot()` and what you add in the `geoms()` later. 
 :::
 
 You can also make these error bars look nicer by playing around with some of the parameters available, like example below:

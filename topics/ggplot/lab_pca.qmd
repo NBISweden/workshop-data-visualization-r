@@ -218,7 +218,7 @@ The distribution looks what is expected of an analysis like differential gene-ex
 If you are interested more in understanding the distribution of p-values, you can read about the possible different outcomes and their reasoning [here](http://varianceexplained.org/statistics/interpreting-pvalue-histogram/).
 :::
 
-## MA plot.
+## MA plot
 
 The MA plot shows the distribution of mean expression vs log fold change for all genes. 
 

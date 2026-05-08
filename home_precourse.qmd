@@ -33,7 +33,7 @@ install.packages(c("cowplot","crosstalk","dplyr","DT","gganimate","ggiraph",
                     "ggplot2","ggpubr","ggrepel","ggthemes","grid","gridExtra",
                     "gt", "kableExtra","leaflet","palmerpenguins","patchwork",
                     "pheatmap","plotly","reshape2","scales","Seurat","shiny",
-                    "tidyr","tidyverse","wesanderson", "dygraphs", "reactable", "reactablefmtr"), dependencies = TRUE)
+                    "tidyr","tidyverse","wesanderson", "dygraphs", "reactable"), dependencies = TRUE)
 
 ```
 
