@@ -173,6 +173,7 @@ VlnPlot(covid_final, group.by = "orig.ident", split.by = "type", features = c("X
 ![](./images/fil_sex_vln.png)
 
 You can clearly tell from the above image that the samples `covid_1`, `covid_17` and `ctrl_19` are `Male` and the rest are `Female`.
+
 ## Cell cycle state
 
 The cell cycle state of each was determined using `CellCycleScoring()` function. Cell cycle scoring adds three slots in the metadata, a score for S phase, a score for G2M phase and the predicted cell cycle phase.
@@ -261,11 +262,12 @@ DimPlot(covid_final, reduction = "tsne", group.by = "orig.ident")
 Similar to `tSNE`, `UMAP` is an another well-known dimentionality reduction methods used with single-cell data. This is generated with the function `RunUMAP()`. Both `tSNE` and `UMAP` are usually generated from the PCA components. By default, `RunUMAP` only generates 2 UMAP components, but you can change this with the parameter `n.components` to have more more UMAP components. 
 
 `covid_final` has the following reductions stored in the object:
- - `pca`: PCA with 50 components built on scaled counts data
- - `umap`: UMAP with 2 components built on 30 PCA components
- - `tsne`: tSNE with 2 components built on 30 PCA components
- - `UMAP10_on_PCA`: UMAP with 10 components built on 30 PCA components
- - `UMAP_on_ScaleData`: UMAP with 2 components built on scaled counts data
+
+- `pca`: PCA with 50 components built on scaled counts data
+- `umap`: UMAP with 2 components built on 30 PCA components
+- `tsne`: tSNE with 2 components built on 30 PCA components
+- `UMAP10_on_PCA`: UMAP with 10 components built on 30 PCA components
+- `UMAP_on_ScaleData`: UMAP with 2 components built on scaled counts data
 
 ```{r, eval=F}
 wrap_plots(
@@ -525,7 +527,7 @@ VlnPlot(covid_final,
 
 # Acknowledgements
 
-All the material in this section were based on a 5-day workshop given by our NBIS colleagues on the single-cell analysis. We only scratch the surface here to think about the important visualizations one does in relation to single-cell data anaysis. There is much more to the actual analysis and the QC steps in relation to the down stream analysis of any single-cell data. If you have more questions, please go through the material available as part of that [workshop](https://nbisweden.github.io/workshop-scRNAseq/home_schedule.html)
+All the material in this section were based on a 5-day workshop given by our NBIS colleagues on the single-cell analysis. We only scratch the surface here to think about the important visualizations one does in relation to single-cell data anaysis. There is much more to the actual analysis and the QC steps in relation to the down stream analysis of any single-cell data. If you have more questions, please go through the material available as part of that [workshop](https://nbisweden.github.io/workshop-scRNAseq/home_schedule.html).
 
 
 
