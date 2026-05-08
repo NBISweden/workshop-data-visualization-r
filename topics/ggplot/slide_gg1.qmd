@@ -262,7 +262,7 @@ read.table("iris-head.csv", sep = ',')
 
 ### Reserved variables
 
-* Reserved variables like `T`, `F`, `character` and many others ...
+* Reserved variables like `TRUE`, `FALSE`, `character` and many others ...
 * How can you check if something is a reserved variable?
 
 ```{webr-r}
@@ -270,8 +270,9 @@ read.table("iris-head.csv", sep = ',')
 #| warning: false
 #| auto-run: false
 
-T
-F
+TRUE
+FALSE
+var_a
 ```
 
 :::

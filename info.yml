@@ -83,9 +83,9 @@ lund_fm:
     - label: Dinner
       marker_icon: glass
       marker_color: green
-      lat: 55.70847
-      lon: 13.19594
-      popup: "Valvet Steakhouse, Allhelgona kyrkogata 7, 223 62 Lund"
+      lat: 55.70923
+      lon: 13.19234
+      popup: "Lundabryggeriets Ölkällare, Sankt Laurentiigatan 5 A, 222 21 Lund"
     - label: Hotel Lundia
       marker_icon: bed
       marker_color: blue

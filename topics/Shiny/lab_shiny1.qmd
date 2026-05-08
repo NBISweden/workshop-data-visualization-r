@@ -49,13 +49,13 @@ ui <- fluidPage(
                         helpText("Col2"),
                         fluidRow(
                           column(4,style="background-color:#b0c6fb",
-                                 helpText("Col1")
+                                 helpText("Col2.1")
                           ),
                           column(4,style="background-color:#ffa153",
-                                 helpText("Col2")
+                                 helpText("Col2.2")
                           ),
                           column(4,style="background-color:#b1f6c6",
-                                 helpText("Col3")
+                                 helpText("Col2.3")
                           )
                         )
                  )

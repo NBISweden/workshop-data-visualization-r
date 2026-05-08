@@ -119,8 +119,7 @@ library(shiny)
 
 * [Standalone web applications](http://shiny.rstudio.com/gallery/see-more.html)
 * [Dashboard/Flexboard](http://rstudio.github.io/shinydashboard/examples.html)
-* [Interactive RMarkdown](https://shiny.posit.co/r/articles/build/rmarkdown/)
-* [VScode extensions](https://shiny.posit.co/blog/posts/shiny-vscode-1.0.0/)
+* [Interactive Notebooks](https://quarto.org/docs/interactive/shiny/)
 
 :::
 
@@ -196,7 +195,7 @@ R -e "shiny::runApp('~/shinyapp')"
 
 . . .
 
-- From Rmd file using `rmarkdown::run()`
+- From Qmd file using `quarto render app.qmd`
 
 
 ## {.center}
@@ -270,9 +269,9 @@ ui=fluidPage(
                            column(6,
                                   helpText("Col2"),
                                   fluidRow(
-                                    column(4,style="background-color:#b0c6fb",helpText("Col1")),
-                                    column(4,style="background-color:#ffa153",helpText("Col2")),
-                                    column(4,style="background-color:#b1f6c6",helpText("Col3"))
+                                    column(4,style="background-color:#b0c6fb",helpText("Col2.1")),
+                                    column(4,style="background-color:#ffa153",helpText("Col2.2")),
+                                    column(4,style="background-color:#b1f6c6",helpText("Col2.3"))
                                   )
                            )
                          )
@@ -675,7 +674,7 @@ server=function(input, output) {
 ::: {.center-xy}
 
 ### Thank you. Questions? {style="text-align: center;"}
-Slide inspirations: Roy Francis (NBIS, RaukR2024)
+Slide inspirations: Roy Francis (NBIS, RaukR2025)
 
 :::
 

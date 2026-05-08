@@ -677,7 +677,7 @@ output$button_download <- downloadHandler(
 ::: {.center-xy}
 
 ### Thank you. Questions? {style="text-align: center;"}
-Slide inspirations: Roy Francis (NBIS, RaukR2024)
+Slide inspirations: Roy Francis (NBIS, RaukR2025)
 
 :::
 

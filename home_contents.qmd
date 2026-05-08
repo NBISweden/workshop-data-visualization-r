@@ -10,8 +10,7 @@ format: html
 
 ::: {.callout-note} 
 
-The contents of this course are currently being generated. It will be updated here regularly until the course. 
-Please check the [**Schedule**](https://nbisweden.github.io/workshop-data-visualization-r/2505/home_schedule.html) for the proposed topics and updated materials.
+The contents of this course are currently being generated. It will be updated here regularly until the course is completed. 
 
 :::
 
@@ -52,8 +51,23 @@ s %>%
 </span>
 </p>
 
+:::{.callout-tip icon="false" collapse="false"}
+## {{< fa solid tree-city >}} &nbsp; Optional or of Interest
+
+ * [Visualizing phylogenetic trees](https://nbisweden.github.io/workshop-data-visualization-r/2304/home_content.html#51_Phylogenetic_trees)
+ * [Visualizing maps with ggmap and leaflet](https://nbisweden.github.io/workshop-data-visualization-r/2304/lab_ggmap.html)
+:::
+
+:::{.callout-tip icon="false" collapse="false"}
+## {{< fa brands python >}} &nbsp; Python and data visualization with Polars
+
+If you are using Python as your main language of preference, we have here tried to reproduce some of the examples from the R course with `Polars` in combination with other python libraries. You can take a look at the examples [here](topics/python_polars.html)
+:::
+
 :::{.callout-tip icon="false" collapse="true"}
 ## {{< fa tools >}} &nbsp; Solutions to Lab Exercises
 
 We have compiled all the solutions for the different exercises in each of the sections [here](topics/lab_solutions.html)
 :::
+
+

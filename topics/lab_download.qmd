@@ -28,10 +28,13 @@ If `workshop_on_advanced_data_visualization` is the current working directory, t
   + <span style="color:blue">data</span>
     + 2024_final_scores.tsv
     + arch_newick.txt
+    + bcg-immunization-coverage-for-tb-among-1-year-olds.csv
+    + Blood_Cells_Image.jpeg
     + counts_deseq2.txt
     + counts_filtered.txt
     + counts_raw.txt
     + counts_vst.txt
+    + dream_location_filt.csv
     + human_biomaRt_annotation.csv
     + metadata.csv
     + shiny_app_data.csv
