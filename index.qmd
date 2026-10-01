@@ -1,0 +1,95 @@
+---
+title: "Advanced Data Visualization in R"
+pagetitle: "NBIS Workshop • Advanced Data Visualization in R"
+subtitle: "NBIS Workshop"
+description: "Publication-ready Data Visualization using R including Quarto and Shiny"
+image: "assets/images/seo.webp"
+toc: false
+date: ""
+number-sections: false
+anchor-sections: false
+---
+
+## Topics
+
+::: {.topic-grid}
+::: {.topic-item}
+### ggplot2
+
+Data visualization in R using ggplot2
+:::
+
+::: {.topic-item}
+### Single-cell data
+
+Single-cell data visualization using Seurat
+:::
+
+::: {.topic-item}
+### Quarto notebooks
+
+Quarto notebooks and reports
+:::
+
+::: {.topic-item}
+### Shiny web applications
+
+Build interactive web applications using Shiny
+:::
+:::
+
+::: {.workshop-facts}
+::: {.workshop-fact}
+**Once a year**
+
+Typically Spring
+:::
+
+::: {.workshop-fact}
+**Venue**
+
+On-site in Lund, Sweden
+:::
+
+::: {.workshop-fact}
+**About 30 seats**
+
+Registration is required
+:::
+
+::: {.workshop-fact}
+**Taught in English**
+
+Lectures and hands-on exercises
+:::
+:::
+
+::: {.details-grid}
+::: {.details-section}
+## Audience
+
+::: {.detail-list}
+- **Audience:** PhD students, postdocs and researchers in life sciences, healthcare and related fields
+- **Background:** Basic R experience needed
+- **Eligibility:** Swedish applicants are prioritized; international applicants are welcome
+:::
+:::
+
+::: {.details-section}
+## Registration and fees
+
+::: {.detail-list}
+- **Announcements:** Published on [SciLifeLab Training](https://training.scilifelab.se/) a few months in advance
+- **Online:** Free for academia; industry participants pay a fee
+- **On-site:** Fees apply to all and include lunch, coffee breaks and a course dinner
+- **Logistics:** Arrange your own travel and accommodation; bring a laptop
+- **Billing:** An institutional reference is required; NBIS cannot invoice individuals
+:::
+:::
+:::
+
+## Instances
+
+Choose an instance below for course materials and more information.
+
+{{< include _instances.qmd >}}
