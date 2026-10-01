@@ -17,6 +17,12 @@ library(shiny)
 library(ggplot2)
 ```
 
+::: {.callout-note}
+
+{{< fa hand-sparkles >}} Interactive app  
+
+:::
+
 # Reactivity
 
 We will here first look into the example of what the automatic reactivity of Rshiny looks like. The reactive functions like `renderPlot()` and `renderPrint()` are always looking for any changes in the input values and are updated quickly! Although this is super handy for any app, sometimes this can lead to unwanted confusion. Like, take the R function `rnorm()`, this function basically spits out random numbers. If you use this function in an app, everytime this function is called, it will output different random number sets. This can cause problems like in the example below:

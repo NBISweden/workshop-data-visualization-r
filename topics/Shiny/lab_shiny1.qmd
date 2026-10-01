@@ -18,11 +18,13 @@ library(shiny)
 library(ggplot2)
 ```
 
-<br>
-<div class="abstract spaced">
-This is an introduction to shiny web applications with R. Please follow the exercise to familiarise yourself with the fundamentals. And then you can follow instructions to build an app with interactive plots related to the Covid data.  Code chunks starting with `shinyApp()` can be simply copy-pasted to the RStudio console and run. Generally, complete shiny code is saved as a text file, named for example, as **app.R** and then clicking **Run app** launches the app. 
-</div>
-<br>
+::: {.callout-note}
+
+This is an introduction to shiny web applications with R. Please follow the exercise to familiarise yourself with the fundamentals. And then you can follow instructions to build an app with interactive plots related to the Covid data.  Code chunks starting with `shinyApp()` can be simply copy-pasted to the RStudio console and run. Generally, complete shiny code is saved as a text file, named for example, as **app.R** and then clicking **Run app** launches the app.  
+
+{{< fa hand-sparkles >}} Interactive app  
+
+:::
 
 # UI • Layout
 
