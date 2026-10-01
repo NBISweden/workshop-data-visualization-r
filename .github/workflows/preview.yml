@@ -1,0 +1,48 @@
+# https://github.com/rossjrw/pr-preview-action
+name: Deploy PR previews
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+
+concurrency:
+  # Serialize every workflow that writes to gh-pages.
+  group: pages-${{ github.repository }}
+  cancel-in-progress: false
+
+env:
+  IMAGE: ghcr.io/nbisweden/workshop-adv-data-viz:latest
+  TZ: Europe/Stockholm
+
+jobs:
+  deploy-preview:
+    # only run if PR is from the same repo
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Read Quarto output directory
+        id: quarto-config
+        run: |
+          output_dir=$(grep -m1 '^  output-dir:' _quarto.yml | cut -d '"' -f2)
+          echo "output_dir=$output_dir" >> "$GITHUB_OUTPUT"
+
+      - name: Render site
+        if: github.event.action != 'closed'
+        run: |
+          # Render website
+          echo "Rendering qmd files ..."
+          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd -e XDG_DATA_HOME=/tmp/quarto-data -e XDG_CACHE_HOME=/tmp/quarto-cache -e XDG_RUNTIME_DIR=/tmp/quarto-runtime "${{ env.IMAGE }}"
+
+      - name: Deploy preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: ./${{ steps.quarto-config.outputs.output_dir }}/
+          wait-for-pages-deployment: true
