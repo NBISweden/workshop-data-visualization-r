@@ -1,0 +1,9 @@
+<div class='workshop-list'>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://royfrancis.github.io/workshop-data-visualization-r/2605/'>2026 May</a></span></div>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://royfrancis.github.io/workshop-data-visualization-r/2505/'>2025 May</a></span></div>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://royfrancis.github.io/workshop-data-visualization-r/2404/'>2024 Apr</a></span></div>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://royfrancis.github.io/workshop-data-visualization-r/2304/'>2023 Apr</a></span></div>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://royfrancis.github.io/workshop-data-visualization-r/2210/'>2022 Oct</a></span></div>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://royfrancis.github.io/workshop-data-visualization-r/2204/'>2022 Apr</a></span></div>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://nbisweden.github.io/Workshop_geneco_2020_05/docs/'>2020 Nov</a></span></div>
+</div>
