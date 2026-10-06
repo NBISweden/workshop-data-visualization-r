@@ -26,10 +26,7 @@ toastui:
       eventView: ['time']
       hourStart: 9
       hourEnd: 21
-      showNowIndicator: true
-    timezone:
-      zones:
-        - timezoneName: Europe/Stockholm
+      showNowIndicator: false
     calendars:
       - id: "session"
         name: "Session"
