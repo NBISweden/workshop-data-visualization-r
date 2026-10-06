@@ -5,13 +5,14 @@ date: ""
 toc: false
 number-sections: false
 sidebar: false
+freeze: true
 format: html
 ---
 
 ::: {.callout-note} 
 
-The contents of this course are currently being generated. It will be updated here regularly until the course is completed. 
-
+The contents of this course are currently being generated. It will be updated here regularly until the course is completed. {{< fa file-powerpoint >}}  Slides, 
+{{< fa file-lines >}}  Lab
 :::
 
 ```{r}
@@ -37,19 +38,6 @@ s %>%
     addHtmlTableStyle(align = "lcc", align.header = "ccc", css.rgroup = "color:#4d6804;font-weight:800;", css.cell = "padding-right:1em;") %>%
     htmlTable(rnames = FALSE, rgroup = r$values, n.rgroup = r$lengths)
 ```
-
-
-<!-- marker legend -->
-<p class="small" style="margin-top:20px;text-align:center;">
-<span>
-<span style="margin-left:6px; margin-right:6px;">
-{{< fa file-powerpoint >}}  Slides
-</span>
-<span style="margin-left:6px; margin-right:6px;">
-{{< fa file-lines >}}  Lab
-</span>
-</span>
-</p>
 
 :::{.callout-tip icon="false" collapse="false"}
 ## {{< fa solid tree-city >}} &nbsp; Optional or of Interest

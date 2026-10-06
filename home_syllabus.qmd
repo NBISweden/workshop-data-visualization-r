@@ -34,7 +34,7 @@ After this workshop you should be able to:
 
 - Advanced level
   - Handle data in R for visualizations
-  - Familiarize with ggplot2 functions and techniques at adavanced level
+  - Familiarize with ggplot2 functions and techniques at advanced level
   - Combine different data and/or different plots that are of publication-ready
   - Create interactive documents with Quarto for data exploration and analysis
   - Write your own simple Shiny app in R

@@ -27,8 +27,7 @@ Install [RStudio](https://posit.co/download/rstudio-desktop/) or [Positron](http
 
 Install all the R packages necessary for this course by opening an `R terminal` either in RStudio or VScode and pasting the following command:
 
-```{r,eval=FALSE,block.title=TRUE}
-
+```r
 install.packages(c("cowplot","crosstalk","dplyr","DT","gganimate","ggiraph",
                     "ggplot2","ggpubr","ggrepel","ggthemes","grid","gridExtra",
                     "gt", "kableExtra","leaflet","palmerpenguins","patchwork",
@@ -41,6 +40,7 @@ To make sure that the installations went well, we will try to make a quick plot 
 :::
 
 :::{.callout-caution icon="false"}
+
 ### {{< fa solid file-arrow-down >}} Download course files
 
 Please download all the necessary files from [here](https://nbisweden.github.io/workshop-data-visualization-r/2505/topics/lab_download.html) and make sure that the directory tree looks similar to the one displayed in that page.
