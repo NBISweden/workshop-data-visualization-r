@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting...</title>
+  <link rel="canonical" href="https://nbisweden.github.io/workshop-dataviz/">
+  <meta http-equiv="refresh" content="0; url=https://nbisweden.github.io/workshop-dataviz/">
+  <script>
+    const newBase = "https://nbisweden.github.io/workshop-dataviz";
+    const oldPrefix = "/workshop-data-visualization-r";
+    let path = window.location.pathname;
+    if (path.startsWith(oldPrefix)) {
+      path = path.slice(oldPrefix.length);
+    }
+    window.location.replace(newBase + path + window.location.search + window.location.hash);
+  </script>
+</head>
+<body>
+  <p>This page has moved. If you are not redirected automatically, <a href="https://nbisweden.github.io/workshop-dataviz/">click here</a>.</p>
+</body>
+</html>
